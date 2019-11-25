@@ -1,0 +1,40 @@
+.headingLi {
+    color: var(--darkslategrey)
+}
+.headingDa {
+    color: var(--gainsboro)
+}
+.headingDe {
+    color: var(--darkslategrey);
+}
+
+.technologyElementLi {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    padding: 0.5em;
+    color: var(--darkslategrey);
+}
+.technologyElementDa {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    padding: 0.5em;
+    color: var(--gainsboro);
+}
+.technologyElementDe {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    padding: 0.5em;
+    color: var(--darkslategrey);
+}
+.technologyElementLi:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+.technologyElementDa:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+.technologyElementDe:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
