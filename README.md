@@ -7,8 +7,9 @@ This branch contains applications frontend.
 ###### tests:
 
 ###### breakdown:
+
 feature | status
-: ----- | ---- :
+------- | -----:
 Basic project structure | `done`
 
 ###### frameworks & libraries:
