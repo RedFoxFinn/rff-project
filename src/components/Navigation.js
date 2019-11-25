@@ -1,5 +1,5 @@
 import React from 'react';
-import {connect} from "react-redux";
+import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 
 import classProvider from '../tools/classProvider';
@@ -10,16 +10,12 @@ const mapStateToProps = (state) => {
   return {
     appState: state.appState,
     loginState: state.loginState
-  }
+  };
 };
 
 const Navigation = (props) => {
-  
-  const themes = ['light', 'dark', 'dev'];
 
-  const switchApp = (app) => {
-    props.dispatch({type: 'switchApplication', application: app});
-  };
+  const themes = ['light', 'dark', 'dev'];
 
   const Menu = () => {
     const theme = props.appState.theme;
@@ -39,6 +35,7 @@ const Navigation = (props) => {
           <Link to='/admin' onClick={() => switchApp( 'Admin tools')}>Admin tools</Link>
           <Link to='/about' onClick={() => switchApp( 'About')}>About</Link>
           <Link to='/default' onClick={() => switchApp( 'CRA Default')}>CRA Default</Link>
+          <ThemeSelector/>
         </div>
       </div>
     );
@@ -47,11 +44,11 @@ const Navigation = (props) => {
   const ThemeSelector = () => {
     const theme = props.appState.theme;
     return (
-      <div className={classProvider(theme, 'navMenu')}>
-        <button className={classProvider(theme, 'navButton')}>
+      <div className={classProvider(theme, 'navSubMenu')}>
+        <button className={classProvider(theme, 'navSubButton')}>
           <strong>{props.appState.theme}</strong> theme selected
         </button>
-        <div className={classProvider(theme, 'navContent')}>
+        <div className={classProvider(theme, 'navSubContent')}>
           {themes.map((t) =>
             <a key={t} onClick={event => switchTheme(event, t)}>{t}</a>
           )}
@@ -63,28 +60,34 @@ const Navigation = (props) => {
   const LoginModule = () => {
     const theme = props.appState.theme;
     return (
-      <div>
-        <button>
-          {props.loginState.user ? 'logout' : 'login'}
-        </button>
-        <div>
-        </div>
+      <div className={classProvider(theme, 'loginMenu')}>
+        {props.loginState.user === null
+          ? <Link to='/login' onClick={() => switchApp('Login')}>login</Link>
+          : <Link to='/' onClick={() => logout()}>logout</Link>
+        }
       </div>
     );
   };
 
+  function switchApp(app) {
+    props.dispatch({type: 'switchApplication', application: app});
+  }
   function switchTheme(event, theme) {
     event.preventDefault();
     props.dispatch({type: 'switchTheme', theme: theme});
+  }
+
+  function logout() {
+    switchApp('Home');
   }
 
   return(
     <div className='navRow'>
       <Menu/>
       <h3 className={classProvider(props.appState.theme, 'heading')}>{props.appState.application}</h3>
-      <ThemeSelector/>
+      <LoginModule/>
     </div>
-  )
+  );
 };
 
 export default connect(mapStateToProps)(Navigation);

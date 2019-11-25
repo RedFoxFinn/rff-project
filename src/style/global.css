@@ -1,3 +1,4 @@
+
 :root {
     --peru: #e16f3a;
     --gainsboro: #dbdbdb;
@@ -48,6 +49,7 @@
     --jbgreen: #18D68C;
     --jblemon: #FCF84A;
     --heroku: #6762a6;
+    --font-global: 'Raleway', sans-serif;
 }
 .app {
     display: flex;
@@ -57,7 +59,25 @@
 .appContainer {
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: space-between;
+}
+.appContainer .headingLi {
+    color: var(--darkslategrey);
+}
+.appContainer .headingDa {
+    color: var(--gainsboro);
+}
+.appContainer .headingDe {
+    color: var(--darkslategrey);
+}
+.appContainer .descriptionLi {
+    color: var(--darkslategrey);
+}
+.appContainer .descriptionDa {
+    color: var(--gainsboro);
+}
+.appContainer .descriptionDe {
+    color: var(--darkslategrey);
 }
 .appElements {
     display: flex;
@@ -70,9 +90,52 @@
 .appWidgets {
     display: flex;
     flex-direction: row;
-    justify-content: space-evenly;
+    justify-content: space-around;
 }
-.appWidget {}
+.appWidget {
+    height: 10em;
+    width: 10em;
+}
 .appWidget:hover {
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+button {
+    font-family: var(--font-global);
+}
+
+.headingLi {
+    color: var(--darkslategrey);
+}
+.headingDa {
+    color: var(--gainsboro);
+}
+.headingDe {
+    color: var(--darkslategrey);
+}
+.descriptionLi {
+    color: var(--darkslategrey);
+    width: 50%;
+}
+.descriptionDa {
+    color: var(--gainsboro);
+    width: 50%;
+}
+.descriptionDe {
+    color: var(--darkslategrey);
+    width: 50%;
+}
+.linkLi {
+    padding: 0.5em;
+    color: var(--darkslategrey);
+    text-decoration: none;
+}
+.linkDa {
+    padding: 0.5em;
+    color: var(--gainsboro);
+    text-decoration: none;
+}
+.linkDe {
+    padding: 0.5em;
+    color: var(--darkslategrey);
+    text-decoration: none;
 }

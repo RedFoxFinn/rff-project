@@ -21,7 +21,7 @@ Site navigation with React-router | `done`
 About-section | `ongoing`
 About:colors | `done`
 About:technologies | `ongoing`
-Admin-tools | `upcoming`
+Admin-tools | `ongoing`
 Calculate-app | `done`
 Dashboard-section | `ongoing`
 Dashboard:CountryCount | `ongoing`

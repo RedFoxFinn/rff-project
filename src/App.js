@@ -1,26 +1,26 @@
 import React, {useState, useEffect} from 'react';
-import {connect} from "react-redux";
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import {connect} from 'react-redux';
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 
 import './style/root.css';
 
-import DefaultApp from "./default/DefaultApp";
+import DefaultApp from './default/DefaultApp';
 import Navigation from './components/Navigation';
-import AdminTools from "./components/AdminTools";
+import AdminTools from './components/AdminTools';
 import About from './components/About';
-import Calculate from "./components/Calculate";
-import Dashboard from "./components/Dashboard";
-import Dishy from "./components/Dishy";
-import LandingPage from "./components/LandingPage";
-import LoginPage from "./components/LoginPage";
-import OpenCountry from "./components/OpenCountry";
-import Tasker from "./components/Tasker";
-import Transporter from "./components/Transporter";
+import Calculate from './components/Calculate';
+import Dashboard from './components/Dashboard';
+import Dishy from './components/Dishy';
+import LandingPage from './components/LandingPage';
+import LoginPage from './components/LoginPage';
+import OpenCountry from './components/OpenCountry';
+import Tasker from './components/Tasker';
+import Transporter from './components/Transporter';
 
 const mapStateToProps = (state) => {
   return {
     appState: state.appState
-  }
+  };
 };
 
 const App = (props) => {
@@ -47,7 +47,7 @@ const App = (props) => {
         </Switch>
       </Router>
     </div>
-  )
+  );
 };
 
 

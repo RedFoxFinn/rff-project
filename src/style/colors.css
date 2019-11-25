@@ -1,4 +1,12 @@
-
+.headingLi {
+    color: var(--headingLi)
+}
+.headingDa {
+    color: var(--headingDa)
+}
+.headingDe {
+    color: var(--headingDe);
+}
 .peru {
     background-color: var(--peru);
     width: 2.5em;

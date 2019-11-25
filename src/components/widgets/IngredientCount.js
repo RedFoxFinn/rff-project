@@ -3,7 +3,6 @@ import {connect} from "react-redux";
 
 import classProvider from '../../tools/classProvider';
 import '../../style/global.css';
-import '../../style/count.css';
 
 const mapStateToProps = (state) => {
   return {
@@ -16,7 +15,7 @@ const IngredientCount = (props) => {
   
   const Count = () => {
     return (
-      <p><strong>{data}</strong> unique ingredients available</p>
+      <p className={classProvider(props.appState.theme, 'description')}><strong>{data}</strong> unique ingredients available</p>
     );
   };
   

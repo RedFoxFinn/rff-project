@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {connect} from "react-redux";
+import {connect} from 'react-redux';
 import numbro from 'numbro';
 
 import classProvider from '../tools/classProvider';
@@ -9,13 +9,13 @@ import '../style/calculate.css';
 const mapStateToProps = (state) => {
   return {
     appState: state.appState
-  }
+  };
 };
 
 const Calculator = (props) => {
   const [value1, setValue1] = useState(0);
   const [value2, setValue2] = useState(0);
-  
+
   const Results = () => {
     return (
       <>
@@ -134,7 +134,7 @@ const Calculator = (props) => {
           <input type='number' placeholder='numerical value' onChange={({target}) => setValue1(target.value)}
             className={classProvider(props.appState.theme, 'calculateElement')}/>
           <input type='number' placeholder='numerical value' onChange={({target}) => setValue2(target.value)}
-                 className={classProvider(props.appState.theme, 'calculateElement')}/>
+            className={classProvider(props.appState.theme, 'calculateElement')}/>
         </div>
         <Results/>
       </div>

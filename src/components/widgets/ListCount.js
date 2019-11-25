@@ -3,7 +3,6 @@ import {connect} from "react-redux";
 
 import classProvider from '../../tools/classProvider';
 import '../../style/global.css';
-import '../../style/count.css';
 
 const mapStateToProps = (state) => {
   return {
@@ -15,9 +14,15 @@ const ListCount = (props) => {
   const data = 0;
   
   const Count = () => {
-    return (
-      <p><strong>{data}</strong> task lists accessible</p>
-    );
+    if (props.mode === 'admin') {
+      return (
+        <p className={classProvider(props.appState.theme, 'description')}><strong>all</strong> task lists accessible</p>
+      );
+    } else {
+      return (
+        <p className={classProvider(props.appState.theme, 'description')}><strong>{data}</strong> task lists accessible</p>
+      );
+    }
   };
   
   return(

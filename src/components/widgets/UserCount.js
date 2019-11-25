@@ -10,18 +10,16 @@ const mapStateToProps = (state) => {
   }
 };
 
-const GroupCount = (props) => {
+const UserCount = (props) => {
   const data = 0;
   
   const Count = () => {
     if (props.mode === 'admin') {
       return (
-        <p className={classProvider(props.appState.theme, 'description')}><strong>all</strong> groups accessible</p>
+        <p className={classProvider(props.appState.theme, 'description')}>application has <strong>{data}</strong> users</p>
       );
     } else {
-      return (
-        <p className={classProvider(props.appState.theme, 'description')}><strong>{data}</strong> groups accessible</p>
-      );
+      return null;
     }
   };
   
@@ -36,4 +34,4 @@ const GroupCount = (props) => {
   );
 };
 
-export default connect(mapStateToProps)(GroupCount);
+export default connect(mapStateToProps)(UserCount);

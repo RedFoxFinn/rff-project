@@ -1,12 +1,3 @@
-.headingLi {
-    color: var(--darkslategrey)
-}
-.headingDa {
-    color: var(--gainsboro)
-}
-.headingDe {
-    color: var(--darkslategrey);
-}
 
 .technologyElementLi {
     display: flex;
