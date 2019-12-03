@@ -34,7 +34,6 @@ const Navigation = (props) => {
           <Link to='/transit' onClick={() => switchApp( 'Transporter')}>Transporter</Link>
           <Link to='/admin' onClick={() => switchApp( 'Admin tools')}>Admin tools</Link>
           <Link to='/about' onClick={() => switchApp( 'About')}>About</Link>
-          <Link to='/default' onClick={() => switchApp( 'CRA Default')}>CRA Default</Link>
           <ThemeSelector/>
         </div>
       </div>
