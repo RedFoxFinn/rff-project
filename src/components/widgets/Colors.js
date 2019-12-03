@@ -1,5 +1,5 @@
 import React from 'react';
-import {connect} from "react-redux";
+import {connect} from 'react-redux';
 
 import classProvider from '../../tools/classProvider';
 import '../../style/global.css';
@@ -8,7 +8,7 @@ import '../../style/colors.css';
 const mapStateToProps = (state) => {
   return {
     appState: state.appState
-  }
+  };
 };
 
 const Colors = (props) => {

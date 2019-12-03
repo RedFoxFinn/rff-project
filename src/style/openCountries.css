@@ -1,0 +1,68 @@
+.searchElementDe {
+    display: block;
+    margin: 1em;
+    width: 16em;
+    background-color: var(--peru);
+    color: var(--darkslategrey);
+    border: 1px solid var(--darkslategrey);
+}
+.searchElementDa {
+    display: block;
+    margin: 1em;
+    width: 16em;
+    background-color: var(--darkslategrey);
+    color: var(--gainsboro);
+    border: 1px solid var(--gainsboro);
+}
+.searchElementLi {
+    display: block;
+    margin: 1em;
+    width: 16em;
+    background-color: var(--gainsboro);
+    color: var(--darkslategrey);
+    border: 1px solid var(--darkslategrey);
+}
+.searchCancelDe {
+    display: block;
+    margin: 1em;
+    min-width: 4em;
+    background-color: var(--peru);
+    color: var(--darkslategrey);
+    border: 1px solid var(--darkslategrey);
+}
+.searchCancelDa {
+    display: block;
+    margin: 1em;
+    min-width: 4em;
+    background-color: var(--darkslategrey);
+    color: var(--gainsboro);
+    border: 1px solid var(--gainsboro);
+}
+.searchCancelLi {
+    display: block;
+    margin: 1em;
+    min-width: 4em;
+    background-color: var(--gainsboro);
+    color: var(--darkslategrey);
+    border: 1px solid var(--darkslategrey);
+}
+.countryAppElements {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+.countryAppElements:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+.countryContainer {
+    display: block;
+    margin: 1em;
+}
+.countryDetailsLi {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: flex-start;
+}
+.countryDetailsDa {}
+.countryDetailsDe {}

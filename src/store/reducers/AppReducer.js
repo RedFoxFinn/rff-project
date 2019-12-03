@@ -11,14 +11,14 @@ const initialState = {
 
 const AppReducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'fu':
-      return {...state};
-    case 'switchApplication':
-      return {...state, application: action.application};
-    case 'switchTheme':
-      return {...state, theme: action.theme};
-    default:
-      return state;
+  case 'fu':
+    return {...state};
+  case 'switchApplication':
+    return {...state, application: action.application};
+  case 'switchTheme':
+    return {...state, theme: action.theme};
+  default:
+    return state;
   }
 };
 

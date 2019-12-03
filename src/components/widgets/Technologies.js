@@ -1,7 +1,7 @@
 import React from 'react';
-import {connect} from "react-redux";
+import {connect} from 'react-redux';
 
-import {Icon, InlineIcon} from "@iconify/react";
+import {Icon, InlineIcon} from '@iconify/react';
 import ReduxIcon from '@iconify/icons-simple-icons/redux';
 import reactIcon from '@iconify/icons-simple-icons/react';
 import graphqlIcon from '@iconify/icons-simple-icons/graphql';
@@ -25,7 +25,7 @@ import '../../style/technologies.css';
 const mapStateToProps = (state) => {
   return {
     appState: state.appState
-  }
+  };
 };
 
 const Technologies = (props) => {
@@ -65,31 +65,31 @@ const Technologies = (props) => {
 
   const Repository = () => {
     const repo = props.appState.repository;
-    return <a className={classProvider(props.appState.theme, 'technologyElement')} href={repo.url}>{repo.icon} {repo.name}</a>
+    return <a className={classProvider(props.appState.theme, 'technologyElement')} href={repo.url}>{repo.icon} {repo.name}</a>;
   };
   const Front = () => {
     return frontend.map((f) => {
-      return <a className={classProvider(props.appState.theme, 'technologyElement')} href={f.url}>{f.icon} {f.name}</a>
+      return <a className={classProvider(props.appState.theme, 'technologyElement')} href={f.url}>{f.icon} {f.name}</a>;
     });
   };
   const Back = () => {
     return backend.map((b) => {
-      return <a className={classProvider(props.appState.theme, 'technologyElement')} href={b.url}>{b.icon} {b.name}</a>
+      return <a className={classProvider(props.appState.theme, 'technologyElement')} href={b.url}>{b.icon} {b.name}</a>;
     });
   };
   const Data = () => {
     return data.map((d) => {
-      return <a className={classProvider(props.appState.theme, 'technologyElement')} href={d.url}>{d.icon} {d.name}</a>
+      return <a className={classProvider(props.appState.theme, 'technologyElement')} href={d.url}>{d.icon} {d.name}</a>;
     });
   };
   const Testing = () => {
     return testing.map((t) => {
-      return <a className={classProvider(props.appState.theme, 'technologyElement')} href={t.url}>{t.icon} {t.name}</a>
+      return <a className={classProvider(props.appState.theme, 'technologyElement')} href={t.url}>{t.icon} {t.name}</a>;
     });
   };
   const DevTools = () => {
     return tools.map((dt) => {
-      return <a className={classProvider(props.appState.theme, 'technologyElement')} href={dt.url}>{dt.icon} {dt.name}</a>
+      return <a className={classProvider(props.appState.theme, 'technologyElement')} href={dt.url}>{dt.icon} {dt.name}</a>;
     });
   };
   return(

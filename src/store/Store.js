@@ -3,11 +3,13 @@ import thunk from 'redux-thunk';
 import {composeWithDevTools} from 'redux-devtools-extension';
 
 import AppReducer from './reducers/AppReducer';
-import LoginReducer from "./reducers/LoginReducer";
-import RegReducer from "./reducers/RegReducer";
+import CountryReducer from './reducers/CountryReducer';
+import LoginReducer from './reducers/LoginReducer';
+import RegReducer from './reducers/RegReducer';
 
 const reducers = combineReducers({
   appState: AppReducer,
+  countryState: CountryReducer,
   loginState: LoginReducer,
   regState: RegReducer
 });

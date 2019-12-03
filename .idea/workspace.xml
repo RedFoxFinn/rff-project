@@ -2,47 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a69d5581-dc09-455b-96e6-941e02078fc1" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dictionaries/redfoxfinn.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/eslintPlugin.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vagrant.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/About.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/About.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/AdminTools.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/AdminTools.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Calculate.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Calculate.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Dashboard.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Dishy.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dishy.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/LandingPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/LandingPage.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/LoginPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/LoginPage.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Navigation.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Navigation.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/OpenCountry.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/OpenCountry.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/widgets/Colors.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/widgets/Colors.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/widgets/CountryCount.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/widgets/CountryCount.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/widgets/DishCount.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/widgets/DishCount.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/widgets/GroupCount.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/widgets/GroupCount.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/widgets/IngredientCount.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/widgets/IngredientCount.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/widgets/ListCount.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/widgets/ListCount.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/widgets/TaskCount.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/widgets/TaskCount.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/widgets/TrackedStopsCount.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/widgets/TrackedStopsCount.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/reducers/AppReducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/reducers/AppReducer.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/reducers/LoginReducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/reducers/LoginReducer.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/reducers/RegReducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/reducers/RegReducer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/widgets/Technologies.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/widgets/Technologies.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/store/Store.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/Store.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/store/reducers/AppReducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/reducers/AppReducer.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/style/colors.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/style/colors.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/style/count.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/style/dashboard.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/style/dashboard.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/style/global.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/style/global.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/style/navigation.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/style/navigation.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/style/technologies.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/style/technologies.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/tools/Styler.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/tools/classProvider.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/tools/classProvider.js" afterDir="false" />
     </list>
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -51,8 +21,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="JavaScript File" />
         <option value="CSS File" />
+        <option value="JavaScript File" />
       </list>
     </option>
   </component>
@@ -74,6 +44,11 @@
   </component>
   <component name="ProjectId" id="1Tpx8PbHeWXmLcbtayjzvG6DkIO" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
   <component name="PropertiesComponent">
     <property name="JavaScriptWeakerCompletionTypeGuess" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
@@ -89,7 +64,7 @@
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="settings.editor.selected.configurable" value="MTConfigurable" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -100,15 +75,15 @@
       <recent name="$PROJECT_DIR$/src/tools" />
     </key>
   </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
+  <component name="ServiceViewManager">
+    <option name="viewStates">
       <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
+        <serviceView>
+          <treeState>
+            <expand />
+            <select />
+          </treeState>
+        </serviceView>
       </list>
     </option>
   </component>
@@ -131,7 +106,10 @@
       <workItem from="1574673133095" duration="17825000" />
       <workItem from="1574693654692" duration="4588000" />
       <workItem from="1574698268626" duration="1044000" />
-      <workItem from="1574699342269" duration="7060000" />
+      <workItem from="1574699342269" duration="7664000" />
+      <workItem from="1574753975100" duration="72000" />
+      <workItem from="1574754085829" duration="1800000" />
+      <workItem from="1575362902494" duration="29586000" />
     </task>
     <servers />
   </component>
@@ -150,5 +128,11 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="188" y="32" width="992" height="733" key="SettingsEditor" timestamp="1575362957068">
+      <screen x="0" y="28" width="1366" height="740" />
+    </state>
+    <state x="188" y="32" width="992" height="733" key="SettingsEditor/0.28.1366.740@0.28.1366.740" timestamp="1575362957068" />
   </component>
 </project>
