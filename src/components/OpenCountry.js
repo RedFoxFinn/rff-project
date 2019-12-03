@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {} from 'react';
 import {connect} from 'react-redux';
 import {Icon, InlineIcon} from '@iconify/react';
 import resetIcon from '@iconify/icons-iwwa/reset';
@@ -7,8 +7,7 @@ import resetIcon from '@iconify/icons-iwwa/reset';
 import classProvider from '../tools/classProvider';
 import '../style/global.css';
 import '../style/openCountries.css';
-import Connector from '../services/Connector';
-import {initCountries, setSearch, resetSearch} from '../store/reducers/CountryReducer';
+import {setSearch, resetSearch} from '../store/reducers/CountryReducer';
 import CountryDetails from './widgets/CountryDetails';
 
 const mapStateToProps = (state) => {
@@ -20,20 +19,12 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = {
-  initCountries,
   setSearch,
   resetSearch
 };
 
 const Countries = (props) => {
-  useEffect(() => {
-    async function init() {
-      await Connector.getCountries().then(response => {
-        props.initCountries(response.data);
-      });
-    }
-    init();
-  }, []);
+
   let matched = [];
 
   const handleSearch = (event) => {

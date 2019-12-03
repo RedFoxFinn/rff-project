@@ -35,7 +35,7 @@ Dishy-app | `upcoming`
 Landing page | `upcoming`
 Login page | `upcoming`
 Navigation | `ongoing`
-OpenCountry-app | `upcoming`
+OpenCountry-app | `done`
 Tasker-app | `upcoming`
 Transporter-app | `upcoming`
 

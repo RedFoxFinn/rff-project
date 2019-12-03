@@ -1,10 +1,9 @@
-import React, {useState, useEffect} from 'react';
+import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 
 import './style/root.css';
 
-import DefaultApp from './default/DefaultApp';
 import Navigation from './components/Navigation';
 import AdminTools from './components/AdminTools';
 import About from './components/About';
@@ -16,7 +15,13 @@ import LoginPage from './components/LoginPage';
 import OpenCountry from './components/OpenCountry';
 import Tasker from './components/Tasker';
 import Transporter from './components/Transporter';
+import Connector from './services/Connector';
 
+import {initCountries} from './store/reducers/CountryReducer';
+
+const mapDispatchToProps = {
+  initCountries
+};
 const mapStateToProps = (state) => {
   return {
     appState: state.appState
@@ -27,6 +32,14 @@ const App = (props) => {
   useEffect(() => {
     document.body.className = props.appState.theme;
   });
+  useEffect(() => {
+    async function init() {
+      await Connector.getCountries().then(response => {
+        props.initCountries(response.data);
+      });
+    }
+    init();
+  }, []);
 
   return(
     <div className='appContainer'>
@@ -43,7 +56,6 @@ const App = (props) => {
           <Route path='/countries' component={OpenCountry}/>
           <Route path='/tasker' component={Tasker}/>
           <Route path='/transit' component={Transporter}/>
-          <Route path='/default' component={DefaultApp}/>
         </Switch>
       </Router>
     </div>
@@ -52,4 +64,4 @@ const App = (props) => {
 
 
 
-export default connect(mapStateToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);

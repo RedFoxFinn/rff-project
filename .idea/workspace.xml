@@ -3,15 +3,16 @@
   <component name="ChangeListManager">
     <list default="true" id="a69d5581-dc09-455b-96e6-941e02078fc1" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/OpenCountry.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/OpenCountry.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/widgets/Colors.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/widgets/Colors.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/widgets/Technologies.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/widgets/Technologies.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/Store.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/Store.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/reducers/AppReducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/reducers/AppReducer.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/style/colors.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/style/colors.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/tools/classProvider.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/tools/classProvider.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/widgets/CountryCount.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/widgets/CountryCount.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/default/App.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/default/App.test.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/default/DefaultApp.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/default/index.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/default/logo.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,6 +52,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="JavaScriptWeakerCompletionTypeGuess" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
@@ -109,7 +111,9 @@
       <workItem from="1574699342269" duration="7664000" />
       <workItem from="1574753975100" duration="72000" />
       <workItem from="1574754085829" duration="1800000" />
-      <workItem from="1575362902494" duration="29586000" />
+      <workItem from="1575362902494" duration="29664000" />
+      <workItem from="1575396368732" duration="919000" />
+      <workItem from="1575397331867" duration="31000" />
     </task>
     <servers />
   </component>
