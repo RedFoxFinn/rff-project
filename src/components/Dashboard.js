@@ -9,6 +9,7 @@ import CountryCount from './widgets/CountryCount';
 import DishCount from './widgets/DishCount';
 import GroupCount from './widgets/GroupCount';
 import ListCount from './widgets/ListCount';
+import MethodCount from './widgets/MethodCount';
 import TaskCount from './widgets/TaskCount';
 import IngredientCount from './widgets/IngredientCount';
 import TrackedStopsCount from './widgets/TrackedStopsCount';
@@ -31,6 +32,7 @@ const Dashboard = (props) => {
         <CountryCount/>
         <DishCount/>
         <IngredientCount/>
+        <MethodCount/>
       </div>
     );
   };

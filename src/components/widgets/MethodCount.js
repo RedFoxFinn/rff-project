@@ -5,9 +5,7 @@ import {useQuery, useMutation, useApolloClient, useSubscription} from '@apollo/r
 
 import classProvider from '../../tools/classProvider';
 import '../../style/global.css';
-import {CARB_COUNT} from '../../core/graphql/queries/q_carbCount.js';
-import {PROTEIN_COUNT} from '../../core/graphql/queries/q_proteinCount.js';
-import {SPICE_COUNT} from '../../core/graphql/queries/q_spiceCount.js';
+import {METHOD_COUNT} from '../../core/graphql/queries/q_methodCount.js';
 
 const mapStateToProps = (state) => {
   return {
@@ -15,26 +13,24 @@ const mapStateToProps = (state) => {
   };
 };
 
-const IngredientCount = (props) => {
+const MethodCount = (props) => {
   const client = useApolloClient();
-  const carbResult = useQuery(CARB_COUNT);
-  const proteinResult = useQuery(PROTEIN_COUNT);
-  const spiceResult = useQuery(SPICE_COUNT);
+  const methodResult = useQuery(METHOD_COUNT);
   let data = 0;
 
   const Count = () => {
-    if (!carbResult.loading && !proteinResult.loading && !spiceResult.loading) {
-      if (carbResult.data && proteinResult.data && spiceResult.data) {
-        data = carbResult.data.carbCount + proteinResult.data.proteinCount + spiceResult.data.spiceCount;
+    if (!methodResult.loading) {
+      if (methodResult.data) {
+        data = methodResult.data.methodCount;
         return (
           <p className={classProvider(props.appState.theme, 'description')}>
-            <strong>{data}</strong> ingredients available</p>
+            <strong>{data}</strong> cooking methods available</p>
         );
       }
     }
     return (
       <p className={classProvider(props.appState.theme, 'description')}>
-        <strong>fetching</strong> count for ingredients</p>
+        <strong>fetching</strong> count for cooking methods</p>
     );
   };
 
@@ -49,4 +45,4 @@ const IngredientCount = (props) => {
   );
 };
 
-export default connect(mapStateToProps)(IngredientCount);
+export default connect(mapStateToProps)(MethodCount);

@@ -6,7 +6,7 @@ import {connect} from 'react-redux';
 import numbro from 'numbro';
 import 'semantic-ui-css/semantic.min.css';
 
-import Country from '../../classes/Country';
+import Country from '../../core/classes/Country';
 import '../../style/global.css';
 import '../../style/openCountries.css';
 import classProvider from '../../tools/classProvider';

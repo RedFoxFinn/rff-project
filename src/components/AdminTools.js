@@ -9,6 +9,7 @@ import ListCount from './widgets/ListCount';
 import TaskCount from './widgets/TaskCount';
 import DishCount from './widgets/DishCount';
 import IngredientCount from './widgets/IngredientCount';
+import MethodCount from './widgets/MethodCount';
 import TrackedStopsCount from './widgets/TrackedStopsCount';
 import UserCount from './widgets/UserCount';
 
@@ -26,6 +27,7 @@ const AdminTools = (props) => {
         <CountryCount/>
         <DishCount/>
         <IngredientCount/>
+        <MethodCount/>
       </div>
     );
   };

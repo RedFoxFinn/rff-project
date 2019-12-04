@@ -2,16 +2,19 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a69d5581-dc09-455b-96e6-941e02078fc1" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/core/classes/User.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/OpenCountry.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/OpenCountry.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/widgets/CountryCount.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/widgets/CountryCount.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/default/App.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/default/App.test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/default/DefaultApp.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/default/index.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/default/logo.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/classes/Country.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/classes/Country.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/classes/User.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/AdminTools.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/AdminTools.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Dashboard.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/widgets/CountryDetails.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/widgets/CountryDetails.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/widgets/DishCount.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/widgets/DishCount.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/widgets/IngredientCount.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/widgets/IngredientCount.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -70,11 +73,11 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src/store" />
-      <recent name="$PROJECT_DIR$/src/Redux" />
-      <recent name="$PROJECT_DIR$/src/components/widgets" />
-      <recent name="$PROJECT_DIR$/src/components" />
-      <recent name="$PROJECT_DIR$/src/tools" />
+      <recent name="$PROJECT_DIR$/src/core/graphql/subscriptions" />
+      <recent name="$PROJECT_DIR$/src/core/graphql/queries" />
+      <recent name="$PROJECT_DIR$/src/core/graphql/mutations" />
+      <recent name="$PROJECT_DIR$/src/core/graphql" />
+      <recent name="$PROJECT_DIR$/src/core" />
     </key>
   </component>
   <component name="ServiceViewManager">
@@ -114,6 +117,7 @@
       <workItem from="1575362902494" duration="29664000" />
       <workItem from="1575396368732" duration="919000" />
       <workItem from="1575397331867" duration="31000" />
+      <workItem from="1575451383042" duration="15005000" />
     </task>
     <servers />
   </component>
@@ -134,9 +138,17 @@
     </option>
   </component>
   <component name="WindowStateProjectService">
+    <state x="279" y="58" key="#GraphQL" timestamp="1575466780500">
+      <screen x="0" y="28" width="1366" height="740" />
+    </state>
+    <state x="279" y="58" key="#GraphQL/0.28.1366.740@0.28.1366.740" timestamp="1575466780500" />
     <state x="188" y="32" width="992" height="733" key="SettingsEditor" timestamp="1575362957068">
       <screen x="0" y="28" width="1366" height="740" />
     </state>
     <state x="188" y="32" width="992" height="733" key="SettingsEditor/0.28.1366.740@0.28.1366.740" timestamp="1575362957068" />
+    <state x="0" y="28" width="648" height="828" key="find.popup" timestamp="1575467002266">
+      <screen x="0" y="28" width="1366" height="740" />
+    </state>
+    <state x="0" y="28" width="648" height="828" key="find.popup/0.28.1366.740@0.28.1366.740" timestamp="1575467002266" />
   </component>
 </project>

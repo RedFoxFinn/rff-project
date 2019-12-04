@@ -27,8 +27,9 @@ Dashboard-section | `ongoing`
 Dashboard:CountryCount | `ongoing`
 Dashboard:DishCount | `ongoing`
 Dashboard:GroupCount | `ongoing`
-Dashboard:IngredientCount | `ongoing`
+Dashboard:IngredientCount | `done`
 DashBoard:ListCount | `ongoing`
+Dashboard:MethodCount | `done`
 Dashboard:TaskCount | `ongoing`
 Dashboard:TrackedStopsCount | `ongoing`
 Dishy-app | `upcoming`
@@ -38,6 +39,11 @@ Navigation | `ongoing`
 OpenCountry-app | `done`
 Tasker-app | `upcoming`
 Transporter-app | `upcoming`
+GraphQL-fragments | `ongoing`
+GraphQL-mutations | `ongoing`
+GraphQL-queries | `ongoing`
+GraphQL-subscriptions | `ongoing`
+Classes | `ongoing`
 
 ###### frameworks & libraries:
 
