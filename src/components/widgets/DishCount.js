@@ -1,10 +1,9 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import gql from 'graphql-tag';
-import {useQuery, useMutation, useApolloClient, useSubscription} from '@apollo/react-hooks';
+import {useQuery, useApolloClient} from '@apollo/react-hooks';
 
-import classProvider from '../../tools/classProvider';
-import '../../style/global.css';
+import classProvider from '../../core/tools/classProvider';
+import '../../core/style/global.css';
 import {DISH_COUNT} from '../../core/graphql/queries/q_dishCount.js';
 
 const mapStateToProps = (state) => {

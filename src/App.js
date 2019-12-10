@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 
-import './style/root.css';
+import './core/style/root.css';
 
 import Navigation from './components/Navigation';
 import AdminTools from './components/AdminTools';
@@ -15,16 +15,17 @@ import LoginPage from './components/LoginPage';
 import OpenCountry from './components/OpenCountry';
 import Tasker from './components/Tasker';
 import Transporter from './components/Transporter';
-import Connector from './services/Connector';
+import Connector from './core/services/Connector';
 
-import {initCountries} from './store/reducers/CountryReducer';
+import {initCountries} from './core/store/reducers/CountryReducer';
 
 const mapDispatchToProps = {
   initCountries
 };
 const mapStateToProps = (state) => {
   return {
-    appState: state.appState
+    appState: state.appState,
+    dishyState: state.dishyState
   };
 };
 
@@ -46,16 +47,16 @@ const App = (props) => {
       <Router>
         <Navigation/>
         <Switch>
-          <Route exact path='/' component={LandingPage}/>
-          <Route path='/about' component={About}/>
-          <Route path='/admin' component={AdminTools}/>
-          <Route path='/calculate' component={Calculate}/>
-          <Route path='/dashboard' component={Dashboard}/>
-          <Route path='/dishy' component={Dishy}/>
-          <Route path='/login' component={LoginPage}/>
-          <Route path='/countries' component={OpenCountry}/>
-          <Route path='/tasker' component={Tasker}/>
-          <Route path='/transit' component={Transporter}/>
+          <Route exact path='/' render={(props) => <LandingPage {...props}/>}/>
+          <Route path='/about' render={(props) => <About {...props}/>}/>
+          <Route path='/admin' render={(props) => <AdminTools {...props}/>}/>
+          <Route path='/calculate' render={(props) => <Calculate {...props}/>}/>
+          <Route path='/dashboard' render={(props) => <Dashboard {...props}/>}/>
+          <Route path='/dishy' render={(props) => <Dishy {...props}/>}/>
+          <Route path='/login' render={(props) => <LoginPage {...props}/>}/>
+          <Route path='/countries' render={(props) => <OpenCountry {...props}/>}/>
+          <Route path='/tasker' render={(props) => <Tasker {...props}/>}/>
+          <Route path='/transit' render={(props) => <Transporter {...props}/>}/>
         </Switch>
       </Router>
     </div>

@@ -2,9 +2,9 @@ import React, {useState} from 'react';
 import {connect} from 'react-redux';
 import numbro from 'numbro';
 
-import classProvider from '../tools/classProvider';
-import '../style/global.css';
-import '../style/calculate.css';
+import classProvider from '../core/tools/classProvider';
+import '../core/style/global.css';
+import '../core/style/calculate.css';
 
 const mapStateToProps = (state) => {
   return {

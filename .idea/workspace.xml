@@ -2,20 +2,102 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a69d5581-dc09-455b-96e6-941e02078fc1" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/core/classes/User.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/classes/Country.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/classes/Country.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/classes/User.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/About.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/About.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/AdminTools.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/AdminTools.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Calculate.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Calculate.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Dashboard.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Dishy.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dishy.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/LandingPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/LandingPage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/LoginPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/LoginPage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Navigation.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Navigation.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/OpenCountry.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/OpenCountry.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Tasker.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Tasker.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Transporter.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Transporter.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/widgets/Colors.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/widgets/Colors.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/widgets/CountryCount.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/widgets/CountryCount.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/widgets/CountryDetails.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/widgets/CountryDetails.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/widgets/Dish.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/widgets/Dish.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/widgets/DishCount.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/widgets/DishCount.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/widgets/GroupCount.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/widgets/GroupCount.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/widgets/IngredientCount.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/widgets/IngredientCount.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/widgets/ListCount.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/widgets/ListCount.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/widgets/MethodCount.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/widgets/MethodCount.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/widgets/OtherStyles.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/widgets/OtherStyles.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/widgets/TaskCount.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/widgets/TaskCount.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/widgets/Technologies.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/widgets/Technologies.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/widgets/TrackedStopsCount.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/widgets/TrackedStopsCount.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/widgets/UserCount.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/widgets/UserCount.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/graphql/mutations/m_addComment.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/graphql/mutations/m_addComment.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/graphql/mutations/m_addDish.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/graphql/mutations/m_addDish.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/graphql/mutations/m_addGroup.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/graphql/mutations/m_addGroup.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/graphql/mutations/m_addIngredient.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/graphql/mutations/m_addIngredient.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/graphql/mutations/m_addListGroup.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/graphql/mutations/m_addListGroup.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/graphql/mutations/m_addListPrivate.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/graphql/mutations/m_addListPrivate.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/graphql/mutations/m_addMethod.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/graphql/mutations/m_addMethod.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/graphql/mutations/m_addTask.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/graphql/mutations/m_addTask.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/graphql/mutations/m_addUser.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/graphql/mutations/m_addUser.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/graphql/mutations/m_dishCarma.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/graphql/mutations/m_dishKarma.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/graphql/mutations/m_login.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/graphql/mutations/m_login.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/graphql/mutations/m_removeComment.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/graphql/mutations/m_removeComment.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/graphql/mutations/m_removeDish.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/graphql/mutations/m_removeDish.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/graphql/mutations/m_removeGroup.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/graphql/mutations/m_removeGroup.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/graphql/mutations/m_removeIngredient.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/graphql/mutations/m_removeIngredient.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/graphql/mutations/m_removeListGroup.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/graphql/mutations/m_removeListGroup.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/graphql/mutations/m_removeListPrivate.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/graphql/mutations/m_removeListPrivate.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/graphql/mutations/m_removeMethod.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/graphql/mutations/m_removeMethod.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/graphql/mutations/m_removeTask.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/graphql/mutations/m_removeTask.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/graphql/mutations/m_removeUser.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/graphql/mutations/m_removeUser.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/graphql/mutations/m_taskActivation.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/graphql/mutations/m_taskActivation.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/graphql/mutations/m_taskDeactivation.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/graphql/mutations/m_taskDeactivation.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/graphql/mutations/m_taskPriority.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/graphql/mutations/m_taskPriority.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/graphql/mutations/m_updateDish.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/graphql/mutations/m_updateDish.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/graphql/mutations/m_updateGroup.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/graphql/mutations/m_updateGroup.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/graphql/mutations/m_updateUser.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/graphql/mutations/m_updateUser.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/graphql/mutations/m_voteComment.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/graphql/mutations/m_voteComment.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/graphql/queries/q_allDishes.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/graphql/queries/q_allDishes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/graphql/queries/q_allGroups.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/graphql/queries/q_allGroups.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/graphql/queries/q_allListCount.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/graphql/queries/q_allListCount.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/graphql/queries/q_allTaskCount.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/graphql/queries/q_allTaskCount.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/graphql/queries/q_comments.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/graphql/queries/q_comments.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/graphql/queries/q_dishes.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/graphql/queries/q_dishes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/graphql/queries/q_groupCount.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/graphql/queries/q_groupCount.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/graphql/queries/q_groupLists.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/graphql/queries/q_groupLists.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/graphql/queries/q_groups.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/graphql/queries/q_groups.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/graphql/queries/q_listCount.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/graphql/queries/q_listCount.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/graphql/queries/q_me.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/graphql/queries/q_me.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/graphql/queries/q_privateLists.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/graphql/queries/q_privateLists.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/graphql/queries/q_taskCount.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/graphql/queries/q_taskCount.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/graphql/queries/q_tasks.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/graphql/queries/q_tasks.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/graphql/queries/q_userCount.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/graphql/queries/q_userCount.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/graphql/queries/q_users.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/graphql/queries/q_users.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/graphql/subscriptions/s_dishEvent.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/graphql/subscriptions/s_dishEvent.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/graphql/subscriptions/s_groupEvent.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/graphql/subscriptions/s_groupEvent.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/graphql/subscriptions/s_ingredientEvent.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/graphql/subscriptions/s_ingredientEvent.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/graphql/subscriptions/s_listEventGroup.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/graphql/subscriptions/s_listEventGroup.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/graphql/subscriptions/s_listEventPrivate.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/graphql/subscriptions/s_listEventPrivate.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/graphql/subscriptions/s_majorDBE.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/graphql/subscriptions/s_majorDBE.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/graphql/subscriptions/s_methodEvent.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/graphql/subscriptions/s_methodEvent.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/graphql/subscriptions/s_taskEvent.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/graphql/subscriptions/s_taskEvent.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/graphql/subscriptions/s_userEvent.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/graphql/subscriptions/s_userEvent.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/Connector.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/services/Connector.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/store/Store.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/store/Store.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/store/reducers/AppReducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/store/reducers/AppReducer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/store/reducers/CountryReducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/store/reducers/CountryReducer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/store/reducers/LoginReducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/store/reducers/LoginReducer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/store/reducers/RegReducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/store/reducers/RegReducer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/style/calculate.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/style/calculate.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/style/colors.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/style/colors.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/style/dashboard.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/style/dashboard.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/style/global.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/style/global.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/style/landing.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/style/landing.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/style/navigation.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/style/navigation.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/style/openCountries.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/style/openCountries.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/style/root.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/style/root.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/style/technologies.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/style/technologies.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/tools/classProvider.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/tools/classProvider.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -73,11 +155,11 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/core" />
       <recent name="$PROJECT_DIR$/src/core/graphql/subscriptions" />
       <recent name="$PROJECT_DIR$/src/core/graphql/queries" />
       <recent name="$PROJECT_DIR$/src/core/graphql/mutations" />
       <recent name="$PROJECT_DIR$/src/core/graphql" />
-      <recent name="$PROJECT_DIR$/src/core" />
     </key>
   </component>
   <component name="ServiceViewManager">
@@ -118,6 +200,7 @@
       <workItem from="1575396368732" duration="919000" />
       <workItem from="1575397331867" duration="31000" />
       <workItem from="1575451383042" duration="15005000" />
+      <workItem from="1575965152150" duration="28660000" />
     </task>
     <servers />
   </component>

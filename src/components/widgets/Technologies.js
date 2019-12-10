@@ -18,9 +18,9 @@ import googlechromeIcon from '@iconify/icons-simple-icons/googlechrome';
 import postmanIcon from '@iconify/icons-simple-icons/postman';
 import jestIcon from '@iconify/icons-simple-icons/jest';
 
-import classProvider from '../../tools/classProvider';
-import '../../style/global.css';
-import '../../style/technologies.css';
+import classProvider from '../../core/tools/classProvider';
+import '../../core/style/global.css';
+import '../../core/style/technologies.css';
 
 const mapStateToProps = (state) => {
   return {

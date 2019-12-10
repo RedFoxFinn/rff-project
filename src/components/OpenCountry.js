@@ -4,10 +4,10 @@ import {Icon, InlineIcon} from '@iconify/react';
 import resetIcon from '@iconify/icons-iwwa/reset';
 
 
-import classProvider from '../tools/classProvider';
-import '../style/global.css';
-import '../style/openCountries.css';
-import {setSearch, resetSearch} from '../store/reducers/CountryReducer';
+import classProvider from '../core/tools/classProvider';
+import '../core/style/global.css';
+import '../core/style/openCountries.css';
+import {setSearch, resetSearch} from '../core/store/reducers/CountryReducer';
 import CountryDetails from './widgets/CountryDetails';
 
 const mapStateToProps = (state) => {

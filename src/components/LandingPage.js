@@ -1,9 +1,9 @@
 import React from 'react';
 import {connect} from 'react-redux';
 
-import classProvider from '../tools/classProvider';
-import '../style/global.css';
-import '../style/landing.css';
+import classProvider from '../core/tools/classProvider';
+import '../core/style/global.css';
+import '../core/style/landing.css';
 
 const mapStateToProps = (state) => {
   return {

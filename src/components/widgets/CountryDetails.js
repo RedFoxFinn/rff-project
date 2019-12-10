@@ -7,10 +7,10 @@ import numbro from 'numbro';
 import 'semantic-ui-css/semantic.min.css';
 
 import Country from '../../core/classes/Country';
-import '../../style/global.css';
-import '../../style/openCountries.css';
-import classProvider from '../../tools/classProvider';
-import {setSearch} from '../../store/reducers/CountryReducer';
+import '../../core/style/global.css';
+import '../../core/style/openCountries.css';
+import classProvider from '../../core/tools/classProvider';
+import {setSearch} from '../../core/store/reducers/CountryReducer';
 
 const mapStateToProps = (state) => {
   return {

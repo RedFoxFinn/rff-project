@@ -1,10 +1,9 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import gql from 'graphql-tag';
-import {useQuery, useMutation, useApolloClient, useSubscription} from '@apollo/react-hooks';
+import {useQuery} from '@apollo/react-hooks';
 
-import classProvider from '../../tools/classProvider';
-import '../../style/global.css';
+import classProvider from '../../core/tools/classProvider';
+import '../../core/style/global.css';
 import {METHOD_COUNT} from '../../core/graphql/queries/q_methodCount.js';
 
 const mapStateToProps = (state) => {
@@ -14,7 +13,6 @@ const mapStateToProps = (state) => {
 };
 
 const MethodCount = (props) => {
-  const client = useApolloClient();
   const methodResult = useQuery(METHOD_COUNT);
   let data = 0;
 

@@ -2,9 +2,9 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 
-import classProvider from '../tools/classProvider';
-import '../style/navigation.css';
-import '../style/global.css';
+import classProvider from '../core/tools/classProvider';
+import '../core/style/navigation.css';
+import '../core/style/global.css';
 
 const mapStateToProps = (state) => {
   return {

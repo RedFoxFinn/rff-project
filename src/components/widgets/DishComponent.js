@@ -10,12 +10,12 @@ const mapStateToProps = (state) => {
   };
 };
 
-const Dish = (props) => {
+const DishComponent = (props) => {
   return (
     <div className='dishWidget'>
-      <p>{props.name}</p>
+      DishComponent
     </div>
   );
 };
 
-export default connect(mapStateToProps)(Dish);
+export default connect(mapStateToProps)(DishComponent);

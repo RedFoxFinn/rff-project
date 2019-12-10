@@ -1,9 +1,9 @@
 import React from 'react';
 import {connect} from 'react-redux';
 
-import classProvider from '../tools/classProvider';
-import '../style/global.css';
-import '../style/dashboard.css';
+import classProvider from '../core/tools/classProvider';
+import '../core/style/global.css';
+import '../core/style/dashboard.css';
 
 import CountryCount from './widgets/CountryCount';
 import DishCount from './widgets/DishCount';
@@ -51,12 +51,8 @@ const Dashboard = (props) => {
   return(
     <div className='app'>
       <div className='appContainer'>
-        <div className='appElements'>
-          <h4 className={classProvider(props.appState.theme, 'heading')}>Available applications:</h4>
-        </div>
-        <div className='appElements'>
-          <h4 className={classProvider(props.appState.theme, 'heading')}>Statistics:</h4>
-        </div>
+        <h4 className={classProvider(props.appState.theme, 'heading')}>Available applications:</h4>
+        <h4 className={classProvider(props.appState.theme, 'heading')}>Statistics:</h4>
         <WidgetsCommon/>
         <WidgetsAdvanced/>
       </div>
