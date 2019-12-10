@@ -422,6 +422,7 @@ const resolvers = {
     carbs: (root) => root.carbs,
     spices: (root) => root.spices,
     karma: (root) => root.karma,
+    note: (root) => root.note,
     addedBy: (root) => root.addedBy,
     id: (root) => root._id
   },
@@ -490,6 +491,8 @@ const resolvers = {
       const user = await User.findById(decodedToken.id);
       if (user && (user.role === 'admin' || user.role === 'owner')) {
         return Group.collection.countDocuments();
+      } else if (user) {
+        return user.groups.length;
       } else {
         throw new AuthenticationError('Insufficient clearance!');
       }
@@ -871,7 +874,7 @@ const resolvers = {
       const decodedToken = await jwt.verify(args.token, config.secret);
       const user = await User.findById(decodedToken.id);
       if (user.role === 'owner' || user.role === 'admin') {
-        const comment = await Comment.findById(args.id);
+        const comment = await Comment.findById(args.id).populate('addedBy');
         try {
           await comment.remove();
         } catch (e) {

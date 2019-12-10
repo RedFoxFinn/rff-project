@@ -24,7 +24,7 @@ login.post('/', async (req, res) => {
       role: user.role
     };
     const token = jwt.sign(userForToken, config.secret);
-    res.status(200).json({token: token, username: user.username, userID: user._id});
+    res.status(200).json({token: token, username: user.username, userID: user._id, role: user.role});
   }
 });
 

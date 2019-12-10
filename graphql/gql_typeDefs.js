@@ -85,7 +85,7 @@ const typeDefs = gql`
     groupCount(token: String!): Int!
     groups(token: String!): [Group!]!
     allGroups(token: String!): [Group!]!
-    listCount(token: String, groupID: String): Int!
+    listCount(token: String): Int!
     allListCount(token: String!): Int!
     privateLists(token: String!): [PrivateList!]!
     groupLists(token: String!): [GroupList!]!

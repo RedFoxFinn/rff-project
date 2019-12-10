@@ -12,7 +12,7 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const apolloServer = require('./graphql/gql_server');
-const login = require('./utils/login');
+// const login = require('./utils/login');
 
 // mongoose options
 mongoose.set('useFindAndModify', false);
@@ -35,9 +35,8 @@ mongoose.connect(config.mongo).then(res => {
 
 // defining routes
 app.use('/', express.static(path.join(__dirname, '/build/index.html')));
-apolloServer.applyMiddleware({ app, path: '/api' });
 apolloServer.applyMiddleware({ app, path: '/graphql' });
-app.use('/login', login);
+// app.use('/login', login);
 const httpServer = http.createServer(app);
 apolloServer.installSubscriptionHandlers(httpServer);
 
