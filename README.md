@@ -10,9 +10,9 @@ This branch contains applications frontend.
 
 feature | status
 ------- | -----:
-Basic project structure | `done`
+Basic project structure | `done`,`tweaked`
 Custom icons | `done`
-Redux-store (global state management) | `done`
+Redux-store (global state management) | `done`,`additions`
 Redux-reducers (global state management) | `ongoing`
 Services | `upcoming`
 Style | `ongoing`
@@ -32,17 +32,17 @@ DashBoard:ListCount | `ongoing`
 Dashboard:MethodCount | `done`
 Dashboard:TaskCount | `ongoing`
 Dashboard:TrackedStopsCount | `ongoing`
-Dishy-app | `upcoming`
+Dishy-app | `ongoing`
 Landing page | `upcoming`
 Login page | `upcoming`
 Navigation | `ongoing`
 OpenCountry-app | `done`
 Tasker-app | `upcoming`
 Transporter-app | `upcoming`
-GraphQL-fragments | `ongoing`
-GraphQL-mutations | `ongoing`
-GraphQL-queries | `ongoing`
-GraphQL-subscriptions | `ongoing`
+GraphQL-fragments | `done`
+GraphQL-mutations | `done`
+GraphQL-queries | `done`
+GraphQL-subscriptions | `done`
 Classes | `ongoing`
 
 ###### frameworks & libraries:
