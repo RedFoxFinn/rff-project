@@ -10,8 +10,8 @@ const EasyGraphQLTester = require('easygraphql-tester');
 const dbPusher = require('../utils/dbInit');
 const axios = require('axios');
 
-const {typeDefs} = require('../graphql/gql_typeDefs');
-const {resolvers} = require('../graphql/gql_resolvers');
+const { typeDefs } = require('../graphql/gql_typeDefs');
+const { resolvers } = require('../graphql/gql_resolvers');
 
 const tester = new EasyGraphQLTester(typeDefs, resolvers);
 
@@ -22,6 +22,7 @@ const { Ingredient, CookingMethod, Comment, Dish, Group,
 
 // sample data for testing
 const samples = {
+  stops: ['3483','3482','3476','3477','3478'],
   dummyUser: {
     username: 'dummy',
     password: 'dummy'
@@ -153,8 +154,8 @@ const samples = {
     spices: [],
     note: 'toBeDestined'
   },
-  dishNote1: `This dish isn't very good`,
-  dishNote2: `This dish is delicious`,
+  dishNote1: 'This dish isn\'t very good',
+  dishNote2: 'This dish is delicious',
 };
 
 // list test helpers
@@ -168,7 +169,7 @@ const privateListInit = async (token) => {
       title: samples.privateList1.title
     }
   );
-  return PrivateList.findOne({title: samples.privateList1.title}).populate('owner');
+  return PrivateList.findOne({ title: samples.privateList1.title }).populate('owner');
 };
 // group
 const groupListInit = async (token, group) => {
@@ -181,7 +182,7 @@ const groupListInit = async (token, group) => {
       group: group
     }
   );
-  return GroupList.findOne({title: samples.groupList1.title}).populate('group');
+  return GroupList.findOne({ title: samples.groupList1.title }).populate('group');
 };
 // extra user
 const extraUserInit = async () => {
@@ -196,9 +197,9 @@ const extraUserInit = async () => {
 
 // username reverse, test helper function
 const usernameReverse = (username) => {
-  const splitUsername = username.split("");
+  const splitUsername = username.split('');
   const reverseUsername = splitUsername.reverse();
-  return reverseUsername.join("");
+  return reverseUsername.join('');
 };
 
 // user creation - password hashing
@@ -223,9 +224,9 @@ const getDummyToken = async () => {
     username: samples.dummyUser.username,
     password: samples.dummyUser.password
   };
-  
+
   const mutation = await createMutation('login');
-  const {data} = await tester.graphql(mutation, undefined, undefined, payload);
+  const { data } = await tester.graphql(mutation, undefined, undefined, payload);
   return data.login.value;
 };
 // tests - nullUser
@@ -234,9 +235,9 @@ const getNullToken = async () => {
     username: samples.nullUser.username,
     password: samples.nullUser.password
   };
-  
+
   const mutation = await createMutation('login');
-  const {data} = await tester.graphql(mutation, undefined, undefined, payload);
+  const { data } = await tester.graphql(mutation, undefined, undefined, payload);
   return data.login.value;
 };
 
@@ -861,6 +862,44 @@ const createMutation = (mutationType) => {
         }
       }
     `;
+  case 'activateUser':
+    return gql`
+      mutation activateUser($token: String!, $id: String!) {
+        activateUser(token: $token, id: $id) {
+          username
+          id
+          active
+        }
+      }
+    `;
+  case 'deactivateUser':
+    return gql`
+      mutation deactivateUser($token: String!, $id: String!) {
+        deactivateUser(token: $token, id: $id) {
+          username
+          id
+          active
+        }
+      }
+    `;
+  case 'addStop':
+    return gql`
+      mutation addStop($token: String!, $stop: String!) {
+        addStop(token: $token, stop: $stop) {
+          username
+          stops
+        }
+      }
+    `;
+  case 'removeStop':
+    return gql`
+      mutation removeStop($token: String!, $stop: String!) {
+        removeStop(token: $token, stop: $stop) {
+          username
+          stops
+        }
+      }
+    `;
   case 'addGroup':          // args: title!
     return gql`
       mutation addGroup($token: String!, $title: String!) {
@@ -909,13 +948,13 @@ const createMutation = (mutationType) => {
 
 // setup db for testing
 beforeAll(async (done) => {
-  
+
   // mongoose options
   mongoose.set('useFindAndModify', false);
   mongoose.set('useNewUrlParser', true);
   mongoose.set('useUnifiedTopology', true);
   mongoose.set('useCreateIndex', true);
-  
+
   try {
     await mongoose.connect(config.mongo);
     console.log('Connection to Atlas - MongoDB cloud: success');
@@ -943,82 +982,46 @@ describe('test:dummy', () => {
 
 // user test
 describe('API:test:user', () => {
-  let newUser;
+  let nullUser;
   let user;
+  let usernameReversed;
+  let masterToken;
   let token;
-  
+
+  beforeAll(async () => {
+    nullUser = await User.findOne({ username: samples.nullUser.username });
+  });
+
   test('login:gql, fail', async () => {
     const mutation = await createMutation('login');
     const variables = {
       username: samples.nullUser.username,
       password: samples.nullUser.wrongPassword
     };
-    const {errors} = await tester.graphql(mutation, undefined, undefined, variables);
+    const { errors } = await tester.graphql(mutation, undefined, undefined, variables);
     expect(errors).toBeDefined();
     const message = errors[0].message;
     expect(message).toMatch('Incorrect username or password!');
   });
-  
+
   test('login:gql, success', async () => {
     const mutation = await createMutation('login');
     const variables = {
       username: samples.nullUser.username,
       password: samples.nullUser.password
     };
-    const {data} = await tester.graphql(mutation, undefined, undefined, variables);
+    const { data } = await tester.graphql(mutation, undefined, undefined, variables);
     expect(data).toBeDefined();
     expect(data.login).toBeDefined();
-    token = data.login.value;
+    masterToken = data.login.value;
   });
 
-  test('login, fail', async () => {
-    const payload = {
-      username: samples.nullUser.username,
-      password: samples.nullUser.wrongPassword
-    };
-    
-    await axios.post(
-      `${addr}/login`,
-      payload,
-      {
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })
-      .then(res => console.error(res.status))
-      .catch(err => {
-        expect(err).toBeDefined();
-        expect(err.response.status).toBe(401);
-      });
-  });
-  
-  test('login, success', async () => {
-    const payload = {
-      username: samples.nullUser.username,
-      password: samples.nullUser.password
-    };
-    await axios.post(
-      `${addr}/login`,
-      payload,
-      {
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })
-      .then(res => {
-        expect(res).toBeDefined();
-        expect(res.status).toBe(200);
-        user = res.data;
-      })
-      .catch(err => console.error(err));
-  });
-  
   test('userCount', async () => {
     const query = await createQuery('userCount');
     const variables = {
-      token: token.substring(7)
+      token: masterToken.substring(7)
     };
-    const {data} = await tester.graphql(query, undefined, undefined, variables);
+    const { data } = await tester.graphql(query, undefined, undefined, variables);
     expect(data).toBeDefined();
     expect(data.userCount).toBeDefined();
     expect(data.userCount).toBe(2);
@@ -1030,79 +1033,64 @@ describe('API:test:user', () => {
       username: samples.user1.username,
       password: samples.user1.password
     };
-    const {data, errors} = await tester.graphql(mutation, undefined, undefined, variables);
+    const { data, errors } = await tester.graphql(mutation, undefined, undefined, variables);
     expect(data).toBeDefined();
     expect(data.addUser).toBeDefined();
     expect(data.addUser).toHaveProperty('username', samples.user1.username);
+    user = data.addUser;
   });
-  
+
   test('addUser, not unique', async () => {
     const mutation = await createMutation('addUser');
     const variables = {
       username: samples.user1.username,
       password: samples.user1.password
     };
-    const {data, errors} = await tester.graphql(mutation, undefined, undefined, variables);
+    const { data, errors } = await tester.graphql(mutation, undefined, undefined, variables);
     expect(errors).toBeDefined();
     const message = errors[0].message.substring(0, 38);
     expect(message).toMatch('E11000 duplicate key error collection:');
   });
-  
+
+  test('new user, login:gql, fail', async () => {
+    const mutation = await createMutation('login');
+    const variables = {
+      username: samples.user1.username,
+      password: samples.user1.wrongPassword
+    };
+    const { errors } = await tester.graphql(mutation, undefined, undefined, variables);
+    expect(errors).toBeDefined();
+    const message = errors[0].message;
+    expect(message).toMatch('Incorrect username or password!');
+  });
+
+  test('new user, login:gql, success', async () => {
+    const mutation = await createMutation('login');
+    const variables = {
+      username: samples.user1.username,
+      password: samples.user1.password
+    };
+    const { data } = await tester.graphql(mutation, undefined, undefined, variables);
+    expect(data).toBeDefined();
+    expect(data.login).toBeDefined();
+    token = data.login.value;
+  });
+
   test('userCount, revisited', async () => {
     const query = await createQuery('userCount');
     const variables = {
-      token: token.substring(7)
+      token: masterToken.substring(7)
     };
-    const {data} = await tester.graphql(query, undefined, undefined, variables);
+    const { data } = await tester.graphql(query, undefined, undefined, variables);
     expect(data).toBeDefined();
     expect(data.userCount).toBeDefined();
     expect(data.userCount).toBe(3);
   });
-  
-  test('new user login, fail', async () => {
-    const payload = {
-      username: samples.user1.username,
-      password: samples.user1.wrongPassword
-    };
-    await axios.post(
-      `${addr}/login`,
-      payload,
-      {
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })
-      .then(res => console.error(res.status))
-      .catch(err => {
-        expect(err).toBeDefined();
-        expect(err.response.status).toBe(401);
-      });
-  });
-  
-  test('new user login, success', async () => {
-    const payload = {
-      username: samples.user1.username,
-      password: samples.user1.password
-    };
-    await axios.post(
-      `${addr}/login`,
-      payload,
-      {
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })
-      .then(res => {
-        expect(res).toBeDefined();
-        expect(res.status).toBe(200);
-        user = res.data;
-      })
-      .catch(err => console.error(err));
-  });
+
   test('users, active', async () => {
     const query = await createQuery('users');
     const variables = {
-      token: token.substring(7),
+      token: masterToken.substring(7),
       active: true
     };
     const { data } = await tester.graphql(query, undefined, undefined, variables);
@@ -1113,7 +1101,7 @@ describe('API:test:user', () => {
   test('users, role', async () => {
     const query = await createQuery('users');
     const variables = {
-      token: token.substring(7),
+      token: masterToken.substring(7),
       role: 'user'
     };
     const { data } = await tester.graphql(query, undefined, undefined, variables);
@@ -1124,7 +1112,7 @@ describe('API:test:user', () => {
   test('users, username', async () => {
     const query = await createQuery('users');
     const variables = {
-      token: token.substring(7),
+      token: masterToken.substring(7),
       username: samples.user1.username
     };
     const { data } = await tester.graphql(query, undefined, undefined, variables);
@@ -1136,7 +1124,7 @@ describe('API:test:user', () => {
   test('users, noArgs', async () => {
     const query = await createQuery('users');
     const variables = {
-      token: token.substring(7)
+      token: masterToken.substring(7)
     };
     const { data } = await tester.graphql(query, undefined, undefined, variables);
     expect(data).toBeDefined();
@@ -1145,64 +1133,146 @@ describe('API:test:user', () => {
   });
   test('updateUser:password, success', async () => {
     const mutation = await createMutation('updateUser');
-    const reversed = await usernameReverse(user.username);
     const variables = {
-      token: user.token,
+      token: token.substring(7),
       password: samples.user1.password,
       newPassword: samples.user1.wrongPassword
     };
-    const {data} = await tester.graphql(mutation, undefined, undefined, variables);
-    expect(data).toBeDefined();
-    expect(data.updateUser).toBeDefined();
-  });
-  
-  test('updateUser:username, success', async () => {
-    const mutation = await createMutation('updateUser');
-    const reversed = await usernameReverse(user.username);
-    const variables = {
-      token: user.token,
-      password: samples.user1.wrongPassword,
-      newUsername: reversed
-    };
-    const {data} = await tester.graphql(mutation, undefined, undefined, variables);
+    const { data } = await tester.graphql(mutation, undefined, undefined, variables);
     expect(data).toBeDefined();
     expect(data.updateUser).toBeDefined();
   });
 
-  test('updateUser, fail', async () => {
+  test('updateUser:username, success', async () => {
     const mutation = await createMutation('updateUser');
     const reversed = await usernameReverse(samples.user1.username);
     const variables = {
-      token: user.token,
-      password: samples.user1.password,
+      token: token.substring(7),
+      password: samples.user1.wrongPassword,
       newUsername: reversed
     };
-    const {errors} = await tester.graphql(mutation, undefined, undefined, variables);
+    const { data } = await tester.graphql(mutation, undefined, undefined, variables);
+    expect(data).toBeDefined();
+    expect(data.updateUser).toBeDefined();
+    expect(data.updateUser.username).toMatch(reversed);
+    usernameReversed = reversed;
+  });
+
+  test('updateUser, fail', async () => {
+    const mutation = await createMutation('updateUser');
+    const variables = {
+      token: token.substring(7),
+      password: samples.user1.password,
+      newUsername: samples.user1.username
+    };
+    const { errors } = await tester.graphql(mutation, undefined, undefined, variables);
     expect(errors).toBeDefined();
     const message = errors[0].message;
     expect(message).toMatch('Invalid authentication!');
   });
-  
+
+  test('addStop', async () => {
+    const mutation = await createMutation('addStop');
+    const variables = {
+      token: token.substring(7),
+      stop: samples.stops[0]
+    };
+    const { data } = await tester.graphql(mutation, undefined, undefined, variables);
+    expect(data).toBeDefined();
+    expect(data.addStop).toBeDefined();
+    expect(data.addStop.stops).toBeDefined();
+    expect(data.addStop.stops.length).toBe(1);
+    expect(data.addStop.stops[0]).toMatch(samples.stops[0]);
+  });
+  test('removeStop', async () => {
+    const mutation = await createMutation('removeStop');
+    const variables = {
+      token: token.substring(7),
+      stop: samples.stops[0]
+    };
+    const { data } = await tester.graphql(mutation, undefined, undefined, variables);
+    expect(data).toBeDefined();
+    expect(data.removeStop).toBeDefined();
+    expect(data.removeStop.stops).toBeDefined();
+    expect(data.removeStop.stops.length).toBe(0);
+  });
+
+  test('deactivate user, fail', async () => {
+    const mutation = await createMutation('deactivateUser');
+    const variables = {
+      token: token.substring(7),
+      id: nullUser._id.toString()
+    };
+    const { errors } = await tester.graphql(mutation, undefined, undefined, variables);
+    expect(errors).toBeDefined();
+    const error = errors[0].message;
+    expect(error).toMatch('Session error: you must be logged in!');
+  });
+  test('deactivate user, success', async () => {
+    const mutation = await createMutation('deactivateUser');
+    const variables = {
+      token: token.substring(7),
+      id: user.id
+    };
+    const { data } = await tester.graphql(mutation, undefined, undefined, variables);
+    expect(data).toBeDefined();
+    expect(data.deactivateUser).toBeDefined();
+    expect(data.deactivateUser.username).toMatch(usernameReversed);
+  });
+  test('activate user, fail', async () => {
+    const mutation = await createMutation('activateUser');
+    const variables = {
+      token: token.substring(7),
+      id: user.id
+    };
+    const { errors } = await tester.graphql(mutation, undefined, undefined, variables);
+    expect(errors).toBeDefined();
+    const error = errors[0].message;
+    expect(error).toMatch('Session error: you must be logged in!');
+  });
+  test('activate user, success', async () => {
+    const mutation = await createMutation('activateUser');
+    const variables = {
+      token: masterToken.substring(7),
+      id: user.id
+    };
+    const { data } = await tester.graphql(mutation, undefined, undefined, variables);
+    expect(data).toBeDefined();
+    expect(data.activateUser).toBeDefined();
+    expect(data.activateUser.username).toMatch(usernameReversed);
+  });
+
   test('removeUser, fail', async () => {
     const mutation = await createMutation('removeUser');
     const variables = {
-      token: user.token,
-      id: user.userID,
+      token: token.substring(7),
+      id: user.id,
       password: samples.user1.password
     };
-    const {errors} = await tester.graphql(mutation, undefined, undefined, variables);
+    const { errors } = await tester.graphql(mutation, undefined, undefined, variables);
     expect(errors).toBeDefined();
     const message = errors[0].message;
     expect(message).toMatch('Insufficient clearance!');
   });
-  test('removeUser, success', async () => {});
+  test('removeUser, success', async () => {
+    const mutation = await createMutation('removeUser');
+    const variables = {
+      token: token.substring(7),
+      id: user.id,
+      password: samples.user1.wrongPassword
+    };
+    const { data } = await tester.graphql(mutation, undefined, undefined, variables);
+    expect(data).toBeDefined();
+    expect(data.removeUser).toBeDefined();
+    expect(data.removeUser.username).toMatch(usernameReversed);
+  });
 });
 
 // group tests
 describe('API:test:group', () => {
   let token;
   let dummyToken;
-  
+
   beforeAll(async () => {
     dummyToken = await getDummyToken();
   });
@@ -1215,7 +1285,7 @@ describe('API:test:group', () => {
     const variables = {
       token: token.substring(7)
     };
-    const {data} = await tester.graphql(query, undefined, undefined, variables);
+    const { data } = await tester.graphql(query, undefined, undefined, variables);
     expect(data).toBeDefined();
     expect(data.groupCount).toBe(0);
   });
@@ -1225,7 +1295,7 @@ describe('API:test:group', () => {
       token: token.substring(7),
       title: samples.group1.title
     };
-    const {data} = await tester.graphql(mutation, undefined, undefined, variables);
+    const { data } = await tester.graphql(mutation, undefined, undefined, variables);
     expect(data).toBeDefined();
     expect(data.addGroup).toBeDefined();
     expect(data.addGroup.title).toBeDefined();
@@ -1237,7 +1307,7 @@ describe('API:test:group', () => {
       token: token.substring(7),
       title: samples.group1.title
     };
-    const {errors} = await tester.graphql(mutation, undefined, undefined, variables);
+    const { errors } = await tester.graphql(mutation, undefined, undefined, variables);
     expect(errors).toBeDefined();
     const message = errors[0].message.substring(0, 38);
     expect(message).toMatch('E11000 duplicate key error collection:');
@@ -1247,7 +1317,7 @@ describe('API:test:group', () => {
     const variables = {
       token: token.substring(7)
     };
-    const {data} = await tester.graphql(query, undefined, undefined, variables);
+    const { data } = await tester.graphql(query, undefined, undefined, variables);
     expect(data).toBeDefined();
     expect(data.groupCount).toBe(1);
   });
@@ -1256,7 +1326,7 @@ describe('API:test:group', () => {
     const variables = {
       token: token.substring(7)
     };
-    const {data} = await tester.graphql(query, undefined, undefined, variables);
+    const { data } = await tester.graphql(query, undefined, undefined, variables);
     expect(data).toBeDefined();
     expect(data.groups).toBeDefined();
     expect(data.groups.length).toBe(1);
@@ -1268,7 +1338,7 @@ describe('API:test:group', () => {
     const variables = {
       token: dummyToken.substring(7)
     };
-    const {data} = await tester.graphql(query, undefined, undefined, variables);
+    const { data } = await tester.graphql(query, undefined, undefined, variables);
     expect(data).toBeDefined();
     expect(data.allGroups).toBeDefined();
     expect(data.allGroups.length).toBe(0);
@@ -1278,7 +1348,7 @@ describe('API:test:group', () => {
     const variables = {
       token: token.substring(7)
     };
-    const {data} = await tester.graphql(query, undefined, undefined, variables);
+    const { data } = await tester.graphql(query, undefined, undefined, variables);
     expect(data).toBeDefined();
     expect(data.allGroups).toBeDefined();
     expect(data.allGroups.length).toBe(1);
@@ -1290,53 +1360,53 @@ describe('API:test:group', () => {
       title: samples.group2.title
     };
     await tester.graphql(mut1, undefined, undefined, var1);
-    const group = await Group.findOne({title: samples.group2.title});
-    
+    const group = await Group.findOne({ title: samples.group2.title });
+
     const mutation = await createMutation('updateGroup');
     const variables = {
       token: token.substring(7),
       id: group._id.toString(),
       title: samples.group1.title
     };
-    const {errors} = await tester.graphql(mutation, undefined, undefined, variables);
+    const { errors } = await tester.graphql(mutation, undefined, undefined, variables);
     expect(errors).toBeDefined();
     const message = errors[0].message.substring(0, 38);
     expect(message).toMatch('E11000 duplicate key error collection:');
-    await Group.findOneAndDelete({title: samples.group2.title});
+    await Group.findOneAndDelete({ title: samples.group2.title });
   });
   test('updateGroup, success', async () => {
     const mutation = await createMutation('updateGroup');
-    const group = await Group.findOne({title: samples.group1.title});
+    const group = await Group.findOne({ title: samples.group1.title });
     const variables = {
       token: token.substring(7),
       id: group._id.toString(),
       title: samples.group2.title
     };
-    const {data} = await tester.graphql(mutation, undefined, undefined, variables);
+    const { data } = await tester.graphql(mutation, undefined, undefined, variables);
     expect(data).toBeDefined();
     expect(data.updateGroup).toBeDefined();
     expect(data.updateGroup.title).toMatch(samples.group2.title);
   });
   test('removeGroup, fail', async () => {
     const mutation = await createMutation('removeGroup');
-    const group = await Group.findOne({title: samples.group2.title});
+    const group = await Group.findOne({ title: samples.group2.title });
     const variables = {
       token: dummyToken.substring(7),
       id: group._id.toString()
     };
-    const {errors} = await tester.graphql(mutation, undefined, undefined, variables);
+    const { errors } = await tester.graphql(mutation, undefined, undefined, variables);
     expect(errors).toBeDefined();
     const message = errors[0].message;
     expect(message).toMatch('Insufficient clearance!');
   });
   test('removeGroup, success', async () => {
     const mutation = await createMutation('removeGroup');
-    const group = await Group.findOne({title: samples.group2.title});
+    const group = await Group.findOne({ title: samples.group2.title });
     const variables = {
       token: token.substring(7),
       id: group._id.toString()
     };
-    const {data} = await tester.graphql(mutation, undefined, undefined, variables);
+    const { data } = await tester.graphql(mutation, undefined, undefined, variables);
     expect(data).toBeDefined();
     expect(data.removeGroup).toBeDefined();
     expect(data.removeGroup.title).toMatch(samples.group2.title);
@@ -1347,7 +1417,7 @@ describe('API:test:group', () => {
 describe('API:test:carb', () => {
   let token;
   let dummyToken;
-  
+
   beforeAll(async () => {
     dummyToken = await getDummyToken();
   });
@@ -1360,7 +1430,7 @@ describe('API:test:carb', () => {
 
   test('carbCount', async () => {
     const query = await createQuery('carbCount');
-    const {data} = await tester.graphql(query, undefined, undefined, {});
+    const { data } = await tester.graphql(query, undefined, undefined, {});
     expect(data).toBeDefined();
     expect(data.carbCount).toBeDefined();
     expect(data.carbCount).toBe(0);
@@ -1372,7 +1442,7 @@ describe('API:test:carb', () => {
       type: 'carb',
       name: samples.carbs[0].name
     };
-    const {data} = await tester.graphql(mutation, undefined, undefined, variables);
+    const { data } = await tester.graphql(mutation, undefined, undefined, variables);
     expect(data).toBeDefined();
     expect(data.addIngredient).toBeDefined();
     expect(data.addIngredient.name).toBeDefined();
@@ -1385,44 +1455,44 @@ describe('API:test:carb', () => {
       type: 'carb',
       name: samples.carbs[0].name
     };
-    const {errors} = await tester.graphql(mutation, undefined, undefined, variables);
+    const { errors } = await tester.graphql(mutation, undefined, undefined, variables);
     expect(errors).toBeDefined();
     const message = errors[0].message.substring(0, 38);
     expect(message).toMatch('E11000 duplicate key error collection:');
   });
   test('carbCount, revisited', async () => {
     const query = await createQuery('carbCount');
-    const {data} = await tester.graphql(query, undefined, undefined, {});
+    const { data } = await tester.graphql(query, undefined, undefined, {});
     expect(data).toBeDefined();
     expect(data.carbCount).toBeDefined();
     expect(data.carbCount).toBe(1);
   });
   test('allCarbs', async () => {
     const query = await createQuery('allCarbs');
-    const {data} = await tester.graphql(query, undefined, undefined, {});
+    const { data } = await tester.graphql(query, undefined, undefined, {});
     expect(data).toBeDefined();
     expect(data.allCarbs).toBeDefined();
   });
   test('removeIngredient, carb, fail', async () => {
     const mutation = await createMutation('removeIngredient');
-    const carb = await Ingredient.findOne({type: 'carb', name: samples.carbs[0].name});
+    const carb = await Ingredient.findOne({ type: 'carb', name: samples.carbs[0].name });
     const variables = {
       token: dummyToken.substring(7),
       id: carb._id.toString()
     };
-    const {errors} = await tester.graphql(mutation, undefined, undefined, variables);
+    const { errors } = await tester.graphql(mutation, undefined, undefined, variables);
     expect(errors).toBeDefined();
     const message = errors[0].message;
     expect(message).toMatch('Insufficient clearance!');
   });
   test('removeIngredient, carb, success', async () => {
     const mutation = await createMutation('removeIngredient');
-    const carb = await Ingredient.findOne({type: 'carb', name: samples.carbs[0].name});
+    const carb = await Ingredient.findOne({ type: 'carb', name: samples.carbs[0].name });
     const variables = {
       token: token.substring(7),
       id: carb._id.toString()
     };
-    const {data} = await tester.graphql(mutation, undefined, undefined, variables);
+    const { data } = await tester.graphql(mutation, undefined, undefined, variables);
     expect(data).toBeDefined();
     expect(data.removeIngredient).toBeDefined();
     expect(data.removeIngredient.name).toBeDefined();
@@ -1434,7 +1504,7 @@ describe('API:test:carb', () => {
 describe('API:test:cookingMethod', () => {
   let token;
   let dummyToken;
-  
+
   beforeAll(async () => {
     dummyToken = await getDummyToken();
   });
@@ -1447,7 +1517,7 @@ describe('API:test:cookingMethod', () => {
 
   test('methodCount', async () => {
     const query = await createQuery('methodCount');
-    const {data} = await tester.graphql(query, undefined, undefined, {});
+    const { data } = await tester.graphql(query, undefined, undefined, {});
     expect(data).toBeDefined();
     expect(data.methodCount).toBeDefined();
     expect(data.methodCount).toBe(0);
@@ -1458,7 +1528,7 @@ describe('API:test:cookingMethod', () => {
       token: token.substring(7),
       name: samples.methods[0].name
     };
-    const {data} = await tester.graphql(mutation, undefined, undefined, variables);
+    const { data } = await tester.graphql(mutation, undefined, undefined, variables);
     expect(data).toBeDefined();
     expect(data.addMethod).toBeDefined();
     expect(data.addMethod.name).toBeDefined();
@@ -1470,43 +1540,43 @@ describe('API:test:cookingMethod', () => {
       token: token.substring(7),
       name: samples.methods[0].name
     };
-    const {errors} = await tester.graphql(mutation, undefined, undefined, variables);
+    const { errors } = await tester.graphql(mutation, undefined, undefined, variables);
     expect(errors).toBeDefined();
     const message = errors[0].message.substring(0, 38);
     expect(message).toMatch('E11000 duplicate key error collection:');
   });
   test('methodCount, revisited', async () => {
     const query = await createQuery('methodCount');
-    const {data} = await tester.graphql(query, undefined, undefined, {});
+    const { data } = await tester.graphql(query, undefined, undefined, {});
     expect(data).toBeDefined();
     expect(data.methodCount).toBeDefined();
     expect(data.methodCount).toBe(1);
   });
   test('allMethods', async () => {
     const query = await createQuery('allMethods');
-    const {data} = await tester.graphql(query, undefined, undefined, {});
+    const { data } = await tester.graphql(query, undefined, undefined, {});
     expect(data).toBeDefined();
   });
   test('removeMethod, fail', async () => {
     const mutation = await createMutation('removeMethod');
-    const method = await CookingMethod.findOne({name: samples.methods[0].name});
+    const method = await CookingMethod.findOne({ name: samples.methods[0].name });
     const variables = {
       token: dummyToken.substring(7),
       id: method._id.toString()
     };
-    const {errors} = await tester.graphql(mutation, undefined, undefined, variables);
+    const { errors } = await tester.graphql(mutation, undefined, undefined, variables);
     expect(errors).toBeDefined();
     const message = errors[0].message;
     expect(message).toMatch('Insufficient clearance!');
   });
   test('removeMethod, success', async () => {
     const mutation = await createMutation('removeMethod');
-    const method = await CookingMethod.findOne({name: samples.methods[0].name});
+    const method = await CookingMethod.findOne({ name: samples.methods[0].name });
     const variables = {
       token: token.substring(7),
       id: method._id.toString()
     };
-    const {data} = await tester.graphql(mutation, undefined, undefined, variables);
+    const { data } = await tester.graphql(mutation, undefined, undefined, variables);
     expect(data).toBeDefined();
     expect(data.removeMethod).toBeDefined();
     expect(data.removeMethod.name).toBeDefined();
@@ -1518,7 +1588,7 @@ describe('API:test:cookingMethod', () => {
 describe('API:test:protein', () => {
   let token;
   let dummyToken;
-  
+
   beforeAll(async () => {
     dummyToken = await getDummyToken();
   });
@@ -1531,7 +1601,7 @@ describe('API:test:protein', () => {
 
   test('proteinCount', async () => {
     const query = await createQuery('proteinCount');
-    const {data} = await tester.graphql(query, undefined, undefined, {});
+    const { data } = await tester.graphql(query, undefined, undefined, {});
     expect(data).toBeDefined();
     expect(data.proteinCount).toBeDefined();
     expect(data.proteinCount).toBe(0);
@@ -1543,7 +1613,7 @@ describe('API:test:protein', () => {
       type: 'protein',
       name: samples.proteins[0].name
     };
-    const {data} = await tester.graphql(mutation, undefined, undefined, variables);
+    const { data } = await tester.graphql(mutation, undefined, undefined, variables);
     expect(data).toBeDefined();
     expect(data.addIngredient).toBeDefined();
     expect(data.addIngredient.name).toBeDefined();
@@ -1556,43 +1626,43 @@ describe('API:test:protein', () => {
       type: 'protein',
       name: samples.proteins[0].name
     };
-    const {errors} = await tester.graphql(mutation, undefined, undefined, variables);
+    const { errors } = await tester.graphql(mutation, undefined, undefined, variables);
     expect(errors).toBeDefined();
     const message = errors[0].message.substring(0, 38);
     expect(message).toMatch('E11000 duplicate key error collection:');
   });
   test('proteinCount, revisited', async () => {
     const query = await createQuery('proteinCount');
-    const {data} = await tester.graphql(query, undefined, undefined, {});
+    const { data } = await tester.graphql(query, undefined, undefined, {});
     expect(data).toBeDefined();
     expect(data.proteinCount).toBeDefined();
     expect(data.proteinCount).toBe(1);
   });
   test('allProteins', async () => {
     const query = await createQuery('allProteins');
-    const {data} = await tester.graphql(query, undefined, undefined, {});
+    const { data } = await tester.graphql(query, undefined, undefined, {});
     expect(data).toBeDefined();
   });
   test('removeIngredient, protein, fail', async () => {
     const mutation = await createMutation('removeIngredient');
-    const protein = await Ingredient.findOne({type: 'protein', name: samples.proteins[0].name});
+    const protein = await Ingredient.findOne({ type: 'protein', name: samples.proteins[0].name });
     const variables = {
       token: dummyToken.substring(7),
       id: protein._id.toString()
     };
-    const {errors} = await tester.graphql(mutation, undefined, undefined, variables);
+    const { errors } = await tester.graphql(mutation, undefined, undefined, variables);
     expect(errors).toBeDefined();
     const message = errors[0].message;
     expect(message).toMatch('Insufficient clearance!');
   });
   test('removeIngredient, protein, success', async () => {
     const mutation = await createMutation('removeIngredient');
-    const protein = await Ingredient.findOne({type: 'protein', name: samples.proteins[0].name});
+    const protein = await Ingredient.findOne({ type: 'protein', name: samples.proteins[0].name });
     const variables = {
       token: token.substring(7),
       id: protein._id.toString()
     };
-    const {data} = await tester.graphql(mutation, undefined, undefined, variables);
+    const { data } = await tester.graphql(mutation, undefined, undefined, variables);
     expect(data).toBeDefined();
     expect(data.removeIngredient).toBeDefined();
     expect(data.removeIngredient.name).toBeDefined();
@@ -1604,7 +1674,7 @@ describe('API:test:protein', () => {
 describe('API:test:spice', () => {
   let token;
   let dummyToken;
-  
+
   beforeAll(async () => {
     dummyToken = await getDummyToken();
   });
@@ -1617,7 +1687,7 @@ describe('API:test:spice', () => {
 
   test('spiceCount', async () => {
     const query = await createQuery('spiceCount');
-    const {data} = await tester.graphql(query, undefined, undefined, {});
+    const { data } = await tester.graphql(query, undefined, undefined, {});
     expect(data).toBeDefined();
     expect(data.spiceCount).toBeDefined();
     expect(data.spiceCount).toBe(0);
@@ -1629,7 +1699,7 @@ describe('API:test:spice', () => {
       type: 'spice',
       name: samples.spices[0].name
     };
-    const {data} = await tester.graphql(mutation, undefined, undefined, variables);
+    const { data } = await tester.graphql(mutation, undefined, undefined, variables);
     expect(data).toBeDefined();
     expect(data.addIngredient).toBeDefined();
     expect(data.addIngredient.name).toBeDefined();
@@ -1642,43 +1712,43 @@ describe('API:test:spice', () => {
       type: 'spice',
       name: samples.spices[0].name
     };
-    const {errors} = await tester.graphql(mutation, undefined, undefined, variables);
+    const { errors } = await tester.graphql(mutation, undefined, undefined, variables);
     expect(errors).toBeDefined();
     const message = errors[0].message.substring(0, 38);
     expect(message).toMatch('E11000 duplicate key error collection:');
   });
   test('spiceCount, revisited', async () => {
     const query = await createQuery('spiceCount');
-    const {data} = await tester.graphql(query, undefined, undefined, {});
+    const { data } = await tester.graphql(query, undefined, undefined, {});
     expect(data).toBeDefined();
     expect(data.spiceCount).toBeDefined();
     expect(data.spiceCount).toBe(1);
   });
   test('allSpices', async () => {
     const query = await createQuery('allSpices');
-    const {data} = await tester.graphql(query, undefined, undefined, {});
+    const { data } = await tester.graphql(query, undefined, undefined, {});
     expect(data).toBeDefined();
   });
   test('removeIngredient, spice, fail', async () => {
     const mutation = await createMutation('removeIngredient');
-    const spice = await Ingredient.findOne({type: 'spice', name: samples.spices[0].name});
+    const spice = await Ingredient.findOne({ type: 'spice', name: samples.spices[0].name });
     const variables = {
       token: dummyToken.substring(7),
       id: spice._id.toString()
     };
-    const {errors} = await tester.graphql(mutation, undefined, undefined, variables);
+    const { errors } = await tester.graphql(mutation, undefined, undefined, variables);
     expect(errors).toBeDefined();
     const message = errors[0].message;
     expect(message).toMatch('Insufficient clearance!');
   });
   test('removeIngredient, spice, success', async () => {
     const mutation = await createMutation('removeIngredient');
-    const spice = await Ingredient.findOne({type: 'spice', name: samples.spices[0].name});
+    const spice = await Ingredient.findOne({ type: 'spice', name: samples.spices[0].name });
     const variables = {
       token: token.substring(7),
       id: spice._id.toString()
     };
-    const {data} = await tester.graphql(mutation, undefined, undefined, variables);
+    const { data } = await tester.graphql(mutation, undefined, undefined, variables);
     expect(data).toBeDefined();
     expect(data.removeIngredient).toBeDefined();
     expect(data.removeIngredient.name).toBeDefined();
@@ -1696,7 +1766,7 @@ describe('API:test:dish', () => {
   let spices;
   let carbs;
   let methods;
-  
+
   beforeAll(async () => {
     dummyToken = await getDummyToken();
     user = await User.findOne({ username: samples.dummyUser.username });
@@ -1728,7 +1798,7 @@ describe('API:test:dish', () => {
 
   test('dishCount', async () => {
     const query = await createQuery('dishCount');
-    const {data} = await tester.graphql(query, undefined, undefined, {});
+    const { data } = await tester.graphql(query, undefined, undefined, {});
     expect(data).toBeDefined();
     expect(data.dishCount).toBeDefined();
     expect(data.dishCount).toBe(0);
@@ -1759,7 +1829,7 @@ describe('API:test:dish', () => {
       ],
       note: samples.dishNote1
     };
-    const {data} = await tester.graphql(mutation, undefined, undefined, variables);
+    const { data } = await tester.graphql(mutation, undefined, undefined, variables);
     expect(data).toBeDefined();
     expect(data.addDish).toBeDefined();
     expect(data.addDish.name).toMatch(samples.dish1.name);
@@ -1789,21 +1859,21 @@ describe('API:test:dish', () => {
       ],
       note: samples.dishNote2
     };
-    const {errors} = await tester.graphql(mutation, undefined, undefined, variables);
+    const { errors } = await tester.graphql(mutation, undefined, undefined, variables);
     expect(errors).toBeDefined();
     const message = errors[0].message.substring(0, 38);
     expect(message).toMatch('E11000 duplicate key error collection:');
   });
   test('dishCount, revisited', async () => {
     const query = await createQuery('dishCount');
-    const {data} = await tester.graphql(query, undefined, undefined, {});
+    const { data } = await tester.graphql(query, undefined, undefined, {});
     expect(data).toBeDefined();
     expect(data.dishCount).toBeDefined();
     expect(data.dishCount).toBe(1);
   });
   test('allDishes', async () => {
     const query = await createQuery('allDishes');
-    const {data} = await tester.graphql(query, undefined, undefined, {});
+    const { data } = await tester.graphql(query, undefined, undefined, {});
     expect(data).toBeDefined();
     expect(data.allDishes).toBeDefined();
     expect(data.allDishes.length).toBe(1);
@@ -1905,7 +1975,7 @@ describe('API:test:dish', () => {
   });
   test('updateDish', async () => {
     const mutation = await createMutation('updateDish');
-    dish = await Dish.findOne({name: samples.dish1.name});
+    dish = await Dish.findOne({ name: samples.dish1.name });
     const dishMethods = dish.cookingMethods.map(m => m.toString());
     const dishCarbs = dish.carbs.map(c => c.toString());
     const dishProteins = dish.proteins.map(p => p.toString());
@@ -1920,7 +1990,7 @@ describe('API:test:dish', () => {
       karma: -10,
       note: samples.dishNote2
     };
-    const {data} = await tester.graphql(mutation, undefined, undefined, variables);
+    const { data } = await tester.graphql(mutation, undefined, undefined, variables);
     expect(data).toBeDefined();
     expect(data.updateDish).toBeDefined();
     expect(data.updateDish.name).toMatch(samples.dish1.name);
@@ -1933,13 +2003,13 @@ describe('API:test:dish', () => {
   });
   test('dishKarma, up', async () => {
     const mutation = await createMutation('dishKarma');
-    const dish = await Dish.findOne({name: samples.dish1.name});
+    const dish = await Dish.findOne({ name: samples.dish1.name });
     const variables = {
       token: token.substring(7),
       vote: 'up',
       id: dish._id.toString()
     };
-    const {data} = await tester.graphql(mutation, undefined, undefined, variables);
+    const { data } = await tester.graphql(mutation, undefined, undefined, variables);
     expect(data).toBeDefined();
     expect(data.dishKarma).toBeDefined();
     expect(data.dishKarma.name).toMatch(samples.dish1.name);
@@ -1947,13 +2017,13 @@ describe('API:test:dish', () => {
   });
   test('dishKarma, down', async () => {
     const mutation = await createMutation('dishKarma');
-    const dish = await Dish.findOne({name: samples.dish1.name});
+    const dish = await Dish.findOne({ name: samples.dish1.name });
     const variables = {
       token: token.substring(7),
       vote: 'down',
       id: dish._id.toString()
     };
-    const {data} = await tester.graphql(mutation, undefined, undefined, variables);
+    const { data } = await tester.graphql(mutation, undefined, undefined, variables);
     expect(data).toBeDefined();
     expect(data.dishKarma).toBeDefined();
     expect(data.dishKarma.name).toMatch(samples.dish1.name);
@@ -1961,24 +2031,24 @@ describe('API:test:dish', () => {
   });
   test('removeDish, fail', async () => {
     const mutation = await createMutation('removeDish');
-    const dish = await Dish.findOne({name: samples.dish1.name});
+    const dish = await Dish.findOne({ name: samples.dish1.name });
     const variables = {
       token: dummyToken.substring(7),
       id: dish._id.toString()
     };
-    const {errors} = await tester.graphql(mutation, undefined, undefined, variables);
+    const { errors } = await tester.graphql(mutation, undefined, undefined, variables);
     expect(errors).toBeDefined();
     const message = errors[0].message;
     expect(message).toMatch('Insufficient clearance!');
   });
   test('removeDish, success', async () => {
     const mutation = await createMutation('removeDish');
-    const dish = await Dish.findOne({name: samples.dish1.name});
+    const dish = await Dish.findOne({ name: samples.dish1.name });
     const variables = {
       token: token.substring(7),
       id: dish._id.toString()
     };
-    const {data} = await tester.graphql(mutation, undefined, undefined, variables);
+    const { data } = await tester.graphql(mutation, undefined, undefined, variables);
     expect(data).toBeDefined();
     expect(data.removeDish).toBeDefined();
     expect(data.removeDish.name).toMatch(samples.dish1.name);
@@ -1990,7 +2060,7 @@ describe('API:test:privateList', () => {
   let token;
   let dummyToken;
   let user;
-  
+
   beforeAll(async () => {
     dummyToken = await getDummyToken();
     user = await User.findOne({ username: samples.dummyUser.username });
@@ -1998,13 +2068,13 @@ describe('API:test:privateList', () => {
   beforeEach(async () => {
     token = await getNullToken();
   });
-  
+
   test('privateLists', async () => {
     const query = await createQuery('privateLists');
     const variables = {
       token: dummyToken.substring(7)
     };
-    const {data} = await tester.graphql(query, undefined, undefined, variables);
+    const { data } = await tester.graphql(query, undefined, undefined, variables);
     expect(data).toBeDefined();
     expect(data.privateLists).toBeDefined();
     expect(data.privateLists.length).toBe(0);
@@ -2015,7 +2085,7 @@ describe('API:test:privateList', () => {
       token: dummyToken.substring(7),
       title: samples.privateList1.title
     };
-    const {data} = await tester.graphql(mutation, undefined, undefined, variables);
+    const { data } = await tester.graphql(mutation, undefined, undefined, variables);
     expect(data).toBeDefined();
     expect(data.addListPrivate).toBeDefined();
     expect(data.addListPrivate.title).toMatch(samples.privateList1.title);
@@ -2028,7 +2098,7 @@ describe('API:test:privateList', () => {
       token: dummyToken.substring(7),
       title: samples.privateList1.title
     };
-    const {errors} = await tester.graphql(mutation, undefined, undefined, variables);
+    const { errors } = await tester.graphql(mutation, undefined, undefined, variables);
     expect(errors).toBeDefined();
     const message = errors[0].message.substring(0, 38);
     expect(message).toMatch('E11000 duplicate key error collection:');
@@ -2038,7 +2108,7 @@ describe('API:test:privateList', () => {
     const variables = {
       token: dummyToken.substring(7)
     };
-    const {data} = await tester.graphql(query, undefined, undefined, variables);
+    const { data } = await tester.graphql(query, undefined, undefined, variables);
     expect(data).toBeDefined();
     expect(data.privateLists).toBeDefined();
     expect(data.privateLists.length).toBe(1);
@@ -2046,24 +2116,24 @@ describe('API:test:privateList', () => {
   });
   test('removeListPrivate, fail', async () => {
     const mutation = await createMutation('removeListPrivate');
-    const list = await PrivateList.findOne({title: samples.privateList1.title});
+    const list = await PrivateList.findOne({ title: samples.privateList1.title });
     const variables = {
       id: list._id.toString(),
       token: token.substring(7)
     };
-    const {errors} = await tester.graphql(mutation, undefined, undefined, variables);
+    const { errors } = await tester.graphql(mutation, undefined, undefined, variables);
     expect(errors).toBeDefined();
     const message = errors[0].message;
     expect(message).toMatch('Insufficient clearance!');
   });
   test('removeListPrivate, success', async () => {
     const mutation = await createMutation('removeListPrivate');
-    const list = await PrivateList.findOne({title: samples.privateList1.title});
+    const list = await PrivateList.findOne({ title: samples.privateList1.title });
     const variables = {
       id: list._id.toString(),
       token: dummyToken.substring(7)
     };
-    const {data} = await tester.graphql(mutation, undefined, undefined, variables);
+    const { data } = await tester.graphql(mutation, undefined, undefined, variables);
     expect(data).toBeDefined();
     expect(data.removeListPrivate).toBeDefined();
     expect(data.removeListPrivate.title).toMatch(samples.privateList1.title);
@@ -2075,7 +2145,7 @@ describe('API:test:groupList', () => {
   let token;
   let dummyToken;
   let user;
-  
+
   beforeAll(async () => {
     dummyToken = await getDummyToken();
     user = await User.findOne({ username: samples.dummyUser.username });
@@ -2090,26 +2160,26 @@ describe('API:test:groupList', () => {
   beforeEach(async () => {
     token = await getNullToken();
   });
-  
+
   test('groupLists', async () => {
     const query = await createQuery('groupLists');
     const variables = {
       token: dummyToken.substring(7)
     };
-    const {data} = await tester.graphql(query, undefined, undefined, variables);
+    const { data } = await tester.graphql(query, undefined, undefined, variables);
     expect(data).toBeDefined();
     expect(data.groupLists).toBeDefined();
     expect(data.groupLists.length).toBe(0);
   });
   test('addListGroup, unique, success', async () => {
-    const group = await Group.findOne({title: samples.group1.title});
+    const group = await Group.findOne({ title: samples.group1.title });
     const mutation = await createMutation('addListGroup');
     const variables = {
       token: token.substring(7),
       title: samples.groupList1.title,
       group: group._id.toString()
     };
-    const {data} = await tester.graphql(mutation, undefined, undefined, variables);
+    const { data } = await tester.graphql(mutation, undefined, undefined, variables);
     expect(data).toBeDefined();
     expect(data.addListGroup).toBeDefined();
     expect(data.addListGroup.listType).toMatch('GroupList');
@@ -2117,14 +2187,14 @@ describe('API:test:groupList', () => {
     expect(data.addListGroup.group.title).toMatch(group.title);
   });
   test('addListGroup, non-unique, fail', async () => {
-    const group = await Group.findOne({title: samples.group1.title});
+    const group = await Group.findOne({ title: samples.group1.title });
     const mutation = await createMutation('addListGroup');
     const variables = {
       token: token.substring(7),
       title: samples.groupList1.title,
       group: group._id.toString()
     };
-    const {errors} = await tester.graphql(mutation, undefined, undefined, variables);
+    const { errors } = await tester.graphql(mutation, undefined, undefined, variables);
     expect(errors).toBeDefined();
     const message = errors[0].message.substring(0, 38);
     expect(message).toMatch('E11000 duplicate key error collection:');
@@ -2134,32 +2204,32 @@ describe('API:test:groupList', () => {
     const variables = {
       token: dummyToken.substring(7)
     };
-    const {data} = await tester.graphql(query, undefined, undefined, variables);
+    const { data } = await tester.graphql(query, undefined, undefined, variables);
     expect(data).toBeDefined();
     expect(data.groupLists).toBeDefined();
     expect(data.groupLists.length).toBe(1);
     expect(data.groupLists[0].title).toMatch(samples.groupList1.title);
   });
   test('removeListGroup, fail', async () => {
-    const list = await GroupList.findOne({title: samples.groupList1.title});
+    const list = await GroupList.findOne({ title: samples.groupList1.title });
     const mutation = await createMutation('removeListGroup');
     const variables = {
       id: list._id.toString(),
       token: dummyToken.substring(7)
     };
-    const {errors} = await tester.graphql(mutation, undefined, undefined, variables);
+    const { errors } = await tester.graphql(mutation, undefined, undefined, variables);
     expect(errors).toBeDefined();
     const message = errors[0].message;
     expect(message).toMatch('Insufficient clearance!');
   });
   test('removeListGroup, success', async () => {
-    const list = await GroupList.findOne({title: samples.groupList1.title});
+    const list = await GroupList.findOne({ title: samples.groupList1.title });
     const mutation = await createMutation('removeListGroup');
     const variables = {
       id: list._id.toString(),
       token: token.substring(7)
     };
-    const {data} = await tester.graphql(mutation, undefined, undefined, variables);
+    const { data } = await tester.graphql(mutation, undefined, undefined, variables);
     expect(data).toBeDefined();
     expect(data.removeListGroup).toBeDefined();
     expect(data.removeListGroup.title).toMatch(samples.groupList1.title);
@@ -2172,7 +2242,7 @@ describe('API:test:comment', () => {
   let dummyToken;
   let privateList;
   let groupList;
-  
+
   beforeAll(async () => {
     const groups = await Group.find({});
     dummyToken = await getDummyToken();
@@ -2183,7 +2253,7 @@ describe('API:test:comment', () => {
     token = await getNullToken();
   });
   test('comments, privateList', async () => {
-    const {data} = await tester.graphql(
+    const { data } = await tester.graphql(
       await createQuery('comments'),
       undefined, undefined,
       {
@@ -2195,7 +2265,7 @@ describe('API:test:comment', () => {
     expect(data.comments.length).toBe(0);
   });
   test('comments, groupList', async () => {
-    const {data} = await tester.graphql(
+    const { data } = await tester.graphql(
       await createQuery('comments'),
       undefined, undefined,
       {
@@ -2207,7 +2277,7 @@ describe('API:test:comment', () => {
     expect(data.comments.length).toBe(0);
   });
   test('addComment, privateList', async () => {
-    const {data} = await tester.graphql(
+    const { data } = await tester.graphql(
       await createMutation('addComment'),
       undefined, undefined,
       {
@@ -2222,7 +2292,7 @@ describe('API:test:comment', () => {
     expect(data.addComment.addedBy.username).toMatch(samples.dummyUser.username);
   });
   test('addComment, groupList', async () => {
-    const {data} = await tester.graphql(
+    const { data } = await tester.graphql(
       await createMutation('addComment'),
       undefined, undefined,
       {
@@ -2237,7 +2307,7 @@ describe('API:test:comment', () => {
     expect(data.addComment.addedBy.username).toMatch(samples.dummyUser.username);
   });
   test('comments, privateList, revisited', async () => {
-    const {data} = await tester.graphql(
+    const { data } = await tester.graphql(
       await createQuery('comments'),
       undefined, undefined,
       {
@@ -2250,7 +2320,7 @@ describe('API:test:comment', () => {
     expect(data.comments[0].karma).toBe(0);
   });
   test('comments, groupList, revisited', async () => {
-    const {data} = await tester.graphql(
+    const { data } = await tester.graphql(
       await createQuery('comments'),
       undefined, undefined,
       {
@@ -2263,7 +2333,7 @@ describe('API:test:comment', () => {
     expect(data.comments[0].karma).toBe(0);
   });
   test('voteComment, privateList:comment:up', async () => {
-    const comment = await Comment.findOne({comment: samples.genericCommentP});
+    const comment = await Comment.findOne({ comment: samples.genericCommentP });
     await tester.graphql(
       await createMutation('voteComment'),
       undefined, undefined,
@@ -2272,7 +2342,7 @@ describe('API:test:comment', () => {
         id: comment._id.toString(),
         vote: 'up'
       });
-    const {data} = await tester.graphql(
+    const { data } = await tester.graphql(
       await createMutation('voteComment'),
       undefined, undefined,
       {
@@ -2285,8 +2355,8 @@ describe('API:test:comment', () => {
     expect(data.voteComment.karma).toBe(2);
   });
   test('voteComment, privateList:comment:down', async () => {
-    const comment = await Comment.findOne({comment: samples.genericCommentP});
-    const {data} = await tester.graphql(
+    const comment = await Comment.findOne({ comment: samples.genericCommentP });
+    const { data } = await tester.graphql(
       await createMutation('voteComment'),
       undefined, undefined,
       {
@@ -2299,8 +2369,8 @@ describe('API:test:comment', () => {
     expect(data.voteComment.karma).toBe(1);
   });
   test('voteComment, groupList:comment:up', async () => {
-    const comment = await Comment.findOne({comment: samples.genericCommentG});
-    const {data} = await tester.graphql(
+    const comment = await Comment.findOne({ comment: samples.genericCommentG });
+    const { data } = await tester.graphql(
       await createMutation('voteComment'),
       undefined, undefined,
       {
@@ -2313,7 +2383,7 @@ describe('API:test:comment', () => {
     expect(data.voteComment.karma).toBe(1);
   });
   test('voteComment, groupList:comment:down', async () => {
-    const comment = await Comment.findOne({comment: samples.genericCommentG});
+    const comment = await Comment.findOne({ comment: samples.genericCommentG });
     await tester.graphql(
       await createMutation('voteComment'),
       undefined, undefined,
@@ -2322,7 +2392,7 @@ describe('API:test:comment', () => {
         id: comment._id.toString(),
         vote: 'down'
       });
-    const {data} = await tester.graphql(
+    const { data } = await tester.graphql(
       await createMutation('voteComment'),
       undefined, undefined,
       {
@@ -2335,8 +2405,8 @@ describe('API:test:comment', () => {
     expect(data.voteComment.karma).toBe(-1);
   });
   test('removeComment, groupList:comment, fail', async () => {
-    const comment = await Comment.findOne({comment: samples.genericCommentG});
-    const {errors} = await tester.graphql(
+    const comment = await Comment.findOne({ comment: samples.genericCommentG });
+    const { errors } = await tester.graphql(
       await createMutation('removeComment'),
       undefined, undefined,
       {
@@ -2348,8 +2418,8 @@ describe('API:test:comment', () => {
     expect(message).toMatch('Insufficient clearance!');
   });
   test('removeComment, privateList:comment, fail', async () => {
-    const comment = await Comment.findOne({comment: samples.genericCommentP});
-    const {errors} = await tester.graphql(
+    const comment = await Comment.findOne({ comment: samples.genericCommentP });
+    const { errors } = await tester.graphql(
       await createMutation('removeComment'),
       undefined, undefined,
       {
@@ -2361,8 +2431,8 @@ describe('API:test:comment', () => {
     expect(message).toMatch('Insufficient clearance!');
   });
   test('removeComment, groupList:comment, success', async () => {
-    const comment = await Comment.findOne({comment: samples.genericCommentG});
-    const {data} = await tester.graphql(
+    const comment = await Comment.findOne({ comment: samples.genericCommentG });
+    const { data } = await tester.graphql(
       await createMutation('removeComment'),
       undefined, undefined,
       {
@@ -2375,8 +2445,8 @@ describe('API:test:comment', () => {
     expect(data.removeComment.comment).toMatch(comment.comment);
   });
   test('removeComment, privateList:comment, success', async () => {
-    const comment = await Comment.findOne({comment: samples.genericCommentP});
-    const {data} = await tester.graphql(
+    const comment = await Comment.findOne({ comment: samples.genericCommentP });
+    const { data } = await tester.graphql(
       await createMutation('removeComment'),
       undefined, undefined,
       {
@@ -2396,7 +2466,7 @@ describe('API:test:task', () => {
   let dummyToken;
   let privateList;
   let groupList;
-  
+
   beforeAll(async () => {
     const groups = await Group.find({});
     dummyToken = await getDummyToken();
@@ -2471,7 +2541,7 @@ describe('API:test:task', () => {
     expect(data.tasks).toBeDefined();
     expect(data.tasks.length).toBe(0);
   });
-  
+
   test('addTask, privateList', async () => {
     const mutation = await createMutation('addTask');
     const variables = {
@@ -2502,9 +2572,9 @@ describe('API:test:task', () => {
     expect(data.addTask.priority).toBe(false);
     expect(data.addTask.creator.username).toMatch(samples.dummyUser.username);
   });
-  
+
   test('taskPriority, privateList:task, priority', async () => {
-    const task = await Task.findOne({task: samples.genericTaskP.task});
+    const task = await Task.findOne({ task: samples.genericTaskP.task });
     const mutation = await createMutation('taskPriority');
     const variables = {
       token: dummyToken.substring(7),
@@ -2518,7 +2588,7 @@ describe('API:test:task', () => {
     expect(data.taskPriority.task).toMatch(samples.genericTaskP.task);
   });
   test('taskPriority, groupList:task, priority', async () => {
-    const task = await Task.findOne({task: samples.genericTaskG.task});
+    const task = await Task.findOne({ task: samples.genericTaskG.task });
     const mutation = await createMutation('taskPriority');
     const variables = {
       token: dummyToken.substring(7),
@@ -2532,7 +2602,7 @@ describe('API:test:task', () => {
     expect(data.taskPriority.task).toMatch(samples.genericTaskG.task);
   });
   test('taskPriority, privateList:task, non-priority', async () => {
-    const task = await Task.findOne({task: samples.genericTaskP.task});
+    const task = await Task.findOne({ task: samples.genericTaskP.task });
     const mutation = await createMutation('taskPriority');
     const variables = {
       token: dummyToken.substring(7),
@@ -2546,7 +2616,7 @@ describe('API:test:task', () => {
     expect(data.taskPriority.task).toMatch(samples.genericTaskP.task);
   });
   test('taskPriority, groupList:task, non-priority', async () => {
-    const task = await Task.findOne({task: samples.genericTaskG.task});
+    const task = await Task.findOne({ task: samples.genericTaskG.task });
     const mutation = await createMutation('taskPriority');
     const variables = {
       token: dummyToken.substring(7),
@@ -2559,7 +2629,7 @@ describe('API:test:task', () => {
     expect(data.taskPriority.priority).toBe(false);
     expect(data.taskPriority.task).toMatch(samples.genericTaskG.task);
   });
-  
+
   test('allTaskCount, revisited', async () => {
     const query = await createQuery('allTaskCount');
     const variables = {
@@ -2627,9 +2697,9 @@ describe('API:test:task', () => {
     expect(data.tasks.length).toBe(1);
     expect(data.tasks[0].task).toMatch(samples.genericTaskG.task);
   });
-  
+
   test('deactivateTask, privateList', async () => {
-    const task = await Task.findOne({listID: privateList._id.toString()});
+    const task = await Task.findOne({ listID: privateList._id.toString() });
     const mutation = await createMutation('taskDeactivation');
     const variables = {
       token: dummyToken.substring(7),
@@ -2642,7 +2712,7 @@ describe('API:test:task', () => {
     expect(data.taskDeactivation.active).toBe(false);
   });
   test('deactivateTask, groupList', async () => {
-    const task = await Task.findOne({listID: groupList._id.toString()});
+    const task = await Task.findOne({ listID: groupList._id.toString() });
     const mutation = await createMutation('taskDeactivation');
     const variables = {
       token: dummyToken.substring(7),
@@ -2655,7 +2725,7 @@ describe('API:test:task', () => {
     expect(data.taskDeactivation.active).toBe(false);
   });
   test('activateTask, privateList', async () => {
-    const task = await Task.findOne({listID: privateList._id.toString()});
+    const task = await Task.findOne({ listID: privateList._id.toString() });
     const mutation = await createMutation('taskActivation');
     const variables = {
       token: dummyToken.substring(7),
@@ -2668,7 +2738,7 @@ describe('API:test:task', () => {
     expect(data.taskActivation.active).toBe(true);
   });
   test('activateTask, groupList', async () => {
-    const task = await Task.findOne({listID: groupList._id.toString()});
+    const task = await Task.findOne({ listID: groupList._id.toString() });
     const mutation = await createMutation('taskActivation');
     const variables = {
       token: dummyToken.substring(7),
@@ -2680,9 +2750,9 @@ describe('API:test:task', () => {
     expect(data.taskActivation.task).toMatch(samples.genericTaskG.task);
     expect(data.taskActivation.active).toBe(true);
   });
-  
+
   test('removeTask, privateList:task, fail', async () => {
-    const task = await Task.findOne({listID: privateList._id.toString()});
+    const task = await Task.findOne({ listID: privateList._id.toString() });
     const mutation = await createMutation('removeTask');
     const variables = {
       token: token.substring(7),
@@ -2694,7 +2764,7 @@ describe('API:test:task', () => {
     expect(message).toMatch('Insufficient clearance!');
   });
   test('removeTask, groupList:task, fail', async () => {
-    const task = await Task.findOne({listID: groupList._id.toString()});
+    const task = await Task.findOne({ listID: groupList._id.toString() });
     const mutation = await createMutation('removeTask');
     const variables = {
       token: token.substring(7),
@@ -2706,7 +2776,7 @@ describe('API:test:task', () => {
     expect(message).toMatch('Insufficient clearance!');
   });
   test('removeTask, privateList:task, success', async () => {
-    const task = await Task.findOne({listID: privateList._id.toString()});
+    const task = await Task.findOne({ listID: privateList._id.toString() });
     const mutation = await createMutation('removeTask');
     const variables = {
       token: dummyToken.substring(7),
@@ -2720,7 +2790,7 @@ describe('API:test:task', () => {
     expect(data.removeTask.active).toBe(true);
   });
   test('removeTask, groupList:task, success', async () => {
-    const task = await Task.findOne({listID: groupList._id.toString()});
+    const task = await Task.findOne({ listID: groupList._id.toString() });
     const mutation = await createMutation('removeTask');
     const variables = {
       token: dummyToken.substring(7),

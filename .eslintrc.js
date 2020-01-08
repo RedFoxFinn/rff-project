@@ -9,9 +9,9 @@ module.exports = {
   'globals': {
     'Atomics': 'readonly',
     'SharedArrayBuffer': 'readonly',
-    'describe': 1,
-    'test': 1,
-    'expect': 1
+    'describe': 'readonly',
+    'test': 'readonly',
+    'expect': 'readonly'
   },
   'parserOptions': {
     'ecmaVersion': 2018

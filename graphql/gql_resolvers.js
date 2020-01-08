@@ -102,11 +102,11 @@ const findDishes = async (args) => {
 const findUsers = async (args) => {
   const users = await User.find({}).populate('groups');
   // 1
-  if (args.username) return await User.find({username: args.username}).populate('groups');
-  if (args.active) return await User.find({active: args.active}).populate('groups');
-  if (args.role) return await User.find({role: args.role}).populate('groups');
-  if (args.group) return await User.find({groups: args.group}).populate('groups');
-    // 0
+  if (args.username) return await User.find({ username: args.username }).populate('groups');
+  if (args.active) return await User.find({ active: args.active }).populate('groups');
+  if (args.role) return await User.find({ role: args.role }).populate('groups');
+  if (args.group) return await User.find({ groups: args.group }).populate('groups');
+  // 0
   return await User.find({}).populate('groups');
 };
 
@@ -150,16 +150,16 @@ const countTasks = async (args) => {
   let count = 0;
   if (args.all) return Task.collection.countDocuments();
   if (args.countType === 'user' || args.countType === 'total') {
-    const lists = await PrivateList.find({owner: args.userID});
+    const lists = await PrivateList.find({ owner: args.userID });
     for (let l = 0; l < lists.length; l++) {
-      count += await Task.find({listID: lists[l]._id.toString()}).countDocuments();
+      count += await Task.find({ listID: lists[l]._id.toString() }).countDocuments();
     }
   }
   if (args.countType === 'group' || args.countType === 'total') {
     for (let g = 0; g < args.groupIDs.length; g++) {
-      const lists = await GroupList.find({group: args.groupIDs[g]});
+      const lists = await GroupList.find({ group: args.groupIDs[g] });
       for (let l = 0; l < lists.length; l++) {
-        count += await Task.find({listID: lists[l]._id.toString()}).countDocuments();
+        count += await Task.find({ listID: lists[l]._id.toString() }).countDocuments();
       }
     }
   }
@@ -461,7 +461,8 @@ const resolvers = {
     removable: (root) => root.removable,
     role: (root) => root.role,
     groups: (root) => root.groups,
-    id: (root) => root._id
+    id: (root) => root._id,
+    stops: (root) => root.stops
   },
   Query: {
     me: async (root, args) => {
@@ -539,7 +540,7 @@ const resolvers = {
       const decodedToken = await jwt.verify(args.token, config.secret);
       const user = await User.findById(decodedToken.id);
       if (user) {
-        return await PrivateList.find({owner: user._id}).populate('owner');
+        return await PrivateList.find({ owner: user._id }).populate('owner');
       } else {
         throw new AuthenticationError('Session error: you must be logged in!');
       }
@@ -550,7 +551,7 @@ const resolvers = {
       if (user) {
         let lists = [];
         for (let g = 0; g < user.groups.length; g++) {
-          const gl = await GroupList.find({group: user.groups[g]}).populate('group');
+          const gl = await GroupList.find({ group: user.groups[g] }).populate('group');
           lists = [...lists, ...gl];
         }
         return lists;
@@ -587,22 +588,22 @@ const resolvers = {
         throw new AuthenticationError('Session error: you must be logged in!');
       }
     },
-    carbCount: async () => await Ingredient.find({type: 'carb'}).countDocuments(),
-    allCarbs: async () => await Ingredient.find({type: 'carb'}).populate(['uses', 'addedBy']),
+    carbCount: async () => await Ingredient.find({ type: 'carb' }).countDocuments(),
+    allCarbs: async () => await Ingredient.find({ type: 'carb' }).populate('addedBy'),
     dishCount: async () => await Dish.collection.countDocuments(),
     allDishes: async () => await Dish.find({}).populate(dishFields),
     methodCount: async () => await CookingMethod.collection.countDocuments(),
-    allMethods: async () => await CookingMethod.find({}).populate(['uses', 'addedBy']),
-    proteinCount: async () => await Ingredient.find({type: 'protein'}).countDocuments(),
-    allProteins: async () => await Ingredient.find({type: 'protein'}).populate(['uses', 'addedBy']),
-    spiceCount: async () => await Ingredient.find({type: 'spice'}).countDocuments(),
-    allSpices: async () => await Ingredient.find({type: 'spice'}).populate(['uses', 'addedBy']),
+    allMethods: async () => await CookingMethod.find({}).populate('addedBy'),
+    proteinCount: async () => await Ingredient.find({ type: 'protein' }).countDocuments(),
+    allProteins: async () => await Ingredient.find({ type: 'protein' }).populate('addedBy'),
+    spiceCount: async () => await Ingredient.find({ type: 'spice' }).countDocuments(),
+    allSpices: async () => await Ingredient.find({ type: 'spice' }).populate('addedBy'),
     dishes: async (root, args) => await findDishes(args),
     comments: async (root, args) => {
       const decodedToken = await jwt.verify(args.token, config.secret);
       const user = await User.findById(decodedToken.id);
       if (user) {
-        return await Comment.find({listID: args.id}).populate('addedBy');
+        return await Comment.find({ listID: args.id }).populate('addedBy');
       } else {
         throw new AuthenticationError('Insufficient clearance!');
       }
@@ -666,7 +667,7 @@ const resolvers = {
           throw new UserInputError(e.message, { invalidArgs: args });
         }
         await pubsub.publish('DISH_ADDED', { dishEvent: dish });
-        dish = await Dish.findOne({name: args.name}).populate(dishFields);
+        dish = await Dish.findOne({ name: args.name }).populate(dishFields);
         return dish;
       } else {
         throw new AuthenticationError('Session error: you must be logged in!');
@@ -693,7 +694,7 @@ const resolvers = {
         if (args.methods) await updateUsage(args.id, 'METHOD', args.methods);
         if (args.proteins) await updateUsage(args.id, 'PROTEIN', args.proteins);
         if (args.spices) await updateUsage(args.id, 'SPICE', args.spices);
-        dish = await Dish.findOne({_id: args.id}).populate(dishFields);
+        dish = await Dish.findOne({ _id: args.id }).populate(dishFields);
         await pubsub.publish('DISH_UPDATED', { dishEvent: dish });
         return dish;
       } else {
@@ -728,7 +729,7 @@ const resolvers = {
         } catch (e) {
           throw new UserInputError(e.message, { invalidArgs: args });
         }
-        dish = await Dish.findOne({_id: args.id}).populate(dishFields);
+        dish = await Dish.findOne({ _id: args.id }).populate(dishFields);
         await pubsub.publish('DISH_VOTED', { dishEvent: dish });
         return dish;
       } else {
@@ -785,7 +786,7 @@ const resolvers = {
         } catch (e) {
           throw new UserInputError(e.message, { invalidArgs: args });
         }
-        list = await GroupList.findOne({title: args.title}).populate('group');
+        list = await GroupList.findOne({ title: args.title }).populate('group');
         await pubsub.publish('LIST_ADDED_G', { listEventGroup: list });
         return list;
       } else {
@@ -822,7 +823,7 @@ const resolvers = {
         } catch (e) {
           throw new UserInputError(e.message, { invalidArgs: args });
         }
-        list = await PrivateList.findOne({title: args.title}).populate('owner');
+        list = await PrivateList.findOne({ title: args.title }).populate('owner');
         await pubsub.publish('LIST_ADDED_P', { listEventPrivate: list });
         return list;
       } else {
@@ -864,7 +865,7 @@ const resolvers = {
         } catch (e) {
           throw new UserInputError(e.message, { invalidArgs: args });
         }
-        comment = await Comment.findOne({comment: args.comment}).populate('addedBy');
+        comment = await Comment.findOne({ comment: args.comment }).populate('addedBy');
         return comment;
       } else {
         throw new AuthenticationError('Session error: you must be logged in!');
@@ -896,7 +897,7 @@ const resolvers = {
         } catch (e) {
           throw new UserInputError(e.message, { invalidArgs: args });
         }
-        comment = await Comment.findOne({_id: args.id}).populate('addedBy');
+        comment = await Comment.findOne({ _id: args.id }).populate('addedBy');
         return comment;
       } else {
         throw new AuthenticationError('Session error: you must be logged in!');
@@ -918,7 +919,7 @@ const resolvers = {
         } catch (e) {
           throw new UserInputError(e.message, { invalidArgs: args });
         }
-        task = await Task.findOne({task: args.task}).populate('creator');
+        task = await Task.findOne({ task: args.task }).populate('creator');
         await pubsub.publish('TASK_ADDED', { taskEvent: task });
         return task;
       } else {
@@ -931,11 +932,11 @@ const resolvers = {
       const user = await User.findById(decodedToken.id);
       const task = await Task.findById(args.id).populate('creator');
       const groupValid = async () => {
-        list = await GroupList.findOne({_id: task.listID.toString()});
+        list = await GroupList.findOne({ _id: task.listID.toString() });
         return list ? user.groups.includes(list.group.toString()) : false;
       };
       const userValid = async () => {
-        list = await PrivateList.findOne({_id: task.listID.toString()});
+        list = await PrivateList.findOne({ _id: task.listID.toString() });
         return list ? user._id.toString() === list.owner.toString() : false;
       };
       if (await groupValid() || await userValid()) {
@@ -961,7 +962,7 @@ const resolvers = {
         } catch (e) {
           throw new UserInputError(e.message, { invalidArgs: args });
         }
-        task = await Task.findOne({_id: args.id}).populate('creator');
+        task = await Task.findOne({ _id: args.id }).populate('creator');
         await pubsub.publish('TASK_UPDATED', { taskEvent: task });
         return task;
       } else {
@@ -979,7 +980,7 @@ const resolvers = {
         } catch (e) {
           throw new UserInputError(e.message, { invalidArgs: args });
         }
-        task = await Task.findOne({_id: args.id}).populate('creator');
+        task = await Task.findOne({ _id: args.id }).populate('creator');
         await pubsub.publish('TASK_UPDATED', { taskEvent: task });
         return task;
       } else {
@@ -997,7 +998,7 @@ const resolvers = {
         } catch (e) {
           throw new UserInputError(e.message, { invalidArgs: args });
         }
-        task = await Task.findOne({_id: args.id}).populate('creator');
+        task = await Task.findOne({ _id: args.id }).populate('creator');
         await pubsub.publish('TASK_UPDATED', { taskEvent: task });
         return task;
       } else {
@@ -1033,7 +1034,7 @@ const resolvers = {
           user.username = args.newUsername;
         }
         try {
-          user = await user.save();
+          await user.save();
         } catch (e) {
           throw new UserInputError(e.message, { invalidArgs: args });
         }
@@ -1077,6 +1078,74 @@ const resolvers = {
         throw new AuthenticationError('Session error: you must be logged in!');
       }
     },
+    activateUser: async (root, args) => {
+      const decodedToken = await jwt.verify(args.token, config.secret);
+      const user = await User.findById(decodedToken.id);
+      if (user.role === 'owner' || user.role === 'admin') {
+        let userToActivate = await User.findById(args.id);
+        try {
+          userToActivate.active = true;
+          await userToActivate.save();
+        } catch (e) {
+          throw new UserInputError(e.message, { invalidArgs: args });
+        }
+        userToActivate = await User.findById(args.id);
+        return userToActivate;
+      } else {
+        throw new AuthenticationError('Session error: you must be logged in!');
+      }
+    },
+    deactivateUser: async (root, args) => {
+      const decodedToken = await jwt.verify(args.token, config.secret);
+      const user = await User.findById(decodedToken.id);
+      if (user.role === 'owner' || user.role === 'admin' || user._id.toString() === args.id) {
+        let userToDeactivate = await User.findById(args.id);
+        try {
+          userToDeactivate.active = true;
+          await userToDeactivate.save();
+        } catch (e) {
+          throw new UserInputError(e.message, { invalidArgs: args });
+        }
+        userToDeactivate = await User.findById(args.id);
+        return userToDeactivate;
+      } else {
+        throw new AuthenticationError('Session error: you must be logged in!');
+      }
+    },
+    addStop: async (root, args) => {
+      const decodedToken = await jwt.verify(args.token, config.secret);
+      let user = await User.findById(decodedToken.id);
+      if (user) {
+        user.stops = [...user.stops, args.stop];
+        try {
+          await user.save();
+        } catch (e) {
+          throw new UserInputError(e.message, { invalidArgs: args });
+        }
+        await pubsub.publish('USER_UPDATED', { userEvent: user });
+        return user;
+      } else {
+        throw new AuthenticationError('You must be logged in!');
+      }
+    },
+    removeStop: async (root, args) => {
+      const decodedToken = await jwt.verify(args.token, config.secret);
+      let user = await User.findById(decodedToken.id);
+      if (user) {
+        user.stops = user.stops.filter(s => {
+          if (s !== args.stop) return s;
+        });
+        try {
+          await user.save();
+        } catch (e) {
+          throw new UserInputError(e.message, { invalidArgs: args });
+        }
+        await pubsub.publish('USER_UPDATED', { userEvent: user });
+        return user;
+      } else {
+        throw new AuthenticationError('You must be logged in!');
+      }
+    },
     addGroup: async (root, args) => {
       const decodedToken = await jwt.verify(args.token, config.secret);
       const user = await User.findById(decodedToken.id);
@@ -1092,7 +1161,7 @@ const resolvers = {
         } catch (e) {
           throw new UserInputError(e.message, { invalidArgs: args });
         }
-        newGroup = await Group.findOne({title: args.title}).populate('creator');
+        newGroup = await Group.findOne({ title: args.title }).populate('creator');
         user.groups = [...user.groups, newGroup._id.toString()];
         await user.save();
         await pubsub.publish('GROUP_ADDED', { groupEvent: newGroup });

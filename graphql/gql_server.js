@@ -8,7 +8,7 @@ const { ApolloServer } = require('apollo-server-express');
 const jwt = require('jsonwebtoken');
 
 const { resolvers } = require('./gql_resolvers');
-const {typeDefs} = require('./gql_typeDefs');
+const { typeDefs } = require('./gql_typeDefs');
 const User = require('../models/User');
 
 // initializing Apollo Server for Express

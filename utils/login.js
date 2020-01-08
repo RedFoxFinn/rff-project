@@ -10,13 +10,13 @@ const User = require('../models/User.js');
 
 login.post('/', async (req, res) => {
   const body = req.body;
-  const user = await User.findOne({username: body.username});
+  const user = await User.findOne({ username: body.username });
   const correctPassword = user === null
     ? false
     : await bcrypt.compare(body.password, user.passwordHash);
-  
+
   if (!(user && correctPassword)) {
-    return res.status(401).json({error: 'Incorrect username or password!'});
+    return res.status(401).json({ error: 'Incorrect username or password!' });
   } else {
     const userForToken = {
       username: user.username,
@@ -24,7 +24,7 @@ login.post('/', async (req, res) => {
       role: user.role
     };
     const token = jwt.sign(userForToken, config.secret);
-    res.status(200).json({token: token, username: user.username, userID: user._id, role: user.role});
+    res.status(200).json({ token: token, username: user.username, userID: user._id, role: user.role });
   }
 });
 

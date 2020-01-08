@@ -9,7 +9,7 @@ const typeDefs = gql`
   type Ingredient {
     type: String!
     name: String!
-    uses: [Dish!]!
+    uses: [String!]!
     addedBy: User!
     id: ID!
   }
@@ -22,7 +22,7 @@ const typeDefs = gql`
   }
   type CookingMethod {
     name: String!
-    uses: [Dish!]!
+    uses: [String!]!
     addedBy: User!
     id: ID!
   }
@@ -77,6 +77,7 @@ const typeDefs = gql`
     role: String!
     groups: [Group!]!
     id: ID!
+    stops: [String!]!
   }
   type Query {
     me(token: String!): User!
@@ -132,6 +133,10 @@ const typeDefs = gql`
     updateUser(token: String!, password: String!,
       newUsername: String, newPassword: String): User!,
     removeUser(token: String!, id: String!, password: String): User!,
+    activateUser(token: String!, id: String!): User!,
+    deactivateUser(token: String!, id: String!): User!,
+    addStop(token: String!, stop: String!): User!,
+    removeStop(token: String!, stop: String!): User!,
     addGroup(token: String!, title: String!): Group!,
     updateGroup(token: String!, id: String!, title: String, active: Boolean): Group!,
     removeGroup(token: String!, id: String!): Group!,
@@ -150,4 +155,4 @@ const typeDefs = gql`
   }
 `;
 
-module.exports = {typeDefs};
+module.exports = { typeDefs };

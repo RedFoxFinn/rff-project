@@ -11,19 +11,19 @@ const DishSchema = new mongoose.Schema({
   },
   cookingMethods: {
     required: true,
-    type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'CookingMethod'}]
+    type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'CookingMethod' }]
   },
   proteins: {
     required: true,
-    type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Ingredient'}]
+    type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Ingredient' }]
   },
   carbs: {
     required: true,
-    type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Ingredient'}]
+    type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Ingredient' }]
   },
   spices: {
     required: true,
-    type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Ingredient'}]
+    type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Ingredient' }]
   },
   karma: {
     required: true,

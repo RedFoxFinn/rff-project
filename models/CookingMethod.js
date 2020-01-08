@@ -11,7 +11,7 @@ const CookingMethodSchema = new mongoose.Schema({
   },
   uses: {
     required: true,
-    type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Dish'}]
+    type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Dish' }]
   },
   addedBy: {
     required: true,
