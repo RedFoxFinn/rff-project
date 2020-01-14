@@ -1,0 +1,25 @@
+.dishyElementDe {
+    margin: 1em;
+    width: 9em;
+    background-color: var(--peru);
+    color: var(--darkslategrey);
+}
+.dishyElementDa {
+    margin: 1em;
+    width: 9em;
+    background-color: var(--darkslategrey);
+    color: var(--gainsboro);
+}
+.dishyElementLi {
+    margin: 1em;
+    width: 9em;
+    background-color: var(--gainsboro);
+    color: var(--darkslategrey);
+}
+.dishySelectDrop {
+    background-color: #7D7D7D;
+    opacity: 0.75;
+    min-width: 5em;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    z-index: 1;
+}

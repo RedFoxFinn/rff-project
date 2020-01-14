@@ -4,7 +4,7 @@ import {useQuery} from '@apollo/react-hooks';
 
 import classProvider from '../../core/tools/classProvider';
 import '../../core/style/global.css';
-import {METHOD_COUNT} from '../../core/graphql/queries/q_methodCount.js';
+import {METHOD_COUNT} from '../../core/graphql/rff/queries/q_methodCount.js';
 
 const mapStateToProps = (state) => {
   return {

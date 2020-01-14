@@ -54,7 +54,7 @@
 .app {
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: space-evenly;
 }
 .appContainer {
     display: flex;
@@ -67,17 +67,11 @@
 .appContainer .headingDa {
     color: var(--gainsboro);
 }
-.appContainer .headingDe {
-    color: var(--darkslategrey);
-}
 .appContainer .descriptionLi {
     color: var(--darkslategrey);
 }
 .appContainer .descriptionDa {
     color: var(--gainsboro);
-}
-.appContainer .descriptionDe {
-    color: var(--darkslategrey);
 }
 .appElements {
     display: flex;
@@ -90,8 +84,8 @@
 .appWidgets {
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
-    align-content: center;
+    justify-content: space-evenly;
+    align-items: center;
 }
 .appWidget {
     height: 10em;
@@ -99,6 +93,12 @@
 }
 .appWidget:hover {
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+.commonElements {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-content: center;
 }
 .dishWidget {
 }
@@ -121,22 +121,12 @@ button {
     justify-content: space-evenly;
     color: var(--gainsboro);
 }
-.headingDe {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-    color: var(--darkslategrey);
-}
 .descriptionLi {
     color: var(--darkslategrey);
     width: 50%;
 }
 .descriptionDa {
     color: var(--gainsboro);
-    width: 50%;
-}
-.descriptionDe {
-    color: var(--darkslategrey);
     width: 50%;
 }
 .linkLi {
@@ -149,8 +139,73 @@ button {
     color: var(--gainsboro);
     text-decoration: none;
 }
-.linkDe {
-    padding: 0.5em;
+.formElementDa {
+    display: block;
+    margin: 1em;
+    width: 9em;
+    background-color: var(--darkslategrey);
+    color: var(--gainsboro);
+    border: 1px solid var(--gainsboro);
+    text-align: center;
+}
+.formElementDa:focus {
+    outline-color: var(--greenyellow);
+    outline-style: dotted;
+}
+.formElementLi {
+    display: block;
+    margin: 1em;
+    width: 9em;
+    background-color: var(--gainsboro);
     color: var(--darkslategrey);
-    text-decoration: none;
+    border: 1px solid var(--darkslategrey);
+    text-align: center;
+}
+.formElementLi:focus {
+    outline-color: var(--greenyellow);
+    outline-style: dotted;
+}
+.notificationNullDa {
+    display: block;
+    margin: 1em;
+    background-color: var(--darkslategrey);
+    color: transparent;
+    text-align: center;
+}
+.notificationNullLi {
+    display: block;
+    margin: 1em;
+    background-color: var(--gainsboro);
+    color: transparent;
+    text-align: center;
+}
+
+.notificationInfoDa {
+    display: block;
+    margin: 1em;
+    background-color: var(--darkslategrey);
+    color: var(--googlegreen);
+    text-align: center;
+}
+.notificationInfoLi {
+    display: block;
+    margin: 1em;
+    background-color: var(--gainsboro);
+    color: var(--googlegreen);
+    text-align: center;
+}
+
+.notificationErrorDa {
+    display: block;
+    margin: 1em;
+    background-color: var(--darkslategrey);
+    color: var(--googlered);
+    text-align: center;
+}
+.notificationErrorLi {
+    display: block;
+    margin: 1em;
+    background-color: var(--gainsboro);
+    color: var(--googlered);
+    text-align: center;
 }

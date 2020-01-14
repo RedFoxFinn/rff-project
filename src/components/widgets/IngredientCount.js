@@ -4,9 +4,9 @@ import {useQuery, useApolloClient} from '@apollo/react-hooks';
 
 import classProvider from '../../core/tools/classProvider';
 import '../../core/style/global.css';
-import {CARB_COUNT} from '../../core/graphql/queries/q_carbCount.js';
-import {PROTEIN_COUNT} from '../../core/graphql/queries/q_proteinCount.js';
-import {SPICE_COUNT} from '../../core/graphql/queries/q_spiceCount.js';
+import {CARB_COUNT} from '../../core/graphql/rff/queries/q_carbCount.js';
+import {PROTEIN_COUNT} from '../../core/graphql/rff/queries/q_proteinCount.js';
+import {SPICE_COUNT} from '../../core/graphql/rff/queries/q_spiceCount.js';
 
 const mapStateToProps = (state) => {
   return {
@@ -15,7 +15,6 @@ const mapStateToProps = (state) => {
 };
 
 const IngredientCount = (props) => {
-  const client = useApolloClient();
   const carbResult = useQuery(CARB_COUNT);
   const proteinResult = useQuery(PROTEIN_COUNT);
   const spiceResult = useQuery(SPICE_COUNT);

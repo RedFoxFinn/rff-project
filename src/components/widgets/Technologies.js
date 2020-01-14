@@ -17,6 +17,7 @@ import webstormIcon from '@iconify/icons-simple-icons/webstorm';
 import googlechromeIcon from '@iconify/icons-simple-icons/googlechrome';
 import postmanIcon from '@iconify/icons-simple-icons/postman';
 import jestIcon from '@iconify/icons-simple-icons/jest';
+import altairIcon from '@iconify/icons-logos/altair';
 
 import classProvider from '../../core/tools/classProvider';
 import '../../core/style/global.css';
@@ -60,7 +61,8 @@ const Technologies = (props) => {
     {name: 'GitHub', url: 'https://github.com/', icon: <InlineIcon icon={githubIcon}/>},
     {name: 'WebStorm', url: 'https://www.jetbrains.com/webstorm/', icon: <InlineIcon icon={webstormIcon}/>},
     {name: 'Chrome', url: 'https://www.google.com/intl/en_en/chrome/', icon: <InlineIcon icon={googlechromeIcon}/>},
-    {name: 'Postman', url: 'https://www.getpostman.com/', icon: <InlineIcon icon={postmanIcon}/>}
+    {name: 'Postman', url: 'https://www.getpostman.com/', icon: <InlineIcon icon={postmanIcon}/>},
+    {name: 'Altair', url: 'https://altair.sirmuel.design/', icon: <InlineIcon icon={altairIcon}/>}
   ];
 
   const Repository = () => {
@@ -95,34 +97,18 @@ const Technologies = (props) => {
   return(
     <div className='app'>
       <div className='appContainer'>
-        <div className='appElements'>
-          <h4 className={classProvider(props.appState.theme, 'heading')}>Repository:</h4>
-        </div>
+        <h4 className={classProvider(props.appState.theme, 'heading')}>Repository:</h4>
         <Repository/>
-        <div className='appElements'>
-          <h4 className={classProvider(props.appState.theme, 'heading')}>Used technology stack:</h4>
-        </div>
-        <div className='appElements'>
-          <h4 className={classProvider(props.appState.theme, 'heading')}>Frontend</h4>
-        </div>
-        <>
-          <Front/>
-        </>
-        <div className='appElements'>
-          <h4 className={classProvider(props.appState.theme, 'heading')}>Backend</h4>
-        </div>
+        <h4 className={classProvider(props.appState.theme, 'heading')}>Used technology stack:</h4>
+        <h4 className={classProvider(props.appState.theme, 'heading')}>Frontend</h4>
+        <Front/>
+        <h4 className={classProvider(props.appState.theme, 'heading')}>Backend</h4>
         <Back/>
-        <div className='appElements'>
-          <h4 className={classProvider(props.appState.theme, 'heading')}>Database & API</h4>
-        </div>
+        <h4 className={classProvider(props.appState.theme, 'heading')}>Database & API</h4>
         <Data/>
-        <div className='appElements'>
-          <h4 className={classProvider(props.appState.theme, 'heading')}>Testing</h4>
-        </div>
+        <h4 className={classProvider(props.appState.theme, 'heading')}>Testing</h4>
         <Testing/>
-        <div className='appElements'>
-          <h4 className={classProvider(props.appState.theme, 'heading')}>Development tools</h4>
-        </div>
+        <h4 className={classProvider(props.appState.theme, 'heading')}>Development tools</h4>
         <DevTools/>
       </div>
     </div>

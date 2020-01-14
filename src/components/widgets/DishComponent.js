@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 
 import classProvider from '../../core/tools/classProvider';
 import '../../core/style/global.css';
+import '../../core/style/dishy.css';
 
 const mapStateToProps = (state) => {
   return {
@@ -13,7 +14,7 @@ const mapStateToProps = (state) => {
 const DishComponent = (props) => {
   return (
     <div className='dishWidget'>
-      DishComponent
+      <p className={classProvider(props.theme, 'description')}>DishComponent</p>
     </div>
   );
 };

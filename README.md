@@ -13,7 +13,7 @@ feature | status
 Basic project structure | `done`,`tweaked`
 Custom icons | `done`
 Redux-store (global state management) | `done`,`additions`
-Redux-reducers (global state management) | `ongoing`
+Redux-reducers (global state management) | `ongoing`,`Thunk-enhanced`
 Services | `upcoming`
 Style | `ongoing`
 Tools | `ongoing`
@@ -33,11 +33,13 @@ Dashboard:MethodCount | `done`
 Dashboard:TaskCount | `ongoing`
 Dashboard:TrackedStopsCount | `ongoing`
 Dishy-app | `ongoing`
-Landing page | `upcoming`
-Login page | `upcoming`
+Landing page | `done`
+Login page | `done`
 Navigation | `ongoing`
 OpenCountry-app | `done`
 Tasker-app | `upcoming`
+UserSettings | `ongoing`
+Registering | `ongoing`
 Transporter-app | `upcoming`
 GraphQL-fragments | `done`
 GraphQL-mutations | `done`

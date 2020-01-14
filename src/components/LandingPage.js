@@ -3,7 +3,6 @@ import {connect} from 'react-redux';
 
 import classProvider from '../core/tools/classProvider';
 import '../core/style/global.css';
-import '../core/style/landing.css';
 
 const mapStateToProps = (state) => {
   return {
@@ -16,7 +15,7 @@ const LandingPage = (props) => {
 
   const Locked = () => {
     return(
-      <div className='landingElements'>
+      <div className='commonElements'>
         <p className={classProvider(props.appState.theme, 'landingDescription')}>Some applications are available only for registered and logged users.</p>
         <p className={classProvider(props.appState.theme, 'landingDescription')}>If you want to use these advanced features, please log in.</p>
       </div>
@@ -25,7 +24,7 @@ const LandingPage = (props) => {
 
   const Unlocked = () => {
     return(
-      <div className='landingElements'>
+      <div className='commonElements'>
         <p className={classProvider(props.appState.theme, 'landingDescription')}>Some applications are available only for registered and logged users.</p>
         <p className={classProvider(props.appState.theme, 'landingDescription')}>You have logged in and therefore eligible to use advanced features.</p>
       </div>

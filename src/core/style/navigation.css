@@ -5,9 +5,6 @@
 .headingDa {
     color: var(--gainsboro);
 }
-.headingDe {
-    color: var(--darkslategrey);
-}
 
 .navRow {
     display: flex;
@@ -20,10 +17,6 @@
     display: inline-block;
 }
 .navMenuDa {
-    position: relative;
-    display: inline-block;
-}
-.navMenuDe {
     position: relative;
     display: inline-block;
 }
@@ -47,16 +40,6 @@
 .navButtonDa:hover {
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
 }
-.navButtonDe {
-    border: none;
-    padding: 1em;
-    cursor: pointer;
-    background-color: greenyellow;
-    color: black;
-}
-.navButtonDe:hover {
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-}
 .navContentLi {
     background-color: #7D7D7D;
     opacity: 0.75;
@@ -67,15 +50,6 @@
     z-index: 1;
 }
 .navContentDa {
-    background-color: #7D7D7D;
-    opacity: 0.75;
-    min-width: 5em;
-    display: none;
-    position: absolute;
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-    z-index: 1;
-}
-.navContentDe {
     background-color: #7D7D7D;
     opacity: 0.75;
     min-width: 5em;
@@ -98,13 +72,6 @@
     text-decoration: none;
     cursor: pointer;
 }
-.navContentDe a {
-    margin: 1em;
-    display: block;
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
-}
 .navContentLi a:hover {
 }
 .navMenuLi:hover .navContentLi {
@@ -115,21 +82,12 @@
 .navMenuDa:hover .navContentDa {
     display: block;
 }
-.navContentDe a:hover {
-}
-.navMenuDe:hover .navContentDe {
-    display: block;
-}
 
 .navSubMenuLi {
     position: relative;
     display: inline-block;
 }
 .navSubMenuDa {
-    position: relative;
-    display: inline-block;
-}
-.navSubMenuDe {
     position: relative;
     display: inline-block;
 }
@@ -147,20 +105,10 @@
     background-color: greenyellow;
     color: black;
 }
-.navSubButtonDe {
-    border: none;
-    padding: 1em;
-    cursor: pointer;
-    background-color: greenyellow;
-    color: black;
-}
 .navSubButtonLi:hover {
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
 }
 .navSubButtonDa:hover {
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-}
-.navSubButtonDe:hover {
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
 }
 .navSubContentLi {
@@ -173,15 +121,6 @@
     z-index: 1;
 }
 .navSubContentDa {
-    background-color: #7D7D7D;
-    opacity: 0.75;
-    min-width: 5em;
-    display: none;
-    position: absolute;
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-    z-index: 1;
-}
-.navSubContentDe {
     background-color: #7D7D7D;
     opacity: 0.75;
     min-width: 5em;
@@ -204,21 +143,11 @@
     text-decoration: none;
     cursor: pointer;
 }
-.navSubContentDe a {
-    margin: 1em;
-    display: block;
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
-}
 
 .navSubMenuLi:hover .navSubContentLi {
     display: inline-block;
 }
 .navSubMenuDa:hover .navSubContentDa {
-    display: inline-block;
-}
-.navSubMenuDe:hover .navSubContentDe {
     display: inline-block;
 }
 
@@ -230,10 +159,6 @@
     position: relative;
     display: block;
 }
-.loginMenuDe {
-    position: relative;
-    display: block;
-}
 .loginMenuLi:hover {
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
     z-index: 1;
@@ -242,19 +167,11 @@
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
     z-index: 1;
 }
-.loginMenuDe:hover {
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-    z-index: 1;
-}
 .loginContentLi {
     display: block;
     min-width: 5em;
 }
 .loginContentDa {
-    display: block;
-    min-width: 5em;
-}
-.loginContentDe {
     display: block;
     min-width: 5em;
 }
@@ -267,14 +184,6 @@
     border: none;
 }
 .loginMenuDa a {
-    padding: 0.75em;
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
-    background-color: greenyellow;
-    border: none;
-}
-.loginMenuDe a {
     padding: 0.75em;
     color: black;
     text-decoration: none;

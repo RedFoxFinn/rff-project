@@ -130,12 +130,12 @@ const Calculator = (props) => {
   return(
     <div className='app'>
       <div className='appContainer'>
-        <div className='appElements'>
+        <form className='appElements'>
           <input type='number' placeholder='numerical value' onChange={({target}) => setValue1(target.value)}
             className={classProvider(props.appState.theme, 'calculateElement')}/>
           <input type='number' placeholder='numerical value' onChange={({target}) => setValue2(target.value)}
             className={classProvider(props.appState.theme, 'calculateElement')}/>
-        </div>
+        </form>
         <Results/>
       </div>
     </div>

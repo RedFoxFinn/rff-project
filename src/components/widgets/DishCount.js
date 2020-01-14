@@ -4,7 +4,7 @@ import {useQuery, useApolloClient} from '@apollo/react-hooks';
 
 import classProvider from '../../core/tools/classProvider';
 import '../../core/style/global.css';
-import {DISH_COUNT} from '../../core/graphql/queries/q_dishCount.js';
+import {DISH_COUNT} from '../../core/graphql/rff/queries/q_dishCount.js';
 
 const mapStateToProps = (state) => {
   return {
@@ -13,7 +13,6 @@ const mapStateToProps = (state) => {
 };
 
 const DishCount = (props) => {
-  const client = useApolloClient();
   const dishResult = useQuery(DISH_COUNT);
   let data = 0;
 

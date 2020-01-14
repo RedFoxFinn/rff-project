@@ -77,13 +77,9 @@ const Countries = (props) => {
   return(
     <div className='app'>
       <div className='appContainer'>
-        <div className='appElements'>
-          <div className='countryContainer'>
-            <p className={classProvider(props.theme, 'heading')}>
-              Data for {props.countrySearch.length > 0 ? props.countries.length : props.countries.length} countries found.
-            </p>
-          </div>
-        </div>
+        <h5 className={classProvider(props.theme, 'heading')}>
+          Data for {props.countrySearch.length > 0 ? props.countries.length : props.countries.length} countries found.
+        </h5>
         <div className='appElements'>
           <input type='search' placeholder='search country by typing name'
             onChange={event => handleSearch(event)}

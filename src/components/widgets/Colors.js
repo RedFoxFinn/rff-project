@@ -15,9 +15,7 @@ const Colors = (props) => {
   return(
     <div className='app'>
       <div className='appContainer'>
-        <div className='appElements'>
-          <h4 className={classProvider(props.appState.theme, 'heading')}>Site color palette:</h4>
-        </div>
+        <h4 className={classProvider(props.appState.theme, 'heading')}>Site color palette:</h4>
         <div className='appElements'>
           <div className='peru'/>
           <div className='gainsboro'/>

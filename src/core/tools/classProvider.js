@@ -15,8 +15,10 @@ const classProvider = (theme, element) => {
       return 'navSubContentDe';
     case 'heading':
       return 'headingDe';
+    case 'formElement':
+      return 'formElementDe';
     case 'calculateElement':
-      return 'calculateElementDe';
+      return 'formElementDe';
     case 'calculateResult':
       return 'calculateResultDe';
     case 'technologyElement':
@@ -39,6 +41,20 @@ const classProvider = (theme, element) => {
       return 'searchCancelDe';
     case 'countryDetails':
       return 'countryDetailsDe';
+    case 'dishyElement':
+      return 'dishyElementDe';
+    case 'stopContainer':
+      return 'stopContainer';
+    case 'stopDetails':
+      return 'stopDetailsDe';
+    case 'linkButton':
+      return 'linkButtonDe';
+    case 'notificationInfo':
+      return 'notificationInfoDe';
+    case 'notificationError':
+      return 'notificationErrorDe';
+    case 'notificationNull':
+      return 'notificationNullDe';
     default:
       return '';
     }
@@ -58,8 +74,10 @@ const classProvider = (theme, element) => {
       return 'navSubContentDa';
     case 'heading':
       return 'headingDa';
+    case 'formElement':
+      return 'formElementDa';
     case 'calculateElement':
-      return 'calculateElementDa';
+      return 'formElementDa';
     case 'calculateResult':
       return 'calculateResultDa';
     case 'technologyElement':
@@ -82,6 +100,20 @@ const classProvider = (theme, element) => {
       return 'searchCancelDa';
     case 'countryDetails':
       return 'countryDetailsDa';
+    case 'dishyElement':
+      return 'dishyElementDa';
+    case 'stopContainer':
+      return 'stopContainer';
+    case 'stopDetails':
+      return 'stopDetailsDa';
+    case 'linkButton':
+      return 'linkButtonDa';
+    case 'notificationInfo':
+      return 'notificationInfoDa';
+    case 'notificationError':
+      return 'notificationErrorDa';
+    case 'notificationNull':
+      return 'notificationNullDa';
     default:
       return '';
     }
@@ -101,8 +133,10 @@ const classProvider = (theme, element) => {
       return 'navSubContentLi';
     case 'heading':
       return 'headingLi';
+    case 'formElement':
+      return 'formElementLi';
     case 'calculateElement':
-      return 'calculateElementLi';
+      return 'formElementLi';
     case 'calculateResult':
       return 'calculateResultLi';
     case 'technologyElement':
@@ -125,6 +159,20 @@ const classProvider = (theme, element) => {
       return 'searchCancelLi';
     case 'countryDetails':
       return 'countryDetailsLi';
+    case 'dishyElement':
+      return 'dishyElementLi';
+    case 'stopContainer':
+      return 'stopContainer';
+    case 'stopDetails':
+      return 'stopDetailsLi';
+    case 'linkButton':
+      return 'linkButtonLi';
+    case 'notificationInfo':
+      return 'notificationInfoLi';
+    case 'notificationError':
+      return 'notificationErrorLi';
+    case 'notificationNull':
+      return 'notificationNullLi';
     default:
       return '';
     }

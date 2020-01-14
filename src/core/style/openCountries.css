@@ -6,6 +6,10 @@
     color: var(--darkslategrey);
     border: 1px solid var(--darkslategrey);
 }
+.searchElementDe:focus {
+    outline-color: var(--greenyellow);
+    outline-style: dotted;
+}
 .searchElementDa {
     display: block;
     margin: 1em;
@@ -13,6 +17,10 @@
     background-color: var(--darkslategrey);
     color: var(--gainsboro);
     border: 1px solid var(--gainsboro);
+}
+.searchElementDa:focus {
+    outline-color: var(--greenyellow);
+    outline-style: dotted;
 }
 .searchElementLi {
     display: block;
@@ -22,6 +30,10 @@
     color: var(--darkslategrey);
     border: 1px solid var(--darkslategrey);
 }
+.searchElementLi:focus {
+    outline-color: var(--greenyellow);
+    outline-style: dotted;
+}
 .searchCancelDe {
     display: block;
     margin: 1em;
@@ -29,6 +41,10 @@
     background-color: var(--peru);
     color: var(--darkslategrey);
     border: 1px solid var(--darkslategrey);
+}
+.searchCancelDe:focus {
+    outline-color: var(--greenyellow);
+    outline-style: dotted;
 }
 .searchCancelDa {
     display: block;
@@ -38,6 +54,10 @@
     color: var(--gainsboro);
     border: 1px solid var(--gainsboro);
 }
+.searchCancelDa:focus {
+    outline-color: var(--greenyellow);
+    outline-style: dotted;
+}
 .searchCancelLi {
     display: block;
     margin: 1em;
@@ -45,6 +65,10 @@
     background-color: var(--gainsboro);
     color: var(--darkslategrey);
     border: 1px solid var(--darkslategrey);
+}
+.searchCancelLi:focus {
+    outline-color: var(--greenyellow);
+    outline-style: dotted;
 }
 .countryAppElements {
     display: flex;
@@ -61,8 +85,18 @@
 .countryDetailsLi {
     display: flex;
     flex-direction: column;
-    align-content: center;
+    align-content: flex-start;
     justify-content: flex-start;
 }
-.countryDetailsDa {}
-.countryDetailsDe {}
+.countryDetailsDa {
+    display: flex;
+    flex-direction: column;
+    align-content: flex-start;
+    justify-content: flex-start;
+}
+.countryDetailsDe {
+    display: flex;
+    flex-direction: column;
+    align-content: flex-start;
+    justify-content: flex-start;
+}
