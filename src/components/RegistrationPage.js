@@ -2,10 +2,11 @@ import React from 'react';
 import {connect} from 'react-redux';
 
 import classProvider from '../core/tools/classProvider';
-import {
-  setNewUsername, setNewPassword, setNewPasswordConfirm, registerFailure, registerSuccess
-} from '../core/store/reducers/LoginReducer';
 import '../core/style/global.css';
+
+import {handleInfo, handleError} from '../core/store/reducers/AppReducer';
+import {ADD_USER} from '../core/graphql/rff/mutations/m_addUser';
+import {useApolloClient} from '@apollo/react-hooks';
 
 const mapStateToProps = (state) => {
   return {
@@ -15,32 +16,49 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = {
-  setNewUsername, setNewPassword, setNewPasswordConfirm, registerFailure, registerSuccess
+  handleError, handleInfo
 };
 
 const RegistrationPage = (props) => {
+  const client = useApolloClient();
 
-  const register = (event) => {
+  const register = async (event) => {
     event.preventDefault();
+    const username = document.getElementById('regUsername').value;
+    const password = document.getElementById('regPassword').value;
+    const confirm = document.getElementById('regConfirm').value;
     console.error('attempt!');
+    password === confirm
+      ? await client.mutate({
+        mutation: ADD_USER,
+        variables: {
+          username: username,
+          password: password
+        }
+      }).then((result, errors) => {
+        if (!errors) {
+          props.handleInfo(`${username} registered`);
+        } else {
+          props.handleError(errors[0]);
+        }
+      })
+      : props.handleError({message: 'New passwords do not match'});
+    document.getElementById('regUsername').value = '';
+    document.getElementById('regPassword').value = '';
+    document.getElementById('regConfirm').value = '';
   };
 
   return(
     <div className='app'>
       <div className='appContainer'>
-        <form className='commonElements'>
-          <input type='text' required minLength={4} placeholder='username'
-            onChange={({target}) => props.setNewUsername(target.value)}
-            className={classProvider(props.theme, 'formElement')} value={props.loginState.newUsername} autoComplete={true}/>
-          <input type='password' required minLength={8} placeholder='password'
-            onChange={({target}) => props.setNewPassword(target.value)}
-            className={classProvider(props.theme, 'formElement')} value={props.loginState.newPassword} autoComplete={false}/>
-          <input type='password' required minLength={8} placeholder='re-type password'
-            onChange={({target}) => props.setNewPasswordConfirm(target.value)}
-            className={classProvider(props.theme, 'formElement')} value={props.loginState.newPasswordConfirm} autoComplete={false}/>
-          <button type='button' disabled={props.loginState.newPassword !== props.loginState.newPasswordConfirm}
-            onClick={(event) => register(event)}
-            className={classProvider(props.theme, 'formElement')}>register</button>
+        <form className='commonElements' onSubmit={(event) => register(event)}>
+          <input id='regUsername' type='text' required minLength={4} placeholder='username'
+            className={classProvider(props.theme, 'formElement')} autoComplete={true}/>
+          <input id='regPassword' type='password' required minLength={8} placeholder='password'
+            className={classProvider(props.theme, 'formElement')} autoComplete={false}/>
+          <input id='regConfirm' type='password' required minLength={8} placeholder='re-type password'
+            className={classProvider(props.theme, 'formElement')} autoComplete={false}/>
+          <button type='submit' className={classProvider(props.theme, 'formElement')}>register</button>
         </form>
       </div>
     </div>

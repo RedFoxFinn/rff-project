@@ -28,7 +28,22 @@ const Navigation = (props) => {
   const client = useApolloClient();
   const themes = ['light', 'dark'];
   const theme = props.appState.theme;
-  let loginToken = localStorage.getItem('rffUserToken').toString();
+  const loginToken = localStorage.getItem('rffUserToken');
+
+  useEffect(() => {
+    loginToken !== null && client.query({
+      query: ME,
+      variables: {
+        token: loginToken.substring(7)
+      }
+    }).then((result, errors) => {
+      if (!errors) {
+        props.loginSuccess(result.data.me);
+      } else {
+        props.handleError(errors[0]);
+      }
+    });
+  }, [loginToken, client, ME]);
 
   const MenuModule = () => {
     return (

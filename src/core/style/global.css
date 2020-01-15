@@ -123,11 +123,11 @@ button {
 }
 .descriptionLi {
     color: var(--darkslategrey);
-    width: 50%;
+    width: 14em;
 }
 .descriptionDa {
     color: var(--gainsboro);
-    width: 50%;
+    width: 14em;
 }
 .linkLi {
     padding: 0.5em;
@@ -209,3 +209,6 @@ button {
     color: var(--googlered);
     text-align: center;
 }
+.tile {}
+.tileDescriptionLi {}
+.tileDescriptionDa {}

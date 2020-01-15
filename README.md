@@ -34,12 +34,12 @@ Dashboard:TaskCount | `ongoing`
 Dashboard:TrackedStopsCount | `ongoing`
 Dishy-app | `ongoing`
 Landing page | `done`
-Login page | `done`
+Login page | `done`,`tweaked`
 Navigation | `ongoing`
 OpenCountry-app | `done`
 Tasker-app | `upcoming`
 UserSettings | `ongoing`
-Registering | `ongoing`
+Registering | `done`
 Transporter-app | `upcoming`
 GraphQL-fragments | `done`
 GraphQL-mutations | `done`

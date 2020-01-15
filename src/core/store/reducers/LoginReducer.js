@@ -3,10 +3,7 @@
 const initialState = {
   user: null,
   username: '',
-  password: '',
-  newUsername: '',
-  newPassword: '',
-  newPasswordConfirm: ''
+  password: ''
 };
 
 const LoginReducer = (state = initialState, action) => {
@@ -21,16 +18,6 @@ const LoginReducer = (state = initialState, action) => {
     return {...state, username: action.username};
   case 'setPassword':
     return {...state, password: action.password};
-  case 'setNewUsername':
-    return {...state, newUsername: action.username};
-  case 'setNewPassword':
-    return {...state, newPassword: action.password};
-  case 'setNewPasswordConfirm':
-    return {...state, newPasswordConfirm: action.password};
-  case 'registerFailure':
-    return {...state, newPassword: '', newPasswordConfirm: ''};
-  case 'registerSuccess':
-    return {...initialState};
   default:
     return state;
   }
@@ -59,32 +46,6 @@ export const setPassword = (password) => {
 export const logout = () => {
   return async dispatch => {
     dispatch({type: 'logout'});
-  };
-};
-
-export const setNewUsername = (username) => {
-  return async dispatch => {
-    dispatch({type: 'setNewUsername', username: username});
-  };
-};
-export const setNewPassword = (password) => {
-  return async dispatch => {
-    dispatch({type: 'setNewPassword', password: password});
-  };
-};
-export const setNewPasswordConfirm = (password) => {
-  return async dispatch => {
-    dispatch({type: 'setNewPasswordConfirm', password: password});
-  };
-};
-export const registerFailure = () => {
-  return async dispatch => {
-    dispatch({type: 'registerFailure'});
-  };
-};
-export const registerSuccess = () => {
-  return async dispatch => {
-    dispatch({type: 'registerSuccess'});
   };
 };
 

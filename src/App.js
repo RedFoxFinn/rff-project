@@ -165,7 +165,7 @@ const App = (props) => {
             <Route path='/login' render={(props) => <LoginPage {...props} show={true}/>}/>
             <Route path='/register' render={(props) => <RegistrationPage {...props} show={true}/>}/>
             <Route path='/tasker' render={(props) => <Tasker {...props} show={true}/>}/>
-            <Route path='/user' render={(props) => <UserPage {...props} show={true}/>}/>
+            {props.user && <Route path='/user' render={(props) => <UserPage {...props} show={true}/>}/>}
           </Switch>
         </ApolloProvider>
         <ApolloProvider client={hslClient}>
