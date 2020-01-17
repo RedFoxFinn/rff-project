@@ -41,6 +41,7 @@ module.exports = {
     'semi': [
       'error',
       'always'
-    ]
+    ],
+    'no-irregular-whitespace': 1
   }
 };
