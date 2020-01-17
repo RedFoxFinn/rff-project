@@ -933,6 +933,8 @@ const createMutation = (mutationType) => {
   }
 };
 
+let connection;
+
 // setup db for testing
 beforeAll(async (done) => {
 
@@ -943,7 +945,7 @@ beforeAll(async (done) => {
   mongoose.set('useCreateIndex', true);
 
   try {
-    await mongoose.connect(config.mongo);
+    connection = await mongoose.connect(config.mongo);
     console.log('Connection to Atlas - MongoDB cloud: success');
   } catch (e) {
     console.error('Connection to Atlas - MongoDB cloud: failed');
@@ -951,6 +953,11 @@ beforeAll(async (done) => {
     await resetDB();
     done();
   }
+});
+
+afterAll(async (done) => {
+  await connection.close;
+  done();
 });
 
 // test sets
