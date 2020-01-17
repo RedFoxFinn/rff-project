@@ -29,7 +29,7 @@
     "test": "NODE_ENV=test node Server.js",
     "watch": "NODE_ENV=development nodemon Server.js",
     "watch:test": "NODE_ENV=test nodemon Server.js",
-    "jest": "NODE_ENV=test jest",
+    "jest": "NODE_ENV=test jest --forceExit",
     "lint": "eslint --fix ."
   },
   "browserslist": [
