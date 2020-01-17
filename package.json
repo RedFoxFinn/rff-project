@@ -1,6 +1,6 @@
 {
   "name": "rff",
-  "version": "1.6.5",
+  "version": "1.0a",
   "private": true,
   "engines": {
     "node": "11.x",
