@@ -8,14 +8,11 @@ const bcrypt = require('bcrypt');
 const gql = require('graphql-tag');
 const EasyGraphQLTester = require('easygraphql-tester');
 const dbPusher = require('../utils/dbInit');
-const axios = require('axios');
 
 const { typeDefs } = require('../graphql/gql_typeDefs');
 const { resolvers } = require('../graphql/gql_resolvers');
 
 const tester = new EasyGraphQLTester(typeDefs, resolvers);
-
-const addr = `http://localhost:${config.port}`;
 
 const { Ingredient, CookingMethod, Comment, Dish, Group,
   GroupList, PrivateList, Task, User } = require('../models/modelImporter');
@@ -183,16 +180,6 @@ const groupListInit = async (token, group) => {
     }
   );
   return GroupList.findOne({ title: samples.groupList1.title }).populate('group');
-};
-// extra user
-const extraUserInit = async () => {
-  await tester.graphql(
-    await createMutation('addUser'),
-    undefined, undefined,
-    {
-      username: samples.user2.username,
-      password: samples.user2.password
-    });
 };
 
 // username reverse, test helper function
@@ -1033,7 +1020,7 @@ describe('API:test:user', () => {
       username: samples.user1.username,
       password: samples.user1.password
     };
-    const { data, errors } = await tester.graphql(mutation, undefined, undefined, variables);
+    const { data } = await tester.graphql(mutation, undefined, undefined, variables);
     expect(data).toBeDefined();
     expect(data.addUser).toBeDefined();
     expect(data.addUser).toHaveProperty('username', samples.user1.username);
@@ -1046,7 +1033,7 @@ describe('API:test:user', () => {
       username: samples.user1.username,
       password: samples.user1.password
     };
-    const { data, errors } = await tester.graphql(mutation, undefined, undefined, variables);
+    const { errors } = await tester.graphql(mutation, undefined, undefined, variables);
     expect(errors).toBeDefined();
     const message = errors[0].message.substring(0, 38);
     expect(message).toMatch('E11000 duplicate key error collection:');
@@ -1840,7 +1827,7 @@ describe('API:test:dish', () => {
     expect(data.addDish.note).toMatch(values.note);
     expect(data.addDish.addedBy.username).toMatch(samples.nullUser.username);
   });
-  test('addDish, non-unique, fail', async () => {
+  test('addDish, non-unique, fail', async () => {
     const mutation = await createMutation('addDish');
     const variables = {
       token: token.substring(7),
@@ -2059,11 +2046,9 @@ describe('API:test:dish', () => {
 describe('API:test:privateList', () => {
   let token;
   let dummyToken;
-  let user;
 
   beforeAll(async () => {
     dummyToken = await getDummyToken();
-    user = await User.findOne({ username: samples.dummyUser.username });
   });
   beforeEach(async () => {
     token = await getNullToken();
@@ -2144,11 +2129,9 @@ describe('API:test:privateList', () => {
 describe('API:test:groupList', () => {
   let token;
   let dummyToken;
-  let user;
 
   beforeAll(async () => {
     dummyToken = await getDummyToken();
-    user = await User.findOne({ username: samples.dummyUser.username });
     await tester.graphql(
       await createMutation('addGroup'),
       undefined, undefined,

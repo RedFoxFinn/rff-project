@@ -2,10 +2,8 @@
 // test helper utility
 
 // imports
-const config = require('./config');
 
-const { Ingredient, CookingMethod, Comment, Dish, Group,
-  GroupList, PrivateList, Task, User } = require('../models/modelImporter');
+const { Ingredient, CookingMethod } = require('../models/modelImporter');
 
 const dbPusher = async (type, data, user) => {
   let err = false;
