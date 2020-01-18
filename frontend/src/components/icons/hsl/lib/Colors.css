@@ -1,0 +1,242 @@
+.HslSininen {
+    color: #007AC9;
+    fill: #007AC9;
+    outline-color: #007AC9;
+}
+.HslBlue {
+    color: #007AC9;
+    fill: #007AC9;
+    outline-color: #007AC9;
+}
+
+.Kaupunkifillari {
+    color: #FCBC19;
+    fill: #FCBC19;
+    outline-color: #FCBC19;
+}
+.Citybike {
+    color: #FCBC19;
+    fill: #FCBC19;
+    outline-color: #FCBC19;
+}
+
+.Bussi {
+    color: #007AC9;
+    fill: #007AC9;
+    outline-color: #007AC9;
+}
+.Bus {
+    color: #007AC9;
+    fill: #007AC9;
+    outline-color: #007AC9;
+}
+
+.Spora {
+    color: #00985F;
+    fill: #00985F;
+    outline-color: #00985F;
+}
+.Tram {
+    color: #00985F;
+    fill: #00985F;
+    outline-color: #00985F;
+}
+
+.Juna {
+    color: #8C4799;
+    fill: #8C4799;
+    outline-color: #8C4799;
+}
+.Train {
+    color: #8C4799;
+    fill: #8C4799;
+    outline-color: #8C4799;
+}
+
+.Metro {
+    color: #FF6319;
+    fill: #FF6319;
+    outline-color: #FF6319;
+}
+
+.Raidejokeri {
+    color: #00B2A9;
+    fill: #00B2A9;
+    outline-color: #00B2A9;
+}
+.JokeriLightRail {
+    color: #00B2A9;
+    fill: #00B2A9;
+    outline-color: #00B2A9;
+}
+
+.Lautta {
+    color: #00B9E4;
+    fill: #00B9E4;
+    outline-color: #00B9E4;
+}
+.Ferry {
+    color: #00B9E4;
+    fill: #00B9E4;
+    outline-color: #00B9E4;
+}
+
+.LauttaVaalea {
+    color: #BEE4F8;
+    fill: #BEE4F8;
+    outline-color: #BEE4F8;
+}
+.FerryLight {
+    color: #BEE4F8;
+    fill: #BEE4F8;
+    outline-color: #BEE4F8;
+}
+
+.HslPinkki {
+    color: #F092CD;
+    fill: #F092CD;
+    outline-color: #F092CD;
+}
+.HslPink {
+    color: #F092CD;
+    fill: #F092CD;
+    outline-color: #F092CD;
+}
+
+.HslPinkkiVaalea {
+    color: #F4DEEA;
+    fill: #F4DEEA;
+    outline-color: #F4DEEA;
+}
+.HslPinkLight {
+    color: #F4DEEA;
+    fill: #F4DEEA;
+    outline-color: #F4DEEA;
+}
+
+.HslVihrea {
+    color: #64BE1E;
+    fill: #64BE1E;
+    outline-color: #64BE1E;
+}
+.HslGreen {
+    color: #64BE1E;
+    fill: #64BE1E;
+    outline-color: #64BE1E;
+}
+
+.HslVihreaVaalea {
+    color: #D0E6BD;
+    fill: #D0E6BD;
+    outline-color: #D0E6BD;
+}
+.HslGreenLight {
+    color: #D0E6BD;
+    fill: #D0E6BD;
+    outline-color: #D0E6BD;
+}
+
+.HslVaroitusPunainen {
+    color: #DC0451;
+    fill: #DC0451;
+    outline-color: #DC0451;
+}
+.HslWarningRed {
+    color: #DC0451;
+    fill: #DC0451;
+    outline-color: #DC0451;
+}
+
+.HslHuomiokeltainen {
+    color: #FED100;
+    fill: #FED100;
+    outline-color: #FED100;
+}
+.HslHighlightYellow {
+    color: #FED100;
+    fill: #FED100;
+    outline-color: #FED100;
+}
+
+.HslHarmaaTumma {
+    color: #333333;
+    fill: #333333;
+    outline-color: #333333;
+}
+.HslGreyDark {
+    color: #333333;
+    fill: #333333;
+    outline-color: #333333;
+}
+
+.HslHarmaa {
+    color: #616365;
+    fill: #616365;
+    outline-color: #616365;
+}
+.HslGrey {
+    color: #616365;
+    fill: #616365;
+    outline-color: #616365;
+}
+
+.HslHarmaaVaalea {
+    color: #666666;
+    fill: #666666;
+    outline-color: #666666;
+}
+.HslGreyLight {
+    color: #666666;
+    fill: #666666;
+    outline-color: #666666;
+}
+
+.HslHarmaaVaaleampi {
+    color: #dddddc;
+    fill: #dddddc;
+    outline-color: #dddddc;
+}
+.HslGreyVeryLight {
+    color: #dddddc;
+    fill: #dddddc;
+    outline-color: #dddddc;
+}
+
+.Valkoinen {
+    color: white;
+    fill: white;
+    outline-color: white;
+}
+.White {
+    color: white;
+    fill: white;
+    outline-color: white;
+}
+
+.Musta {
+    color: black;
+    fill: black;
+    outline-color: black;
+}
+.Black {
+    color: black;
+    fill: black;
+    outline-color: black;
+}
+
+.DigitransitSininen {
+    color: #3db7e4;
+    fill: #3db7e4;
+    outline-color: #3db7e4;
+}
+.DigitransitBlue {
+    color: #3db7e4;
+    fill: #3db7e4;
+    outline-color: #3db7e4;
+}
+
+.GradientHSL {
+    background: linear-gradient(to right, #00985F,#8C4799);
+    color: transparent;
+    -webkit-background-clip: text;
+}

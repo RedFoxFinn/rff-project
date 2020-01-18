@@ -1,0 +1,15 @@
+
+.appContainer {
+    background-color: transparent;
+    margin: 1em;
+}
+.light {
+    background-color: var(--gainsboro);
+}
+.dark {
+    background-color: var(--darkslategrey);
+}
+.dev {
+    background-color: var(--peru);
+}
+

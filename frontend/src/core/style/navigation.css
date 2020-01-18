@@ -1,0 +1,193 @@
+
+.headingLi {
+    color: var(--darkslategrey);
+}
+.headingDa {
+    color: var(--gainsboro);
+}
+
+.navRow {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+.navMenuLi {
+    position: relative;
+    display: inline-block;
+}
+.navMenuDa {
+    position: relative;
+    display: inline-block;
+}
+.navButtonLi {
+    border: none;
+    padding: 1em;
+    cursor: pointer;
+    background-color: greenyellow;
+    color: black;
+}
+.navButtonLi:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+.navButtonDa {
+    border: none;
+    padding: 1em;
+    cursor: pointer;
+    background-color: greenyellow;
+    color: black;
+}
+.navButtonDa:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+.navContentLi {
+    background-color: #7D7D7D;
+    opacity: 0.75;
+    min-width: 5em;
+    display: none;
+    position: absolute;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    z-index: 1;
+}
+.navContentDa {
+    background-color: #7D7D7D;
+    opacity: 0.75;
+    min-width: 5em;
+    display: none;
+    position: absolute;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    z-index: 1;
+}
+.navContentLi a {
+    margin: 1em;
+    display: block;
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+.navContentDa a {
+    margin: 1em;
+    display: block;
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+.navContentLi a:hover {
+}
+.navMenuLi:hover .navContentLi {
+    display: block;
+}
+.navContentDa a:hover {
+}
+.navMenuDa:hover .navContentDa {
+    display: block;
+}
+
+.navSubMenuLi {
+    position: relative;
+    display: inline-block;
+}
+.navSubMenuDa {
+    position: relative;
+    display: inline-block;
+}
+.navSubButtonLi {
+    border: none;
+    padding: 1em;
+    cursor: pointer;
+    background-color: greenyellow;
+    color: black;
+}
+.navSubButtonDa {
+    border: none;
+    padding: 1em;
+    cursor: pointer;
+    background-color: greenyellow;
+    color: black;
+}
+.navSubButtonLi:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+.navSubButtonDa:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+.navSubContentLi {
+    background-color: #7D7D7D;
+    opacity: 0.75;
+    min-width: 5em;
+    display: none;
+    position: absolute;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    z-index: 1;
+}
+.navSubContentDa {
+    background-color: #7D7D7D;
+    opacity: 0.75;
+    min-width: 5em;
+    display: none;
+    position: absolute;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    z-index: 1;
+}
+.navSubContentLi a {
+    margin: 1em;
+    display: block;
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+.navSubContentDa a {
+    margin: 1em;
+    display: block;
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.navSubMenuLi:hover .navSubContentLi {
+    display: inline-block;
+}
+.navSubMenuDa:hover .navSubContentDa {
+    display: inline-block;
+}
+
+.loginMenuLi {
+    position: relative;
+    display: block;
+}
+.loginMenuDa {
+    position: relative;
+    display: block;
+}
+.loginMenuLi:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    z-index: 1;
+}
+.loginMenuDa:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    z-index: 1;
+}
+.loginContentLi {
+    display: block;
+    min-width: 5em;
+}
+.loginContentDa {
+    display: block;
+    min-width: 5em;
+}
+.loginMenuLi a {
+    padding: 0.75em;
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+    background-color: greenyellow;
+    border: none;
+}
+.loginMenuDa a {
+    padding: 0.75em;
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+    background-color: greenyellow;
+    border: none;
+}

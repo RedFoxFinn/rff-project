@@ -1,0 +1,96 @@
+.searchElementDe {
+    display: block;
+    margin: 1em;
+    width: 16em;
+    background-color: var(--peru);
+    color: var(--darkslategrey);
+    border: 1px solid var(--darkslategrey);
+}
+.searchElementDe:focus {
+    outline-color: var(--greenyellow);
+    outline-style: dotted;
+}
+.searchElementDa {
+    display: block;
+    margin: 1em;
+    width: 16em;
+    background-color: var(--darkslategrey);
+    color: var(--gainsboro);
+    border: 1px solid var(--gainsboro);
+}
+.searchElementDa:focus {
+    outline-color: var(--greenyellow);
+    outline-style: dotted;
+}
+.searchElementLi {
+    display: block;
+    margin: 1em;
+    width: 16em;
+    background-color: var(--gainsboro);
+    color: var(--darkslategrey);
+    border: 1px solid var(--darkslategrey);
+}
+.searchElementLi:focus {
+    outline-color: var(--greenyellow);
+    outline-style: dotted;
+}
+.searchCancelDe {
+    display: block;
+    margin: 1em;
+    min-width: 4em;
+    background-color: var(--peru);
+    color: var(--darkslategrey);
+    border: 1px solid var(--darkslategrey);
+}
+.searchCancelDe:focus {
+    outline-color: var(--greenyellow);
+    outline-style: dotted;
+}
+.searchCancelDa {
+    display: block;
+    margin: 1em;
+    min-width: 4em;
+    background-color: var(--darkslategrey);
+    color: var(--gainsboro);
+    border: 1px solid var(--gainsboro);
+}
+.searchCancelDa:focus {
+    outline-color: var(--greenyellow);
+    outline-style: dotted;
+}
+.searchCancelLi {
+    display: block;
+    margin: 1em;
+    min-width: 4em;
+    background-color: var(--gainsboro);
+    color: var(--darkslategrey);
+    border: 1px solid var(--darkslategrey);
+}
+.searchCancelLi:focus {
+    outline-color: var(--greenyellow);
+    outline-style: dotted;
+}
+.countryAppElements {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+.countryAppElements:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+.countryContainer {
+    display: block;
+    margin: 1em;
+}
+.countryDetailsLi {
+    display: flex;
+    flex-direction: column;
+    align-content: flex-start;
+    justify-content: flex-start;
+}
+.countryDetailsDa {
+    display: flex;
+    flex-direction: column;
+    align-content: flex-start;
+    justify-content: flex-start;
+}

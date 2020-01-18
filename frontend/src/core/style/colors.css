@@ -1,0 +1,295 @@
+
+.peru {
+    background-color: var(--peru);
+    width: 2.5em;
+    height: 2.5em;
+    margin: 1em;
+}
+.gainsboro {
+    background-color: var(--gainsboro);
+    width: 2.5em;
+    height: 2.5em;
+    margin: 1em;
+}
+.darkslategrey {
+    background-color: var(--darkslategrey);
+    width: 2.5em;
+    height: 2.5em;
+    margin: 1em;
+}
+.yellowgreen {
+    background-color: var(--greenyellow);
+    width: 2.5em;
+    height: 2.5em;
+    margin: 1em;
+}
+.reactblue {
+    background-color: var(--reactblue);
+    width: 2.5em;
+    height: 2.5em;
+    margin: 1em;
+}
+.slateblue {
+    background-color: var(--slateblue);
+    width: 2.5em;
+    height: 2.5em;
+    margin: 1em;
+}
+.deeppink {
+    background-color: var(--deeppink);
+    width: 2.5em;
+    height: 2.5em;
+    margin: 1em;
+}
+.seagreen {
+    background-color: var(--seagreen);
+    width: 2.5em;
+    height: 2.5em;
+    margin: 1em;
+}
+.googleblue {
+    background-color: var(--googleblue);
+    width: 2.5em;
+    height: 2.5em;
+    margin: 1em;
+}
+.googlered {
+    background-color: var(--googlered);
+    width: 2.5em;
+    height: 2.5em;
+    margin: 1em;
+}
+.googleyellow {
+    background-color: var(--googleyellow);
+    width: 2.5em;
+    height: 2.5em;
+    margin: 1em;
+}
+.googlegreen {
+    background-color: var(--googlegreen);
+    width: 2.5em;
+    height: 2.5em;
+    margin: 1em;
+}
+.amazonorange {
+    background-color: var(--amazonorange);
+    width: 2.5em;
+    height: 2.5em;
+    margin: 1em;
+}
+.slackblue {
+    background-color: var(--slackblue);
+    width: 2.5em;
+    height: 2.5em;
+    margin: 1em;
+}
+.slackgreen {
+    background-color: var(--slackgreen);
+    width: 2.5em;
+    height: 2.5em;
+    margin: 1em;
+}
+.slackyellow {
+    background-color: var(--slackyellow);
+    width: 2.5em;
+    height: 2.5em;
+    margin: 1em;
+}
+.slackred {
+    background-color: var(--slackred);
+    width: 2.5em;
+    height: 2.5em;
+    margin: 1em;
+}
+.bus {
+    background-color: var(--bus);
+    width: 2.5em;
+    height: 2.5em;
+    margin: 1em;
+}
+.citybike {
+    background-color: var(--citybike);
+    width: 2.5em;
+    height: 2.5em;
+    margin: 1em;
+}
+.tram {
+    background-color: var(--tram);
+    width: 2.5em;
+    height: 2.5em;
+    margin: 1em;
+}
+.train {
+    background-color: var(--train);
+    width: 2.5em;
+    height: 2.5em;
+    margin: 1em;
+}
+.metro {
+    background-color: var(--metro);
+    width: 2.5em;
+    height: 2.5em;
+    margin: 1em;
+}
+.jokerilightrail {
+    background-color: var(--jokerilightrail);
+    width: 2.5em;
+    height: 2.5em;
+    margin: 1em;
+}
+.ferry {
+    background-color: var(--ferry);
+    width: 2.5em;
+    height: 2.5em;
+    margin: 1em;
+}
+.ferrylight {
+    background-color: var(--ferrylight);
+    width: 2.5em;
+    height: 2.5em;
+    margin: 1em;
+}
+.hslpink {
+    background-color: var(--hslpink);
+    width: 2.5em;
+    height: 2.5em;
+    margin: 1em;
+}
+.hslpinklight {
+    background-color: var(--hslpinklight);
+    width: 2.5em;
+    height: 2.5em;
+    margin: 1em;
+}
+.hslgreen {
+    background-color: var(--hslgreen);
+    width: 2.5em;
+    height: 2.5em;
+    margin: 1em;
+}
+.hslgreenlight {
+    background-color: var(--hslgreenlight);
+    width: 2.5em;
+    height: 2.5em;
+    margin: 1em;
+}
+.hslwarning {
+    background-color: var(--hslwarning);
+    width: 2.5em;
+    height: 2.5em;
+    margin: 1em;
+}
+.hslhighlight {
+    background-color: var(--hslhighlight);
+    width: 2.5em;
+    height: 2.5em;
+    margin: 1em;
+}
+.hslblue {
+    background-color: var(--hslblue);
+    width: 2.5em;
+    height: 2.5em;
+    margin: 1em;
+}
+.dgray {
+    background-color: var(--dgray);
+    width: 2.5em;
+    height: 2.5em;
+    margin: 1em;
+}
+.gray {
+    background-color: var(--gray);
+    width: 2.5em;
+    height: 2.5em;
+    margin: 1em;
+}
+.lgray {
+    background-color: var(--lgray);
+    width: 2.5em;
+    height: 2.5em;
+    margin: 1em;
+}
+.vlgray {
+    background-color: var(--vlgray);
+    width: 2.5em;
+    height: 2.5em;
+    margin: 1em;
+}
+.digitransit {
+    background-color: var(--digitransit);
+    width: 2.5em;
+    height: 2.5em;
+    margin: 1em;
+}
+.jbamber {
+    background-color: var(--jbamber);
+    width: 2.5em;
+    height: 2.5em;
+    margin: 1em;
+}
+.jbsiena {
+    background-color: var(--jbsiena);
+    width: 2.5em;
+    height: 2.5em;
+    margin: 1em;
+}
+.jbcrimson {
+    background-color: var(--jbcrimson);
+    width: 2.5em;
+    height: 2.5em;
+    margin: 1em;
+}
+.jbcarmine {
+    background-color: var(--jbcarmine);
+    width: 2.5em;
+    height: 2.5em;
+    margin: 1em;
+}
+.jbfuchsia {
+    background-color: var(--jbfuchsia);
+    width: 2.5em;
+    height: 2.5em;
+    margin: 1em;
+}
+.jblilac {
+    background-color: var(--jblilac);
+    width: 2.5em;
+    height: 2.5em;
+    margin: 1em;
+}
+.jbmauve {
+    background-color: var(--jbmauve);
+    width: 2.5em;
+    height: 2.5em;
+    margin: 1em;
+}
+.jbpurple {
+    background-color: var(--jbpurple);
+    width: 2.5em;
+    height: 2.5em;
+    margin: 1em;
+}
+.jbskyblue {
+    background-color: var(--jbskyblue);
+    width: 2.5em;
+    height: 2.5em;
+    margin: 1em;
+}
+.jbgreen {
+    background-color: var(--jbgreen);
+    width: 2.5em;
+    height: 2.5em;
+    margin: 1em;
+}
+.jblemon {
+    background-color: var(--jblemon);
+    width: 2.5em;
+    height: 2.5em;
+    margin: 1em;
+}
+.heroku {
+    background-color: var(--heroku);
+    width: 2.5em;
+    height: 2.5em;
+    margin: 1em;
+}
