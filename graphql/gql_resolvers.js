@@ -139,8 +139,11 @@ const countLists = async (args, user) => {
     return List.collection.countDocuments();
   } else {
     const p = await PrivateList.find({ owner: user._id }).countDocuments();
-    const g = user.groups.map(g => GroupList.find({ group: g }).countDocuments()).reduce();
-    return p+g;
+    const gl = await GroupList.find({});
+    const g = gl.map(l => {
+      return user.groups.includes(l.group) && l;
+    });
+    return p+g.length;
   }
 };
 

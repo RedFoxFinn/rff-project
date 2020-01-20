@@ -2,13 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ed49563c-3f14-4e8e-9ab4-730018c08380" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.eslintrc.js" beforeDir="false" afterPath="$PROJECT_DIR$/.eslintrc.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.github/workflows/nodejs.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/nodejs.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/graphql/gql_resolvers.js" beforeDir="false" afterPath="$PROJECT_DIR$/graphql/gql_resolvers.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/api.test.js" beforeDir="false" afterPath="$PROJECT_DIR$/tests/api.test.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/dbInit.js" beforeDir="false" afterPath="$PROJECT_DIR$/utils/dbInit.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,6 +65,8 @@
       <workItem from="1578390501895" duration="44000" />
       <workItem from="1578394286202" duration="12946000" />
       <workItem from="1579251699530" duration="15111000" />
+      <workItem from="1579510312570" duration="605000" />
+      <workItem from="1579523235911" duration="848000" />
     </task>
     <servers />
   </component>
@@ -77,6 +74,10 @@
     <option name="version" value="1" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="439" y="195" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1579510339072">
+      <screen x="0" y="32" width="1366" height="736" />
+    </state>
+    <state x="439" y="195" key="#com.intellij.fileTypes.FileTypeChooser/0.32.1366.736@0.32.1366.736" timestamp="1579510339072" />
     <state x="100" y="128" width="1166" height="540" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1578397132119">
       <screen x="0" y="28" width="1366" height="740" />
     </state>
