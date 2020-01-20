@@ -33,7 +33,7 @@ const ReactIcon = ({heightStyle}) => {
         <polygon fill="#61DAFB" points="520.5,78.1 520.5,78.1 520.5,78.1 	"/>
       </g>
     </svg>
-  )
+  );
 };
 
-export default ReactIcon
+export default ReactIcon;

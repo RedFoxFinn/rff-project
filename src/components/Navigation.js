@@ -7,7 +7,6 @@ import {logout, loginSuccess} from '../core/store/reducers/LoginReducer';
 import classProvider from '../core/tools/classProvider';
 import '../core/style/navigation.css';
 import '../core/style/global.css';
-import HslHrtIcon from './icons/hsl/HslHrtIcon';
 
 import {ME} from '../core/graphql/rff/queries/q_me';
 import {useApolloClient} from '@apollo/react-hooks';
@@ -43,7 +42,7 @@ const Navigation = (props) => {
         props.handleError(errors[0]);
       }
     });
-  }, [loginToken, client, ME]);
+  }, [loginToken, client]);
 
   const MenuModule = () => {
     return (

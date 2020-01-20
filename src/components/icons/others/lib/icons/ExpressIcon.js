@@ -29,7 +29,7 @@ const ExpressIcon = ({heightStyle}) => {
           id="path16"/>
       </g>
     </svg>
-  )
+  );
 };
 
-export default ExpressIcon
+export default ExpressIcon;

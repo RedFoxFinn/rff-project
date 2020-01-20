@@ -20,7 +20,7 @@ const PageNotFound = ({className, heightStyle}) => {
         84.676 C293.104,86.573 298.873,94.617 297.759,103.354 ZM269.171,263.859 L97.823,
         263.859 L97.823,253.526 L269.171,253.526 L269.171,263.859 Z"/>
     </svg>
-  )
+  );
 };
 
-export default PageNotFound
+export default PageNotFound;

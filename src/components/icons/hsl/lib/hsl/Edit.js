@@ -8,7 +8,7 @@ const Edit = ({className, heightStyle}) => {
         l80.237,80.237L275.05,88.608c11.22-11.22,11.22-28.899,0-40.119L234.931,8.371z"/>
       <polygon className='Metro' points="107.096,254.522 28.899,176.325 0,283.421 		"/>
     </svg>
-  )
+  );
 };
 
-export default Edit
+export default Edit;

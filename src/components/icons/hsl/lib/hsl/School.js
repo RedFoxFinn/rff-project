@@ -16,7 +16,7 @@ const School = ({className, heightStyle}) => {
            M246.955,234.51h-30.063v-42.95h30.063V234.51z M246.955,158.727h-30.063v-42.948h30.063V158.727z"/>
       </g>
     </svg>
-  )
+  );
 };
 
-export default School
+export default School;

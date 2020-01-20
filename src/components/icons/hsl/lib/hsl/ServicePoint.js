@@ -30,7 +30,7 @@ const ServicePoint = ({className, heightStyle}) => {
         C12.038,11.718,11.963,11.415,11.698,11.151z M13.472,8c0-0.227-0.264-0.396-0.623-0.396c-0.019,0-0.453,0.019-0.68,0.396
         c0.227,0.358,0.66,0.378,0.68,0.378C13.208,8.378,13.472,8.227,13.472,8z"/>
     </svg>
-  )
+  );
 };
 
-export default ServicePoint
+export default ServicePoint;

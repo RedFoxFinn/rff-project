@@ -19,7 +19,7 @@ const Nearby = ({className, heightStyle}) => {
          M141.377,159.748c-1.758,0-2.813,1.407-2.813,2.813v69.619h-23.207v-85.09h52.39v85.09h-23.207v-69.619
         c0-1.406-1.054-2.813-2.812-2.813H141.377z"/>
     </svg>
-  )
+  );
 };
 
-export default Nearby
+export default Nearby;

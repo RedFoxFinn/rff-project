@@ -5,17 +5,19 @@ import classProvider from '../core/tools/classProvider';
 import '../core/style/global.css';
 import '../core/style/transporter.css';
 import HslHrtIcon from './icons/hsl/HslHrtIcon';
+import {useApolloClient} from '@apollo/react-hooks';
 
 const mapStateToProps = (state) => {
   return {
     theme: state.appState.theme,
-    stops: state.loginState.user.stops
+    user: state.loginState.user
   };
 };
 
 const mapDispatchToProps = {};
 
 const Transporter = (props) => {
+  const client = useApolloClient();
   return(
     <div className='app'>
       <div className='appContainer'>

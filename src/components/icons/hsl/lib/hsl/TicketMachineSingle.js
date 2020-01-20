@@ -145,7 +145,7 @@ const TicketMachineSingle = ({className, heightStyle}) => {
         c-0.006-0.018-0.031-0.055-0.079-0.09c0,0.001-0.002-0.001-0.009-0.006c-0.007-0.004-0.016-0.009-0.028-0.015
         c-0.023-0.012-0.051-0.022-0.076-0.024C9.352,10.683,9.349,10.683,9.348,10.683"/>
     </svg>
-  )
+  );
 };
 
-export default TicketMachineSingle
+export default TicketMachineSingle;

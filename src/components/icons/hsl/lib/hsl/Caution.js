@@ -12,7 +12,7 @@ const Caution = ({className, heightStyle}) => {
         c0-9.298-6.852-16.149-16.64-16.149c-9.296,0-16.637,6.852-16.637,16.149v2.447c0,9.298,7.341,16.149,16.637,16.149
         c9.787,0,16.64-6.852,16.64-16.149V214.305z"/>
     </svg>
-  )
+  );
 };
 
-export default Caution
+export default Caution;

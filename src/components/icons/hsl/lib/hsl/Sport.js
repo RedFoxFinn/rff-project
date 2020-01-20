@@ -21,7 +21,7 @@ const Sport = ({className, heightStyle}) => {
         </g>
       </g>
     </svg>
-  )
+  );
 };
 
-export default Sport
+export default Sport;

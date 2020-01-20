@@ -18,7 +18,7 @@ const MapmarkerLocationAnim = ({className, heightStyle}) => {
       <circle strokeWidth="149" r="1075" opacity="0.1" cx="1124" fill="transparent" stroke="rgb(239, 128, 198)" cy="1124" id="circle_pink_fourth"/>
       <use x="850" y="830" width="550" height="550" className="fill-color14" xlinkHref={<User/>} fill="#fff"/>
     </svg>
-  )
+  );
 };
 
-export default MapmarkerLocationAnim
+export default MapmarkerLocationAnim;

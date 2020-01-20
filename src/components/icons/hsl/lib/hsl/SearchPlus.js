@@ -19,7 +19,7 @@ const SearchPlus = ({className, heightStyle}) => {
           c0,7.828-6.346,14.173-14.173,14.173h0c-7.828,0-14.173-6.346-14.173-14.173V78.384C106.731,70.556,113.076,64.211,120.904,64.211z"/>
       </g>
     </svg>
-  )
+  );
 };
 
-export default SearchPlus
+export default SearchPlus;

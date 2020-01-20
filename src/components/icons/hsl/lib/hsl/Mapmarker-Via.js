@@ -13,7 +13,7 @@ const MapmarkerVia = ({className, heightStyle}) => {
         <circle cx="32.5" cy="32.5" r="14" className='HslGreen'/>
       </g>
     </svg>
-  )
+  );
 };
 
-export default MapmarkerVia
+export default MapmarkerVia;

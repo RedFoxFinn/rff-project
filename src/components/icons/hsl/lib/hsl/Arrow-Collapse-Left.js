@@ -9,9 +9,9 @@ const ArrowCollapseLeft = ({className, heightStyle}) => {
         <path className='Tram' d="M512 814.511l-93.011-93.011 492.745-492.745c25.685-25.685 67.326-25.685 93.011 0v0c25.685 25.685 25.685 67.326 0 93.011l-492.745 492.745z"/>
       </g>
     </svg>
-  )
+  );
 };
 
 //fix
 
-export default ArrowCollapseLeft
+export default ArrowCollapseLeft;

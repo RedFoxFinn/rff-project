@@ -99,47 +99,10 @@ const hslClient = new ApolloClient({
 });
 
 const App = (props) => {
-  const url = window.location.href;
+  // const url = window.location.href;
   useEffect(() => {
     document.body.className = props.theme;
   });
-  useEffect(() => {
-    switch (url) {
-    case RegExp(/about/).test(url):
-      props.switchApp('About');
-      break;
-    case RegExp(/admin/).test(url):
-      props.switchApp('Admin tools');
-      break;
-    case RegExp(/calculate/).test(url):
-      props.switchApp('Calculate');
-      break;
-    case RegExp(/countries/).test(url):
-      props.switchApp('OpenCountry');
-      break;
-    case RegExp(/dashboard/).test(url):
-      props.switchApp('Dashboard');
-      break;
-    case RegExp(/dishy/).test(url):
-      props.switchApp('Dishy');
-      break;
-    case RegExp(/home/).test(url):
-      props.switchApp('Home');
-      break;
-    case RegExp(/tasker/).test(url):
-      props.switchApp('Tasker');
-      break;
-    case RegExp(/transit/).test(url):
-      props.switchApp('Transporter');
-      break;
-    case RegExp(/login/).test(url):
-      props.switchApp('Login');
-      break;
-    default:
-      props.switchApp('Home');
-      break;
-    }
-  }, [props, url]);
   useEffect(() => {
     async function init() {
       await Connector.getCountries().then(response => {
@@ -149,29 +112,41 @@ const App = (props) => {
     init();
   }, [props]);
 
+  const Rff = () => {
+    return (
+      <Switch>
+        <Route exact path='/' render={(props) => <LandingPage {...props} show={true}/>}/>
+        <Route path='/about' render={(props) => <About {...props} show={true}/>}/>
+        <Route path='/admin' render={(props) => <AdminTools {...props} show={true}/>}/>
+        <Route path='/calculate' render={(props) => <Calculate {...props} show={true}/>}/>
+        <Route path='/countries' render={(props) => <OpenCountry {...props} show={true}/>}/>
+        <Route path='/dashboard' render={(props) => <Dashboard {...props} show={true}/>}/>
+        <Route path='/dishy' render={(props) => <Dishy {...props} show={true}/>}/>
+        <Route path='/login' render={(props) => <LoginPage {...props} show={true}/>}/>
+        <Route path='/register' render={(props) => <RegistrationPage {...props} show={true}/>}/>
+        <Route path='/tasker' render={(props) => <Tasker {...props} show={true}/>}/>
+        {props.user && <Route path='/user' render={(props) => <UserPage {...props} show={true}/>}/>}
+      </Switch>
+    );
+  };
+
+  const Hsl = () => {
+    return (
+      <Switch>
+        <Route path='/transit' render={(props) => <Transporter {...props}/>}/>
+      </Switch>
+    );
+  };
+
   return(
     <div className='appContainer'>
       <Router basename='/'>
         <ApolloProvider client={rffClient}>
           <Navigation/>
-          <Switch>
-            <Route exact path='/' render={(props) => <LandingPage {...props} show={true}/>}/>
-            <Route path='/about' render={(props) => <About {...props} show={true}/>}/>
-            <Route path='/admin' render={(props) => <AdminTools {...props} show={true}/>}/>
-            <Route path='/calculate' render={(props) => <Calculate {...props} show={true}/>}/>
-            <Route path='/countries' render={(props) => <OpenCountry {...props} show={true}/>}/>
-            <Route path='/dashboard' render={(props) => <Dashboard {...props} show={true}/>}/>
-            <Route path='/dishy' render={(props) => <Dishy {...props} show={true}/>}/>
-            <Route path='/login' render={(props) => <LoginPage {...props} show={true}/>}/>
-            <Route path='/register' render={(props) => <RegistrationPage {...props} show={true}/>}/>
-            <Route path='/tasker' render={(props) => <Tasker {...props} show={true}/>}/>
-            {props.user && <Route path='/user' render={(props) => <UserPage {...props} show={true}/>}/>}
-          </Switch>
+          <Rff/>
         </ApolloProvider>
         <ApolloProvider client={hslClient}>
-          <Switch>
-            <Route path='/transit' render={(props) => <Transporter {...props}/>}/>
-          </Switch>
+          <Hsl/>
         </ApolloProvider>
       </Router>
     </div>

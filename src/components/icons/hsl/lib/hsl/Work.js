@@ -18,7 +18,7 @@ const Work = ({className, heightStyle}) => {
           C150.205,211.65,156.328,205.059,156.328,197.526z"/>
       </g>
     </svg>
-  )
+  );
 };
 
-export default Work
+export default Work;

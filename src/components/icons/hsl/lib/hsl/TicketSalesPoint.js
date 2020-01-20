@@ -36,7 +36,7 @@ const TicketSalesPoint = ({className, heightStyle}) => {
         c-0.454,0.179-0.679,0.696-0.5,1.15l2.053,5.218c0.137,0.348,0.473,0.562,0.827,0.562c0.108,0,0.217-0.02,0.322-0.061l8.904-3.504
         C14.191,9.528,14.416,9.011,14.238,8.557"/>
     </svg>
-  )
+  );
 };
 
-export default TicketSalesPoint
+export default TicketSalesPoint;

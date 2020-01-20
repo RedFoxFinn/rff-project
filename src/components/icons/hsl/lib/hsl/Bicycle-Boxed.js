@@ -21,7 +21,7 @@ const BicycleBoxed = ({className, heightStyle}) => {
       C235.263,119.522,255.118,139.377,255.118,163.413z M168.729,151.918c1.394-5.574,4.181-10.45,7.315-14.979l5.922,7.315
       c-1.742,2.438-2.787,4.877-3.832,7.664H168.729z"/>
     </svg>
-  )
+  );
 };
 
-export default BicycleBoxed
+export default BicycleBoxed;

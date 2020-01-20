@@ -11,7 +11,7 @@ const ArrowExternalLink = ({className, heightStyle}) => {
       <path className='Tram' fillRule="evenodd" clipRule="evenodd" d="M51.862,233.135l-1.532-1.532
       c-11.855-11.859-11.855-31.08,0-42.936L218.558,20.442l44.464,44.464L94.797,233.135C82.938,244.99,63.717,244.99,51.862,233.135z"/>
     </svg>
-  )
+  );
 };
 
-export default ArrowExternalLink
+export default ArrowExternalLink;

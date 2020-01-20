@@ -14,7 +14,7 @@ const Settings = ({className, heightStyle}) => {
       <path className='HslGrey' d="M39.85,222a28.32,28.32,0,0,1,1.36-8.69H0v17H41.09A28.34,28.34,0,0,1,39.85,222Z"/>
       <path className='HslGrey' d="M95.18,213.34a28.42,28.42,0,0,1,.12,17H283.46v-17Z"/>
     </svg>
-  )
+  );
 };
 
-export default Settings
+export default Settings;

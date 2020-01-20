@@ -6,7 +6,7 @@ import {loginFailure, loginSuccess, setUsername, setPassword} from '../core/stor
 import {handleError, handleInfo, switchApp} from '../core/store/reducers/AppReducer';
 import '../core/style/global.css';
 import {Link, Redirect} from 'react-router-dom';
-import {useApolloClient, useMutation, useQuery} from '@apollo/react-hooks';
+import {useApolloClient, useMutation} from '@apollo/react-hooks';
 import {LOGIN} from '../core/graphql/rff/mutations/m_login';
 import {ME} from '../core/graphql/rff/queries/q_me';
 
@@ -26,29 +26,29 @@ const LoginPage = (props) => {
   const [login] = useMutation(LOGIN);
 
   const handleLogin = () => {
-    try {
-      login({
-        variables: {
-          username: props.loginState.username,
-          password: props.loginState.password
-        }
-      }).then((result) => {
+    login({
+      variables: {
+        username: props.loginState.username,
+        password: props.loginState.password
+      }
+    }).then((result, errors) => {
+      if (!errors) {
         const loginToken = result.data.login.value;
         client.query({
           query: ME,
           variables: {
             token: loginToken.substring(7)
           }
-        }).then((result) => {
-          props.loginSuccess(result.data.me);
-        });
-        props.handleInfo('logged in successfully');
-        localStorage.setItem('rffUserToken', loginToken);
-      });
-    } catch (e) {
-      props.handleError(e);
-      props.loginFailure();
-    }
+        }).then((result) => props.loginSuccess(result.data.me)
+          && props.handleInfo('logged in successfully')
+          && localStorage.setItem('rffUserToken', loginToken)
+          && <Redirect push to='/'/>
+        );
+      } else {
+        props.handleError(errors[0]);
+        props.loginFailure();
+      }
+    });
   };
 
   return (

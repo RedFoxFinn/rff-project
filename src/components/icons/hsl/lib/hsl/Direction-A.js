@@ -10,7 +10,7 @@ const DirectionA = ({className, heightStyle}) => {
       <path className='Tram' d="M384.93 944.196h296.543v79.074h-296.543v-79.074z"/>
       <path className='HslGreen' d="M384.93 726.807h79.074v296.543h-79.074v-296.543z"/>
     </svg>
-  )
+  );
 };
 
-export default DirectionA
+export default DirectionA;

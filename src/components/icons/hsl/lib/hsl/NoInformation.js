@@ -14,7 +14,7 @@ const NoInformation = ({className, heightStyle}) => {
         c-0.072,0.396-0.36,0.72-0.774,0.72H11.542z M11.542,16.05c0.738,0,1.278,0.54,1.278,1.242v0.18c0,0.702-0.54,1.242-1.278,1.242
         s-1.278-0.54-1.278-1.242v-0.18C10.264,16.59,10.804,16.05,11.542,16.05z"/>
     </svg>
-  )
+  );
 };
 
-export default NoInformation
+export default NoInformation;

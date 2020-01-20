@@ -9,7 +9,7 @@ const MapmarkerStation = ({className, heightStyle}) => {
       <circle className='HslGreen' fillOpacity="1" cx="1174" cy="1174" r="980"/>
       <use x="657" y="657" width="1024" height="1024" className="fill-color14" fill="#fff" xlinkHref={<Station className='stationIcon'/>}/>
     </svg>
-  )
+  );
 };
 
-export default MapmarkerStation
+export default MapmarkerStation;

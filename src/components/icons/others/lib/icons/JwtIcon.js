@@ -16,7 +16,7 @@ const JwtIcon = ({heightStyle}) => {
         <path d="M69.6,35.7 L85.5,14 L73.3,5.1 L57.5,26.9 L57.5,39.7 L69.6,35.7 Z" fill="#FB015B"/>
       </g>
     </svg>
-  )
+  );
 };
 
-export default JwtIcon
+export default JwtIcon;

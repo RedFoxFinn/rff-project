@@ -15,7 +15,7 @@ const Home = ({className, heightStyle}) => {
         </g>
       </g>
     </svg>
-  )
+  );
 };
 
-export default Home
+export default Home;

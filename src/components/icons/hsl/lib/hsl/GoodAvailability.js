@@ -9,7 +9,7 @@ const GoodAvailability = ({className, heightStyle}) => {
         s5.373,12,12,12s12-5.373,12-12S18.627,0,12,0L12,0z"/>
       <polygon className='White' points="10.628,16.53 6.386,12.287 7.8,10.873 10.628,13.702 16.992,7.338 18.406,8.752 "/>
     </svg>
-  )
+  );
 };
 
-export default GoodAvailability
+export default GoodAvailability;

@@ -87,23 +87,11 @@
     justify-content: space-evenly;
     align-items: center;
 }
-.appWidget {
-    height: 10em;
-    width: 10em;
-}
-.appWidget:hover {
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-}
 .commonElements {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     align-content: center;
-}
-.dishWidget {
-}
-.dishWidget:hover {
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
 }
 button {
     font-family: var(--font-global);
@@ -209,6 +197,33 @@ button {
     color: var(--googlered);
     text-align: center;
 }
-.tile {}
-.tileDescriptionLi {}
-.tileDescriptionDa {}
+.tile {
+    height: 10em;
+    width: 10em;
+}
+.tile:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+.tileDescriptionLi {
+    color: var(--darkslategrey);
+}
+.tileDescriptionDa {
+    color: var(--gainsboro);
+}
+.tileLoading {
+    color: var(--googlegreen);
+}
+.tileError {
+    color: var(--googlered);
+}
+.dashTile {
+    height: 3em;
+}
+.dashTile:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+.dishTile {
+}
+.dishTile:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}

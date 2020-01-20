@@ -9,7 +9,7 @@ const NotInUse = ({className, heightStyle}) => {
       <path className='HslWarningRed' d="M22.435,24c-0.4,0-0.801-0.153-1.107-0.459L0.459,2.672c-0.611-0.611-0.611-1.602,0-2.213
         c0.611-0.611,1.602-0.611,2.213,0l20.87,20.87c0.611,0.611,0.611,1.602,0,2.213C23.236,23.847,22.835,24,22.435,24z"/>
     </svg>
-  )
+  );
 };
 
-export default NotInUse
+export default NotInUse;

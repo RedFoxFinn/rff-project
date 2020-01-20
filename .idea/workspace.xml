@@ -2,27 +2,177 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a69d5581-dc09-455b-96e6-941e02078fc1" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/public/robots.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/About.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/About.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/AdminTools.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/AdminTools.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Dashboard.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Dishy.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dishy.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/LoginPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/LoginPage.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Navigation.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Navigation.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/RegistrationPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/RegistrationPage.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/UserSettings.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/UserSettings.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/graphql/rff/fragments/f_userFragment.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/graphql/rff/fragments/f_userFragment.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/graphql/rff/mutations/m_updateUser.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/graphql/rff/mutations/m_updateUser.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/store/reducers/LoginReducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/store/reducers/LoginReducer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Transporter.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Transporter.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/default/Digitransit.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/default/Digitransit.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Arrow-Collapse-Left.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Arrow-Collapse-Left.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Arrow-Collapse-Right.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Arrow-Collapse-Right.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Arrow-Collapse.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Arrow-Collapse.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Arrow-Down.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Arrow-Down.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Arrow-Dropdown.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Arrow-Dropdown.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Arrow-ExternalLink.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Arrow-ExternalLink.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Arrow-Left.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Arrow-Left.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Arrow-Right.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Arrow-Right.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Arrow-Up.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Arrow-Up.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Attention.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Attention.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Bicycle-Boxed.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Bicycle-Boxed.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Bicycle.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Bicycle.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Biking.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Biking.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Bus-Boxed.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Bus-Boxed.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Bus-Live.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Bus-Live.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Bus.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Bus.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/BusStop.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/BusStop.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Call.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Call.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Car-Boxed.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Car-Boxed.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Car.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Car.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Caution.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Caution.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/City.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/City.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Citybike-Boxed.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Citybike-Boxed.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Citybike-off.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Citybike-off.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Citybike.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Citybike.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Close.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Close.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Cyclist.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Cyclist.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Direction-A.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Direction-A.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Direction-B.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Direction-B.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Edit.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Edit.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Ellipsis.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Ellipsis.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Ferry-Boxed.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Ferry-Boxed.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Ferry-Live.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Ferry-Live.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Ferry.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Ferry.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Geonotifier.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Geonotifier.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/GoodAvailability.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/GoodAvailability.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/HSL.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/HSL.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Home.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Home.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Info.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Info.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Kutsuplus.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Kutsuplus.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Location-Current.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Location-Current.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/MapLayers.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/MapLayers.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Mapmarker-From.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Mapmarker-From.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Mapmarker-Location-Animated.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Mapmarker-Location-Animated.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Mapmarker-Location.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Mapmarker-Location.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Mapmarker-Point.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Mapmarker-Point.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Mapmarker-Station.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Mapmarker-Station.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Mapmarker-To.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Mapmarker-To.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Mapmarker-Via.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Mapmarker-Via.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Maximize.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Maximize.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Menu.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Menu.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Metro-Boxed.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Metro-Boxed.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Metro-Live.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Metro-Live.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Metro.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Metro.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Minimize.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Minimize.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Minus.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Minus.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Nearby.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Nearby.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/NoAvailability.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/NoAvailability.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/NoConnection.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/NoConnection.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/NoInformation.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/NoInformation.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/NoRouteFound.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/NoRouteFound.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/NotInUse.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/NotInUse.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/PageNotFound.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/PageNotFound.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/ParkAndRide.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/ParkAndRide.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Pause.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Pause.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Place.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Place.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Plus.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Plus.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Point-To-Point.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Point-To-Point.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/PoorAvailability.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/PoorAvailability.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Position.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Position.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Print.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Print.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/PublicTransport.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/PublicTransport.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Rail-Boxed.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Rail-Boxed.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Rail-Live.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Rail-Live.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Rail.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Rail.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Realtime.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Realtime.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/RightNow.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/RightNow.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Route.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Route.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Schedule.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Schedule.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/School.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/School.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Search.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Search.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/SearchPlus.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/SearchPlus.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/ServicePoint.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/ServicePoint.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Settings-Adjusted.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Settings-Adjusted.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Settings.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Settings.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Share.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Share.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Shopping.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Shopping.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/SpeechBubble.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/SpeechBubble.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Sport.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Sport.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Star.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Star.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Station.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Station.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Thumb-Down.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Thumb-Down.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Thumb-Up.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Thumb-Up.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Ticket.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Ticket.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/TicketMachine.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/TicketMachine.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/TicketMachineSingle.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/TicketMachineSingle.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/TicketSalesPoint.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/TicketSalesPoint.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Time.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Time.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Tram-Boxed.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Tram-Boxed.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Tram-Live.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Tram-Live.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Tram.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Tram.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/UnderConstruction.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/UnderConstruction.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/User.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/User.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Wait.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Wait.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Walk.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Walk.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Work.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Work.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Zone-A.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Zone-A.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Zone-B.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Zone-B.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Zone-C.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Zone-C.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Zone-D.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Zone-D.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Zone-Ticket-AB.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Zone-Ticket-AB.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Zone-Ticket-ABC.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Zone-Ticket-ABC.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Zone-Ticket-ABCD.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Zone-Ticket-ABCD.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Zone-Ticket-BC.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Zone-Ticket-BC.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Zone-Ticket-BCD.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Zone-Ticket-BCD.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Zone-Ticket-CD.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Zone-Ticket-CD.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Zone-Ticket-D.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/hsl/lib/hsl/Zone-Ticket-D.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/others/Iconos.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/others/Iconos.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/others/lib/icons/ExpressIcon.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/others/lib/icons/ExpressIcon.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/others/lib/icons/GraphqlIcon.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/others/lib/icons/GraphqlIcon.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/others/lib/icons/HerokuIcon.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/others/lib/icons/HerokuIcon.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/others/lib/icons/JwtAsset.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/others/lib/icons/JwtAsset.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/others/lib/icons/JwtIcon.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/others/lib/icons/JwtIcon.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/others/lib/icons/ReactIcon.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/others/lib/icons/ReactIcon.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/others/lib/icons/ReactIconsIcon.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/others/lib/icons/ReactIconsIcon.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/icons/others/lib/icons/ReduxIcon.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/icons/others/lib/icons/ReduxIcon.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/widgets/CountryCount.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/widgets/CountryCount.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/widgets/DishCount.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/widgets/DishCount.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/widgets/GroupCount.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/widgets/GroupCount.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/widgets/IngredientCount.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/widgets/IngredientCount.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/widgets/ListCount.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/widgets/ListCount.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/widgets/MethodCount.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/widgets/MethodCount.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/widgets/TaskCount.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/widgets/TaskCount.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/widgets/TrackedStopsCount.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/widgets/TrackedStopsCount.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/widgets/UserCount.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/widgets/UserCount.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/graphql/rff/queries/q_groupCount.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/graphql/rff/queries/q_groupCount.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/store/reducers/RegReducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/store/reducers/RegReducer.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/core/style/global.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/style/global.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/style/openCountries.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/style/openCountries.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/tools/apiController.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/tools/classProvider.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/tools/classProvider.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/serviceWorker.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/serviceWorker.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FavoritesManager">
+    <favorites_list name="frontend" />
+  </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="CSS File" />
+        <option value="HTML File" />
         <option value="JavaScript File" />
       </list>
     </option>
@@ -51,6 +201,7 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="JavaScriptWeakerCompletionTypeGuess" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
@@ -66,7 +217,7 @@
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="settings.editor.selected.configurable" value="MTCustomThemeConfigurable" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -123,6 +274,8 @@
       <workItem from="1578561128558" duration="3880000" />
       <workItem from="1578901171279" duration="25195000" />
       <workItem from="1578997271016" duration="16149000" />
+      <workItem from="1579362224515" duration="26000" />
+      <workItem from="1579509461889" duration="25049000" />
     </task>
     <servers />
   </component>
@@ -147,6 +300,10 @@
       <screen x="0" y="28" width="1366" height="740" />
     </state>
     <state x="279" y="58" key="#GraphQL/0.28.1366.740@0.28.1366.740" timestamp="1575466780500" />
+    <state x="282" y="64" key="#HTML" timestamp="1579512151743">
+      <screen x="0" y="32" width="1366" height="736" />
+    </state>
+    <state x="282" y="64" key="#HTML/0.32.1366.736@0.32.1366.736" timestamp="1579512151743" />
     <state x="0" y="28" key="#Live_Templates" timestamp="1578991633679">
       <screen x="0" y="28" width="1366" height="740" />
     </state>
@@ -159,14 +316,16 @@
       <screen x="0" y="28" width="1366" height="740" />
     </state>
     <state x="467" y="154" key="FileChooserDialogImpl/0.28.1366.740@0.28.1366.740" timestamp="1576669856633" />
-    <state x="188" y="32" width="992" height="733" key="SettingsEditor" timestamp="1579078521691">
-      <screen x="0" y="28" width="1366" height="740" />
+    <state x="188" y="36" width="992" height="733" key="SettingsEditor" timestamp="1579511544925">
+      <screen x="0" y="32" width="1366" height="736" />
     </state>
     <state x="188" y="32" width="992" height="733" key="SettingsEditor/0.28.1366.740@0.28.1366.740" timestamp="1579078521691" />
-    <state x="100" y="128" width="1166" height="540" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1579086842054">
-      <screen x="0" y="28" width="1366" height="740" />
+    <state x="188" y="36" key="SettingsEditor/0.32.1366.736@0.32.1366.736" timestamp="1579511544925" />
+    <state x="100" y="131" width="1166" height="538" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1579513267983">
+      <screen x="0" y="32" width="1366" height="736" />
     </state>
     <state x="100" y="128" width="1166" height="540" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.28.1366.740@0.28.1366.740" timestamp="1579086842054" />
+    <state x="100" y="131" width="1166" height="538" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.32.1366.736@0.32.1366.736" timestamp="1579513267983" />
     <state x="0" y="28" width="648" height="828" key="find.popup" timestamp="1575467002266">
       <screen x="0" y="28" width="1366" height="740" />
     </state>

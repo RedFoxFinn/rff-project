@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {useQuery, useApolloClient} from '@apollo/react-hooks';
+import {useQuery} from '@apollo/react-hooks';
 
 import classProvider from '../../core/tools/classProvider';
 import '../../core/style/global.css';
@@ -24,20 +24,22 @@ const IngredientCount = (props) => {
     if (!carbResult.loading && !proteinResult.loading && !spiceResult.loading) {
       if (carbResult.data && proteinResult.data && spiceResult.data) {
         data = carbResult.data.carbCount + proteinResult.data.proteinCount + spiceResult.data.spiceCount;
-        return (
-          <p className={classProvider(props.appState.theme, 'description')}>
-            <strong>{data}</strong> ingredients available</p>
-        );
+        return <p className={classProvider(props.appState.theme, 'tileDescription')}>
+          <strong>{data}</strong> ingredients available
+        </p>;
+      } else {
+        return <p className={classProvider(props.appState.theme, 'tileError')}>
+          error occurred while loading ingredient count
+        </p>;
       }
     }
-    return (
-      <p className={classProvider(props.appState.theme, 'description')}>
-        <strong>fetching</strong> count for ingredients</p>
-    );
+    return <p className={classProvider(props.appState.theme, 'tileLoading')}>
+      loading ingredient count
+    </p>;
   };
 
   return(
-    <div className='appWidget'>
+    <div className='tile'>
       <div className='app'>
         <div className='appContainer'>
           <Count/>

@@ -1,4 +1,4 @@
 .directory
 node_modules
-public
 build
+/src/components/widgets/Author.js

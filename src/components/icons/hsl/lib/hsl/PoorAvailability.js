@@ -9,7 +9,7 @@ const PoorAvailability = ({className, heightStyle}) => {
         s5.373,12,12,12s12-5.373,12-12S18.627,0,12,0L12,0z"/>
       <polygon className='White' points="14,14 8,14 8,12 12,12 12,5 14,5 "/>
     </svg>
-  )
+  );
 };
 
-export default PoorAvailability
+export default PoorAvailability;

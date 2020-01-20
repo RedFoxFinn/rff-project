@@ -35,11 +35,11 @@ const AdminTools = (props) => {
   const WidgetsAdvanced = () => {
     return (
       <div className='appWidgets'>
-        <GroupCount mode='admin'/>
         <ListCount mode='admin'/>
         <TaskCount mode='admin'/>
-        <TrackedStopsCount mode='admin'/>
+        <GroupCount mode='admin'/>
         <UserCount mode='admin'/>
+        <TrackedStopsCount mode='admin'/>
       </div>
     );
   };

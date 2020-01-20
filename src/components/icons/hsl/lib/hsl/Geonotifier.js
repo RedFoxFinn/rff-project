@@ -40,7 +40,7 @@ const Geonotifier = ({className, heightStyle}) => {
         </g>
       </g>
     </svg>
-  )
+  );
 };
 
-export default Geonotifier
+export default Geonotifier;

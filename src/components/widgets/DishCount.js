@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {useQuery, useApolloClient} from '@apollo/react-hooks';
+import {useQuery} from '@apollo/react-hooks';
 
 import classProvider from '../../core/tools/classProvider';
 import '../../core/style/global.css';
@@ -13,27 +13,25 @@ const mapStateToProps = (state) => {
 };
 
 const DishCount = (props) => {
-  const dishResult = useQuery(DISH_COUNT);
-  let data = 0;
+  const {data, error, loading} = useQuery(DISH_COUNT);
 
   const Count = () => {
-    if (!dishResult.loading) {
-      if (dishResult.data) {
-        data = dishResult.data.dishCount;
-        return (
-          <p className={classProvider(props.appState.theme, 'description')}>
-            <strong>{data}</strong> dishes available</p>
-        );
+    if (!loading) {
+      if (!error) {
+        return <p className={classProvider(props.appState.theme, 'tileDescription')}>
+          <strong>{data.dishCount}</strong> dishes available
+        </p>;
+      } else {
+        return <p className={classProvider(props.appState.theme, 'tileError')}>
+          error occurred while loading dish count
+        </p>;
       }
     }
-    return (
-      <p className={classProvider(props.appState.theme, 'description')}>
-        <strong>fetching</strong> count for dishes</p>
-    );
+    return <p className={classProvider(props.appState.theme, 'tileLoading')}>loading dish count</p>;
   };
 
   return(
-    <div className='appWidget'>
+    <div className='tile'>
       <div className='app'>
         <div className='appContainer'>
           <Count/>

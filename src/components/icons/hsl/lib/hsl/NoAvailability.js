@@ -10,7 +10,7 @@ const NoAvailability = ({className, heightStyle}) => {
       <rect x="5.636" y="11" transform="matrix(0.7071 -0.7071 0.7071 0.7071 -4.9706 12)" fill="#FFFFFF" width="12.728" height="2"/>
       <rect x="11" y="5.636" transform="matrix(0.7071 -0.7071 0.7071 0.7071 -4.9706 12)" fill="#FFFFFF" width="2" height="12.728"/>
     </svg>
-  )
+  );
 };
 
-export default NoAvailability
+export default NoAvailability;

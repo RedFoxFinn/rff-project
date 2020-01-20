@@ -41,7 +41,7 @@ const NoRouteFound = ({className, heightStyle}) => {
         </g>
       </g>
     </svg>
-  )
+  );
 };
 
-export default NoRouteFound
+export default NoRouteFound;

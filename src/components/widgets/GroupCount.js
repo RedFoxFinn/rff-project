@@ -1,35 +1,72 @@
 import React from 'react';
-import {connect} from "react-redux";
+import {connect} from 'react-redux';
 
 import classProvider from '../../core/tools/classProvider';
 import '../../core/style/global.css';
+import {useQuery} from '@apollo/react-hooks';
+
+import {GROUP_COUNT} from '../../core/graphql/rff/queries/q_groupCount';
 
 const mapStateToProps = (state) => {
   return {
     appState: state.appState
-  }
+  };
 };
 
 const GroupCount = (props) => {
-  const data = 0;
-  
+  const userToken = localStorage.getItem('rffUserToken').substring(7);
+
   const Count = () => {
-    if (props.mode === 'admin') {
-      return (
-        <p className={classProvider(props.appState.theme, 'description')}><strong>all</strong> groups accessible</p>
-      );
+    const {data, error, loading} = useQuery(GROUP_COUNT, {
+      variables: {
+        token: userToken
+      }
+    });
+    if (!loading) {
+      if (!error) {
+        return <p className={classProvider(props.appState.theme, 'tileDescription')}>
+          <strong>{data.groupCount}</strong> groups accessible
+        </p>;
+      } else {
+        return <p className={classProvider(props.appState.theme, 'tileError')}>
+          error occurred while loading group count
+        </p>;
+      }
     } else {
-      return (
-        <p className={classProvider(props.appState.theme, 'description')}><strong>{data}</strong> groups accessible</p>
-      );
+      return <p className={classProvider(props.appState.theme, 'tileLoading')}>
+        loading group count
+      </p>;
     }
   };
-  
+  const CountAdmin = () => {
+    const {data, error, loading} = useQuery(GROUP_COUNT, {
+      variables: {
+        token: userToken,
+        mode: 'admin'
+      }
+    });
+    if (!loading) {
+      if (!error) {
+        return <p className={classProvider(props.appState.theme, 'tileDescription')}>
+          <strong>all {data.groupCount}</strong> groups accessible
+        </p>;
+      } else {
+        return <p className={classProvider(props.appState.theme, 'tileError')}>
+          error occurred while loading group count
+        </p>;
+      }
+    } else {
+      return <p className={classProvider(props.appState.theme, 'tileLoading')}>
+        loading group count
+      </p>;
+    }
+  };
+
   return(
-    <div className='appWidget'>
+    <div className='tile'>
       <div className='app'>
         <div className='appContainer'>
-          <Count/>
+          {props.mode !== 'admin' ? <Count/> : <CountAdmin/>}
         </div>
       </div>
     </div>

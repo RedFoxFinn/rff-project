@@ -15,12 +15,14 @@ const CountryCount = (props) => {
 
   const Count = () => {
     return (
-      <p className={classProvider(props.theme, 'description')}><strong>{props.countries.length}</strong> countries information available</p>
+      <p className={classProvider(props.theme, 'tileDescription')}>
+        <strong>{props.countries.length}</strong> countries information available
+      </p>
     );
   };
 
   return(
-    <div className='appWidget'>
+    <div className='tile'>
       <div className='app'>
         <div className='appContainer'>
           <Count/>

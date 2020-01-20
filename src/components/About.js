@@ -1,7 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
 
-import classProvider from '../core/tools/classProvider';
 import '../core/style/global.css';
 
 import Colors from './widgets/Colors';

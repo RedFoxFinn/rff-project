@@ -11,25 +11,25 @@ import ReduxIcon from './lib/icons/ReduxIcon.js';
 
 function Iconos(name, height) {
   switch (name) {
-    case 'expressIcon':
-      return <ExpressIcon heightStyle={height}/>;
-    case 'graphqlIcon':
-      return <GraphqlIcon heightStyle={height}/>;
-    case 'herokuIcon':
-      return <HerokuIcon heightStyle={height}/>;
-    case 'jwtAsset':
-      return <JwtAsset heightStyle={height}/>;
-    case 'jwtIcon':
-      return <JwtIcon heightStyle={height}/>;
-    case 'reactIcon':
-      return <ReactIcon heightStyle={height}/>;
-    case 'reactIconsIcon':
-      return <ReactIconsIcon heightStyle={height}/>;
-    case 'reduxIcon':
-      return <ReduxIcon heightStyle={height}/>;
-    default:
-      return <ReactIcon heightStyle={height}/>;
+  case 'expressIcon':
+    return <ExpressIcon heightStyle={height}/>;
+  case 'graphqlIcon':
+    return <GraphqlIcon heightStyle={height}/>;
+  case 'herokuIcon':
+    return <HerokuIcon heightStyle={height}/>;
+  case 'jwtAsset':
+    return <JwtAsset heightStyle={height}/>;
+  case 'jwtIcon':
+    return <JwtIcon heightStyle={height}/>;
+  case 'reactIcon':
+    return <ReactIcon heightStyle={height}/>;
+  case 'reactIconsIcon':
+    return <ReactIconsIcon heightStyle={height}/>;
+  case 'reduxIcon':
+    return <ReduxIcon heightStyle={height}/>;
+  default:
+    return <ReactIcon heightStyle={height}/>;
   }
 }
 
-export default Iconos
+export default Iconos;

@@ -19,7 +19,7 @@ const Bicycle = ({className, heightStyle}) => {
       C258.817,113.875,283.636,138.694,283.636,168.739z M175.649,154.37c1.743-6.967,5.226-13.063,9.144-18.724l7.403,9.144
       c-2.177,3.048-3.484,6.096-4.79,9.579H175.649z"/>
     </svg>
-  )
+  );
 };
 
-export default Bicycle
+export default Bicycle;

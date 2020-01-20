@@ -1,64 +1,5 @@
 const classProvider = (theme, element) => {
-  if (theme === 'dev') {
-    switch(element) {
-    case 'navMenu':
-      return 'navMenuDe';
-    case 'navSubMenu':
-      return 'navSubMenuDe';
-    case 'navButton':
-      return 'navButtonDe';
-    case 'navSubButton':
-      return 'navSubButtonDe';
-    case 'navContent':
-      return 'navContentDe';
-    case 'navSubContent':
-      return 'navSubContentDe';
-    case 'heading':
-      return 'headingDe';
-    case 'formElement':
-      return 'formElementDe';
-    case 'calculateElement':
-      return 'formElementDe';
-    case 'calculateResult':
-      return 'calculateResultDe';
-    case 'technologyElement':
-      return 'technologyElementDe';
-    case 'landingDescription':
-      return 'descriptionDe';
-    case 'loginButton':
-      return 'loginButtonDe';
-    case 'loginContent':
-      return 'loginContentDe';
-    case 'loginMenu':
-      return 'loginMenuDe';
-    case 'link':
-      return 'linkDe';
-    case 'description':
-      return 'descriptionDe';
-    case 'countrySearch':
-      return 'searchElementDe';
-    case 'countrySearchCancel':
-      return 'searchCancelDe';
-    case 'countryDetails':
-      return 'countryDetailsDe';
-    case 'dishyElement':
-      return 'dishyElementDe';
-    case 'stopContainer':
-      return 'stopContainer';
-    case 'stopDetails':
-      return 'stopDetailsDe';
-    case 'linkButton':
-      return 'linkButtonDe';
-    case 'notificationInfo':
-      return 'notificationInfoDe';
-    case 'notificationError':
-      return 'notificationErrorDe';
-    case 'notificationNull':
-      return 'notificationNullDe';
-    default:
-      return '';
-    }
-  } else if (theme === 'dark') {
+  if (theme === 'dark') {
     switch(element) {
     case 'navMenu':
       return 'navMenuDa';
@@ -114,6 +55,16 @@ const classProvider = (theme, element) => {
       return 'notificationErrorDa';
     case 'notificationNull':
       return 'notificationNullDa';
+    case 'tile':
+      return 'tile';
+    case 'tileDescription':
+      return 'tileDescriptionDa';
+    case 'tileLoading':
+      return 'tileLoading';
+    case 'tileError':
+      return 'tileError';
+    case 'dashTile':
+      return 'dashTile';
     default:
       return '';
     }
@@ -173,6 +124,14 @@ const classProvider = (theme, element) => {
       return 'notificationErrorLi';
     case 'notificationNull':
       return 'notificationNullLi';
+    case 'tile':
+      return 'tile';
+    case 'tileDescription':
+      return 'tileDescriptionLi';
+    case 'tileLoading':
+      return 'tileLoading';
+    case 'tileError':
+      return 'tileError';
     default:
       return '';
     }

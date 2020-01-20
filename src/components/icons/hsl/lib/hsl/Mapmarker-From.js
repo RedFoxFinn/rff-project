@@ -13,7 +13,7 @@ const MapmarkerFrom = ({className, heightStyle}) => {
         <circle cx="32.5" cy="32.5" r="14" fill="#FFF" stroke="#5EA51E"/>
       </g>
     </svg>
-  )
+  );
 };
 
-export default MapmarkerFrom
+export default MapmarkerFrom;

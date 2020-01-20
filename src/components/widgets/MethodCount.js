@@ -13,27 +13,27 @@ const mapStateToProps = (state) => {
 };
 
 const MethodCount = (props) => {
-  const methodResult = useQuery(METHOD_COUNT);
-  let data = 0;
+  const {data, error, loading} = useQuery(METHOD_COUNT);
 
   const Count = () => {
-    if (!methodResult.loading) {
-      if (methodResult.data) {
-        data = methodResult.data.methodCount;
-        return (
-          <p className={classProvider(props.appState.theme, 'description')}>
-            <strong>{data}</strong> cooking methods available</p>
-        );
+    if (!loading) {
+      if (!error) {
+        return <p className={classProvider(props.appState.theme, 'tileDescription')}>
+          <strong>{data.methodCount}</strong> cooking methods available
+        </p>;
+      } else {
+        return <p className={classProvider(props.appState.theme, 'tileError')}>
+          error occurred while loading cooking method count
+        </p>;
       }
     }
-    return (
-      <p className={classProvider(props.appState.theme, 'description')}>
-        <strong>fetching</strong> count for cooking methods</p>
-    );
+    return <p className={classProvider(props.appState.theme, 'tileLoading')}>
+      loading cooking method count
+    </p>;
   };
 
   return(
-    <div className='appWidget'>
+    <div className='tile'>
       <div className='app'>
         <div className='appContainer'>
           <Count/>

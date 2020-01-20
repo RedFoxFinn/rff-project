@@ -31,7 +31,7 @@ const Schedule = ({className, heightStyle}) => {
           h1.613c7.508,0,13.595,6.087,13.595,13.595v1.371C47.711,264.985,41.624,271.072,34.116,271.072z"/>
       </g>
     </svg>
-  )
+  );
 };
 
-export default Schedule
+export default Schedule;

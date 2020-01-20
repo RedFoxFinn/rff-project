@@ -14,7 +14,7 @@ const Shopping = ({className, heightStyle}) => {
           c9.788,0,14.324-7.299,17.717-17.717l34.051-153.912C286.151,98.271,275.459,88.58,265.662,88.58z"/>
       </g>
     </svg>
-  )
+  );
 };
 
-export default Shopping
+export default Shopping;
