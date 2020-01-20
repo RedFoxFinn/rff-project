@@ -83,7 +83,7 @@ const typeDefs = gql`
     me(token: String!): User!
     userCount(token: String!): Int!
     users(token: String!, active: Boolean, username: String, role: String, group: String): [User!]!
-    groupCount(token: String!): Int!
+    groupCount(token: String!, mode: String): Int!
     groups(token: String!): [Group!]!
     allGroups(token: String!): [Group!]!
     listCount(token: String): Int!

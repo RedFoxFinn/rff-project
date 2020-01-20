@@ -134,16 +134,15 @@ const findGroups = async (args) => {
 };
 
 // list counter
-const countLists = async (args, user) => {
-  if (args.all) {
-    return List.collection.countDocuments();
+const countLists = async (all, user) => {
+    console.log(user);
+  if (all) {
+    return await List.collection.countDocuments();
   } else {
-    const p = await PrivateList.find({ owner: user._id }).countDocuments();
-    const gl = await GroupList.find({});
-    const g = gl.map(l => {
-      return user.groups.includes(l.group) && l;
-    });
-    return p+g.length;
+    const groups = user.groups.map(g => g._id);
+    const privateL = await PrivateList.find({owner: user._id.toString()}).countDocuments();
+    const groupL = await GroupList.find({group: [...groups]}).countDocuments();
+    return groupL + privateL;
   }
 };
 
@@ -492,7 +491,7 @@ const resolvers = {
     groupCount: async (root, args) => {
       const decodedToken = await jwt.verify(args.token, config.secret);
       const user = await User.findById(decodedToken.id);
-      if (user && (user.role === 'admin' || user.role === 'owner')) {
+      if (user && (user.role === 'admin' || user.role === 'owner') && args.mode === 'admin') {
         return Group.collection.countDocuments();
       } else if (user) {
         return user.groups.length;
@@ -522,18 +521,18 @@ const resolvers = {
     },
     listCount: async (root, args) => {
       const decodedToken = await jwt.verify(args.token, config.secret);
-      const user = await User.findById(decodedToken.id);
+      const user = await User.findById(decodedToken.id).populate('groups');
       if (user) {
-        return await countLists({ ...args, all: false }, user);
+        return await countLists(false, user);
       } else {
         throw new AuthenticationError('Insufficient clearance!');
       }
     },
     allListCount: async (root, args) => {
       const decodedToken = await jwt.verify(args.token, config.secret);
-      const user = await User.findById(decodedToken.id);
+      const user = await User.findById(decodedToken.id).populate('groups');
       if (user.role === 'admin' || user.role === 'owner') {
-        return await countLists({ ...args, all: true }, { ...user });
+        return await countLists(true, user);
       } else {
         throw new AuthenticationError('Insufficient clearance!');
       }
