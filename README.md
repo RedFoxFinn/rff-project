@@ -14,7 +14,7 @@ Basic project structure | `done`,`tweaked`
 Custom icons | `done`
 Redux-store (global state management) | `done`,`additions`
 Redux-reducers (global state management) | `ongoing`,`Thunk-enhanced`
-Services | `upcoming`
+Services | `done`
 Style | `ongoing`
 Tools | `ongoing`
 Site navigation with React-router | `done`
@@ -23,29 +23,31 @@ About:colors | `done`
 About:technologies | `ongoing`
 Admin-tools | `ongoing`
 Calculate-app | `done`
-Dashboard-section | `ongoing`
-Dashboard:CountryCount | `ongoing`
-Dashboard:DishCount | `ongoing`
-Dashboard:GroupCount | `ongoing`
+Dashboard-section | `done`
+Dashboard:CountryCount | `done`
+Dashboard:DishCount | `done`
+Dashboard:GroupCount | `done`
 Dashboard:IngredientCount | `done`
-DashBoard:ListCount | `ongoing`
+DashBoard:ListCount | `done`
 Dashboard:MethodCount | `done`
-Dashboard:TaskCount | `ongoing`
-Dashboard:TrackedStopsCount | `ongoing`
+Dashboard:TaskCount | `done`
+Dashboard:TrackedStopsCount | `upcoming`
 Dishy-app | `ongoing`
 Landing page | `done`
 Login page | `done`,`tweaked`
-Navigation | `ongoing`
-OpenCountry-app | `done`
-Tasker-app | `upcoming`
-UserSettings | `ongoing`
+Navigation | `done`
+OpenCountry-app | `done`,`tweaked`
+Tasker-app | `ongoing`
+UserSettings | `upcoming`
 Registering | `done`
 Transporter-app | `upcoming`
 GraphQL-fragments | `done`
 GraphQL-mutations | `done`
 GraphQL-queries | `done`
 GraphQL-subscriptions | `done`
-Classes | `ongoing`
+Classes | `done`
+TESTS | `upcoming`
+CI | `upcoming`
 
 ###### frameworks & libraries:
 
