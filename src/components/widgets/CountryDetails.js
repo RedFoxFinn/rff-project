@@ -32,60 +32,70 @@ const CountryDetails = (props) => {
   const Alias = () => {
     const alts = country.getAltSpellings();
     return (
-      <ul>
+      <>
         <label className={classProvider(props.theme, 'heading')}>Also known as:</label>
-        {alts.map((a) => {
-          return <li className={classProvider(props.theme, 'heading')} key={a}>{a}</li>;
-        })}
-      </ul>
+        <ul>
+          {alts.map((a) => {
+            return <li className={classProvider(props.theme, 'heading')} key={a}>{a}</li>;
+          })}
+        </ul>
+      </>
     );
   };
 
   const Borders = () => {
     const borders = country.getBorders();
     return (
-      <ul>
+      <>
         <label className={classProvider(props.theme, 'heading')}>Borders with:</label>
-        {borders.map((b) => {
-          return <li className={classProvider(props.theme, 'heading')} key={b}>{b}</li>;
-        })}
-      </ul>
+        <ul>
+          {borders.map((b) => {
+            return <li className={classProvider(props.theme, 'heading')} key={b}>{b}</li>;
+          })}
+        </ul>
+      </>
     );
   };
 
   const Calling = () => {
     const codes = country.getCallingCodes();
     return (
-      <ul>
+      <>
         <label className={classProvider(props.theme, 'heading')}>Calling codes:</label>
-        {codes.map((c) => {
-          return <li className={classProvider(props.theme, 'heading')} key={c}>{c}</li>;
-        })}
-      </ul>
+        <ul>
+          {codes.map((c) => {
+            return <li className={classProvider(props.theme, 'heading')} key={c}>{c}</li>;
+          })}
+        </ul>
+      </>
     );
   };
 
   const Currency = () => {
     const currencies = country.getCurrencies();
     return (
-      <ul>
+      <>
         <label className={classProvider(props.theme, 'heading')}>Currency:</label>
-        {currencies.map((c) => {
-          return <li className={classProvider(props.theme, 'heading')} key={c.name}>{c.name}, {c.code}, {c.symbol}</li>;
-        })}
-      </ul>
+        <ul>
+          {currencies.map((c) => {
+            return <li className={classProvider(props.theme, 'heading')} key={c.name}>{c.name}, {c.code}, {c.symbol}</li>;
+          })}
+        </ul>
+      </>
     );
   };
 
   const Domain = () => {
     const domains = country.getDomain();
     return (
-      <ul>
+      <>
         <label className={classProvider(props.theme, 'heading')}>Domain extensions:</label>
-        {domains.map((d) => {
-          return <li className={classProvider(props.theme, 'heading')} key={d}>{d}</li>;
-        })}
-      </ul>
+        <ul>
+          {domains.map((d) => {
+            return <li className={classProvider(props.theme, 'heading')} key={d}>{d}</li>;
+          })}
+        </ul>
+      </>
     );
   };
 
@@ -96,25 +106,49 @@ const CountryDetails = (props) => {
   const Language = () => {
     const languages = country.getLanguages();
     return (
-      <ul>
+      <>
         <label className={classProvider(props.theme, 'heading')}>Official languages:</label>
-        {languages.map((l) => {
-          return <li className={classProvider(props.theme, 'heading')} key={l.name}>{l.name}, {l.nativeName}</li>;
-        })}
-      </ul>
+        <ul>
+          {languages.map((l) => {
+            return <li className={classProvider(props.theme, 'heading')} key={l.name}>{l.name}, {l.nativeName}</li>;
+          })}
+        </ul>
+      </>
     );
   };
 
   const Timezones = () => {
     const zones = country.getTimezones();
     return (
-      <ul>
+      <>
         <label className={classProvider(props.theme, 'heading')}>Timezones:</label>
-        {zones.map((z) => {
-          return <li className={classProvider(props.theme, 'heading')} key={z}>{z}</li>;
-        })}
-      </ul>
+        <ul>
+          {zones.map((z) => {
+            return <li className={classProvider(props.theme, 'heading')} key={z}>{z}</li>;
+          })}
+        </ul>
+      </>
     );
+  };
+
+  const Header = () => {
+    if (props.multi) {
+      return (
+        <div className='countryHeader'>
+          <h4 className={classProvider(props.theme, 'heading')}>
+            <Flag name={country.getAlpha2().toLowerCase()}/> {country.getName()}, {country.getNativeName()}
+          </h4>
+        </div>
+      );
+    } else {
+      return (
+        <div className='countryHeader'>
+          <h3 className={classProvider(props.theme, 'heading')}>
+            <Flag name={country.getAlpha2().toLowerCase()}/> {country.getName()}, {country.getNativeName()}
+          </h3>
+        </div>
+      );
+    }
   };
 
   const Body = () => {
@@ -151,14 +185,7 @@ const CountryDetails = (props) => {
 
   return (
     <div key={country.getNumericCode()} className='countryContainer' onClick={(event) => overrideSearch(event)}>
-      {props.multi
-        ? <h4 className={classProvider(props.theme, 'heading')}>
-          <Flag name={country.getAlpha2().toLowerCase()}/> {country.getName()}, {country.getNativeName()}
-        </h4>
-        : <h3 className={classProvider(props.theme, 'heading')}>
-          <Flag name={country.getAlpha2().toLowerCase()}/> {country.getName()}, {country.getNativeName()}
-        </h3>
-      }
+      <Header/>
       <Body/>
     </div>
   );
