@@ -1,17 +1,12 @@
 
 import gql from 'graphql-tag';
-import {LIST_DETAILS} from '../fragments/f_listFragment';
-import {USER_DETAILS} from '../fragments/f_userFragment';
+import {PRIVATE_LIST_DETAILS} from '../fragments/f_privateListFragment';
 
 export const PRIVATE_LISTS = gql`
   query privateLists($token: String!) {
     privateLists(token: $token) {
-      ...ListDetails
-      owner {
-        ...UserDetails
-      }
+      ...PrivateListDetails
     }
   }
-  ${USER_DETAILS}
-  ${LIST_DETAILS}
+  ${PRIVATE_LIST_DETAILS}
 `;

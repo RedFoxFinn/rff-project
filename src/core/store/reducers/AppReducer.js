@@ -37,6 +37,7 @@ export const switchApp = (app) => {
 
 export const switchTheme = (theme) => {
   return async dispatch => {
+    localStorage.setItem('rffTheme', theme);
     dispatch({
       type: 'switchTheme', theme: theme
     });

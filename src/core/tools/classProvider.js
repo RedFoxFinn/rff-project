@@ -65,6 +65,12 @@ const classProvider = (theme, element) => {
       return 'tileError';
     case 'dashTile':
       return 'dashTile';
+    case 'listHeader':
+      return 'listHeaderDa';
+    case 'listDescription':
+      return 'listDescriptionDa';
+    case 'task':
+      return 'taskDa';
     default:
       return '';
     }
@@ -132,6 +138,12 @@ const classProvider = (theme, element) => {
       return 'tileLoading';
     case 'tileError':
       return 'tileError';
+    case 'listHeader':
+      return 'listHeaderLi';
+    case 'listDescription':
+      return 'listDescriptionLi';
+    case 'task':
+      return 'taskLi';
     default:
       return '';
     }

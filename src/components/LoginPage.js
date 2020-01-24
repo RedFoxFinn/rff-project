@@ -56,13 +56,13 @@ const LoginPage = (props) => {
       {localStorage.getItem('rffUserToken') && <Redirect push to='/'/>}
       <div className='appContainer'>
         <form className='commonElements'>
-          <input type='text' placeholder='username' onChange={({target}) => props.setUsername(target.value)}
+          <input id='loginUsername' type='text' placeholder='username' onChange={({target}) => props.setUsername(target.value)}
             className={classProvider(props.theme, 'formElement')} value={props.loginState.username} autoComplete={true}/>
-          <input type='password' placeholder='password' onChange={({target}) => props.setPassword(target.value)}
+          <input id='loginPassword' type='password' placeholder='password' onChange={({target}) => props.setPassword(target.value)}
             className={classProvider(props.theme, 'formElement')} value={props.loginState.password} autoComplete={true}/>
-          <button type='button' onClick={() => handleLogin()}
+          <button id='loginButton' type='button' onClick={() => handleLogin()}
             className={classProvider(props.theme, 'formElement')}>login</button>
-          <Link to='/register' onClick={() => props.switchApp('Register')}
+          <Link id='gotoRegisterButton' to='/register' onClick={() => props.switchApp('Register')}
             className={classProvider(props.theme, 'formElement')}>register</Link>
         </form>
       </div>

@@ -1,17 +1,12 @@
 
 import gql from 'graphql-tag';
-import {LIST_DETAILS} from '../fragments/f_listFragment';
-import {GROUP_DETAILS} from '../fragments/f_groupFragment';
+import {GROUP_LIST_DETAILS} from '../fragments/f_groupListFragment';
 
 export const GROUP_LISTS = gql`
   query groupLists($token: String!) {
     groupLists(token: $token) {
-      ...ListDetails
-      group {
-        ...GroupDetails
-      }
+      ...GroupListDetails
     }
   }
-  ${GROUP_DETAILS}
-  ${LIST_DETAILS}
+  ${GROUP_LIST_DETAILS}
 `;

@@ -28,6 +28,7 @@ const Navigation = (props) => {
   const themes = ['light', 'dark'];
   const theme = props.appState.theme;
   const loginToken = localStorage.getItem('rffUserToken');
+  const setTheme = localStorage.getItem('rffTheme');
 
   useEffect(() => {
     loginToken !== null && client.query({
@@ -43,6 +44,9 @@ const Navigation = (props) => {
       }
     });
   }, [loginToken, client]);
+  useEffect(() => {
+    setTheme !== null && props.switchTheme(setTheme);
+  }, []);
 
   const MenuModule = () => {
     return (

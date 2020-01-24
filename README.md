@@ -41,12 +41,12 @@ Tasker-app | `ongoing`
 UserSettings | `upcoming`
 Registering | `done`
 Transporter-app | `upcoming`
-GraphQL-fragments | `done`
+GraphQL-fragments | `done`, `tweaked`
 GraphQL-mutations | `done`
 GraphQL-queries | `done`
 GraphQL-subscriptions | `done`
 Classes | `done`
-TESTS | `upcoming`
+TESTS | `ongoing`
 CI | `upcoming`
 
 ###### frameworks & libraries:
@@ -60,3 +60,4 @@ CI | `upcoming`
 - Apollo-client -GraphQL-client
 - Numbro (decimal formatting in calculate-app)
 - Iconify icon library
+- Cypress for e2e-testing

@@ -44,12 +44,14 @@ const AdminTools = (props) => {
     );
   };
 
-  return(
+  return (
     <div className='app'>
       <div className='appContainer'>
         <h4 className={classProvider(props.appState.theme, 'heading')}>App statistics:</h4>
         <WidgetsCommon/>
         <WidgetsAdvanced/>
+        <h4 className={classProvider(props.appState.theme, 'heading')}>User management:</h4>
+        <h4 className={classProvider(props.appState.theme, 'heading')}>Group management:</h4>
       </div>
     </div>
   );

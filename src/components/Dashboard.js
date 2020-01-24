@@ -3,7 +3,6 @@ import {connect} from 'react-redux';
 
 import classProvider from '../core/tools/classProvider';
 import '../core/style/global.css';
-import '../core/style/dashboard.css';
 
 import CountryCount from './widgets/CountryCount';
 import DishCount from './widgets/DishCount';

@@ -1,0 +1,52 @@
+.taskList {
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    align-items: center;
+    margin: 1em;
+}
+.listElements {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+.listHeaderLi {
+    margin: 1em;
+    display: inline-block;
+    color: var(--darkslategrey);
+    background-color: transparent;
+}
+.listHeaderDa {
+    margin: 1.5em;
+    display: inline-block;
+    color: var(--gainsboro);
+    background-color: transparent;
+}
+.listDescriptionLi {
+    margin: 1.5em;
+    display: inline-block;
+    color: var(--darkslategrey);
+    background-color: transparent;
+}
+.listDescriptionDa {
+    margin: 1em;
+    display: inline-block;
+    color: var(--gainsboro);
+    background-color: transparent;
+}
+.listContainer {
+    display: flex;
+    flex-direction: column;
+}
+.taskContainer {
+    background-color: transparent;
+    margin-bottom: 1.5em;
+}
+.taskLi {
+    color: var(--darkslategrey);
+    margin-bottom: 0.5em;
+}
+.taskDa {
+    color: var(--gainsboro);
+    margin-bottom: 0.5em;
+}
