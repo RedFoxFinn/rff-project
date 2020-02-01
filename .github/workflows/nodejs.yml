@@ -13,7 +13,7 @@ jobs:
     - name: install and test
       run: |
         npm install
-        npm run jest
+        npm test
       env:
         CI: true
         SECRET: ${{secrets.SECRET}}
