@@ -1,9 +1,13 @@
-.dishyElementDe {
-    margin: 1em;
-    width: 9em;
-    background-color: var(--peru);
-    color: var(--darkslategrey);
+::placeholder {
+    color: var(--googlered);
 }
+::-webkit-input-placeholder {
+    color: var(--googlered);
+}
+:-ms-input-placeholder {
+    color: var(--googlered);
+}
+
 .dishyElementDa {
     margin: 1em;
     width: 9em;
@@ -16,10 +20,137 @@
     background-color: var(--gainsboro);
     color: var(--darkslategrey);
 }
-.dishySelectDrop {
-    background-color: #7D7D7D;
-    opacity: 0.75;
-    min-width: 5em;
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-    z-index: 1;
+
+option:disabled {
+    color: var(--darkslategrey);
+}
+form {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    border: 1px transparent;
+    margin: 1em;
+}
+.selector {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    border: 1px transparent;
+    margin: 1em;
+}
+.selectorDa {
+    display: block;
+    background-color: var(--darkslategrey);
+    border: 1px solid transparent;
+    outline: none;
+    cursor: pointer;
+    color: var(--gainsboro);
+    padding: 1em;
+}
+.selectorLi {
+    display: block;
+    background-color: var(--gainsboro);
+    border: 1px solid transparent;
+    outline: none;
+    cursor: pointer;
+    color: var(--darkslategrey);
+    padding: 1em;
+}
+.selectedDa {
+    display: block;
+    background-color: var(--googlegreen);
+    border: 1px solid transparent;
+    outline: none;
+    cursor: pointer;
+    color: var(--gainsboro);
+    padding: 1em;
+}
+.selectedLi {
+    display: block;
+    background-color: var(--googlegreen);
+    border: 1px solid transparent;
+    outline: none;
+    cursor: pointer;
+    color: var(--darkslategrey);
+    padding: 1em;
+}
+.selectorLi:hover {
+    border: 1px solid var(--googlegreen);
+}
+.selectorDa:hover {
+    border: 1px solid var(--googlegreen);
+}
+.selectedLi:hover {
+    background-color: transparent;
+    border: 1px solid var(--googlegreen);
+}
+.selectedDa:hover {
+    background-color: transparent;
+    border: 1px solid var(--googlegreen);
+}
+.activatorLi {
+    display: block;
+    background-color: transparent;
+    border: 1px solid var(--googlegreen);
+    outline: none;
+    cursor: pointer;
+    color: var(--darkslategrey);
+    padding: 1em;
+}
+.activatorLi:hover {
+    background-color: var(--googlegreen);
+    border: 1px solid transparent;
+}
+.activatorDa {
+    display: block;
+    background-color: transparent;
+    border: 1px solid var(--googlegreen);
+    outline: none;
+    cursor: pointer;
+    color: var(--gainsboro);
+    padding: 1em;
+}
+.activatorDa:hover {
+    background-color: var(--googlegreen);
+    border: 1px solid transparent;
+}
+.deactivatorLi {
+    display: block;
+    background-color: transparent;
+    border: 1px solid var(--googlered);
+    outline: none;
+    cursor: pointer;
+    color: var(--darkslategrey);
+    padding: 1em;
+}
+.deactivatorLi:hover {
+    background-color: var(--googlered);
+    border: 1px solid transparent;
+}
+.deactivatorDa {
+    display: block;
+    background-color: transparent;
+    border: 1px solid var(--googlered);
+    outline: none;
+    cursor: pointer;
+    color: var(--gainsboro);
+    padding: 1em;
+}
+.deactivatorDa:hover {
+    background-color: var(--googlered);
+    border: 1px solid transparent;
+}
+.fieldLi {
+    background-color: transparent;
+    color: var(--darkslategrey);
+    padding: 1em;
+    border: 1px solid var(--darkslategrey);
+    outline: none;
+}
+.fieldDa {
+    background-color: transparent;
+    color: var(--gainsboro);
+    padding: 1em;
+    border: 1px solid var(--gainsboro);
+    outline: none;
 }

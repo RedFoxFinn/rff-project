@@ -71,6 +71,16 @@ const classProvider = (theme, element) => {
       return 'listDescriptionDa';
     case 'task':
       return 'taskDa';
+    case 'selector':
+      return 'selectorDa';
+    case 'selected':
+      return 'selectedDa';
+    case 'activator':
+      return 'activatorDa';
+    case 'deactivator':
+      return 'deactivatorDa';
+    case 'field':
+      return 'fieldDa';
     default:
       return '';
     }
@@ -144,6 +154,16 @@ const classProvider = (theme, element) => {
       return 'listDescriptionLi';
     case 'task':
       return 'taskLi';
+    case 'selector':
+      return 'selectorLi';
+    case 'selected':
+      return 'selectedLi';
+    case 'activator':
+      return 'activatorLi';
+    case 'deactivator':
+      return 'deactivatorLi';
+    case 'field':
+      return 'fieldLi';
     default:
       return '';
     }

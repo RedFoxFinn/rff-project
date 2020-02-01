@@ -181,13 +181,13 @@ const UserPage = (props) => {
     });
   };
 
-  return (
-    <div className='app'>
+  return props.show
+    ? <div className='app'>
       <div className='appContainer'>
-        {props.user && <UserManager/>}
+        <UserManager/>
       </div>
     </div>
-  );
+    : <Redirect push to='/'/>;
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserPage);

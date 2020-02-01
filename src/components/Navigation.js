@@ -58,9 +58,10 @@ const Navigation = (props) => {
           <Link to='/calculate' onClick={() => props.switchApp( 'Calculate')}>Calculate</Link>
           <Link to='/countries' onClick={() => props.switchApp( 'OpenCountry')}>OpenCountry</Link>
           <Link to='/dishy' onClick={() => props.switchApp( 'Dishy')}>Dishy</Link>
-          <Link to='/tasker' onClick={() => props.switchApp( 'Tasker')}>Tasker</Link>
+          {props.loginState.user && <Link to='/tasker' onClick={() => props.switchApp( 'Tasker')}>Tasker</Link>}
           <Link to='/transit' onClick={() => props.switchApp( 'Transporter')}>Transporter</Link>
-          <Link to='/admin' onClick={() => props.switchApp( 'Admin tools')}>Admin tools</Link>
+          {props.loginState.user && (props.loginState.user.role === 'admin' || props.loginState.user.role === 'owner')
+            && <Link to='/admin' onClick={() => props.switchApp( 'Admin tools')}>Admin tools</Link>}
           <Link to='/about' onClick={() => props.switchApp( 'About')}>About</Link>
           <ThemeSelector/>
         </div>
@@ -93,9 +94,11 @@ const Navigation = (props) => {
     } else {
       return (
         <div className={classProvider(theme, 'navMenu')}>
-          <button type='button' className={classProvider(theme, 'navButton')}>session</button>
+          <button type='button' className={classProvider(theme, 'navButton')}>
+            {props.loginState.user !== null ? props.loginState.user.username : null}
+          </button>
           <div className={classProvider(theme, 'navContent')}>
-            <Link to='/user' onClick={() => props.switchApp('UserSettings')}>user</Link>
+            <Link to='/user' onClick={() => props.switchApp('UserSettings')}>settings</Link>
             <Link to='/' onClick={() => logout()}>logout</Link>
           </div>
         </div>

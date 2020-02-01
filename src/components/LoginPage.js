@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {} from 'react';
 import {connect} from 'react-redux';
 
 import classProvider from '../core/tools/classProvider';
@@ -27,32 +27,34 @@ const LoginPage = (props) => {
 
   const handleLogin = () => {
     login({
+      errorPolicy: 'ignore',
       variables: {
         username: props.loginState.username,
         password: props.loginState.password
       }
-    }).then((result, errors) => {
-      if (!errors) {
-        const loginToken = result.data.login.value;
+    }).then(result => {
+      const {data} = result;
+      if (data !== null) {
+        const loginToken = data.login.value;
         client.query({
           query: ME,
           variables: {
             token: loginToken.substring(7)
           }
-        }).then((result) => props.loginSuccess(result.data.me)
-          && props.handleInfo('logged in successfully')
-          && localStorage.setItem('rffUserToken', loginToken)
-          && <Redirect push to='/'/>
-        );
+        }).then((result) => {
+          props.loginSuccess(result.data.me);
+          localStorage.setItem('rffUserToken', loginToken);
+          props.handleInfo('logged in successfully');
+        });
       } else {
-        props.handleError(errors[0]);
+        props.handleError('invalid username or password');
         props.loginFailure();
       }
     });
   };
 
-  return (
-    <div className='app'>
+  return props.show
+    ? <div className='app'>
       {localStorage.getItem('rffUserToken') && <Redirect push to='/'/>}
       <div className='appContainer'>
         <form className='commonElements'>
@@ -67,7 +69,7 @@ const LoginPage = (props) => {
         </form>
       </div>
     </div>
-  );
+    : <Redirect push to='/'/>;
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);

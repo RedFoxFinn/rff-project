@@ -4,7 +4,7 @@ This branch contains applications frontend.
 
 ###### frontend phase: `building applications: UI & logic` & `designing`
 
-###### tests:
+###### tests: `building E2E test with Cypress`
 
 ###### breakdown:
 
@@ -12,7 +12,7 @@ feature | status
 ------- | -----:
 Basic project structure | `done`,`tweaked`
 Custom icons | `done`
-Redux-store (global state management) | `done`,`additions`
+Redux-store (global state management) | `done`,`additions`,`tweaks`
 Redux-reducers (global state management) | `ongoing`,`Thunk-enhanced`
 Services | `done`
 Style | `ongoing`

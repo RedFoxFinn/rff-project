@@ -50,6 +50,7 @@
     --jblemon: #FCF84A;
     --heroku: #6762a6;
     --font-global: 'Raleway', sans-serif;
+    --navGrey: #7D7D7D;
 }
 .app {
     display: flex;

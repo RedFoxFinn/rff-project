@@ -41,7 +41,7 @@
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
 }
 .navContentLi {
-    background-color: #7D7D7D;
+    background-color: var(--navGrey);
     opacity: 0.75;
     min-width: 5em;
     display: none;
@@ -50,7 +50,7 @@
     z-index: 1;
 }
 .navContentDa {
-    background-color: #7D7D7D;
+    background-color: var(--navGrey);
     opacity: 0.75;
     min-width: 5em;
     display: none;

@@ -5,10 +5,6 @@ const initialState = {
   spiceSearch: '',
   methodSearch: '',
   newDish: false,
-  newCarb: '',
-  newProtein: '',
-  newSpice: '',
-  newMethod: '',
   newDishCarbs: [],
   newDishProteins: [],
   newDishSpices: [],
@@ -27,14 +23,6 @@ const DishyReducer = (state = initialState, action) => {
     return {...state, spiceSearch: action.spiceSearch};
   case 'setMethodSearch':
     return {...state, methodSearch: action.methodSearch};
-  case 'setNewCarb':
-    return {...state, newCarb: action.newCarb};
-  case 'setNewProtein':
-    return {...state, newProtein: action.newProtein};
-  case 'setNewSpice':
-    return {...state, newSpice: action.newSpice};
-  case 'setNewMethod':
-    return {...state, newMethod: action.newMethod};
   case 'setNewDish':
     return {...state, newDish: true};
   case 'setNewDishName':
@@ -88,7 +76,7 @@ export const addDishProtein = (protein) => {
   };
 };
 
-export const addDistSpice = (spice) => {
+export const addDishSpice = (spice) => {
   return async dispatch => {
     dispatch({
       type: 'setNewDishSpices', spice: {name: spice.name, id: spice.id}
@@ -196,70 +184,6 @@ export const resetSearchMethod = () => {
   return async dispatch => {
     dispatch({
       type: 'setMethodSearch', methodSearch: ''
-    });
-  };
-};
-
-export const initCarb = (name) => {
-  return async dispatch => {
-    dispatch({
-      type: 'setNewCarb', newCarb: name
-    });
-  };
-};
-
-export const resetCarb = () => {
-  return async dispatch => {
-    dispatch({
-      type: 'setNewCarb', newCarb: ''
-    });
-  };
-};
-
-export const initProtein = (name) => {
-  return async dispatch => {
-    dispatch({
-      type: 'setNewProtein', newProtein: name
-    });
-  };
-};
-
-export const resetProtein = () => {
-  return async dispatch => {
-    dispatch({
-      type: 'setNewProtein', newProtein: ''
-    });
-  };
-};
-
-export const initSpice = (name) => {
-  return async dispatch => {
-    dispatch({
-      type: 'setNewSpice', newSpice: name
-    });
-  };
-};
-
-export const resetSpice = () => {
-  return async dispatch => {
-    dispatch({
-      type: 'setNewSpice', newSpice: ''
-    });
-  };
-};
-
-export const initMethod = (name) => {
-  return async dispatch => {
-    dispatch({
-      type: 'setNewMethod', newMethod: name
-    });
-  };
-};
-
-export const resetMethod = () => {
-  return async dispatch => {
-    dispatch({
-      type: 'setNewMethod', newMethod: ''
     });
   };
 };

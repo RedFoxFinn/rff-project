@@ -2,27 +2,28 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a69d5581-dc09-455b-96e6-941e02078fc1" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.eslintrc.js" beforeDir="false" afterPath="$PROJECT_DIR$/.eslintrc.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cypress/integration/application_spec.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cypress/fixtures/test.json" beforeDir="false" afterPath="$PROJECT_DIR$/cypress/fixtures/test.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cypress/integration/home_login_register_spec.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/AdminTools.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/AdminTools.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Dashboard.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Dishy.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dishy.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/LoginPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/LoginPage.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Navigation.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Navigation.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/RegistrationPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/RegistrationPage.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Tasker.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Tasker.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/widgets/Colors.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/widgets/Colors.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/widgets/Task.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/widgets/Task.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/graphql/rff/fragments/f_listFragment.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/graphql/rff/queries/q_groupLists.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/graphql/rff/queries/q_groupLists.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/graphql/rff/queries/q_privateLists.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/graphql/rff/queries/q_privateLists.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/graphql/rff/queries/q_tasks.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/graphql/rff/queries/q_tasks.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/UserSettings.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/UserSettings.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/widgets/Dish.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/widgets/DishComponent.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/core/store/reducers/AppReducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/store/reducers/AppReducer.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/style/dashboard.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/store/reducers/DishyReducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/store/reducers/DishyReducer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/style/dishy.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/style/dishy.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/style/global.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/style/global.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/style/navigation.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/style/navigation.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/core/tools/classProvider.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/tools/classProvider.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -37,8 +38,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="HTML File" />
-        <option value="CSS File" />
         <option value="JavaScript File" />
+        <option value="CSS File" />
       </list>
     </option>
   </component>
@@ -79,6 +80,7 @@
     <property name="node.js.path.for.package.tslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="nodejs.jest.jest_package" value="$PROJECT_DIR$/node_modules/react-scripts" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
@@ -92,6 +94,27 @@
       <recent name="$PROJECT_DIR$/src/core/graphql/subscriptions" />
       <recent name="$PROJECT_DIR$/src/core/graphql/queries" />
     </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="Home page.login" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <node-options value="" />
+      <jest-package value="$PROJECT_DIR$/node_modules/react-scripts" />
+      <working-dir value="$PROJECT_DIR$" />
+      <envs />
+      <scope-kind value="TEST" />
+      <test-file value="$PROJECT_DIR$/cypress/integration/home_login_register_spec.js" />
+      <test-names>
+        <test-name value="Home page" />
+        <test-name value="login" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Jest.Home page.login" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="ServiceViewManager">
     <option name="viewStates">
@@ -142,7 +165,12 @@
       <workItem from="1579362224515" duration="26000" />
       <workItem from="1579509461889" duration="28485000" />
       <workItem from="1579703598079" duration="6877000" />
-      <workItem from="1579772363463" duration="28379000" />
+      <workItem from="1579772363463" duration="28965000" />
+      <workItem from="1579887130815" duration="156000" />
+      <workItem from="1580136351368" duration="12211000" />
+      <workItem from="1580149305911" duration="450000" />
+      <workItem from="1580376496322" duration="18444000" />
+      <workItem from="1580549939781" duration="21203000" />
     </task>
     <servers />
   </component>
@@ -171,40 +199,58 @@
       <screen x="0" y="32" width="1366" height="736" />
     </state>
     <state x="282" y="64" key="#HTML/0.32.1366.736@0.32.1366.736" timestamp="1579512151743" />
-    <state x="0" y="28" key="#Live_Templates" timestamp="1578991633679">
-      <screen x="0" y="28" width="1366" height="740" />
+    <state x="0" y="32" width="1358" height="731" key="#Live_Templates" timestamp="1580380680445">
+      <screen x="0" y="32" width="1366" height="736" />
     </state>
     <state x="0" y="28" key="#Live_Templates/0.28.1366.740@0.28.1366.740" timestamp="1578991633679" />
+    <state x="0" y="32" width="1358" height="731" key="#Live_Templates/0.32.1366.736@0.32.1366.736" timestamp="1580380680445" />
     <state x="282" y="64" key="#Menus_and_Toolbars" timestamp="1579544630266">
       <screen x="0" y="32" width="1366" height="736" />
     </state>
     <state x="282" y="64" key="#Menus_and_Toolbars/0.32.1366.736@0.32.1366.736" timestamp="1579544630266" />
-    <state x="417" y="149" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1579884891426">
+    <state x="417" y="149" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1580473477748">
       <screen x="0" y="32" width="1366" height="736" />
     </state>
     <state x="417" y="146" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.28.1366.740@0.28.1366.740" timestamp="1578391563579" />
-    <state x="417" y="149" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.32.1366.736@0.32.1366.736" timestamp="1579884891426" />
+    <state x="417" y="149" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.32.1366.736@0.32.1366.736" timestamp="1580473477748" />
     <state x="467" y="154" key="FileChooserDialogImpl" timestamp="1576669856633">
       <screen x="0" y="28" width="1366" height="740" />
     </state>
     <state x="467" y="154" key="FileChooserDialogImpl/0.28.1366.740@0.28.1366.740" timestamp="1576669856633" />
+    <state width="1343" height="162" key="GridCell.Tab.0.bottom" timestamp="1580574083008">
+      <screen x="0" y="32" width="1366" height="736" />
+    </state>
+    <state width="1343" height="162" key="GridCell.Tab.0.bottom/0.32.1366.736@0.32.1366.736" timestamp="1580574083008" />
+    <state width="1343" height="162" key="GridCell.Tab.0.center" timestamp="1580574083007">
+      <screen x="0" y="32" width="1366" height="736" />
+    </state>
+    <state width="1343" height="162" key="GridCell.Tab.0.center/0.32.1366.736@0.32.1366.736" timestamp="1580574083007" />
+    <state width="1343" height="162" key="GridCell.Tab.0.left" timestamp="1580574083006">
+      <screen x="0" y="32" width="1366" height="736" />
+    </state>
+    <state width="1343" height="162" key="GridCell.Tab.0.left/0.32.1366.736@0.32.1366.736" timestamp="1580574083006" />
+    <state width="1343" height="162" key="GridCell.Tab.0.right" timestamp="1580574083007">
+      <screen x="0" y="32" width="1366" height="736" />
+    </state>
+    <state width="1343" height="162" key="GridCell.Tab.0.right/0.32.1366.736@0.32.1366.736" timestamp="1580574083007" />
     <state x="188" y="36" width="992" height="733" key="SettingsEditor" timestamp="1579703531037">
       <screen x="0" y="32" width="1366" height="736" />
     </state>
     <state x="188" y="32" width="992" height="733" key="SettingsEditor/0.28.1366.740@0.28.1366.740" timestamp="1579078521691" />
     <state x="188" y="36" key="SettingsEditor/0.32.1366.736@0.32.1366.736" timestamp="1579703531037" />
-    <state x="100" y="131" width="1166" height="538" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1579513267983">
+    <state x="100" y="131" width="1166" height="538" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1580556354733">
       <screen x="0" y="32" width="1366" height="736" />
     </state>
     <state x="100" y="128" width="1166" height="540" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.28.1366.740@0.28.1366.740" timestamp="1579086842054" />
-    <state x="100" y="131" width="1166" height="538" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.32.1366.736@0.32.1366.736" timestamp="1579513267983" />
+    <state x="100" y="131" width="1166" height="538" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.32.1366.736@0.32.1366.736" timestamp="1580556354733" />
     <state x="0" y="28" width="648" height="828" key="find.popup" timestamp="1575467002266">
       <screen x="0" y="28" width="1366" height="740" />
     </state>
     <state x="0" y="28" width="648" height="828" key="find.popup/0.28.1366.740@0.28.1366.740" timestamp="1575467002266" />
-    <state x="347" y="44" width="672" height="676" key="search.everywhere.popup" timestamp="1578991519623">
-      <screen x="0" y="28" width="1366" height="740" />
+    <state x="347" y="48" width="672" height="673" key="search.everywhere.popup" timestamp="1580380523908">
+      <screen x="0" y="32" width="1366" height="736" />
     </state>
     <state x="347" y="44" width="672" height="676" key="search.everywhere.popup/0.28.1366.740@0.28.1366.740" timestamp="1578991519623" />
+    <state x="347" y="48" width="672" height="673" key="search.everywhere.popup/0.32.1366.736@0.32.1366.736" timestamp="1580380523908" />
   </component>
 </project>

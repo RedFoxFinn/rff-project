@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
-import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import {BrowserRouter as Router, Redirect, Route, Switch} from 'react-router-dom';
 
 import {ApolloClient} from 'apollo-client';
 import {createHttpLink} from 'apollo-link-http';
@@ -113,19 +113,21 @@ const App = (props) => {
   }, [props]);
 
   const Rff = () => {
+    const user = props.user;
     return (
       <Switch>
         <Route exact path='/' render={(props) => <LandingPage {...props} show={true}/>}/>
         <Route path='/about' render={(props) => <About {...props} show={true}/>}/>
-        <Route path='/admin' render={(props) => <AdminTools {...props} show={true}/>}/>
+        <Route path='/admin' render={(props) => <AdminTools {...props}
+          show={user !== null && (user.role === 'admin' || user.role === 'owner')}/>}/>
         <Route path='/calculate' render={(props) => <Calculate {...props} show={true}/>}/>
         <Route path='/countries' render={(props) => <OpenCountry {...props} show={true}/>}/>
-        <Route path='/dashboard' render={(props) => <Dashboard {...props} show={true}/>}/>
-        <Route path='/dishy' render={(props) => <Dishy {...props} show={true}/>}/>
-        <Route path='/login' render={(props) => <LoginPage {...props} show={true}/>}/>
-        <Route path='/register' render={(props) => <RegistrationPage {...props} show={true}/>}/>
-        <Route path='/tasker' render={(props) => <Tasker {...props} show={true}/>}/>
-        {props.user && <Route path='/user' render={(props) => <UserPage {...props} show={true}/>}/>}
+        <Route path='/dashboard' render={(props) => <Dashboard {...props} show={user !== null ? 'advanced' : 'common'}/>}/>
+        <Route path='/dishy' render={(props) => <Dishy {...props} show={user !== null ? 'advanced' : 'common'}/>}/>
+        <Route path='/login' render={(props) => <LoginPage {...props} show={user === null}/>}/>
+        <Route path='/register' render={(props) => <RegistrationPage {...props} show={user === null}/>}/>
+        <Route path='/tasker' render={(props) => <Tasker {...props} show={user !== null}/>}/>
+        <Route path='/user' render={(props) => <UserPage {...props} show={user !== null}/>}/>
       </Switch>
     );
   };

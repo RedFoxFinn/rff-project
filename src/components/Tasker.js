@@ -17,6 +17,7 @@ import usersIcon from '@iconify/icons-fa-solid/users';
 import {GROUP_LISTS} from '../core/graphql/rff/queries/q_groupLists';
 import {PRIVATE_LISTS} from '../core/graphql/rff/queries/q_privateLists';
 import {TASKS} from '../core/graphql/rff/queries/q_tasks';
+import {Redirect} from 'react-router-dom';
 
 const mapStateToProps = (state) => {
   return {
@@ -27,6 +28,28 @@ const mapStateToProps = (state) => {
 
 const Tasker = (props) => {
   let userToken;
+
+  const Empty = ({type}) => {
+    return (
+      <div className='taskList'>
+        <p className={classProvider(props.theme, 'listHeader')}>no accessible {type} lists</p>
+      </div>
+    );
+  };
+  const Error = ({type}) => {
+    return (
+      <div className='taskList'>
+        <p className={classProvider(props.theme, 'listHeader')}>error occurred while loading {type} lists</p>
+      </div>
+    );
+  };
+  const Loading = ({type}) => {
+    return (
+      <div className='taskList'>
+        <p className={classProvider(props.theme, 'listHeader')}>loading {type} lists</p>
+      </div>
+    );
+  };
 
   const Lists = () => {
     if (props.user) {
@@ -52,32 +75,19 @@ const Tasker = (props) => {
         token: userToken
       }
     });
-    if (!loading) {
-      if (!error) {
-        const lists = data.privateLists;
-        return (
-          <div className='taskList'>
-            <h4 className={classProvider(props.theme, 'listHeader')}>Accessible private lists:</h4>
-            <div>
-              {lists.map(l => <List key={`privateList:${l.id}`} list={l}/>)}
-            </div>
+    return (
+      <div className='taskList'>
+        <h4 className={classProvider(props.theme, 'listHeader')}>Accessible private lists:</h4>
+        {data && data.privateLists.length > 0
+          ? <div>
+            {data.privateLists.map(l => <List key={`privateList:${l.id}`} list={l}/>)}
           </div>
-        );
-      } else {
-        console.error(error);
-        return (
-          <div className='taskList'>
-            <p className={classProvider(props.theme, 'listHeader')}>error occurred while loading private lists</p>
-          </div>
-        );
-      }
-    } else {
-      return (
-        <div className='taskList'>
-          <p className={classProvider(props.theme, 'listHeader')}>loading private lists</p>
-        </div>
-      );
-    }
+          : <Empty type='private'/>
+        }
+        {error && <Error type='private'/>}
+        {loading && <Loading type='private'/>}
+      </div>
+    );
   };
 
   const ListsG = () => {
@@ -86,37 +96,18 @@ const Tasker = (props) => {
         token: userToken
       }
     });
-    if (!loading) {
-      if (!error) {
-        const lists = data.groupLists;
-        return (
-          <div className='taskList'>
-            <h4 className={classProvider(props.theme, 'heading')}>Accessible group lists:</h4>
-            {lists.length > 0
-              ? <div>
-                {lists.map(l => <List key={`groupList:${l.id}`} list={l}/>)}
-              </div>
-              : <div>
-                <p className={classProvider(props.theme, 'listHeader')}>{'couldn\'t find accessible group lists'}</p>
-              </div>
-            }
+    return (
+      <div className='taskList'>
+        <h4 className={classProvider(props.theme, 'heading')}>Accessible group lists:</h4>
+        {data && data.groupLists.length > 0
+          ? <div>
+            {data.groupLists.map(l => <List key={`groupList:${l.id}`} list={l}/>)}
           </div>
-        );
-      } else {
-        console.error(error);
-        return (
-          <div className='taskList'>
-            <p className={classProvider(props.theme, 'listHeader')}>error occurred while loading group lists</p>
-          </div>
-        );
-      }
-    } else {
-      return (
-        <div className='taskList'>
-          <p className={classProvider(props.theme, 'listHeader')}>loading group lists</p>
-        </div>
-      );
-    }
+          : <Empty type='group'/>}
+        {loading && <Loading type='group'/>}
+        {error && <Error type='group'/>}
+      </div>
+    );
   };
 
   const List = ({list}) => {
@@ -189,11 +180,11 @@ const Tasker = (props) => {
     }
   };
 
-  return(
-    <div className='app'>
+  return props.show
+    ? <div className='app'>
       <Lists/>
     </div>
-  );
+    : <Redirect push to='/'/>;
 };
 
 export default connect(mapStateToProps)(Tasker);

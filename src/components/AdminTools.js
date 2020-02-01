@@ -12,6 +12,7 @@ import IngredientCount from './widgets/IngredientCount';
 import MethodCount from './widgets/MethodCount';
 import TrackedStopsCount from './widgets/TrackedStopsCount';
 import UserCount from './widgets/UserCount';
+import {Redirect} from 'react-router-dom';
 
 const mapStateToProps = (state) => {
   return {
@@ -44,8 +45,8 @@ const AdminTools = (props) => {
     );
   };
 
-  return (
-    <div className='app'>
+  return props.show
+    ? <div className='app'>
       <div className='appContainer'>
         <h4 className={classProvider(props.appState.theme, 'heading')}>App statistics:</h4>
         <WidgetsCommon/>
@@ -54,7 +55,7 @@ const AdminTools = (props) => {
         <h4 className={classProvider(props.appState.theme, 'heading')}>Group management:</h4>
       </div>
     </div>
-  );
+    : <Redirect push to='/'/>;
 };
 
 export default connect(mapStateToProps)(AdminTools);

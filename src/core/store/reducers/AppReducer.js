@@ -47,7 +47,7 @@ export const switchTheme = (theme) => {
 export const handleError = (error) => {
   return async dispatch => {
     dispatch({
-      type: 'setNotification', notification: {type: 'error', message: error.message}
+      type: 'setNotification', notification: {type: 'error', message: error}
     });
     setTimeout(() => {
       dispatch({
