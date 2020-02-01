@@ -75,9 +75,9 @@
     "notifyMode": "always",
     "verbose": true,
     "testEnvironment": "node",
-    "testPathIgnorePatterns": [
-      "./node_modules/*",
-      "./build"
+    "modulePathIgnorePatterns": [
+      "<rootDir>/node_modules/*",
+      "<rootDir>/build"
     ]
   },
   "babel": {

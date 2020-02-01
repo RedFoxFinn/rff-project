@@ -135,13 +135,13 @@ const findGroups = async (args) => {
 
 // list counter
 const countLists = async (all, user) => {
-    console.log(user);
+  console.log(user);
   if (all) {
     return await List.collection.countDocuments();
   } else {
     const groups = user.groups.map(g => g._id);
-    const privateL = await PrivateList.find({owner: user._id.toString()}).countDocuments();
-    const groupL = await GroupList.find({group: [...groups]}).countDocuments();
+    const privateL = await PrivateList.find({ owner: user._id.toString() }).countDocuments();
+    const groupL = await GroupList.find({ group: [...groups] }).countDocuments();
     return groupL + privateL;
   }
 };
