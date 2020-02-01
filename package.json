@@ -26,11 +26,11 @@
   "scripts": {
     "start": "NODE_ENV=staging node Server.js",
     "node": "NODE_ENV=development node Server.js",
-    "test": "NODE_ENV=test node Server.js",
+    "test": "npm run lint && npm run jest",
     "watch": "NODE_ENV=development nodemon Server.js",
     "watch:test": "NODE_ENV=test nodemon Server.js",
-    "jest": "NODE_ENV=test jest --forceExit --coverage",
-    "lint": "eslint --fix ."
+    "lint": "eslint --fix .",
+    "jest": "NODE_ENV=test jest --coverage"
   },
   "browserslist": [
     ">0.2%",
