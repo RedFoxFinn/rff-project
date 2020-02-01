@@ -2,8 +2,16 @@ os: linux
 dist: bionic
 language: node_js
 node_js:
-  - 10
-jobs:
-  include:
-    - stage: test
-      script: npm run jest
+  - '10'
+branches:
+  only:
+    - backend
+cache:
+  directories:
+    - node_modules
+before_install:
+  - npm update
+install:
+  - npm install
+script:
+  - npm run jest
