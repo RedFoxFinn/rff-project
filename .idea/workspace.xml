@@ -2,9 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ed49563c-3f14-4e8e-9ab4-730018c08380" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/graphql/gql_resolvers.js" beforeDir="false" afterPath="$PROJECT_DIR$/graphql/gql_resolvers.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/graphql/gql_typeDefs.js" beforeDir="false" afterPath="$PROJECT_DIR$/graphql/gql_typeDefs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,6 +36,12 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="settings.editor.selected.configurable" value="MTCustomThemeConfigurable" />
@@ -70,6 +77,8 @@
       <workItem from="1579523235911" duration="848000" />
       <workItem from="1579532951857" duration="145000" />
       <workItem from="1579534061352" duration="1080000" />
+      <workItem from="1579767852718" duration="6948000" />
+      <workItem from="1580590324385" duration="1644000" />
     </task>
     <servers />
   </component>
@@ -81,9 +90,10 @@
       <screen x="0" y="32" width="1366" height="736" />
     </state>
     <state x="439" y="195" key="#com.intellij.fileTypes.FileTypeChooser/0.32.1366.736@0.32.1366.736" timestamp="1579510339072" />
-    <state x="100" y="128" width="1166" height="540" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1578397132119">
-      <screen x="0" y="28" width="1366" height="740" />
+    <state x="100" y="131" width="1166" height="538" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1579770051740">
+      <screen x="0" y="32" width="1366" height="736" />
     </state>
     <state x="100" y="128" width="1166" height="540" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.28.1366.740@0.28.1366.740" timestamp="1578397132119" />
+    <state x="100" y="131" width="1166" height="538" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.32.1366.736@0.32.1366.736" timestamp="1579770051740" />
   </component>
 </project>

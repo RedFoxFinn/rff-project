@@ -1,0 +1,9 @@
+language: node_js
+node_js:
+  - 10.x
+jobs:
+  include:
+    - stage: preparing
+      script: npm install
+    - stage: testing
+      script: npm run jest

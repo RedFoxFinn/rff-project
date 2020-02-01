@@ -4,3 +4,4 @@ node_modules
 .directory
 .env
 coverage
+package-lock.json

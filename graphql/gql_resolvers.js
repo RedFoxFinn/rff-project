@@ -275,6 +275,7 @@ const dependencyRemover = async (type, id) => {
   let groups;
   let tasks;
   let comments;
+  let users;
   switch (type) {
   case 'CARB':
     dishes = await Dish.find({ carbs: id });
@@ -329,8 +330,15 @@ const dependencyRemover = async (type, id) => {
   case 'GROUP':
     await Group.findByIdAndDelete(id);
     lists = await GroupList.find({ group: id });
+    users = await User.find({});
     await lists.forEach(l => Task.find({ listID: l._id }).deleteMany());
     await lists.forEach(l => l.delete());
+    await users.forEach(u => {
+      u.groups = u.groups.filter(g => {
+        return g !== id;
+      });
+      u.save();
+    });
     break;
   case 'USER':
     /* user removal triggers following:
@@ -541,7 +549,7 @@ const resolvers = {
       const decodedToken = await jwt.verify(args.token, config.secret);
       const user = await User.findById(decodedToken.id);
       if (user) {
-        return await PrivateList.find({ owner: user._id }).populate('owner');
+        return await PrivateList.find({ owner: decodedToken.id }).populate('owner');
       } else {
         throw new AuthenticationError('Session error: you must be logged in!');
       }
@@ -1155,7 +1163,7 @@ const resolvers = {
           title: args.title,
           active: true,
           removable: true,
-          creator: user._id
+          creator: user._id.toString()
         });
         try {
           await newGroup.save();
