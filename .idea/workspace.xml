@@ -4,7 +4,6 @@
     <list default="true" id="ed49563c-3f14-4e8e-9ab4-730018c08380" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/api.test.js" beforeDir="false" afterPath="$PROJECT_DIR$/tests/api.test.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -78,7 +77,7 @@
       <workItem from="1579532951857" duration="145000" />
       <workItem from="1579534061352" duration="1080000" />
       <workItem from="1579767852718" duration="6948000" />
-      <workItem from="1580590324385" duration="7678000" />
+      <workItem from="1580590324385" duration="8093000" />
     </task>
     <servers />
   </component>
@@ -90,10 +89,10 @@
       <screen x="0" y="32" width="1366" height="736" />
     </state>
     <state x="439" y="195" key="#com.intellij.fileTypes.FileTypeChooser/0.32.1366.736@0.32.1366.736" timestamp="1579510339072" />
-    <state x="100" y="131" width="1166" height="538" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1579770051740">
+    <state x="100" y="131" width="1166" height="538" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1580598482822">
       <screen x="0" y="32" width="1366" height="736" />
     </state>
     <state x="100" y="128" width="1166" height="540" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.28.1366.740@0.28.1366.740" timestamp="1578397132119" />
-    <state x="100" y="131" width="1166" height="538" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.32.1366.736@0.32.1366.736" timestamp="1579770051740" />
+    <state x="100" y="131" width="1166" height="538" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.32.1366.736@0.32.1366.736" timestamp="1580598482822" />
   </component>
 </project>
