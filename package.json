@@ -30,7 +30,7 @@
     "watch": "NODE_ENV=development nodemon Server.js",
     "watch:test": "NODE_ENV=test nodemon Server.js",
     "lint": "eslint --fix .",
-    "jest": "NODE_ENV=test jest --coverage"
+    "jest": "NODE_ENV=test jest --coverage --forceExit"
   },
   "browserslist": [
     ">0.2%",
