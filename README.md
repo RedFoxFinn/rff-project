@@ -6,7 +6,7 @@ This branch contains applications frontend.
 
 ###### tests: `building E2E test with Cypress`
 
-[![cypress.io](https://badgen.net/badge/cypress.io/grey?icon=https://https://github.com/cypress-io/cypress-icons/blob/master/src/icons/icon_32x32.png)](https://www.cypress.io/)
+[![cypress.io](https://badgen.net/badge/icon=https://https://github.com/cypress-io/cypress-icons/blob/master/src/icons/icon_32x32.png/cypress.io/grey)](https://www.cypress.io/)
 
 ###### breakdown:
 
