@@ -6,4 +6,4 @@ node_js:
 jobs:
   include:
     - stage: test
-      script: npm run jest
+      script: npm jest
