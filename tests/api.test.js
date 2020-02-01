@@ -936,7 +936,7 @@ const createMutation = (mutationType) => {
 let connection;
 
 // setup db for testing
-beforeAll(async (done) => {
+beforeAll(async () => {
 
   // mongoose options
   mongoose.set('useFindAndModify', false);
@@ -951,13 +951,11 @@ beforeAll(async (done) => {
     console.error('Connection to Atlas - MongoDB cloud: failed');
   } finally {
     await resetDB();
-    done();
   }
 });
 
-afterAll(async (done) => {
+afterAll(async () => {
   await connection.close;
-  done();
 });
 
 // test sets
