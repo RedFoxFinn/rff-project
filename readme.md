@@ -5,20 +5,9 @@ This branch contains applications backend.
 ###### backend phase: `done; waiting frontend`
 
 ###### tests:
+[![Actions Status](https://github.com/RedFoxFinn/rff-project/workflows/CI:backend/badge.svg)](https://github.com/RedFoxFinn/rff-project/actions)
+
 [![jest](https://jestjs.io/img/jest-badge.svg)](https://github.com/facebook/jest)
-![Maintenance](https://img.shields.io/badge/user-done-green.svg?style=flat-square)
-![Maintenance](https://img.shields.io/badge/login-done-green.svg?style=flat-square)
-![Maintenance](https://img.shields.io/badge/group-done-green.svg?style=flat-square)
-![Maintenance](https://img.shields.io/badge/carb-done-green.svg?style=flat-square)
-![Maintenance](https://img.shields.io/badge/cooking_method-done-green.svg?style=flat-square)
-![Maintenance](https://img.shields.io/badge/protein-done-green.svg?style=flat-square)
-![Maintenance](https://img.shields.io/badge/spice-done-green.svg?style=flat-square)
-![Maintenance](https://img.shields.io/badge/dish-done-green.svg?style=flat-square)
-![Maintenance](https://img.shields.io/badge/task_list:_private-done-green.svg?style=flat-square)
-![Maintenance](https://img.shields.io/badge/task_list:_group-done-green.svg?style=flat-square)
-![Maintenance](https://img.shields.io/badge/task_list:_comments-done-green.svg?style=flat-square)
-![Maintenance](https://img.shields.io/badge/task-done-green.svg?style=flat-square)
-![Maintenance](https://img.shields.io/badge/web_app-upcoming-purple.svg?style=flat-square)
 
 ###### breakdown:
  feature | status 
