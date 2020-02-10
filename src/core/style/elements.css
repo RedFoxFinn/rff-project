@@ -1,0 +1,74 @@
+
+.dishyElementDa {
+    margin: 1em;
+    width: 9em;
+    background-color: var(--darkslategrey);
+    color: var(--gainsboro);
+}
+.dishyElementLi {
+    margin: 1em;
+    width: 9em;
+    background-color: var(--gainsboro);
+    color: var(--darkslategrey);
+}
+
+.countryHeader {
+    background-color: transparent;
+    display: block;
+}
+.countryAppElements {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+.countryAppElements:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+.countryContainer {
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    align-items: flex-start;
+    margin: 1em;
+}
+.countryDetailsLi {
+    margin: 1em;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+.countryDetailsDa {
+    margin: 1em;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.dish {
+    background-color: transparent;
+    margin: 0.5em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-items: center;
+}
+.componentContainer {
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    justify-content: space-between;
+    margin: 0.5em;
+}
+.components {
+    margin: 0.5em;
+    padding: 0.5em;
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    align-items: center;
+}
+.component {
+    min-width: 4em;
+    display: block;
+    margin: 0.5em;
+}

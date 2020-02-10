@@ -1,0 +1,212 @@
+::placeholder {
+    color: var(--googlered);
+}
+::-webkit-input-placeholder {
+    color: var(--googlered);
+}
+:-ms-input-placeholder {
+    color: var(--googlered);
+}
+
+option:disabled {
+    color: var(--darkslategrey);
+}
+
+.activatorLi {
+    display: block;
+    background-color: transparent;
+    border: 1px solid var(--googlegreen);
+    outline: none;
+    cursor: pointer;
+    color: var(--darkslategrey);
+    padding: 1em;
+}
+.activatorLi:hover {
+    background-color: var(--googlegreen);
+    border: 1px solid transparent;
+    color: var(--darkslategrey);
+}
+.activatorDa {
+    display: block;
+    background-color: transparent;
+    border: 1px solid var(--googlegreen);
+    outline: none;
+    cursor: pointer;
+    color: var(--gainsboro);
+    padding: 1em;
+}
+.activatorDa:hover {
+    background-color: var(--googlegreen);
+    border: 1px solid transparent;
+    color: var(--darkslategrey);
+}
+.deactivatorLi {
+    display: block;
+    background-color: transparent;
+    border: 1px solid var(--googlered);
+    outline: none;
+    cursor: pointer;
+    color: var(--darkslategrey);
+    padding: 1em;
+}
+.deactivatorLi:hover {
+    background-color: var(--googlered);
+    border: 1px solid transparent;
+    color: var(--darkslategrey);
+}
+.deactivatorDa {
+    display: block;
+    background-color: transparent;
+    border: 1px solid var(--googlered);
+    outline: none;
+    cursor: pointer;
+    color: var(--gainsboro);
+    padding: 1em;
+}
+.deactivatorDa:hover {
+    background-color: var(--googlered);
+    border: 1px solid transparent;
+    color: var(--darkslategrey);
+}
+
+.selector {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    border: 1px transparent;
+    margin: 1em;
+}
+.selectorDa {
+    display: block;
+    background-color: var(--darkslategrey);
+    border: 1px solid transparent;
+    outline: none;
+    cursor: pointer;
+    color: var(--gainsboro);
+    padding: 1em;
+}
+.selectorLi {
+    display: block;
+    background-color: var(--gainsboro);
+    border: 1px solid transparent;
+    outline: none;
+    cursor: pointer;
+    color: var(--darkslategrey);
+    padding: 1em;
+}
+.selectedDa {
+    display: block;
+    background-color: var(--googlegreen);
+    border: 1px solid transparent;
+    outline: none;
+    cursor: pointer;
+    color: var(--darkslategrey);
+    padding: 1em;
+}
+.selectedLi {
+    display: block;
+    background-color: var(--googlegreen);
+    border: 1px solid transparent;
+    outline: none;
+    cursor: pointer;
+    color: var(--darkslategrey);
+    padding: 1em;
+}
+.selectorLi:hover {
+    border: 1px solid var(--googlegreen);
+}
+.selectorDa:hover {
+    border: 1px solid var(--googlegreen);
+}
+.selectedLi:hover {
+    background-color: transparent;
+    border: 1px solid var(--googlegreen);
+}
+.selectedDa:hover {
+    background-color: transparent;
+    border: 1px solid var(--googlegreen);
+    color: var(--gainsboro);
+}
+
+.fieldLi {
+    background-color: transparent;
+    color: var(--darkslategrey);
+    padding: 0.5em;
+    border: 1px solid var(--darkslategrey);
+    outline: none;
+}
+.fieldLi:focus {
+    outline: 1px dashed var(--googlered);
+}
+.fieldDa {
+    background-color: transparent;
+    color: var(--gainsboro);
+    padding: 0.5em;
+    border: 1px solid var(--gainsboro);
+    outline: none;
+}
+.fieldDa:focus {
+    outline: 1px dashed var(--googlered);
+}
+
+.formElementDa {
+    display: block;
+    margin: 1em 0;
+    min-width: 9em;
+    background-color: var(--darkslategrey);
+    color: var(--gainsboro);
+    border: 1px solid var(--gainsboro);
+    text-align: center;
+}
+.formElementDa:focus {
+    outline: 1px dashed var(--googlered);
+}
+.formElementLi {
+    display: block;
+    margin: 1em 0;
+    min-width: 9em;
+    background-color: var(--gainsboro);
+    color: var(--darkslategrey);
+    border: 1px solid var(--darkslategrey);
+    text-align: center;
+}
+.formElementLi:focus {
+    outline: 1px dashed var(--googlered);
+}
+
+.noteAreaDa {
+    background-color: var(--darkslategrey);
+    color: var(--gainsboro);
+    outline: none;
+    padding: 0.5em;
+    border: 1px solid var(--gainsboro);
+    width: 16em;
+    margin: 0.5em 0;
+}
+.noteAreaDa:focus {
+    outline: 1px dashed var(--googlered);
+}
+.noteAreaLi {
+    background-color: var(--gainsboro);
+    color: var(--darkslategrey);
+    outline: none;
+    padding: 0.5em;
+    border: 1px solid var(--darkslategrey);
+    width: 16em;
+    margin: 0.5em 0;
+}
+.noteAreaLi:focus {
+    outline: 1px dashed var(--googlered);
+}
+
+.newComponent {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    border: 1px transparent;
+    margin: 1em;
+}
+
+.newDish {
+
+}

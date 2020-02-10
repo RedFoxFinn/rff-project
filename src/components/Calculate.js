@@ -5,6 +5,7 @@ import numbro from 'numbro';
 import classProvider from '../core/tools/classProvider';
 import '../core/style/global.css';
 import '../core/style/calculate.css';
+import '../core/style/forms.css';
 
 const mapStateToProps = (state) => {
   return {
@@ -129,7 +130,7 @@ const Calculator = (props) => {
 
   return(
     <div className='app'>
-      <div className='appContainer'>
+      <div className='container'>
         <form className='appElements'>
           <input type='number' placeholder='numerical value' onChange={({target}) => setValue1(target.value)}
             className={classProvider(props.appState.theme, 'calculateElement')}/>

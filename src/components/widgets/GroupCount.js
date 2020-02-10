@@ -65,7 +65,7 @@ const GroupCount = (props) => {
   return(
     <div className='tile'>
       <div className='app'>
-        <div className='appContainer'>
+        <div className='container'>
           {props.mode !== 'admin' ? <Count/> : <CountAdmin/>}
         </div>
       </div>

@@ -1,0 +1,21 @@
+name: CI:backend
+
+on: [push]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - uses: actions/setup-node@v1
+      with:
+        node-version: 10.x
+    - name: install and test
+      run: |
+        npm install
+        npm run jest
+      env:
+        CI: true
+        SECRET: ${{secrets.SECRET}}
+        MONGO_URI_DEV: ${{secrets.MONGO_URI_DEV}}
+        MONGO_URI_TEST: ${{secrets.MONGO_URI_TEST}}

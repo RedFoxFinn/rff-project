@@ -8,9 +8,7 @@ const initialState = {
   newDishCarbs: [],
   newDishProteins: [],
   newDishSpices: [],
-  newDishMethods: [],
-  newDishName: '',
-  newDishNote: ''
+  newDishMethods: []
 };
 
 const DishyReducer = (state = initialState, action) => {
@@ -25,10 +23,6 @@ const DishyReducer = (state = initialState, action) => {
     return {...state, methodSearch: action.methodSearch};
   case 'setNewDish':
     return {...state, newDish: true};
-  case 'setNewDishName':
-    return {...state, newDishName: action.newDishName};
-  case 'setNewDishNote':
-    return {...state, newDishNote: action.newDishNote};
   case 'setNewDishCarbs':
     return {...state, newDishCarbs: [...state.newDishCarbs, action.carb]};
   case 'setNewDishProteins':
@@ -38,7 +32,7 @@ const DishyReducer = (state = initialState, action) => {
   case 'setNewDishMethods':
     return {...state, newDishMethods: [...state.newDishMethods, action.method]};
   case 'resetNewDish':
-    return {...state, newDish: false, newDishCarbs: [], newDishProteins: [], newDishSpices: [], newDishMethods: [], newDishName: '', newDishNote: ''};
+    return {...state, newDish: false, newDishCarbs: [], newDishProteins: [], newDishSpices: [], newDishMethods: []};
   default:
     return state;
   }
@@ -88,38 +82,6 @@ export const addDishMethod = (method) => {
   return async dispatch => {
     dispatch({
       type: 'setNewDishMethods', method: {name: method.name, id: method.id}
-    });
-  };
-};
-
-export const initDishNote = (note) => {
-  return async dispatch => {
-    dispatch({
-      type: 'setNewDishNote', newDishNote: note
-    });
-  };
-};
-
-export const resetDishNote = () => {
-  return async dispatch => {
-    dispatch({
-      type: 'setNewDishNote', newDishNote: ''
-    });
-  };
-};
-
-export const initDishName = (name) => {
-  return async dispatch => {
-    dispatch({
-      type: 'setNewDishName', newDishName: name
-    });
-  };
-};
-
-export const resetDishName = () => {
-  return async dispatch => {
-    dispatch({
-      type: 'setNewDishName', newDishName: ''
     });
   };
 };

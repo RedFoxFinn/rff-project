@@ -14,7 +14,7 @@ const mapStateToProps = (state) => {
 const OtherStyles = (props) => {
   return(
     <div className='app'>
-      <div className='appContainer'>
+      <div className='container'>
         <h4 className={classProvider(props.appState.theme, 'heading')}>Other styles:</h4>
         <div className='appElements'>
           <a className={classProvider(props.appState.theme, 'link')} href='https://fonts.google.com/specimen/Raleway'>Font: Raleway</a>

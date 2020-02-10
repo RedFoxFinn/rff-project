@@ -10,7 +10,7 @@ import {useQuery} from '@apollo/react-hooks';
 
 import Task from './widgets/Task';
 
-import { InlineIcon } from '@iconify/react';
+import {InlineIcon} from '@iconify/react';
 import userShield from '@iconify/icons-fa-solid/user-shield';
 import usersIcon from '@iconify/icons-fa-solid/users';
 
@@ -55,14 +55,14 @@ const Tasker = (props) => {
     if (props.user) {
       userToken = localStorage.getItem('rffUserToken').substring(7);
       return (
-        <div className='appContainer'>
+        <div className='container'>
           <ListsP/>
           <ListsG/>
         </div>
       );
     } else {
       return (
-        <div className='appContainer'>
+        <div className='container'>
           <h4 className={classProvider(props.theme, 'listHeader')}>login needed</h4>
         </div>
       );

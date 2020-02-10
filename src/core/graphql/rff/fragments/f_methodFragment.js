@@ -6,9 +6,6 @@ export const METHOD_DETAILS = gql`
   fragment MethodDetails on CookingMethod {
     name
     uses
-    addedBy {
-      ...UserDetails
-    }
     id
   }
   ${USER_DETAILS}

@@ -43,7 +43,7 @@ const UserCount = (props) => {
   return(
     <div className='tile'>
       <div className='app'>
-        <div className='appContainer'>
+        <div className='container'>
           <Count/>
         </div>
       </div>

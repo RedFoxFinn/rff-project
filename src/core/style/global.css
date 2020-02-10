@@ -57,23 +57,13 @@
     flex-direction: row;
     justify-content: space-evenly;
 }
-.appContainer {
+
+.container {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 }
-.appContainer .headingLi {
-    color: var(--darkslategrey);
-}
-.appContainer .headingDa {
-    color: var(--gainsboro);
-}
-.appContainer .descriptionLi {
-    color: var(--darkslategrey);
-}
-.appContainer .descriptionDa {
-    color: var(--gainsboro);
-}
+
 .appElements {
     display: flex;
     flex-direction: row;
@@ -118,6 +108,12 @@ button {
     color: var(--gainsboro);
     width: 14em;
 }
+.textLi {
+    color: var(--darkslategrey);
+}
+.textDa {
+    color: var(--gainsboro);
+}
 .linkLi {
     padding: 0.5em;
     color: var(--darkslategrey);
@@ -128,32 +124,7 @@ button {
     color: var(--gainsboro);
     text-decoration: none;
 }
-.formElementDa {
-    display: block;
-    margin: 1em;
-    width: 9em;
-    background-color: var(--darkslategrey);
-    color: var(--gainsboro);
-    border: 1px solid var(--gainsboro);
-    text-align: center;
-}
-.formElementDa:focus {
-    outline-color: var(--greenyellow);
-    outline-style: dotted;
-}
-.formElementLi {
-    display: block;
-    margin: 1em;
-    width: 9em;
-    background-color: var(--gainsboro);
-    color: var(--darkslategrey);
-    border: 1px solid var(--darkslategrey);
-    text-align: center;
-}
-.formElementLi:focus {
-    outline-color: var(--greenyellow);
-    outline-style: dotted;
-}
+
 .notificationNullDa {
     display: block;
     margin: 1em;

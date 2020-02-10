@@ -16,7 +16,7 @@ const mapStateToProps = (state) => {
 const About = (props) => {
   return(
     <div className='app'>
-      <div className='appContainer'>
+      <div className='container'>
         <Technologies/>
         <Colors/>
         <OtherStyles/>

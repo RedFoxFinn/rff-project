@@ -40,7 +40,7 @@ const Dashboard = (props) => {
           return (
             <div key={`app:${a.app}`} className='dashTile'>
               <div className='app'>
-                <div className='appContainer'>
+                <div className='container'>
                   <Link className={classProvider(props.theme, 'tileDescription')} push to={a.link}>{a.app}</Link>
                 </div>
               </div>
@@ -58,7 +58,7 @@ const Dashboard = (props) => {
           return (
             <div key={`app:${a.app}`} className='dashTile'>
               <div className='app'>
-                <div className='appContainer'>
+                <div className='container'>
                   <Link className={classProvider(props.theme, 'tileDescription')} push to={a.link}>{a.app}</Link>
                 </div>
               </div>
@@ -93,7 +93,7 @@ const Dashboard = (props) => {
 
   return(
     <div className='app'>
-      <div className='appContainer'>
+      <div className='container'>
         <h4 className={classProvider(props.appState.theme, 'heading')}>Available applications:</h4>
         <ApplicationsCommon/>
         {props.user ? <ApplicationsAdvanced/> : null}

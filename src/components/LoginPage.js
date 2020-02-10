@@ -56,7 +56,7 @@ const LoginPage = (props) => {
   return props.show
     ? <div className='app'>
       {localStorage.getItem('rffUserToken') && <Redirect push to='/'/>}
-      <div className='appContainer'>
+      <div className='container'>
         <form className='commonElements'>
           <input id='loginUsername' type='text' placeholder='username' onChange={({target}) => props.setUsername(target.value)}
             className={classProvider(props.theme, 'formElement')} value={props.loginState.username} autoComplete={true}/>

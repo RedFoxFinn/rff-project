@@ -14,7 +14,7 @@ const mapStateToProps = (state) => {
 const Colors = (props) => {
   return(
     <div className='app'>
-      <div className='appContainer'>
+      <div className='container'>
         <h4 className={classProvider(props.appState.theme, 'heading')}>Used color palette:</h4>
         <div className='appElements'>
           <div className='peru'/>

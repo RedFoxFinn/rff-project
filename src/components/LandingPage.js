@@ -16,8 +16,8 @@ const LandingPage = (props) => {
   const Locked = () => {
     return(
       <div className='commonElements'>
-        <p className={classProvider(props.appState.theme, 'landingDescription')}>Some applications are available only for registered and logged users.</p>
-        <p className={classProvider(props.appState.theme, 'landingDescription')}>If you want to use these advanced features, please log in.</p>
+        <p className={classProvider(props.appState.theme, 'description')}>Some applications are available only for registered and logged users.</p>
+        <p className={classProvider(props.appState.theme, 'description')}>If you want to use these advanced features, please log in.</p>
       </div>
     );
   };
@@ -25,15 +25,15 @@ const LandingPage = (props) => {
   const Unlocked = () => {
     return(
       <div className='commonElements'>
-        <p className={classProvider(props.appState.theme, 'landingDescription')}>Some applications are available only for registered and logged users.</p>
-        <p className={classProvider(props.appState.theme, 'landingDescription')}>You have logged in and therefore eligible to use advanced features.</p>
+        <p className={classProvider(props.appState.theme, 'description')}>Some applications are available only for registered and logged users.</p>
+        <p className={classProvider(props.appState.theme, 'description')}>You have logged in and therefore eligible to use advanced features.</p>
       </div>
     );
   };
 
   return(
     <div className='app'>
-      <div className='appContainer'>
+      <div className='container'>
         {props.loginState.user === null
           ? <Locked/>
           : <Unlocked/>

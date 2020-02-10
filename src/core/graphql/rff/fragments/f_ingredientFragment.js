@@ -7,9 +7,6 @@ export const INGREDIENT_DETAILS = gql`
     type
     name
     uses
-    addedBy {
-      ...UserDetails
-    }
     id
   }
   ${USER_DETAILS}

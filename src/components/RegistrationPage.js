@@ -52,7 +52,7 @@ const RegistrationPage = (props) => {
 
   return props.show
     ? <div className='app'>
-      <div className='appContainer'>
+      <div className='container'>
         <form className='commonElements' onSubmit={(event) => register(event)}>
           <input id='regUsername' type='text' required minLength={4} placeholder='username'
             className={classProvider(props.theme, 'formElement')} autoComplete={true}/>

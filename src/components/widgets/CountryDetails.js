@@ -8,7 +8,7 @@ import 'semantic-ui-css/semantic.min.css';
 
 import Country from '../../core/classes/Country';
 import '../../core/style/global.css';
-import '../../core/style/openCountries.css';
+import '../../core/style/elements.css';
 import classProvider from '../../core/tools/classProvider';
 import {setSearch} from '../../core/store/reducers/CountryReducer';
 

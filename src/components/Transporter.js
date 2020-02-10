@@ -20,7 +20,7 @@ const Transporter = (props) => {
   const client = useApolloClient();
   return(
     <div className='app'>
-      <div className='appContainer'>
+      <div className='container'>
         <h5 className={classProvider(props.theme, 'heading')}>Tracked stops:</h5>
       </div>
     </div>

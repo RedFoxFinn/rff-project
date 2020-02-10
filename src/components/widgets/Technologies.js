@@ -96,7 +96,7 @@ const Technologies = (props) => {
   };
   return(
     <div className='app'>
-      <div className='appContainer'>
+      <div className='container'>
         <h4 className={classProvider(props.appState.theme, 'heading')}>Repository:</h4>
         <Repository/>
         <h4 className={classProvider(props.appState.theme, 'heading')}>Used technology stack:</h4>

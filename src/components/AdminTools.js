@@ -47,7 +47,7 @@ const AdminTools = (props) => {
 
   return props.show
     ? <div className='app'>
-      <div className='appContainer'>
+      <div className='container'>
         <h4 className={classProvider(props.appState.theme, 'heading')}>App statistics:</h4>
         <WidgetsCommon/>
         <WidgetsAdvanced/>

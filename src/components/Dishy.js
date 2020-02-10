@@ -1,11 +1,14 @@
-import React, {useState, useEffect} from 'react';
+// Dishy.js | application on demosite.
+
+// IMPORTS
+import React, {useState} from 'react';
 import {connect} from 'react-redux';
 import {useApolloClient, useQuery} from '@apollo/react-hooks';
-import {Button} from 'semantic-ui-react';
 
 import classProvider from '../core/tools/classProvider';
 import '../core/style/global.css';
-import '../core/style/dishy.css';
+import '../core/style/forms.css';
+import '../core/style/elements.css';
 
 import {ALL_CARBS} from '../core/graphql/rff/queries/q_allCarbs';
 import {ALL_PROTEINS} from '../core/graphql/rff/queries/q_allProteins';
@@ -20,6 +23,7 @@ import {handleInfo, handleError} from '../core/store/reducers/AppReducer';
 import {initDish, resetDish, addDishCarb, addDishProtein, addDishSpice,
   addDishMethod} from '../core/store/reducers/DishyReducer';
 
+// prop mapper. maps imported state from store to usable props.
 const mapStateToProps = (state) => {
   return {
     theme: state.appState.theme,
@@ -28,11 +32,13 @@ const mapStateToProps = (state) => {
   };
 };
 
+// prop mapper. maps imported functions from store to usable props.
 const mapDispatchToProps = {
   initDish, resetDish, addDishCarb, addDishProtein, addDishSpice, addDishMethod,
   handleInfo, handleError
 };
 
+// Dishy. application for site.
 const Dishy = (props) => {
   const client = useApolloClient();
   const carbResults = useQuery(ALL_CARBS);
@@ -41,6 +47,7 @@ const Dishy = (props) => {
   const methodResults = useQuery(ALL_METHODS);
   const dishResults = useQuery(ALL_DISHES);
 
+  // subcomponent. shown when GraphQL query/mutation property 'loading' is set.
   const Loading = () => {
     return (
       <div className='appWidgets'>
@@ -50,6 +57,7 @@ const Dishy = (props) => {
       </div>
     );
   };
+  // subcomponent. shown when GraphQL query/mutation property 'loading' is set.
   const Error = () => {
     return (
       <div className='appWidgets'>
@@ -59,6 +67,7 @@ const Dishy = (props) => {
       </div>
     );
   };
+  // subcomponent. shown when GraphQL query/mutation property 'data' is set but has no information.
   const Empty = ({type}) => {
     return (
       <div className='appWidgets'>
@@ -69,6 +78,33 @@ const Dishy = (props) => {
     );
   };
 
+  // helper function to add ingredients or methods to new dish.
+  // checks whether or not instance of component has been added already before adding to list.
+  function handleAddComponent(event, component, type) {
+    event.preventDefault();
+    const {newDishCarbs, newDishProteins, newDishSpices, newDishMethods} = props.dishyState;
+    if (!props.dishyState.newDish) {
+      props.initDish();
+    }
+    switch (type) {
+    case 'carb':
+      if (!newDishCarbs.filter(c => c.id === component.id).length > 0) props.addDishCarb(component);
+      break;
+    case 'protein':
+      if (!newDishProteins.filter(p => p.id === component.id).length > 0) props.addDishProtein(component);
+      break;
+    case 'spice':
+      if (!newDishSpices.filter(s => s.id === component.id).length > 0) props.addDishSpice(component);
+      break;
+    case 'method':
+      if (!newDishMethods.filter(m => m.id === component.id).length > 0) props.addDishMethod(component);
+      break;
+    default:
+      break;
+    }
+  }
+
+  // subcomponent. renders selector for found carbs & selected carb information.
   const Carbs = () => {
     const [selection, setSelection] = useState(null);
     if (carbResults.loading) {
@@ -77,14 +113,19 @@ const Dishy = (props) => {
       const resultCount = carbResults.data.allCarbs.length;
       if (resultCount > 0) {
         return (
-          <div className='appWidgets'>
-            <form className={classProvider(props.theme, 'dishyElement')}>
-              <select defaultValue='default'>
-                <option key='default' value='default' disabled>carbs</option>
-                {carbResults.data.allCarbs.map((c) => <option key={c.id} value={c}>{c.name}</option>)}
-              </select>
-            </form>
-            {selection !== null && <Component type='carb' component={selection}/>}
+          <div className='componentContainer'>
+            <select defaultValue='default' className={classProvider(props.theme, 'formElement')}
+              onChange={({target}) => setSelection(JSON.parse(target.value))}>
+              <option key='default' value='default' disabled>carbs</option>
+              {carbResults.data.allCarbs.map((c) => <option key={c.id} value={JSON.stringify(c)}>{c.name}</option>)}
+            </select>
+            <div>
+              {selection && <Component type='carb' component={selection}/>}
+            </div>
+            <div>
+              {selection && props.show === 'advanced' &&
+                <button onClick={(event) => handleAddComponent(event, selection, 'carb')}>add to new dish</button>}
+            </div>
           </div>
         );
       } else {
@@ -94,6 +135,7 @@ const Dishy = (props) => {
       return <Error/>;
     }
   };
+  // subcomponent. renders selector for found proteins & selected protein information.
   const Proteins = () => {
     const [selection, setSelection] = useState(null);
     if (proteinResults.loading) {
@@ -102,13 +144,19 @@ const Dishy = (props) => {
       const resultCount = proteinResults.data.allProteins.length;
       if (resultCount > 0) {
         return (
-          <div className='appWidgets'>
-            <form className={classProvider(props.theme, 'dishyElement')}>
-              <select defaultValue='default'>
-                <option key='default' value='default' disabled>proteins</option>
-                {proteinResults.data.allProteins.map((p) => <option key={p.id} value={p}>{p.name}</option>)}
-              </select>
-            </form>
+          <div className='componentContainer'>
+            <select defaultValue='default' className={classProvider(props.theme, 'formElement')}
+              onChange={({target}) => setSelection(JSON.parse(target.value))}>
+              <option key='default' value='default' disabled>proteins</option>
+              {proteinResults.data.allProteins.map((p) => <option key={p.id} value={JSON.stringify(p)}>{p.name}</option>)}
+            </select>
+            <div>
+              {selection && <Component type='protein' component={selection}/>}
+            </div>
+            <div>
+              {selection && props.show === 'advanced' &&
+              <button onClick={(event) => handleAddComponent(event, selection, 'protein')}>add to new dish</button>}
+            </div>
           </div>
         );
       } else {
@@ -118,6 +166,7 @@ const Dishy = (props) => {
       return <Error/>;
     }
   };
+  // subcomponent. renders selector for found spices & selected spice information.
   const Spices = () => {
     const [selection, setSelection] = useState(null);
     if (spiceResults.loading) {
@@ -126,13 +175,19 @@ const Dishy = (props) => {
       const resultCount = spiceResults.data.allSpices.length;
       if (resultCount > 0) {
         return (
-          <div className='appWidgets'>
-            <form className={classProvider(props.theme, 'dishyElement')}>
-              <select defaultValue='default'>
-                <option key='default' value='default' disabled>spices</option>
-                {spiceResults.data.allSpices.map((s) => <option key={s.id} value={s}>{s.name}</option>)}
-              </select>
-            </form>
+          <div className='componentContainer'>
+            <select defaultValue='default' className={classProvider(props.theme, 'formElement')}
+              onChange={({target}) => setSelection(JSON.parse(target.value))}>
+              <option key='default' value='default' disabled>spices</option>
+              {spiceResults.data.allSpices.map((s) => <option key={s.id} value={JSON.stringify(s)}>{s.name}</option>)}
+            </select>
+            <div>
+              {selection && <Component type='spice' component={selection}/>}
+            </div>
+            <div>
+              {selection && props.show === 'advanced' &&
+              <button onClick={(event) => handleAddComponent(event, selection, 'spice')}>add to new dish</button>}
+            </div>
           </div>
         );
       } else {
@@ -142,6 +197,7 @@ const Dishy = (props) => {
       return <Error/>;
     }
   };
+  // subcomponent. renders selector for found cooking methods & selected method information.
   const Methods = () => {
     const [selection, setSelection] = useState(null);
     if (methodResults.loading) {
@@ -150,13 +206,19 @@ const Dishy = (props) => {
       const resultCount = methodResults.data.allMethods.length;
       if (resultCount > 0) {
         return (
-          <div className='appWidgets'>
-            <form className={classProvider(props.theme, 'dishyElement')}>
-              <select defaultValue='default'>
-                <option key='default' value='default' disabled>cooking methods</option>
-                {methodResults.data.allMethods.map((m) => <option key={m.id} value={m}>{m.name}</option>)}
-              </select>
-            </form>
+          <div className='componentContainer'>
+            <select defaultValue='default' className={classProvider(props.theme, 'formElement')}
+              onChange={({target}) => setSelection(JSON.parse(target.value))}>
+              <option key='default' value='default' disabled>cooking methods</option>
+              {methodResults.data.allMethods.map((m) => <option key={m.id} value={JSON.stringify(m)}>{m.name}</option>)}
+            </select>
+            <div>
+              {selection && <Component type='method' component={selection}/>}
+            </div>
+            <div>
+              {selection && props.show === 'advanced' &&
+              <button onClick={(event) => handleAddComponent(event, selection, 'method')}>add to new dish</button>}
+            </div>
           </div>
         );
       } else {
@@ -166,7 +228,9 @@ const Dishy = (props) => {
       return <Error/>;
     }
   };
+  // subcomponent. renders selector for found dishes & selected dish information.
   const Dishes = () => {
+    const [selection, setSelection] = useState(null);
     if (dishResults.loading) {
       return <Loading/>;
     } else if (dishResults.data && dishResults.data.allDishes) {
@@ -175,13 +239,14 @@ const Dishy = (props) => {
         return <Empty type='dishes'/>;
       } else {
         return (
-          <div className='appWidgets'>
-            <form className={classProvider(props.theme, 'dishyElement')}>
-              <select defaultValue='default'>
-                <option key='default' value='default' disabled>dishes</option>
-                {dishResults.data.allDishes.map((d) => <option key={d.id} value={d}>{d.name}</option>)}
-              </select>
-            </form>
+          <div className='componentContainer'>
+            <select defaultValue='default' className={classProvider(props.theme, 'formElement')}
+              onChange={({target}) => setSelection(JSON.parse(target.value))}>
+              <option key='default' value='default' disabled>dishes</option>
+              {dishResults.data.allDishes.map((d) => <option key={d.id} value={JSON.stringify(d)}>{d.name}</option>)}
+            </select>
+            {selection && <Dish methods={selection.methods} carbs={selection.carbs} spices={selection.spices}
+              proteins={selection.proteins} note={selection.note} name={selection.name}/>}
           </div>
         );
       }
@@ -189,6 +254,7 @@ const Dishy = (props) => {
       return <Error/>;
     }
   };
+  // subcomponent. renders random dish information.
   const Random = () => {
     if (dishResults.loading) {
       return <Loading/>;
@@ -197,14 +263,20 @@ const Dishy = (props) => {
       if (resultCount === 0) {
         return <Empty type='dishes'/>;
       } else if (resultCount === 1) {
+        const {cookingMethods, carbs, spices, proteins, note, name} = dishResults.data.allDishes[0];
         return (
-          <div className='appWidgets'>
+          <div className='componentContainer'>
+            <Dish view='random' methods={cookingMethods} carbs={carbs} spices={spices}
+              proteins={proteins} note={note} name={name}/>
           </div>
         );
       } else {
         const random = Math.floor(Math.random() * Math.floor(dishResults.data.allDishes.length));
+        const {cookingMethods, carbs, spices, proteins, note, name} = dishResults.data.allDishes[random];
         return (
-          <div className='appWidgets'>
+          <div className='componentContainer'>
+            <Dish view='random' methods={cookingMethods} carbs={carbs} spices={spices}
+              proteins={proteins} note={note} name={name}/>
           </div>
         );
       }
@@ -213,6 +285,8 @@ const Dishy = (props) => {
     }
   };
 
+  // helper function. handles new dish component submission.
+  // checks the type of submission and sets variables accordingly.
   async function handleNewComponent (event, type) {
     event.preventDefault();
     const userToken = localStorage.getItem('rffUserToken').substring(7);
@@ -268,6 +342,8 @@ const Dishy = (props) => {
       });
   }
 
+  // subcomponent. renders form for new dish component submission.
+  // selector defines which type of dish component will be submitted to handler function.
   const NewComponent = () => {
     const [selection, setSelection] = useState('carb');
     return (
@@ -298,131 +374,211 @@ const Dishy = (props) => {
       </div>
     );
   };
+
+  // subcomponent. renders form for new spice submission.
   const NewSpice = () => {
     return (
-      <form onSubmit={(event) => handleNewComponent(event, 'spice')}>
+      <form onSubmit={(event) => handleNewComponent(event, 'spice')} className='newComponent'>
         <input type='text' id='newSpiceName' placeholder='spice name' autoComplete={false} minLength={2}
           required className={classProvider(props.theme, 'field')}/>
         <button type='submit' className={classProvider(props.theme, 'activator')}>Save spice</button>
       </form>
     );
   };
+  // subcomponent. renders form for new protein submission.
   const NewProtein = () => {
     return (
-      <form onSubmit={(event) => handleNewComponent(event, 'protein')}>
+      <form onSubmit={(event) => handleNewComponent(event, 'protein')} className='newComponent'>
         <input type='text' id='newProteinName' placeholder='protein name' autoComplete={false} minLength={2}
           required className={classProvider(props.theme, 'field')}/>
         <button type='submit' className={classProvider(props.theme, 'activator')}>Save protein</button>
       </form>
     );
   };
+  // subcomponent. renders form for new carb submission.
   const NewCarb = () => {
     return (
-      <form onSubmit={(event) => handleNewComponent(event, 'carb')}>
+      <form onSubmit={(event) => handleNewComponent(event, 'carb')} className='newComponent'>
         <input type='text' id='newCarbName' placeholder='carb name' autoComplete={false} minLength={2}
           required className={classProvider(props.theme, 'field')}/>
         <button type='submit' className={classProvider(props.theme, 'activator')}>Save carb</button>
       </form>
     );
   };
+  // subcomponent. renders form for new cooking method submission.
   const NewMethod = () => {
     return (
-      <form onSubmit={(event) => handleNewComponent(event, 'method')}>
-        <input type='text' id='newMethodName' placeholder='cooking method' autoComplete={false} minLength={2}
+      <form onSubmit={(event) => handleNewComponent(event, 'method')} className='newComponent'>
+        <input type='text' id='newMethodName' placeholder='method name' autoComplete={false} minLength={2}
           required className={classProvider(props.theme, 'field')}/>
         <button type='submit' className={classProvider(props.theme, 'activator')}>Save method</button>
       </form>
     );
   };
+
+  // helper function. handles new dish submission.
+  // maps added dish component values to id's (string formatted),
+  // creates variables for GraphQL and triggers mutation.
+  async function handleNewDish(event) {
+    event.preventDefault();
+    const {newDishMethods, newDishProteins, newDishCarbs, newDishSpices, newDish} = props.dishyState;
+    const userToken = localStorage.getItem('rffUserToken').substring(7);
+    const variables = {
+      token: userToken,
+      name: document.getElementById('newDishName').value.toString(),
+      note: document.getElementById('newDishNote').value.toString(),
+      cookingMethods: newDishMethods.map(m => m.id.toString()),
+      proteins: newDishProteins.map(p => p.id.toString()),
+      carbs: newDishCarbs.map(c => c.id.toString()),
+      spices: newDishSpices.map(s => s.id.toString())
+    };
+    if (newDish) await client.mutate({
+      mutation: ADD_DISH,
+      variables: variables,
+      errorPolicy: 'ignore'
+    }).then(result => {
+      const {data} = result;
+      if (data !== null) {
+        props.handleInfo(`New dish saved: ${variables.name}`);
+        props.resetDish();
+        document.getElementById('newProteinName').value = '';
+        document.getElementById('newMethodName').value = '';
+      } else {
+        props.handleError(`Error occurred with dish: cannot add ${variables.name}`);
+      }
+    });
+  }
+
+  function resetDishForm() {
+    document.getElementById('newProteinName').value = '';
+    document.getElementById('newMethodName').value = '';
+    props.resetDish();
+  }
+
+  // subcomponent. renders form for new dish submission.
+  // selector activates/deactivates form.
+  // form activated also when dish component added to new dish if form is not active.
+  // deactivation resets added components from Redux-state.
   const NewDish = () => {
     const {
-      newDish, newDishCarbs, newDishProteins, newDishSpices, newDishMethods, newDishName, newDishNote
+      newDish, newDishCarbs, newDishProteins, newDishSpices, newDishMethods
     } = props.dishyState;
     return (
       <div className={classProvider(props.theme, 'dishyElement')}>
         <h4 className={classProvider(props.theme, 'heading')}>Add new dish</h4>
         {newDish
-          ? <button type='button' onClick={() => props.resetDish()} className={classProvider(props.theme, 'deactivator')}>reset dish</button>
+          ? <button type='button' onClick={() => resetDishForm()} className={classProvider(props.theme, 'deactivator')}>reset dish</button>
           : <button type='button' onClick={() => props.initDish()} className={classProvider(props.theme, 'activator')}>create dish</button>}
-        {newDish && <DishComponents type='carb' components={newDishCarbs} listingType='new'/>}
-        {newDish && <DishComponents type='protein' components={newDishProteins} listingType='new'/>}
-        {newDish && <DishComponents type='spice' components={newDishSpices} listingType='new'/>}
-        {newDish && <DishComponents type='method' components={newDishMethods} listingType='new'/>}
-        {newDish && <button type='button' className={classProvider(props.theme, 'activator')}>Save dish</button>}
+        {newDish && <>
+          <Dish view='new' carbs={newDishCarbs} proteins={newDishProteins}
+            spices={newDishSpices} methods={newDishMethods}/>
+          <button onClick={(event) => handleNewDish(event)}
+            type='button' className={classProvider(props.theme, 'activator')}>Save dish</button>
+        </>}
       </div>
     );
   };
-  const DishComponents = ({listingType, type, components}) => {
+
+  // subcomponent. renders dish with given information.
+  const Dish = ({view, carbs, proteins, spices, methods, note, name}) => {
+    if (view === 'random') {
+      return (
+        <div className='dish'>
+          <p className={classProvider(props.theme, 'text')}>{name}</p>
+          <p className={classProvider(props.theme, 'text')}>{note}</p>
+          <div className='componentContainer'>
+            <DishComponents type='carb' components={carbs} viewType={view}/>
+            <DishComponents type='protein' components={proteins} viewType={view}/>
+            <DishComponents type='spice' components={spices} viewType={view}/>
+            <DishComponents type='method' components={methods} viewType={view}/>
+          </div>
+        </div>
+      );
+    } else if (view === 'new') {
+      return (
+        <div className='dish'>
+          <input className={classProvider(props.theme, 'noteArea')}
+            placeholder='dish name' type='text' id='newDishName'/>
+          <input type='text' className={classProvider(props.theme, 'noteArea')}
+            placeholder='description, steps, etc.' id='newDishNote'/>
+          <div className='componentContainer'>
+            <DishComponents type='carb' components={carbs} viewType={view}/>
+            <DishComponents type='protein' components={proteins} viewType={view}/>
+            <DishComponents type='spice' components={spices} viewType={view}/>
+            <DishComponents type='method' components={methods} viewType={view}/>
+          </div>
+        </div>
+      );
+    } else {
+      return (
+        <div className='dish'>
+          <p className={classProvider(props.theme, 'text')}>{name}</p>
+          <p className={classProvider(props.theme, 'text')}>{note}</p>
+          <div className='componentContainer'>
+            <DishComponents type='carb' components={carbs} viewType={view}/>
+            <DishComponents type='protein' components={proteins} viewType={view}/>
+            <DishComponents type='spice' components={spices} viewType={view}/>
+            <DishComponents type='method' components={methods} viewType={view}/>
+          </div>
+        </div>
+      );
+    }
+  };
+
+  // subcomponent. renders dish components with given information.
+  const DishComponents = ({type, components, viewType}) => {
     if (components.length > 0) {
-      if (listingType === 'new') {
-        return (
-          <div>
-            {type === 'carb' && <h4>Added carbs:</h4>}
-            {type === 'protein' && <h4>Added proteins:</h4>}
-            {type === 'spice' && <h4>Added spices:</h4>}
-            {type === 'method' && <h4>Added cooking methods:</h4>}
-            {type}
-          </div>
-        );
-      } else {
-        return (
-          <div>
-            {type === 'carb' && <h4>Carbs:</h4>}
-            {type === 'protein' && <h4>Proteins:</h4>}
-            {type === 'spice' && <h4>Spices:</h4>}
-            {type === 'method' && <h4>Cooking methods:</h4>}
-            {type}
-          </div>
-        );
-      }
-    } else {
-      if (listingType === 'new') {
-        return (
-          <div>
-            {type === 'carb' && <p className={classProvider(props.theme, 'description')}>carbs not added</p>}
-            {type === 'protein' && <p className={classProvider(props.theme, 'description')}>proteins not added</p>}
-            {type === 'spice' && <p className={classProvider(props.theme, 'description')}>spices not added</p>}
-            {type === 'method' && <p className={classProvider(props.theme, 'description')}>cooking methods not added</p>}
-          </div>
-        );
-      } else {
-        return (
-          <div>
-            {type === 'carb' && <p className={classProvider(props.theme, 'description')}>no carbs</p>}
-            {type === 'protein' && <p className={classProvider(props.theme, 'description')}>no proteins</p>}
-            {type === 'spice' && <p className={classProvider(props.theme, 'description')}>no spices</p>}
-            {type === 'method' && <p className={classProvider(props.theme, 'description')}>no cooking methods</p>}
-          </div>
-        );
-      }
-    }
-  };
-  const Component = ({component, type}) => {
-    if (props.dishyState.newDish) {
       return (
-        <div>
-          <p>{component.name}</p>
-          <p>used in {component.uses.length} dishes</p>
-          {type === 'carb' && <button type='button' onClick={() => props.addDishCarb(component)}>add carb to dish</button>}
-          {type === 'protein' && <button type='button' onClick={() => props.addDishProtein(component)}>add protein to dish</button>}
-          {type === 'spice' && <button type='button' onClick={() => props.addDishSpice(component)}>add spice to dish</button>}
-          {type === 'method' && <button type='button' onClick={() => props.addDishMethod(component)}>add method to dish</button>}
+        <div className='components'>
+          {type === 'carb' && <h4 className={classProvider(props.theme, 'text')}>Carbs:</h4>}
+          {type === 'protein' && <h4 className={classProvider(props.theme, 'text')}>Proteins:</h4>}
+          {type === 'spice' && <h4 className={classProvider(props.theme, 'text')}>Spices:</h4>}
+          {type === 'method' && <h4 className={classProvider(props.theme, 'text')}>Cooking methods:</h4>}
+          {components.map((c) => <Component key={c.name} component={c} type={type} view={viewType}/>)}
         </div>
       );
     } else {
       return (
-        <div>
-          <p>{component.name}</p>
-          <p>used in {component.uses.length} dishes</p>
+        <div className='components'>
+          {type === 'carb' && <p className={classProvider(props.theme, 'text')}>no carbs</p>}
+          {type === 'protein' && <p className={classProvider(props.theme, 'text')}>no proteins</p>}
+          {type === 'spice' && <p className={classProvider(props.theme, 'text')}>no spices</p>}
+          {type === 'method' && <p className={classProvider(props.theme, 'text')}>no cooking methods</p>}
         </div>
       );
     }
   };
-  const Dish = () => {};
+
+  // subcomponent. renders dish component information.
+  const Component = ({component, view}) => {
+    if (props.dishyState.newDish && view === 'new') {
+      return (
+        <div className='component'>
+          <p className={classProvider(props.theme, 'text')}>{component.name}</p>
+        </div>
+      );
+    } else if (view === 'random') {
+      return (
+        <div className='component'>
+          <p className={classProvider(props.theme, 'text')}>{component.name}</p>
+        </div>
+      );
+    } else {
+      const uses = component.uses.length;
+      return (
+        <div className='component'>
+          <p className={classProvider(props.theme, 'text')}>{component.name}</p>
+          <p className={classProvider(props.theme, 'text')}>
+            {uses > 1 ? `used in ${uses} dishes` : uses === 1 ? 'used in 1 dish' : 'no usage'}
+          </p>
+        </div>
+      );
+    }
+  };
 
   return (
     <div className='app'>
-      <div className='appContainer'>
+      <div className='container'>
         <h4 className={classProvider(props.theme, 'heading')}>Suggested:</h4>
         <Random/>
         <h4 className={classProvider(props.theme, 'heading')}>Dishes:</h4>

@@ -6,7 +6,8 @@ import resetIcon from '@iconify/icons-iwwa/reset';
 
 import classProvider from '../core/tools/classProvider';
 import '../core/style/global.css';
-import '../core/style/openCountries.css';
+import '../core/style/forms.css';
+import '../core/style/elements.css';
 import {setSearch, resetSearch} from '../core/store/reducers/CountryReducer';
 import CountryDetails from './widgets/CountryDetails';
 
@@ -76,17 +77,17 @@ const Countries = (props) => {
 
   return(
     <div className='app'>
-      <div className='appContainer'>
+      <div className='container'>
         <h5 className={classProvider(props.theme, 'heading')}>
           Data for {props.countrySearch.length > 0 ? props.countries.length : props.countries.length} countries found.
         </h5>
         <div className='appElements'>
-          <input type='search' placeholder='search country by typing name'
+          <input type='search' placeholder='search country by name'
             onChange={event => handleSearch(event)}
             onReset={() => props.resetSearch()} value={props.countrySearch}
-            className={classProvider(props.theme, 'countrySearch')}/>
+            className={classProvider(props.theme, 'formElement')}/>
           <button onClick={() => props.resetSearch()} title='reset search'
-            className={classProvider(props.theme, 'countrySearchCancel')}><Icon icon={resetIcon} /></button>
+            className={classProvider(props.theme, 'formElement')}><Icon icon={resetIcon} /></button>
         </div>
         <ListCountries/>
       </div>

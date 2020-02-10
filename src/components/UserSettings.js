@@ -183,7 +183,7 @@ const UserPage = (props) => {
 
   return props.show
     ? <div className='app'>
-      <div className='appContainer'>
+      <div className='container'>
         <UserManager/>
       </div>
     </div>

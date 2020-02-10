@@ -23,8 +23,8 @@ const classProvider = (theme, element) => {
       return 'calculateResultDa';
     case 'technologyElement':
       return 'technologyElementDa';
-    case 'landingDescription':
-      return 'descriptionDa';
+    case 'text':
+      return 'textDa';
     case 'loginButton':
       return 'loginButtonDa';
     case 'loginContent':
@@ -81,6 +81,8 @@ const classProvider = (theme, element) => {
       return 'deactivatorDa';
     case 'field':
       return 'fieldDa';
+    case 'noteArea':
+      return 'noteAreaDa';
     default:
       return '';
     }
@@ -108,8 +110,8 @@ const classProvider = (theme, element) => {
       return 'calculateResultLi';
     case 'technologyElement':
       return 'technologyElementLi';
-    case 'landingDescription':
-      return 'descriptionLi';
+    case 'text':
+      return 'textLi';
     case 'loginButton':
       return 'loginButtonLi';
     case 'loginContent':
@@ -164,6 +166,8 @@ const classProvider = (theme, element) => {
       return 'deactivatorLi';
     case 'field':
       return 'fieldLi';
+    case 'noteArea':
+      return 'noteAreaLi';
     default:
       return '';
     }
