@@ -13,7 +13,6 @@ jobs:
     - name: install and test
       run: |
         npm install
-        npm run lint
         ${{secrets.RFF_CI_F_RECORD}}
       env:
         CI: true
