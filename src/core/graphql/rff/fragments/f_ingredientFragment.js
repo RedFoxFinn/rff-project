@@ -8,6 +8,9 @@ export const INGREDIENT_DETAILS = gql`
     name
     uses
     id
+    addedBy {
+        ...UserDetails
+    }
   }
   ${USER_DETAILS}
 `;

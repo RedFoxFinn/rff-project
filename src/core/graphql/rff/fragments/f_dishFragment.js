@@ -1,32 +1,23 @@
 
 import gql from 'graphql-tag';
 import {USER_DETAILS} from './f_userFragment';
+import {DISH_INGREDIENT_DETAILS} from './f_dishIngredientFragment';
+import {DISH_METHOD_DETAILS} from './f_dishMethodFragment';
 
 export const DISH_DETAILS = gql`
   fragment DishDetails on Dish {
     name
     cookingMethods {
-        name
-        uses
-        id
+        ...DishMethodDetails
     }
     proteins {
-        type
-        name
-        uses
-        id
+        ...DishIngredientDetails
     }
     carbs {
-        type
-        name
-        uses
-        id
+        ...DishIngredientDetails
     }
     spices {
-        type
-        name
-        uses
-        id
+        ...DishIngredientDetails
     }
     karma
     note
@@ -36,4 +27,6 @@ export const DISH_DETAILS = gql`
     id
   }
   ${USER_DETAILS}
+  ${DISH_INGREDIENT_DETAILS}
+  ${DISH_METHOD_DETAILS}
 `;

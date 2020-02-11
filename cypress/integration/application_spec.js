@@ -1,6 +1,7 @@
 
 let testData;
 let user;
+let dishComponents;
 
 before(async () => {
   const date = await Date.now();
@@ -8,6 +9,23 @@ before(async () => {
     username: `user:${date/100000}`,
     password: `pw:${date/10000}`,
     altPassword: `pw:${date/1000}`
+  };
+  dishComponents = {
+    carb: {
+      name: `carb:${date/1000}`,
+      type: 'carb'
+    },
+    protein: {
+      name: `protein:${date/1000}`,
+      type: 'protein'
+    },
+    spice: {
+      name: `spice:${date/1000}`,
+      type: 'spice'
+    },
+    method: {
+      name: `method:${date/1000}`
+    }
   };
 });
 
@@ -148,6 +166,7 @@ describe('Dishy', () => {
     cy.contains('Cooking methods:');
   });
   it('dishy:logged', () => {
+    cy.visit('/login');
     cy.get('#loginUsername').type(user.username.toString());
     cy.get('#loginPassword').type(user.password.toString());
     cy.get('#loginButton').click();
@@ -159,7 +178,12 @@ describe('Dishy', () => {
     cy.contains('Spices:');
     cy.contains('Cooking methods:');
     cy.contains('Add new...');
+    cy.contains('Add new dish');
+  });
+  it('dishy:additions', () => {
+    cy.get('#componentSelectCarb').click();
+    cy.get('#newCarbName').type(dishComponents.carb.name.toString());
+    cy.get('#saveCarb').click();
+    cy.contains(`New carb saved: ${dishComponents.carb.name.toString()}`);
   });
 });
-
-describe

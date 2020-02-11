@@ -59,9 +59,9 @@ const LoginPage = (props) => {
       <div className='container'>
         <form className='commonElements'>
           <input id='loginUsername' type='text' placeholder='username' onChange={({target}) => props.setUsername(target.value)}
-            className={classProvider(props.theme, 'formElement')} value={props.loginState.username} autoComplete={true}/>
+            className={classProvider(props.theme, 'formElement')} value={props.loginState.username} autoComplete/>
           <input id='loginPassword' type='password' placeholder='password' onChange={({target}) => props.setPassword(target.value)}
-            className={classProvider(props.theme, 'formElement')} value={props.loginState.password} autoComplete={true}/>
+            className={classProvider(props.theme, 'formElement')} value={props.loginState.password} autoComplete/>
           <button id='loginButton' type='button' onClick={() => handleLogin()}
             className={classProvider(props.theme, 'formElement')}>login</button>
           <Link id='gotoRegisterButton' to='/register' onClick={() => props.switchApp('Register')}

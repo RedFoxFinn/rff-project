@@ -13,6 +13,7 @@ jobs:
     - name: install and test
       run: |
         npm install
+        npm run lint
         npm run cy:run
       env:
         CI: true

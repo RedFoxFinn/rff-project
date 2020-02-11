@@ -55,11 +55,11 @@ const RegistrationPage = (props) => {
       <div className='container'>
         <form className='commonElements' onSubmit={(event) => register(event)}>
           <input id='regUsername' type='text' required minLength={4} placeholder='username'
-            className={classProvider(props.theme, 'formElement')} autoComplete={true}/>
+            className={classProvider(props.theme, 'formElement')} autoComplete/>
           <input id='regPassword' type='password' required minLength={8} placeholder='password'
-            className={classProvider(props.theme, 'formElement')} autoComplete={false}/>
+            className={classProvider(props.theme, 'formElement')}/>
           <input id='regConfirm' type='password' required minLength={8} placeholder='re-type password'
-            className={classProvider(props.theme, 'formElement')} autoComplete={false}/>
+            className={classProvider(props.theme, 'formElement')}/>
           <button id='regButton' type='submit' className={classProvider(props.theme, 'formElement')}>register</button>
         </form>
       </div>
