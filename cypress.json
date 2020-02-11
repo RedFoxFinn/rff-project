@@ -1,7 +1,0 @@
-{
-  "baseUrl": "http://localhost:3000",
-  "projectId": "ym1qft",
-  "env": {
-    "CYPRESS_RECORD_KEY": "49f1647f-e5dd-4be4-bdf9-2e620c12b927"
-  }
-}
