@@ -357,7 +357,7 @@ const Dishy = (props) => {
     return (
       <div className='componentContainer'>
         <div className='dish'>
-          <h4 className={classProvider(props.theme, 'heading')}>Add new...</h4>
+          <p className={classProvider(props.theme, 'heading')}><strong>Add new...</strong></p>
           <div id='addComponentSelector' className='selector'>
             <button id='componentSelectCarb' type='button' onClick={() => setSelection('carb')}
               className={selection === 'carb'

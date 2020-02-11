@@ -3,4 +3,3 @@ node_modules
 build
 /src/components/widgets/Author.js
 .env
-cypress.json

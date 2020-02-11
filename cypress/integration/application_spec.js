@@ -177,8 +177,7 @@ describe('Dishy', () => {
     cy.contains('Proteins:');
     cy.contains('Spices:');
     cy.contains('Cooking methods:');
-    cy.contains('Add new...');
-    cy.contains('Add new dish');
+    expect('#newDishComponent').to.exist;
   });
   it('dishy:additions', () => {
     cy.get('#componentSelectCarb').click();
