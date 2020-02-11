@@ -10,12 +10,9 @@ jobs:
     - uses: actions/setup-node@v1
       with:
         node-version: 12.x
-    - name: install
-      run: npm install
-    - name: cypress-tests
-      uses: cypress-io/github-action@v1
-      with:
-        record: true
+    - name: install & test
+      run: |
+        npm install
+        echo '${{secrets.RFF_CI_F_RECORD}}'
       env:
-        CYPRESS_RECORD_KEY: ${{secrets.RFF_CI_F_RECORD}}
         CI: true
