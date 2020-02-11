@@ -1,4 +1,4 @@
-name: CI:backend
+name: CI:frontend:tests
 
 on: [push]
 
@@ -13,9 +13,6 @@ jobs:
     - name: install and test
       run: |
         npm install
-        npm run jest
+        npm run cy:run
       env:
         CI: true
-        SECRET: ${{secrets.SECRET}}
-        MONGO_URI_DEV: ${{secrets.MONGO_URI_DEV}}
-        MONGO_URI_TEST: ${{secrets.MONGO_URI_TEST}}

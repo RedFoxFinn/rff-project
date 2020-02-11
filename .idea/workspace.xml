@@ -2,44 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a69d5581-dc09-455b-96e6-941e02078fc1" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.github/workflows/nodejs.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/nodejs.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/About.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/About.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/AdminTools.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/AdminTools.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Calculate.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Calculate.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Dashboard.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Dishy.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dishy.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/LandingPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/LandingPage.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/LoginPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/LoginPage.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/OpenCountry.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/OpenCountry.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/RegistrationPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/RegistrationPage.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Tasker.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Tasker.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Transporter.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Transporter.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/UserSettings.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/UserSettings.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/widgets/Colors.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/widgets/Colors.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/widgets/CountryCount.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/widgets/CountryCount.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/widgets/CountryDetails.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/widgets/CountryDetails.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/widgets/DishCount.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/widgets/DishCount.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/widgets/GroupCount.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/widgets/GroupCount.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/widgets/IngredientCount.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/widgets/IngredientCount.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/widgets/ListCount.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/widgets/ListCount.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/widgets/MethodCount.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/widgets/MethodCount.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/widgets/OtherStyles.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/widgets/OtherStyles.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/widgets/TaskCount.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/widgets/TaskCount.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/widgets/Technologies.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/widgets/Technologies.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/widgets/TrackedStopsCount.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/widgets/TrackedStopsCount.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/widgets/UserCount.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/widgets/UserCount.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/graphql/rff/fragments/f_dishFragment.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/graphql/rff/fragments/f_dishFragment.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/graphql/rff/fragments/f_ingredientFragment.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/graphql/rff/fragments/f_ingredientFragment.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/graphql/rff/fragments/f_methodFragment.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/graphql/rff/fragments/f_methodFragment.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/store/reducers/DishyReducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/store/reducers/DishyReducer.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/style/dishy.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/style/forms.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/style/forms.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/style/global.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/style/global.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/style/openCountries.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/tools/classProvider.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/tools/classProvider.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -189,6 +153,7 @@
       <workItem from="1580733348717" duration="2626000" />
       <workItem from="1580737833949" duration="464000" />
       <workItem from="1581323473363" duration="28246000" />
+      <workItem from="1581410205485" duration="146000" />
     </task>
     <servers />
   </component>
