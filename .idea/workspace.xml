@@ -5,6 +5,7 @@
       <change afterPath="$PROJECT_DIR$/src/core/graphql/rff/fragments/f_dishMethodFragment.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.github/workflows/nodejs.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/nodejs.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cypress.json" beforeDir="false" afterPath="$PROJECT_DIR$/cypress.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cypress/integration/application_spec.js" beforeDir="false" afterPath="$PROJECT_DIR$/cypress/integration/application_spec.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cypress/videos/application_spec.js.mp4" beforeDir="false" afterPath="$PROJECT_DIR$/cypress/videos/application_spec.js.mp4" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Dishy.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dishy.js" afterDir="false" />
@@ -164,7 +165,7 @@
       <workItem from="1580737833949" duration="464000" />
       <workItem from="1581323473363" duration="28246000" />
       <workItem from="1581410205485" duration="4725000" />
-      <workItem from="1581416680537" duration="3704000" />
+      <workItem from="1581416680537" duration="5594000" />
     </task>
     <servers />
   </component>
