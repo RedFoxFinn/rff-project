@@ -2,19 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a69d5581-dc09-455b-96e6-941e02078fc1" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/core/graphql/rff/fragments/f_dishMethodFragment.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.github/workflows/nodejs.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/nodejs.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cypress.json" beforeDir="false" afterPath="$PROJECT_DIR$/cypress.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cypress/integration/application_spec.js" beforeDir="false" afterPath="$PROJECT_DIR$/cypress/integration/application_spec.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cypress/videos/application_spec.js.mp4" beforeDir="false" afterPath="$PROJECT_DIR$/cypress/videos/application_spec.js.mp4" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Dishy.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dishy.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/LoginPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/LoginPage.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/RegistrationPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/RegistrationPage.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/graphql/rff/fragments/f_dishFragment.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/graphql/rff/fragments/f_dishFragment.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/graphql/rff/fragments/f_ingredientFragment.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/graphql/rff/fragments/f_ingredientFragment.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/graphql/rff/fragments/f_methodFragment.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/graphql/rff/fragments/f_methodFragment.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/style/elements.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/style/elements.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cypress/fixtures/test.json" beforeDir="false" afterPath="$PROJECT_DIR$/cypress/fixtures/test.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -165,7 +159,7 @@
       <workItem from="1580737833949" duration="464000" />
       <workItem from="1581323473363" duration="28246000" />
       <workItem from="1581410205485" duration="4725000" />
-      <workItem from="1581416680537" duration="7367000" />
+      <workItem from="1581416680537" duration="10543000" />
     </task>
     <servers />
   </component>
@@ -203,10 +197,10 @@
       <screen x="0" y="32" width="1366" height="736" />
     </state>
     <state x="282" y="64" key="#Menus_and_Toolbars/0.32.1366.736@0.32.1366.736" timestamp="1579544630266" />
-    <state x="417" y="142" width="524" height="509" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1581335444066">
+    <state x="417" y="142" width="524" height="509" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1581430435862">
       <screen x="0" y="24" width="1366" height="744" />
     </state>
-    <state x="417" y="142" width="524" height="509" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.24.1366.744@0.24.1366.744" timestamp="1581335444066" />
+    <state x="417" y="142" width="524" height="509" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.24.1366.744@0.24.1366.744" timestamp="1581430435862" />
     <state x="417" y="146" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.28.1366.740@0.28.1366.740" timestamp="1578391563579" />
     <state x="417" y="149" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.32.1366.736@0.32.1366.736" timestamp="1580473477748" />
     <state x="467" y="154" key="FileChooserDialogImpl" timestamp="1576669856633">

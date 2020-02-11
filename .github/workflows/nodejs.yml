@@ -13,6 +13,6 @@ jobs:
     - name: install & test
       run: |
         npm install
-        echo '${{secrets.RFF_CI_F_RECORD}}'
+        npm run cy:run
       env:
         CI: true

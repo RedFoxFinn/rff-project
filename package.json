@@ -50,7 +50,7 @@
     "eject": "react-scripts eject",
     "lint": "eslint --fix .",
     "cy:open": "cypress open",
-    "cy:run": "cypress run"
+    "cy:run": "cypress run --record"
   },
   "eslintConfig": {
     "extends": "react-app"
