@@ -630,10 +630,11 @@ const resolvers = {
           addedBy: user._id.toString()
         });
         try {
-          ingredient = await ingredient.save();
+          await ingredient.save();
         } catch (e) {
           throw new UserInputError(e.message, { invalidArgs: args });
         }
+	ingredient = await Ingredient.findOne({name: args.name}).populate('addedBy');
         await pubsub.publish('INGREDIENT_ADDED', { ingredientEvent: ingredient });
         return ingredient;
       } else {
@@ -675,8 +676,8 @@ const resolvers = {
         } catch (e) {
           throw new UserInputError(e.message, { invalidArgs: args });
         }
-        await pubsub.publish('DISH_ADDED', { dishEvent: dish });
         dish = await Dish.findOne({ name: args.name }).populate(dishFields);
+	await pubsub.publish('DISH_ADDED', { dishEvent: dish });
         return dish;
       } else {
         throw new AuthenticationError('Session error: you must be logged in!');
@@ -755,10 +756,11 @@ const resolvers = {
           addedBy: user._id.toString()
         });
         try {
-          method = await method.save();
+          await method.save();
         } catch (e) {
           throw new UserInputError(e.message, { invalidArgs: args });
         }
+	method = await CookingMethod.findOne({name: args.name}).populate('addedBy');
         await pubsub.publish('METHOD_ADDED', { methodEvent: method });
         return method;
       } else {
