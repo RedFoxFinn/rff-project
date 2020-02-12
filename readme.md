@@ -5,7 +5,7 @@ This branch contains applications backend.
 ###### backend phase: `done; waiting frontend`
 
 ###### tests:
-[![Actions Status](https://github.com/RedFoxFinn/rff-project/workflows/CI:backend/badge.svg)](https://github.com/RedFoxFinn/rff-project/actions)
+[![Actions Status](https://github.com/RedFoxFinn/rff-project/workflows/CI:backend:tests/badge.svg)](https://github.com/RedFoxFinn/rff-project/actions)
 
 [![jest](https://jestjs.io/img/jest-badge.svg)](https://github.com/facebook/jest)
 
