@@ -12,6 +12,7 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const apolloServer = require('./graphql/gql_server');
+const csp = require('express-csp-header');
 
 // mongoose options
 mongoose.set('useFindAndModify', false);
@@ -22,6 +23,12 @@ mongoose.set('useCreateIndex', true);
 // app usages
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(csp({
+    policies: {
+        'default-src': [csp.NONE],
+        'img-src': [csp.SELF],
+    }
+}));
 
 // connecting to cloud mongo
 mongoose.connect(config.mongo).then(res => {

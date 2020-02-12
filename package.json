@@ -1,6 +1,6 @@
 {
   "name": "rff",
-  "version": "1.7.1",
+  "version": "1.8.0",
   "private": true,
   "engines": {
     "node": "11.x",
@@ -14,6 +14,7 @@
     "bson-ext": "^2.0.3",
     "dotenv": "^6.2.0",
     "express": "^4.17.1",
+    "express-csp-header": "^2.3.2",
     "express-graphql": "^0.7.1",
     "graphql": "^14.5.8",
     "jsonwebtoken": "^8.5.0",
@@ -24,7 +25,8 @@
     "subscriptions-transport-ws": "latest"
   },
   "scripts": {
-    "start": "NODE_ENV=staging node Server.js",
+    "start": "NODE_ENV=production node Server.js",
+    "stage": "NODE_ENV=staging node Server.js",
     "node": "NODE_ENV=development node Server.js",
     "test": "npm run lint && npm run jest",
     "watch": "NODE_ENV=development nodemon Server.js",
@@ -61,7 +63,9 @@
     "graphql-tag": "latest",
     "jest": "^24.9.0",
     "nodemon": "^1.19.4",
-    "ws": "latest"
+    "ws": "latest",
+    "cypress": "^3.8.2",
+    "eslint-plugin-cypress": "^2.8.1"
   },
   "proxy": "http://localhost:4005/",
   "jest": {
