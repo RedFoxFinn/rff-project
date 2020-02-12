@@ -159,7 +159,11 @@
       <workItem from="1581410205485" duration="4725000" />
       <workItem from="1581416680537" duration="21328000" />
       <workItem from="1581505999487" duration="10175000" />
+<<<<<<< HEAD
       <workItem from="1581517229119" duration="2859000" />
+=======
+      <workItem from="1581517229119" duration="2761000" />
+>>>>>>> frontend
     </task>
     <servers />
   </component>

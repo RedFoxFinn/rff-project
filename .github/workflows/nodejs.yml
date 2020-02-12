@@ -12,7 +12,11 @@ jobs:
         node-version: 12.x
     - name: install
       run: npm install
+<<<<<<< HEAD
     - name: tests
+=======
+    -name: test
+>>>>>>> frontend
       uses: cypress-io/github-action@v1.16.1
       with:
         start: npm start
