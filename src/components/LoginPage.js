@@ -2,7 +2,7 @@ import React, {} from 'react';
 import {connect} from 'react-redux';
 
 import classProvider from '../core/tools/classProvider';
-import {loginFailure, loginSuccess, setUsername, setPassword} from '../core/store/reducers/LoginReducer';
+import {loginFailure, loginSuccess} from '../core/store/reducers/LoginReducer';
 import {handleError, handleInfo, switchApp} from '../core/store/reducers/AppReducer';
 import '../core/style/global.css';
 import {Link, Redirect} from 'react-router-dom';
@@ -18,7 +18,7 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = {
-  loginFailure, loginSuccess, setUsername, setPassword, switchApp, handleInfo, handleError
+  loginFailure, loginSuccess, switchApp, handleInfo, handleError
 };
 
 const LoginPage = (props) => {
@@ -29,24 +29,28 @@ const LoginPage = (props) => {
     login({
       errorPolicy: 'ignore',
       variables: {
-        username: props.loginState.username,
-        password: props.loginState.password
+        username: document.getElementById('loginUsername').value,
+        password: document.getElementById('loginPassword').value
       }
-    }).then(result => {
+    }).then((result) => {
       const {data} = result;
+      let loginToken;
       if (data !== null) {
-        const loginToken = data.login.value;
+        loginToken = data.login.value;
         client.query({
           query: ME,
           variables: {
             token: loginToken.substring(7)
           }
         }).then((result) => {
-          props.loginSuccess(result.data.me);
+          document.getElementById('loginUsername').value = '';
+          document.getElementById('loginPassword').value = '';
           localStorage.setItem('rffUserToken', loginToken);
+          props.loginSuccess(result.data.me);
           props.handleInfo('logged in successfully');
         });
       } else {
+        document.getElementById('loginPassword').value = '';
         props.handleError('invalid username or password');
         props.loginFailure();
       }
@@ -58,10 +62,10 @@ const LoginPage = (props) => {
       {localStorage.getItem('rffUserToken') && <Redirect push to='/'/>}
       <div className='container'>
         <form className='commonElements'>
-          <input id='loginUsername' type='text' placeholder='username' onChange={({target}) => props.setUsername(target.value)}
-            className={classProvider(props.theme, 'formElement')} value={props.loginState.username} autoComplete/>
-          <input id='loginPassword' type='password' placeholder='password' onChange={({target}) => props.setPassword(target.value)}
-            className={classProvider(props.theme, 'formElement')} value={props.loginState.password} autoComplete/>
+          <input id='loginUsername' type='text' placeholder='username'
+            className={classProvider(props.theme, 'formElement')}/>
+          <input id='loginPassword' type='password' placeholder='password'
+            className={classProvider(props.theme, 'formElement')}/>
           <button id='loginButton' type='button' onClick={() => handleLogin()}
             className={classProvider(props.theme, 'formElement')}>login</button>
           <Link id='gotoRegisterButton' to='/register' onClick={() => props.switchApp('Register')}

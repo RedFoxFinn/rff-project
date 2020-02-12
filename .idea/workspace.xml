@@ -2,14 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a69d5581-dc09-455b-96e6-941e02078fc1" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.github/workflows/nodejs.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cypress/integration/application_spec.js" beforeDir="false" afterPath="$PROJECT_DIR$/cypress/integration/application_spec.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cypress/screenshots/application_spec.js/Dishy -- dishyadditions (failed).png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cypress/videos/application_spec.js.mp4" beforeDir="false" afterPath="$PROJECT_DIR$/cypress/videos/application_spec.js.mp4" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Dishy.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dishy.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/LoginPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/LoginPage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/UserSettings.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/UserSettings.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/store/reducers/LoginReducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/store/reducers/LoginReducer.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -161,6 +163,7 @@
       <workItem from="1581323473363" duration="28246000" />
       <workItem from="1581410205485" duration="4725000" />
       <workItem from="1581416680537" duration="21328000" />
+      <workItem from="1581505999487" duration="10175000" />
     </task>
     <servers />
   </component>
@@ -229,10 +232,10 @@
     </state>
     <state x="188" y="32" width="992" height="733" key="SettingsEditor/0.28.1366.740@0.28.1366.740" timestamp="1579078521691" />
     <state x="188" y="36" key="SettingsEditor/0.32.1366.736@0.32.1366.736" timestamp="1579703531037" />
-    <state x="100" y="124" width="1166" height="544" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1581424196112">
+    <state x="100" y="124" width="1166" height="544" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1581514901996">
       <screen x="0" y="24" width="1366" height="744" />
     </state>
-    <state x="100" y="124" width="1166" height="544" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.24.1366.744@0.24.1366.744" timestamp="1581424196112" />
+    <state x="100" y="124" width="1166" height="544" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.24.1366.744@0.24.1366.744" timestamp="1581514901996" />
     <state x="100" y="128" width="1166" height="540" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.28.1366.740@0.28.1366.740" timestamp="1579086842054" />
     <state x="100" y="131" width="1166" height="538" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.32.1366.736@0.32.1366.736" timestamp="1580556354733" />
     <state x="336" y="24" width="683" height="744" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1581431939998">

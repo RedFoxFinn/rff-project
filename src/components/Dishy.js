@@ -295,35 +295,33 @@ const Dishy = (props) => {
 
   // helper function. handles new dish component submission.
   // checks the type of submission and sets variables accordingly.
-  async function handleNewComponent (event, type) {
-    event.preventDefault();
-    const userToken = localStorage.getItem('rffUserToken').substring(7);
+  const handleNewComponent = async (type) => {
     let variables;
     switch (type) {
     case 'carb':
       variables = {
-        token: userToken,
+        token: localStorage.getItem('rffUserToken').substring(7),
         type: type,
         name: document.getElementById('newCarbName').value
       };
       break;
     case 'protein':
       variables = {
-        token: userToken,
+        token: localStorage.getItem('rffUserToken').substring(7),
         type: type,
         name: document.getElementById('newProteinName').value
       };
       break;
     case 'spice':
       variables = {
-        token: userToken,
+        token: localStorage.getItem('rffUserToken').substring(7),
         type: type,
         name: document.getElementById('newSpiceName').value
       };
       break;
     case 'method':
       variables = {
-        token: userToken,
+        token: localStorage.getItem('rffUserToken').substring(7),
         name: document.getElementById('newMethodName').value
       };
       break;
@@ -331,7 +329,7 @@ const Dishy = (props) => {
       variables = null;
       break;
     }
-    variables !== null && userToken &&
+    variables !== null && variables.token &&
       await client.mutate({
         mutation: type === 'method' ? ADD_METHOD : ADD_INGREDIENT,
         variables: variables,
@@ -348,7 +346,7 @@ const Dishy = (props) => {
           props.handleError(`Error occurred with ${type}: cannot add ${variables.name}`);
         }
       });
-  }
+  };
 
   // subcomponent. renders form for new dish component submission.
   // selector defines which type of dish component will be submitted to handler function.
@@ -388,54 +386,52 @@ const Dishy = (props) => {
   // subcomponent. renders form for new spice submission.
   const NewSpice = () => {
     return (
-      <form onSubmit={(event) => handleNewComponent(event, 'spice')} className='newComponent'>
+      <div className='newComponent'>
         <input type='text' id='newSpiceName' placeholder='spice name' minLength={2}
           required className={classProvider(props.theme, 'field')}/>
-        <button type='submit' id='saveSpice' className={classProvider(props.theme, 'activator')}>Save spice</button>
-      </form>
+        <button type='button' onClick={() => handleNewComponent('spice')} id='saveSpice' className={classProvider(props.theme, 'activator')}>Save spice</button>
+      </div>
     );
   };
   // subcomponent. renders form for new protein submission.
   const NewProtein = () => {
     return (
-      <form onSubmit={(event) => handleNewComponent(event, 'protein')} className='newComponent'>
+      <div className='newComponent'>
         <input type='text' id='newProteinName' placeholder='protein name' minLength={2}
           required className={classProvider(props.theme, 'field')}/>
-        <button type='submit' id='saveProtein' className={classProvider(props.theme, 'activator')}>Save protein</button>
-      </form>
+        <button type='button' onClick={() => handleNewComponent('protein')} id='saveProtein' className={classProvider(props.theme, 'activator')}>Save protein</button>
+      </div>
     );
   };
   // subcomponent. renders form for new carb submission.
   const NewCarb = () => {
     return (
-      <form onSubmit={(event) => handleNewComponent(event, 'carb')} className='newComponent'>
+      <div className='newComponent'>
         <input type='text' id='newCarbName' placeholder='carb name' minLength={2}
           required className={classProvider(props.theme, 'field')}/>
-        <button type='submit' id='saveCarb' className={classProvider(props.theme, 'activator')}>Save carb</button>
-      </form>
+        <button type='button' onClick={() => handleNewComponent('carb')} id='saveCarb' className={classProvider(props.theme, 'activator')}>Save carb</button>
+      </div>
     );
   };
   // subcomponent. renders form for new cooking method submission.
   const NewMethod = () => {
     return (
-      <form onSubmit={(event) => handleNewComponent(event, 'method')} className='newComponent'>
+      <div className='newComponent'>
         <input type='text' id='newMethodName' placeholder='method name' minLength={2}
           required className={classProvider(props.theme, 'field')}/>
-        <button type='submit' id='saveMethod' className={classProvider(props.theme, 'activator')}>Save method</button>
-      </form>
+        <button type='button' onClick={() => handleNewComponent('method')} id='saveMethod' className={classProvider(props.theme, 'activator')}>Save method</button>
+      </div>
     );
   };
 
   // helper function. handles new dish submission.
   // maps added dish component values to id's (string formatted),
   // creates variables for GraphQL and triggers mutation.
-  const handleNewDish = async (event) => {
-    event.preventDefault();
+  const handleNewDish = async () => {
     const {newDishMethods, newDishProteins, newDishCarbs, newDishSpices, newDish} = props.dishyState;
     if (newDish) {
-      const userToken = localStorage.getItem('rffUserToken').substring(7);
       const variables = {
-        token: userToken,
+        token: localStorage.getItem('rffUserToken').substring(7),
         name: document.getElementById('newDishName').value,
         note: document.getElementById('newDishNote').value,
         cookingMethods: newDishMethods.map(m => m.id),
@@ -443,7 +439,7 @@ const Dishy = (props) => {
         carbs: newDishCarbs.map(c => c.id),
         spices: newDishSpices.map(s => s.id)
       };
-      userToken && await client.mutate({
+      variables.token && await client.mutate({
         mutation: ADD_DISH,
         variables: variables,
         errorPolicy: 'ignore'
@@ -485,7 +481,7 @@ const Dishy = (props) => {
           {newDish && <>
             <Dish view='new' carbs={newDishCarbs} proteins={newDishProteins}
               spices={newDishSpices} methods={newDishMethods}/>
-            <button id='saveDish' onClick={(event) => handleNewDish(event)}
+            <button id='saveDish' onClick={() => handleNewDish()}
               type='button' className={classProvider(props.theme, 'activator')}>Save dish</button>
           </>}
         </div>

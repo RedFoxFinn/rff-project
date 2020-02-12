@@ -1,23 +1,17 @@
 
 
 const initialState = {
-  user: null,
-  username: '',
-  password: ''
+  user: null
 };
 
 const LoginReducer = (state = initialState, action) => {
   switch (action.type) {
   case 'loginSuccess':
-    return {...state, user: action.user, username: '', password: ''};
+    return {...state, user: action.user};
   case 'loginFailure':
-    return {...state, password: ''};
+    return {...state};
   case 'logout':
     return {...initialState};
-  case 'setUsername':
-    return {...state, username: action.username};
-  case 'setPassword':
-    return {...state, password: action.password};
   default:
     return state;
   }
@@ -31,16 +25,6 @@ export const loginFailure = () => {
 export const loginSuccess = (user) => {
   return async dispatch => {
     dispatch({type: 'loginSuccess', user: user});
-  };
-};
-export const setUsername = (username) => {
-  return async dispatch => {
-    dispatch({type: 'setUsername', username: username});
-  };
-};
-export const setPassword = (password) => {
-  return async dispatch => {
-    dispatch({type: 'setPassword', password: password});
   };
 };
 export const logout = () => {

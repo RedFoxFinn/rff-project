@@ -3,12 +3,12 @@ import {connect} from 'react-redux';
 
 import classProvider from '../core/tools/classProvider';
 import {
-  loginFailure, loginSuccess, setUsername, setPassword
+  loginFailure, loginSuccess
 } from '../core/store/reducers/LoginReducer';
 import {handleError, handleInfo, switchApp} from '../core/store/reducers/AppReducer';
 import '../core/style/global.css';
 import {Link, Redirect} from 'react-router-dom';
-import {useApolloClient, useMutation} from '@apollo/react-hooks';
+import {useApolloClient} from '@apollo/react-hooks';
 
 import {LOGIN} from '../core/graphql/rff/mutations/m_login';
 import {ME} from '../core/graphql/rff/queries/q_me';
@@ -22,7 +22,7 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = {
-  loginFailure, loginSuccess, setUsername, setPassword, switchApp, handleInfo, handleError
+  loginFailure, loginSuccess, switchApp, handleInfo, handleError
 };
 
 const UserPage = (props) => {
@@ -58,9 +58,9 @@ const UserPage = (props) => {
   const ChangeUsername = () => {
     return (
       <form className='appContainer' onSubmit={(event) => handleUsernameChange(event)}>
-        <input id='changeUsernamePW' type='password' required placeholder='password' autoComplete={true}
+        <input id='changeUsernamePW' type='password' required placeholder='password'
           className={classProvider(props.theme, 'formElement')}/>
-        <input id='changeUsernameNew' type='text' required placeholder='new username' autoComplete={false}
+        <input id='changeUsernameNew' type='text' required placeholder='new username'
           className={classProvider(props.theme, 'formElement')}/>
         <button type='submit' className={classProvider(props.theme, 'formElement')}>change username</button>
       </form>
@@ -70,11 +70,11 @@ const UserPage = (props) => {
   const ChangePassword = () => {
     return (
       <form className='appContainer' onSubmit={(event) => handlePasswordChange(event)}>
-        <input id='changePasswordOld' type='password' required placeholder='old password' autoComplete={true}
+        <input id='changePasswordOld' type='password' required placeholder='old password'
           className={classProvider(props.theme, 'formElement')}/>
-        <input id='changePasswordNew' type='password' required placeholder='new password' autoComplete={false}
+        <input id='changePasswordNew' type='password' required placeholder='new password'
           className={classProvider(props.theme, 'formElement')}/>
-        <input id='changePasswordConfirm' type='password' required placeholder='retype new password' autoComplete={false}
+        <input id='changePasswordConfirm' type='password' required placeholder='retype new password'
           className={classProvider(props.theme, 'formElement')}/>
         <button type='submit' className={classProvider(props.theme, 'formElement')}>
           change password

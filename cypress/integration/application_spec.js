@@ -7,23 +7,27 @@ before(async () => {
   user = {
     username: `user:${date/100000}`,
     password: `pw:${date/10000}`,
-    altPassword: `pw:${date/1000}`
+    altPassword: `pw:${date/10000*2}`
   };
   dishComponents = {
     carb: {
-      name: `carb:${date/1000}`,
+      name: `carb:${date/100000*2}`,
       type: 'carb'
     },
     protein: {
-      name: `protein:${date/1000}`,
+      name: `protein:${date/100000*2}`,
       type: 'protein'
     },
     spice: {
-      name: `spice:${date/1000}`,
+      name: `spice:${date/100000*2}`,
       type: 'spice'
     },
     method: {
-      name: `method:${date/1000}`
+      name: `method:${date/100000*2}`
+    },
+    dish: {
+      name: `dish:${date/100000*2}`,
+      note: `note:${date/100000*2}`
     }
   };
 });
@@ -35,37 +39,37 @@ describe('Home, Register, Login', () => {
   });
   it('register:fail:password mismatch', () => {
     cy.visit('/register');
-    cy.get('#regUsername').type(user.username.toString());
-    cy.get('#regPassword').type(user.password.toString());
-    cy.get('#regConfirm').type(user.altPassword.toString());
+    cy.get('#regUsername').type(user.username);
+    cy.get('#regPassword').type(user.password);
+    cy.get('#regConfirm').type(user.altPassword);
     cy.get('#regButton').click();
     cy.contains('passwords do not match');
   });
   it('register:success', () => {
-    cy.get('#regUsername').type(user.username.toString());
-    cy.get('#regPassword').type(user.password.toString());
-    cy.get('#regConfirm').type(user.password.toString());
+    cy.get('#regUsername').type(user.username);
+    cy.get('#regPassword').type(user.password);
+    cy.get('#regConfirm').type(user.password);
     cy.get('#regButton').click();
-    cy.contains(`${user.username.toString()} registered`);
+    cy.contains(`${user.username} registered`);
   });
   it('register:fail:username already in use', () => {
-    cy.get('#regUsername').type(user.username.toString());
-    cy.get('#regPassword').type(user.password.toString());
-    cy.get('#regConfirm').type(user.password.toString());
+    cy.get('#regUsername').type(user.username);
+    cy.get('#regPassword').type(user.password);
+    cy.get('#regConfirm').type(user.password);
     cy.get('#regButton').click();
-    cy.contains(`username ${user.username.toString()} is already in use`);
+    cy.contains(`username ${user.username} is already in use`);
   });
   it('login:fail', () => {
     cy.visit('/login');
-    cy.contains('login').click();
-    cy.get('#loginUsername').type(user.username.toString());
-    cy.get('#loginPassword').type(user.altPassword.toString());
+    cy.get('#loginUsername').type(user.username);
+    cy.get('#loginPassword').type(user.altPassword);
     cy.get('#loginButton').click();
     cy.contains('invalid username or password');
     cy.location('pathname').should('eq','/login');
   });
   it('login:success', () => {
-    cy.get('#loginPassword').type(user.password.toString());
+    cy.get('#loginUsername').type(user.username);
+    cy.get('#loginPassword').type(user.password);
     cy.get('#loginButton').click();
     cy.contains('logged in successfully');
     cy.location('pathname').should('eq','/');
@@ -138,8 +142,8 @@ describe('Dashboard', () => {
   });
   it('dashboard:logged', () => {
     cy.visit('/login');
-    cy.get('#loginUsername').type(user.username.toString());
-    cy.get('#loginPassword').type(user.password.toString());
+    cy.get('#loginUsername').type(user.username);
+    cy.get('#loginPassword').type(user.password);
     cy.get('#loginButton').click();
     cy.contains('logged in successfully');
     cy.location('pathname').should('eq','/');
@@ -168,8 +172,8 @@ describe('Dishy', () => {
   });
   it('dishy:logged', () => {
     cy.visit('/login');
-    cy.get('#loginUsername').type(user.username.toString());
-    cy.get('#loginPassword').type(user.password.toString());
+    cy.get('#loginUsername').type(user.username);
+    cy.get('#loginPassword').type(user.password);
     cy.get('#loginButton').click();
     cy.contains('logged in successfully');
     cy.location('pathname').should('eq','/');
@@ -182,11 +186,40 @@ describe('Dishy', () => {
     cy.contains('Cooking methods:');
     cy.contains('Add new...');
   });
-  it('dishy:additions', () => {
+  it('dishy:additions:carb', () => {
     cy.get('#componentSelectCarb').click();
-    cy.get('#newCarbName').type(dishComponents.carb.name.toString());
-    cy.get('#saveCarb').click();
-    cy.contains(`New carb saved: ${dishComponents.carb.name.toString()}`);
+    cy.get('#newCarbName').type(dishComponents.carb.name);
+    cy.contains('Save carb').click();
+    cy.contains(`New carb saved: ${dishComponents.carb.name}`);
     cy.get('#newCarbName').should('be.empty');
+  });
+  it('dishy:additions:protein', () => {
+    cy.get('#componentSelectProtein').click();
+    cy.get('#newProteinName').type(dishComponents.protein.name);
+    cy.contains('Save protein').click();
+    cy.contains(`New protein saved: ${dishComponents.protein.name}`);
+    cy.get('#newProteinName').should('be.empty');
+  });
+  it('dishy:additions:spice', () => {
+    cy.get('#componentSelectSpice').click();
+    cy.get('#newSpiceName').type(dishComponents.spice.name);
+    cy.contains('Save spice').click();
+    cy.contains(`New spice saved: ${dishComponents.spice.name}`);
+    cy.get('#newSpiceName').should('be.empty');
+  });
+  it('dishy:additions:method', () => {
+    cy.get('#componentSelectMethod').click();
+    cy.get('#newMethodName').type(dishComponents.method.name);
+    cy.contains('Save method').click();
+    cy.contains(`New method saved: ${dishComponents.method.name}`);
+    cy.get('#newMethodName').should('be.empty');
+  });
+  it('dishy:additions:dish', () => {
+    cy.get('#newDishActivate').click();
+    cy.get('#newDishName').type(dishComponents.dish.name);
+    cy.get('#newDishNote').type(dishComponents.dish.note);
+
+    cy.get('#newDishName').should('be.empty');
+    cy.get('#newDishNote').should('be.empty');
   });
 });
