@@ -13,9 +13,10 @@ jobs:
     - name: install
       run: npm install
     -name: test
-      uses: cypress-io/github-action@v1
+      uses: cypress-io/github-action@v1.16.1
       with:
         start: npm start
+        record: true
         browser: chrome
         headless: true
       env:

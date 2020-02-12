@@ -2,13 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a69d5581-dc09-455b-96e6-941e02078fc1" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/cypress/integration/application_dev_spec.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.github/workflows/nodejs.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/nodejs.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cypress/integration/application_spec.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/LoginPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/LoginPage.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/RegistrationPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/RegistrationPage.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -164,7 +159,7 @@
       <workItem from="1581410205485" duration="4725000" />
       <workItem from="1581416680537" duration="21328000" />
       <workItem from="1581505999487" duration="10175000" />
-      <workItem from="1581517229119" duration="2518000" />
+      <workItem from="1581517229119" duration="2761000" />
     </task>
     <servers />
   </component>
