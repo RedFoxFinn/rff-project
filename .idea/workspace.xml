@@ -2,16 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a69d5581-dc09-455b-96e6-941e02078fc1" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/cypress/integration/application_dev_spec.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cypress/integration/application_spec.js" beforeDir="false" afterPath="$PROJECT_DIR$/cypress/integration/application_spec.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cypress/screenshots/application_spec.js/Dishy -- dishyadditions (failed).png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cypress/videos/application_spec.js.mp4" beforeDir="false" afterPath="$PROJECT_DIR$/cypress/videos/application_spec.js.mp4" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Dishy.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dishy.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cypress/integration/application_spec.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/LoginPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/LoginPage.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/UserSettings.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/UserSettings.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/store/reducers/LoginReducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/store/reducers/LoginReducer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/RegistrationPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/RegistrationPage.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,7 +56,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../backend" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
@@ -74,6 +71,9 @@
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/components" />
       <recent name="$PROJECT_DIR$/src/core/graphql/rff" />
@@ -164,6 +164,7 @@
       <workItem from="1581410205485" duration="4725000" />
       <workItem from="1581416680537" duration="21328000" />
       <workItem from="1581505999487" duration="10175000" />
+      <workItem from="1581517229119" duration="2518000" />
     </task>
     <servers />
   </component>
@@ -201,10 +202,14 @@
       <screen x="0" y="32" width="1366" height="736" />
     </state>
     <state x="282" y="64" key="#Menus_and_Toolbars/0.32.1366.736@0.32.1366.736" timestamp="1579544630266" />
-    <state x="417" y="142" width="524" height="509" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1581430558522">
+    <state x="379" y="191" width="601" height="430" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1581517623434">
       <screen x="0" y="24" width="1366" height="744" />
     </state>
-    <state x="417" y="142" width="524" height="509" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.24.1366.744@0.24.1366.744" timestamp="1581430558522" />
+    <state x="379" y="191" width="601" height="430" key="#com.intellij.fileTypes.FileTypeChooser/0.24.1366.744@0.24.1366.744" timestamp="1581517623434" />
+    <state x="417" y="142" width="524" height="509" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1581518069011">
+      <screen x="0" y="24" width="1366" height="744" />
+    </state>
+    <state x="417" y="142" width="524" height="509" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.24.1366.744@0.24.1366.744" timestamp="1581518069011" />
     <state x="417" y="146" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.28.1366.740@0.28.1366.740" timestamp="1578391563579" />
     <state x="417" y="149" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.32.1366.736@0.32.1366.736" timestamp="1580473477748" />
     <state x="467" y="154" key="FileChooserDialogImpl" timestamp="1576669856633">

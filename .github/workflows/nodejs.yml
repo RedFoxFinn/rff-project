@@ -1,0 +1,23 @@
+name: CI:frontend:tests
+
+on: [push]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - uses: actions/setup-node@v1
+      with:
+        node-version: 12.x
+    - name: install
+      run: npm install
+    -name: test
+      uses: cypress-io/github-action@v1
+      with:
+        start: npm start
+        browser: chrome
+        headless: true
+      env:
+        CI: true
+        CYPRESS_RECORD_KEY: ${{secrets.CYPRESS_RECORD_KEY}}

@@ -60,7 +60,7 @@ const RegistrationPage = (props) => {
             className={classProvider(props.theme, 'formElement')}/>
           <input id='regConfirm' type='password' required minLength={8} placeholder='re-type password'
             className={classProvider(props.theme, 'formElement')}/>
-          <button id='regButton' type='submit' className={classProvider(props.theme, 'formElement')}>register</button>
+          <button id='regButton' type='submit' className={classProvider(props.theme, 'formElement')}>{'register >'}</button>
         </form>
       </div>
     </div>

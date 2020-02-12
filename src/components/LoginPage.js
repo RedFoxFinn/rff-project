@@ -67,9 +67,9 @@ const LoginPage = (props) => {
           <input id='loginPassword' type='password' placeholder='password'
             className={classProvider(props.theme, 'formElement')}/>
           <button id='loginButton' type='button' onClick={() => handleLogin()}
-            className={classProvider(props.theme, 'formElement')}>login</button>
+            className={classProvider(props.theme, 'formElement')}>{'login >'}</button>
           <Link id='gotoRegisterButton' to='/register' onClick={() => props.switchApp('Register')}
-            className={classProvider(props.theme, 'formElement')}>register</Link>
+            className={classProvider(props.theme, 'formElement')}>{'register >'}</Link>
         </form>
       </div>
     </div>
