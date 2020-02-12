@@ -13,6 +13,7 @@ jobs:
     - name: install
       run: npm install
     - name: tests
+    - name: test
       uses: cypress-io/github-action@v1.16.1
       with:
         start: npm start
