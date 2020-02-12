@@ -2,8 +2,6 @@
 
 This branch contains applications backend.
 
-###### backend phase: `done; waiting frontend`
-
 ###### tests:
 [![Actions Status](https://github.com/RedFoxFinn/rff-project/workflows/CI:backend:tests/badge.svg)](https://github.com/RedFoxFinn/rff-project/actions)
 
@@ -27,7 +25,7 @@ This branch contains applications backend.
  `.gitignore` | `done`
  `eslint` | `done`
  `Jest` for `testing`-mode | `done`
- Frontend | `ongoing`
+ Webpage | `ongoing`
  
 ###### frameworks & libraries:
 - Node.js
