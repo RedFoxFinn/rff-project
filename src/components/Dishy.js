@@ -331,7 +331,7 @@ const Dishy = (props) => {
       variables = null;
       break;
     }
-    variables !== null &&
+    variables !== null && userToken &&
       await client.mutate({
         mutation: type === 'method' ? ADD_METHOD : ADD_INGREDIENT,
         variables: variables,
@@ -340,13 +340,13 @@ const Dishy = (props) => {
         const {data} = result;
         if (data !== null) {
           props.handleInfo(`New ${type} saved: ${variables.name}`);
+          if (type === 'spice') document.getElementById('newSpiceName').value = '';
+          if (type === 'carb') document.getElementById('newCarbName').value = '';
+          if (type === 'protein') document.getElementById('newProteinName').value = '';
+          if (type === 'method') document.getElementById('newMethodName').value = '';
         } else {
           props.handleError(`Error occurred with ${type}: cannot add ${variables.name}`);
         }
-        if (type === 'spice') document.getElementById('newSpiceName').value = '';
-        if (type === 'carb') document.getElementById('newCarbName').value = '';
-        if (type === 'protein') document.getElementById('newProteinName').value = '';
-        if (type === 'method') document.getElementById('newMethodName').value = '';
       });
   }
 
@@ -443,7 +443,7 @@ const Dishy = (props) => {
         carbs: newDishCarbs.map(c => c.id),
         spices: newDishSpices.map(s => s.id)
       };
-      await client.mutate({
+      userToken && await client.mutate({
         mutation: ADD_DISH,
         variables: variables,
         errorPolicy: 'ignore'

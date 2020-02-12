@@ -39,7 +39,7 @@ const mapStateToProps = (state) => {
     theme: state.appState.theme,
     app: state.appState.application,
     dishyState: state.dishyState,
-    user: state.loginState.user
+    loginState: state.loginState
   };
 };
 
@@ -113,7 +113,7 @@ const App = (props) => {
   }, [props]);
 
   const Rff = () => {
-    const user = props.user;
+    const {user} = props.loginState;
     return (
       <Switch>
         <Route exact path='/' render={(props) => <LandingPage {...props} show={true}/>}/>

@@ -1,5 +1,4 @@
 
-let testData;
 let user;
 let dishComponents;
 
@@ -137,11 +136,13 @@ describe('Dashboard', () => {
     cy.contains('Dishy');
     cy.contains('OpenCountry');
   });
-  it('dashboard:logged', async () => {
+  it('dashboard:logged', () => {
     cy.visit('/login');
     cy.get('#loginUsername').type(user.username.toString());
     cy.get('#loginPassword').type(user.password.toString());
     cy.get('#loginButton').click();
+    cy.contains('logged in successfully');
+    cy.location('pathname').should('eq','/');
     cy.visit('/dashboard');
     cy.contains('Available applications:');
     cy.contains('Statistics:');
@@ -170,6 +171,8 @@ describe('Dishy', () => {
     cy.get('#loginUsername').type(user.username.toString());
     cy.get('#loginPassword').type(user.password.toString());
     cy.get('#loginButton').click();
+    cy.contains('logged in successfully');
+    cy.location('pathname').should('eq','/');
     cy.visit('/dishy');
     cy.contains('Suggested:');
     cy.contains('Dishes:');
@@ -177,12 +180,13 @@ describe('Dishy', () => {
     cy.contains('Proteins:');
     cy.contains('Spices:');
     cy.contains('Cooking methods:');
-    expect('#newDishComponent').to.exist;
+    cy.contains('Add new...');
   });
   it('dishy:additions', () => {
     cy.get('#componentSelectCarb').click();
     cy.get('#newCarbName').type(dishComponents.carb.name.toString());
     cy.get('#saveCarb').click();
     cy.contains(`New carb saved: ${dishComponents.carb.name.toString()}`);
+    cy.get('#newCarbName').should('be.empty');
   });
 });
