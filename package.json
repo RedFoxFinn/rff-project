@@ -32,7 +32,8 @@
     "watch": "NODE_ENV=development nodemon Server.js",
     "watch:test": "NODE_ENV=test nodemon Server.js",
     "lint": "eslint --fix .",
-    "jest": "NODE_ENV=test jest --collectCoverage --forceExit"
+    "jest": "NODE_ENV=test jest --collectCoverage --forceExit",
+    "cypress": "cypress open"
   },
   "browserslist": [
     ">0.2%",
