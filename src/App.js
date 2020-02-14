@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
-import {BrowserRouter as Router, Redirect, Route, Switch} from 'react-router-dom';
+import {HashRouter as Router, Redirect, Route, Switch} from 'react-router-dom';
 
 import {ApolloClient} from 'apollo-client';
 import {createHttpLink} from 'apollo-link-http';
@@ -45,12 +45,12 @@ const mapStateToProps = (state) => {
 
 const getWsUriRff = () => {
   return process.env.NODE_ENV === 'production'
-    ? '/graphql'
+    ? 'ws://redfoxfinn.github.io/graphql'
     : 'ws://localhost:4010/graphql';
 };
 const getUriRff = () => {
   return process.env.NODE_ENV === 'production'
-    ? '/graphql'
+    ? 'http://redfoxfinn.github.io/graphql'
     : 'http://localhost:4010/graphql';
 };
 const getUriHsl = () => {
