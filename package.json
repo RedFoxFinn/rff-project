@@ -63,7 +63,9 @@
     "graphql-tag": "latest",
     "jest": "^24.9.0",
     "nodemon": "^1.19.4",
-    "ws": "latest"
+    "ws": "latest",
+    "cypress": "^3.8.2",
+    "eslint-plugin-cypress": "^2.8.1"
   },
   "proxy": "http://localhost:4005/",
   "jest": {
