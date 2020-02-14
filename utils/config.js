@@ -4,18 +4,18 @@ if (process.env.NODE_ENV !== 'production') {
 
 const MONGODB_URI = () => {
   switch (process.env.NODE_ENV) {
-  case 'prod' || 'production':
+  case 'production':
     return process.env.MONGO_URI_PROD;
-  case 'dev' || 'development':
+  case 'development':
     return process.env.MONGO_URI_DEV;
-  case 'test' || 'testing' || 'stag' || 'staging':
+  case 'testing' || 'staging':
     return process.env.MONGO_URI_TEST;
   default:
     return process.env.MONGO_URI_DEV;
   }
 };
 
-const PORT = process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'prod'
+const PORT = process.env.NODE_ENV === 'production'
   ? process.env.PORT
   : 4010;
 const SECRET = process.env.SECRET;
