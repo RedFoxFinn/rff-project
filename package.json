@@ -1,6 +1,6 @@
 {
   "name": "rff",
-  "version": "1.8.0",
+  "version": "1.8.1",
   "private": true,
   "engines": {
     "node": "11.x",
@@ -50,7 +50,7 @@
   "bugs": {
     "url": "https://github.com/RedFoxFinn/rff-project/issues"
   },
-  "homepage": "https://github.com/RedFoxFinn/rff-project/blob/master/readme.md",
+  "homepage": "https://redfoxfinn.github.io/",
   "devDependencies": {
     "apollo-client": "^2.6.4",
     "apollo-utilities": "latest",
@@ -63,9 +63,7 @@
     "graphql-tag": "latest",
     "jest": "^24.9.0",
     "nodemon": "^1.19.4",
-    "ws": "latest",
-    "cypress": "^3.8.2",
-    "eslint-plugin-cypress": "^2.8.1"
+    "ws": "latest"
   },
   "proxy": "http://localhost:4005/",
   "jest": {
