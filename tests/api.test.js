@@ -963,11 +963,11 @@ afterAll(async () => {
 // dummy
 describe('test:dummy', () => {
   test('dummy, success', () => {
-    const x = process.env.NODE_ENV === 'test' ? 'dummy' : 'notDummy';
+    const x = process.env.NODE_ENV === 'testing' ? 'dummy' : 'notDummy';
     expect(x).toBe('dummy');
   });
   test('dummy, fail', () => {
-    const x = process.env.NODE_ENV === 'dev' ? 'dummy' : 'notDummy';
+    const x = process.env.NODE_ENV === 'development' ? 'dummy' : 'notDummy';
     expect(x).toBe('notDummy');
   });
 });
