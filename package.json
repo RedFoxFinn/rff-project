@@ -26,7 +26,7 @@
   },
   "scripts": {
     "start": "NODE_ENV=production node Server.js",
-    "stage": "NODE_ENV=staging node Server.js",
+    "stage": "NODE_ENV=staging MODE=staging node Server.js",
     "node": "NODE_ENV=development node Server.js",
     "test": "npm run lint && npm run jest",
     "watch": "NODE_ENV=development nodemon Server.js",

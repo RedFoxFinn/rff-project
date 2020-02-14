@@ -8,7 +8,9 @@ const MONGODB_URI = () => {
     return process.env.MONGO_URI_PROD;
   case 'development':
     return process.env.MONGO_URI_DEV;
-  case 'testing' || 'staging':
+  case 'testing':
+    return process.env.MONGO_URI_TEST;
+  case 'staging':
     return process.env.MONGO_URI_TEST;
   default:
     return process.env.MONGO_URI_DEV;
