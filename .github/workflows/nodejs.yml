@@ -17,7 +17,6 @@ jobs:
         start: npm start
         record: true
         browser: chrome
-        headless: true
       env:
         CI: true
         CYPRESS_RECORD_KEY: ${{secrets.CYPRESS_RECORD_KEY}}
