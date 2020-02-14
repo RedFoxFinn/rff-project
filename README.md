@@ -25,7 +25,7 @@ This branch contains applications backend.
  `.gitignore` | `done`
  `eslint` | `done`
  `Jest` for `testing`-mode | `done`
- Webpage | `ongoing`
+ Webpage | ![CI:build](https://github.com/RedFoxFinn/rff-project/workflows/CI:build/badge.svg?branch=staging)
  
 ###### frameworks & libraries:
 - Node.js
