@@ -1,7 +1,4 @@
 
-before(() => {
-  cy.clearLocalStorage();
-});
 
 describe('Home, Register & Login -pages', () => {
   it('home', () => {

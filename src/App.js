@@ -43,26 +43,12 @@ const mapStateToProps = (state) => {
   };
 };
 
-const getWsUriRff = () => {
-  return process.env.NODE_ENV === 'production'
-    ? 'ws://redfoxfinn.github.io/graphql'
-    : 'ws://localhost:4010/graphql';
-};
-const getUriRff = () => {
-  return process.env.NODE_ENV === 'production'
-    ? 'http://redfoxfinn.github.io/graphql'
-    : 'http://localhost:4010/graphql';
-};
-const getUriHsl = () => {
-  return 'https://api.digitransit.fi/routing/v1/routers/hsl/index/graphql';
-};
-
 const wsLink = new WebSocketLink({
-  uri: getWsUriRff(),
+  uri: process.env.REACT_APP_RFF_WEBSOCKET,
   options: {reconnect: true}
 });
 const httpLink = createHttpLink({
-  uri: getUriRff(),
+  uri: process.env.REACT_APP_RFF_ENDPOINT,
 });
 const authLink = setContext((_, {headers}) => {
   const token = localStorage.getItem('rffUserToken');
@@ -83,7 +69,7 @@ const rffLink = split(
 );
 
 const hslLink = createHttpLink({
-  uri: getUriHsl()
+  uri: process.env.REACT_APP_HSL_ENDPOINT
 });
 
 const rffClient = new ApolloClient({

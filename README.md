@@ -48,7 +48,7 @@ GraphQL-queries | `done`
 GraphQL-subscriptions | `done`
 Classes | `done`
 TESTS | `ongoing`
-CI | `dev:done`,`build:ongoing`
+CI | `dev:done+tweaked`,`build:ongoing`
 
 ###### frameworks & libraries:
 
