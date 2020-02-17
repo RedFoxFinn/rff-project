@@ -3,6 +3,7 @@ node_modules
 build
 /src/components/widgets/Author.js
 .env
-.env.dev
-.env.test
-.env.stage
+.env.development
+.env.testing
+.env.staging
+.env.production
