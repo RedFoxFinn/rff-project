@@ -15,7 +15,8 @@ jobs:
     - uses: cypress-io/github-action@v1.16.1
       with:
         start: npm start
-        spec: cypress/integration/ui_spec.js
+        config-file: cypress/specs/ui/cypress-config.json
+        spec: cypress/specs/ui/ui_spec.js
         record: true
         browser: chrome
       env:
@@ -29,11 +30,14 @@ jobs:
       with:
         node-version: 12.x
     - name: install
-      run: npm install
+      run: npm install && npm install -g serve
+    - name: build
+      run: npm build
     - uses: cypress-io/github-action@v1.16.1
       with:
-        start: npm start
-        spec: cypress/integration/integration_spec.js
+        start: serve -s build
+        config-file: cypress/specs/integration/cypress-config.json
+        spec: cypress/specs/integration/integration_spec.js
         record: true
         browser: chrome
       env:
