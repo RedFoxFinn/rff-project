@@ -46,13 +46,13 @@ const mapStateToProps = (state) => {
 const wsLink = new WebSocketLink({
   uri: process.env.NODE_ENV === 'development'
     ? 'ws://localhost:4000/graphql'
-    : 'ws://kettula.herokuapp.com/graphql',
+    : process.env.REACT_APP_RFF_WEBSOCKET,
   options: {reconnect: true}
 });
 const httpLink = createHttpLink({
   uri: process.env.NODE_ENV === 'development'
     ? 'http://localhost:4000/graphql'
-    : 'https://kettula.herokuapp.com/graphql'
+    : process.env.REACT_APP_RFF_ENDPOINT
 });
 const authLink = setContext((_, {headers}) => {
   const token = localStorage.getItem('rffUserToken');
