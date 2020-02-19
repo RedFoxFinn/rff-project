@@ -1,4 +1,4 @@
-name: CI:backend:tests
+name: CI:backend
 
 on: [push]
 
