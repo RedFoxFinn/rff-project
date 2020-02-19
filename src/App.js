@@ -77,7 +77,7 @@ const hslLink = createHttpLink({
 });
 
 const rffClient = new ApolloClient({
-  link: rffLink,
+  link: httpLink,
   cache: new InMemoryCache(),
   connectToDevTools: process.env.NODE_ENV === 'development'
 });
