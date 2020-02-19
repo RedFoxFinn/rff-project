@@ -44,11 +44,15 @@ const mapStateToProps = (state) => {
 };
 
 const wsLink = new WebSocketLink({
-  uri: process.env.REACT_APP_RFF_WEBSOCKET,
+  uri: process.env.NODE_ENV === 'development'
+    ? 'ws://localhost:4000/graphql'
+    : 'ws://kettula.herokuapp.com/graphql',
   options: {reconnect: true}
 });
 const httpLink = createHttpLink({
-  uri: process.env.REACT_APP_RFF_ENDPOINT,
+  uri: process.env.NODE_ENV === 'development'
+    ? 'http://localhost:4000/graphql'
+    : 'https://kettula.herokuapp.com/graphql'
 });
 const authLink = setContext((_, {headers}) => {
   const token = localStorage.getItem('rffUserToken');
@@ -69,7 +73,7 @@ const rffLink = split(
 );
 
 const hslLink = createHttpLink({
-  uri: process.env.REACT_APP_HSL_ENDPOINT
+  uri: 'https://api.digitransit.fi/routing/v1/routers/hsl/index/graphql'
 });
 
 const rffClient = new ApolloClient({
