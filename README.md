@@ -2,6 +2,8 @@
 
 This branch contains applications frontend.
 
+![Page version](https://img.shields.io/badge/dynamic/json?url=https://raw.githubusercontent.com/RedFoxFinn/rff-project/frontend/package.json&query=version&color=61bd51&label=version)
+
 ###### tests: 
 ![CI Status](https://github.com/RedFoxFinn/rff-project/workflows/CI:frontend/badge.svg?branch=frontend)
 
