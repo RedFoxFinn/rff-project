@@ -3,7 +3,7 @@ name: CI:frontend:tests
 on: [push]
 
 jobs:
-  ui test:
+  ui_test:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
@@ -21,7 +21,7 @@ jobs:
       env:
         CI: true
         CYPRESS_RECORD_KEY: ${{secrets.CYPRESS_RECORD_KEY}}
-  integration test:
+  integration_test:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
