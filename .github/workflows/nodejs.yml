@@ -37,8 +37,8 @@ jobs:
     - uses: cypress-io/github-action@v1.16.1
       with:
         start: serve -s build
-        config-file: cypress/integration/cypress-config-stage.json
-        spec: cypress/integration/integration_spec.js
+        config-file: cypress/specs/integration/cypress-config.json
+        spec: cypress/specs/integration/integration_spec.js
         record: true
         browser: chrome
       env:
