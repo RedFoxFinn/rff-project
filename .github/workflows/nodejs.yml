@@ -10,11 +10,12 @@ jobs:
     - uses: actions/setup-node@v1
       with:
         node-version: 12.x
-    - name: test
+    - name: install and test
       run: |
         npm install
         npm run jest
       env:
         CI: true
         SECRET: ${{secrets.SECRET}}
+        MONGO_URI_DEV: ${{secrets.MONGO_URI_DEV}}
         MONGO_URI_TEST: ${{secrets.MONGO_URI_TEST}}
