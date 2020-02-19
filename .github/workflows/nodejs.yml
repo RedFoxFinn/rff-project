@@ -20,6 +20,3 @@ jobs:
       env:
         CI: true
         CYPRESS_RECORD_KEY: ${{secrets.CYPRESS_RECORD_KEY}}
-        REACT_APP_HSL_ENDPOINT: ${{secrets.REACT_APP_HSL_ENDPOINT}}
-        REACT_APP_RFF_WEBSOCKET: ${{secrets.REACT_APP_RFF_WEBSOCKET}}
-        REACT_APP_RFF_ENDPOINT: ${{secrets.REACT_APP_RFF_ENDPOINT}}
