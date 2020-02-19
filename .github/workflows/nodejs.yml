@@ -1,7 +1,5 @@
-name: CI:frontend:tests
-
+name: CI:frontend
 on: [push]
-
 jobs:
   ui_test:
     runs-on: ubuntu-latest
