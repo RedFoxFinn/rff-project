@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
-import {BrowserRouter as Router, Redirect, Route, Switch} from 'react-router-dom';
+import {HashRouter as Router, Redirect, Route, Switch} from 'react-router-dom';
 
 import {ApolloClient} from 'apollo-client';
 import {createHttpLink} from 'apollo-link-http';
@@ -90,7 +90,6 @@ const hslClient = new ApolloClient({
 
 const App = (props) => {
   // const url = window.location.href;
-  let home;
   useEffect(() => {
     document.body.className = props.theme;
   });
@@ -102,9 +101,6 @@ const App = (props) => {
     }
     init();
   }, [props]);
-  useEffect(() => {
-    home = process.env.NODE_ENV === 'production' ? 'https://redfoxfinn.github.io/' : '/';
-  });
 
   const Rff = () => {
     const {user} = props.loginState;
@@ -136,7 +132,7 @@ const App = (props) => {
 
   return(
     <div className='appContainer'>
-      <Router basename={home}>
+      <Router basename='/#/'>
         <ApolloProvider client={rffClient}>
           <Navigation/>
           <Rff/>
