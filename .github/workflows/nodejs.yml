@@ -3,7 +3,7 @@ name: CI:frontend:tests
 on: [push]
 
 jobs:
-  test:
+  ui test:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
@@ -15,8 +15,29 @@ jobs:
     - uses: cypress-io/github-action@v1.16.1
       with:
         start: npm start
+        spec: cypress/integration/ui_spec.js
         record: true
         browser: chrome
       env:
         CI: true
         CYPRESS_RECORD_KEY: ${{secrets.CYPRESS_RECORD_KEY}}
+  integration test:
+    runs-on: ubuntu-latest
+      steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+      - name: install
+        run: npm install
+      - uses: cypress-io/github-action@v1.16.1
+        with:
+          start: npm start
+          spec: cypress/integration/integration_spec.js
+          record: true
+          browser: chrome
+        env:
+          CI: true
+          CYPRESS_RECORD_KEY: ${{secrets.CYPRESS_STAGING_KEY}}
+          REACT_APP_RFF_WEBSOCKET: ${{secrets.REACT_APP_RFF_WEBSOCKET}}
+          REACT_APP_RFF_ENDPOINT: ${{secrets.REACT_APP_RFF_ENDPOINT}}
