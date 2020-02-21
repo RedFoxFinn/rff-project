@@ -1,0 +1,23 @@
+name: CI:stage
+on: [push]
+jobs:
+  integration_test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+      - name: install
+        run: npm install
+      - uses: cypress-io/github-action@v1.16.1
+        with:
+          start: npm run watch:stage
+          spec: cypress/integration/integration_spec.js
+          record: true
+          browser: chrome
+        env:
+          CI: true
+          CYPRESS_RECORD_KEY: ${{secrets.CYPRESS_STAGING_KEY}}
+          SECRET: ${{secrets.SECRET}}
+          MONGO_URI_TEST: ${{secrets.MONGO_URI_TEST}}
