@@ -4,7 +4,7 @@ This repository contains production build of my project.
 
 Featuring MERN-stack + Apollo GraphQL.
 
-![CI status](https://github.com/RedFoxFinn/redfoxfinn.github.io/workflows/CI:stage/badge.svg)
+![CI:stage](https://github.com/RedFoxFinn/redfoxfinn.github.io/workflows/CI:stage/badge.svg)
 
 ![Page version](https://img.shields.io/badge/dynamic/json?url=https://raw.githubusercontent.com/RedFoxFinn/rff-project/frontend/package.json&query=version&color=61bd51&label=frontend)![Page version](https://img.shields.io/badge/dynamic/json?url=https://raw.githubusercontent.com/RedFoxFinn/rff-project/backend/package.json&query=version&color=61bd51&label=backend)
 
