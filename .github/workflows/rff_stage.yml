@@ -18,6 +18,6 @@ jobs:
           browser: chrome
         env:
           CI: true
-          CYPRESS_RECORD_KEY: ${{secrets.CYPRESS_STAGING_KEY}}
+          CYPRESS_RECORD_KEY: ${{secrets.CYPRESS_RECORD_KEY}}
           SECRET: ${{secrets.SECRET}}
           MONGO_URI_TEST: ${{secrets.MONGO_URI_TEST}}
