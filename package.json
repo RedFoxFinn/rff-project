@@ -1,6 +1,6 @@
 {
   "name": "rff",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "private": true,
   "engines": {
     "node": "11.x",
@@ -26,14 +26,15 @@
   },
   "scripts": {
     "start": "NODE_ENV=production node Server.js",
-    "stage": "NODE_ENV=staging MODE=staging node Server.js",
+    "stage": "NODE_ENV=staging node Server.js",
     "node": "NODE_ENV=development node Server.js",
     "test": "npm run lint && npm run jest",
     "watch": "NODE_ENV=development nodemon Server.js",
     "watch:test": "NODE_ENV=testing nodemon Server.js",
     "lint": "eslint --fix .",
     "jest": "NODE_ENV=testing jest --collectCoverage --forceExit",
-    "cypress": "cypress open"
+    "cy:open": "cypress open",
+    "cy:run": "cypress run"
   },
   "browserslist": [
     ">0.2%",
