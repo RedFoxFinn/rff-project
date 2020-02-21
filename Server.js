@@ -7,7 +7,7 @@ const config = require('./utils/config.js');
 let express = require('express'),
   app = express(),
   PORT = config.port;
-const https = require('https');
+const http = require('http');
 const path = require('path');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
@@ -39,7 +39,7 @@ app.route('/')
       res.sendFile(path.join(__dirname, '/build/index.html'));
     });
 apolloServer.applyMiddleware({ app, path: '/graphql' });
-const server = https.createServer(app);
+const server = http.createServer(app);
 apolloServer.installSubscriptionHandlers(server);
 
 // starting server
