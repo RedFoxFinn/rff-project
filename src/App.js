@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
-import {HashRouter as Router, Redirect, Route, Switch} from 'react-router-dom';
+import {BrowserRouter as Router, Redirect, Route, Switch} from 'react-router-dom';
 
 import {ApolloClient} from 'apollo-client';
 import {createHttpLink} from 'apollo-link-http';
@@ -45,13 +45,13 @@ const mapStateToProps = (state) => {
 
 const wsLink = new WebSocketLink({
   uri: process.env.NODE_ENV === 'development'
-    ? 'wss://localhost:4000/graphql'
+    ? 'ws://localhost:4000/graphql'
     : process.env.REACT_APP_RFF_WEBSOCKET,
   options: {reconnect: true}
 });
 const httpLink = createHttpLink({
   uri: process.env.NODE_ENV === 'development'
-    ? 'https://localhost:4000/graphql'
+    ? 'http://localhost:4000/graphql'
     : process.env.REACT_APP_RFF_ENDPOINT
 });
 const authLink = setContext((_, {headers}) => {
@@ -77,7 +77,7 @@ const hslLink = createHttpLink({
 });
 
 const rffClient = new ApolloClient({
-  link: httpLink,
+  link: rffLink,
   cache: new InMemoryCache(),
   connectToDevTools: process.env.NODE_ENV === 'development'
 });
@@ -132,7 +132,7 @@ const App = (props) => {
 
   return(
     <div className='appContainer'>
-      <Router basename='/#/'>
+      <Router basename='/'>
         <ApolloProvider client={rffClient}>
           <Navigation/>
           <Rff/>
