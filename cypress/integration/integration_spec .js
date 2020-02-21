@@ -30,11 +30,11 @@ before(async () => {
 
 describe('Home, Register, Login', () => {
   it('home:not logged', () => {
-    cy.visit('/');
+    cy.visit('/#/');
     cy.contains('If you want to use these advanced features, please log in.');
   });
   it('register:fail:password mismatch', () => {
-    cy.visit('/register');
+    cy.visit('/#/register');
     cy.get('#regUsername').type(user.username);
     cy.get('#regPassword').type(user.password);
     cy.get('#regConfirm').type(user.altPassword);
@@ -56,19 +56,19 @@ describe('Home, Register, Login', () => {
     cy.contains(`username ${user.username} is already in use`);
   });
   it('login:fail', () => {
-    cy.visit('/login');
+    cy.visit('/#/login');
     cy.get('#loginUsername').type(user.username);
     cy.get('#loginPassword').type(user.altPassword);
     cy.get('#loginButton').click();
     cy.contains('invalid username or password');
-    cy.location('pathname').should('eq','/login');
+    cy.location('pathname').should('eq','/#/login');
   });
   it('login:success', () => {
     cy.get('#loginUsername').type(user.username);
     cy.get('#loginPassword').type(user.password);
     cy.get('#loginButton').click();
     cy.contains('logged in successfully');
-    cy.location('pathname').should('eq','/');
+    cy.location('pathname').should('eq','/#/');
   });
   it('home:logged', () => {
     cy.contains('You have logged in and therefore eligible to use advanced features.');
@@ -76,10 +76,8 @@ describe('Home, Register, Login', () => {
 });
 
 describe('About', () => {
-  before(() => {
-    cy.visit('/about');
-  });
   it('about', () => {
+    cy.visit('/#/about');
     cy.contains('Repository:');
     cy.contains('Used technology stack:');
     cy.contains('Frontend');
@@ -93,10 +91,8 @@ describe('About', () => {
 });
 
 describe('Calculate', () => {
-  before(() => {
-    cy.visit('/calculate');
-  });
   it('calculate:fields', () => {
+    cy.visit('/#/calculate');
     cy.contains('Addition');
     cy.contains('Multiplication');
     cy.contains('Exponentiation');
@@ -109,10 +105,8 @@ describe('Calculate', () => {
 });
 
 describe('OpenCountry', () => {
-  before(() => {
-    cy.visit('/countries');
-  });
   it('countries:heading', () => {
+    cy.visit('/#/countries');
     cy.contains('Data for');
     cy.contains('countries found');
   });
@@ -126,10 +120,8 @@ describe('OpenCountry', () => {
 });
 
 describe('Dashboard', () => {
-  before(() => {
-    cy.visit('/dashboard');
-  });
   it('dashboard:not logged', () => {
+    cy.visit('/#/dashboard');
     cy.contains('Available applications:');
     cy.contains('Statistics:');
     cy.contains('Calculate');
@@ -137,13 +129,13 @@ describe('Dashboard', () => {
     cy.contains('OpenCountry');
   });
   it('dashboard:logged', () => {
-    cy.visit('/login');
+    cy.visit('/#/login');
     cy.get('#loginUsername').type(user.username);
     cy.get('#loginPassword').type(user.password);
     cy.get('#loginButton').click();
     cy.contains('logged in successfully');
-    cy.location('pathname').should('eq','/');
-    cy.visit('/dashboard');
+    cy.location('pathname').should('eq','/#/');
+    cy.visit('/#/dashboard');
     cy.contains('Available applications:');
     cy.contains('Statistics:');
     cy.contains('Calculate');
@@ -155,10 +147,8 @@ describe('Dashboard', () => {
 });
 
 describe('Dishy', () => {
-  before(() => {
-    cy.visit('/dishy');
-  });
   it('dishy:unlogged', () => {
+    cy.visit('/#/dishy');
     cy.contains('Suggested:');
     cy.contains('Dishes:');
     cy.contains('Carbs:');
@@ -167,13 +157,13 @@ describe('Dishy', () => {
     cy.contains('Cooking methods:');
   });
   it('dishy:logged', () => {
-    cy.visit('/login');
+    cy.visit('/#/login');
     cy.get('#loginUsername').type(user.username);
     cy.get('#loginPassword').type(user.password);
     cy.get('#loginButton').click();
     cy.contains('logged in successfully');
-    cy.location('pathname').should('eq','/');
-    cy.visit('/dishy');
+    cy.location('pathname').should('eq','/#/');
+    cy.visit('/#/dishy');
     cy.contains('Suggested:');
     cy.contains('Dishes:');
     cy.contains('Carbs:');
@@ -186,7 +176,7 @@ describe('Dishy', () => {
     cy.get('#componentSelectCarb').click();
     cy.get('#newCarbName').type(dishComponents.carb.name);
     cy.get('#saveCarb').click();
-    cy.location('pathname').should('eq','/dishy');
+    cy.location('pathname').should('eq','/#/dishy');
     cy.contains(`New carb saved: ${dishComponents.carb.name}`);
     cy.get('#newCarbName').should('be.empty');
   });
@@ -194,7 +184,7 @@ describe('Dishy', () => {
     cy.get('#componentSelectProtein').click();
     cy.get('#newProteinName').type(dishComponents.protein.name);
     cy.get('#saveProtein').click();
-    cy.location('pathname').should('eq','/dishy');
+    cy.location('pathname').should('eq','/#/dishy');
     cy.contains(`New protein saved: ${dishComponents.protein.name}`);
     cy.get('#newProteinName').should('be.empty');
   });
