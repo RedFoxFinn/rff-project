@@ -1,6 +1,6 @@
 {
   "name": "rff",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "private": true,
   "engines": {
     "node": "11.x",
@@ -31,6 +31,7 @@
     "test": "npm run lint && npm run jest",
     "watch": "NODE_ENV=development nodemon Server.js",
     "watch:test": "NODE_ENV=testing nodemon Server.js",
+    "watch:stage": "NODE_ENV=staging nodemon Server.js",
     "lint": "eslint --fix .",
     "jest": "NODE_ENV=testing jest --collectCoverage --forceExit",
     "cy:open": "cypress open",

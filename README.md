@@ -18,7 +18,7 @@ This branch contains applications backend.
  GraphQL-playground at `/api` endpoint in `development`-mode | `done`
  MongoDB/Mongoose models | `done`
  GraphQL schemas | `done`
- GraphQL resolvers | `done`
+ GraphQL resolvers | `done`,`tweaked`
  JWT used for login | `done`
  BCrypt used for encrypting sensitive user data stored `Atlas mongo-cloud` | `done`
  `.env` for environmental variables in `development`-mode | `done`

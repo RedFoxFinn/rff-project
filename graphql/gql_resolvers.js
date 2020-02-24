@@ -635,7 +635,7 @@ const resolvers = {
           throw new UserInputError(e.message, { invalidArgs: args });
         }
 	ingredient = await Ingredient.findOne({name: args.name}).populate('addedBy');
-        await pubsub.publish('INGREDIENT_ADDED', { ingredientEvent: ingredient });
+        await pubsub.publish('INGREDIENT_ADDED', { ingredientAdded: ingredient });
         return ingredient;
       } else {
         throw new AuthenticationError('Session error: you must be logged in!');
@@ -651,7 +651,7 @@ const resolvers = {
         } catch (e) {
           throw new UserInputError(e.message, { invalidArgs: args });
         }
-        await pubsub.publish('INGREDIENT_REMOVED', { ingredientEvent: ingredient });
+        await pubsub.publish('INGREDIENT_REMOVED', { ingredientRemoved: ingredient });
         return ingredient;
       } else {
         throw new AuthenticationError('Insufficient clearance!');
@@ -677,7 +677,7 @@ const resolvers = {
           throw new UserInputError(e.message, { invalidArgs: args });
         }
         dish = await Dish.findOne({ name: args.name }).populate(dishFields);
-	await pubsub.publish('DISH_ADDED', { dishEvent: dish });
+	    await pubsub.publish('DISH_ADDED', { dishAdded: dish });
         return dish;
       } else {
         throw new AuthenticationError('Session error: you must be logged in!');
@@ -705,7 +705,7 @@ const resolvers = {
         if (args.proteins) await updateUsage(args.id, 'PROTEIN', args.proteins);
         if (args.spices) await updateUsage(args.id, 'SPICE', args.spices);
         dish = await Dish.findOne({ _id: args.id }).populate(dishFields);
-        await pubsub.publish('DISH_UPDATED', { dishEvent: dish });
+        await pubsub.publish('DISH_UPDATED', { dishUpdated: dish });
         return dish;
       } else {
         throw new AuthenticationError('Session error: you must be logged in!');
@@ -721,7 +721,7 @@ const resolvers = {
         } catch (e) {
           throw new UserInputError(e.message, { invalidArgs: args });
         }
-        await pubsub.publish('DISH_REMOVED', { dishEvent: dish });
+        await pubsub.publish('DISH_REMOVED', { dishRemoved: dish });
         return dish;
       } else {
         throw new AuthenticationError('Insufficient clearance!');
@@ -740,7 +740,7 @@ const resolvers = {
           throw new UserInputError(e.message, { invalidArgs: args });
         }
         dish = await Dish.findOne({ _id: args.id }).populate(dishFields);
-        await pubsub.publish('DISH_VOTED', { dishEvent: dish });
+        await pubsub.publish('DISH_VOTED', { dishVoted: dish });
         return dish;
       } else {
         throw new AuthenticationError('Session error: you must be logged in!');
@@ -760,8 +760,8 @@ const resolvers = {
         } catch (e) {
           throw new UserInputError(e.message, { invalidArgs: args });
         }
-	method = await CookingMethod.findOne({name: args.name}).populate('addedBy');
-        await pubsub.publish('METHOD_ADDED', { methodEvent: method });
+	    method = await CookingMethod.findOne({name: args.name}).populate('addedBy');
+        await pubsub.publish('METHOD_ADDED', { methodAdded: method });
         return method;
       } else {
         throw new AuthenticationError('Session error: you must be logged in!');
@@ -777,7 +777,7 @@ const resolvers = {
         } catch (e) {
           throw new UserInputError(e.message, { invalidArgs: args });
         }
-        await pubsub.publish('METHOD_REMOVED', { methodEvent: method });
+        await pubsub.publish('METHOD_REMOVED', { methodRemoved: method });
         return method;
       } else {
         throw new AuthenticationError('Insufficient clearance!');
@@ -798,7 +798,7 @@ const resolvers = {
           throw new UserInputError(e.message, { invalidArgs: args });
         }
         list = await GroupList.findOne({ title: args.title }).populate('group');
-        await pubsub.publish('LIST_ADDED_G', { listEventGroup: list });
+        await pubsub.publish('LIST_ADDED_G', { listAddedGroup: list });
         return list;
       } else {
         throw new AuthenticationError('Session error: you must be logged in!');
@@ -814,7 +814,7 @@ const resolvers = {
         } catch (e) {
           throw new UserInputError(e.message, { invalidArgs: args });
         }
-        await pubsub.publish('LIST_REMOVED_G', { listEventGroup: list });
+        await pubsub.publish('LIST_REMOVED_G', { listRemovedGroup: list });
         return list;
       } else {
         throw new AuthenticationError('Insufficient clearance!');
@@ -835,7 +835,7 @@ const resolvers = {
           throw new UserInputError(e.message, { invalidArgs: args });
         }
         list = await PrivateList.findOne({ title: args.title }).populate('owner');
-        await pubsub.publish('LIST_ADDED_P', { listEventPrivate: list });
+        await pubsub.publish('LIST_ADDED_P', { listAddedPrivate: list });
         return list;
       } else {
         throw new AuthenticationError('Session error: you must be logged in!');
@@ -852,7 +852,7 @@ const resolvers = {
           } catch (e) {
             throw new UserInputError(e.message, { invalidArgs: args });
           }
-          await pubsub.publish('LIST_REMOVED_P', { listEventPrivate: list });
+          await pubsub.publish('LIST_REMOVED_P', { listRemovedPrivate: list });
           return list;
         } else {
           throw new AuthenticationError('Insufficient clearance!');
@@ -931,7 +931,7 @@ const resolvers = {
           throw new UserInputError(e.message, { invalidArgs: args });
         }
         task = await Task.findOne({ task: args.task }).populate('creator');
-        await pubsub.publish('TASK_ADDED', { taskEvent: task });
+        await pubsub.publish('TASK_ADDED', { taskAdded: task });
         return task;
       } else {
         throw new AuthenticationError('Session error: you must be logged in!');
@@ -956,7 +956,7 @@ const resolvers = {
         } catch (e) {
           throw new UserInputError(e.message, { invalidArgs: args });
         }
-        await pubsub.publish('TASK_REMOVED', { taskEvent: task });
+        await pubsub.publish('TASK_REMOVED', { taskRemoved: task });
         return task;
       } else {
         throw new AuthenticationError('Insufficient clearance!');
@@ -974,7 +974,7 @@ const resolvers = {
           throw new UserInputError(e.message, { invalidArgs: args });
         }
         task = await Task.findOne({ _id: args.id }).populate('creator');
-        await pubsub.publish('TASK_UPDATED', { taskEvent: task });
+        await pubsub.publish('TASK_UPDATED', { taskUpdated: task });
         return task;
       } else {
         throw new AuthenticationError('Session error: you must be logged in!');
@@ -992,7 +992,7 @@ const resolvers = {
           throw new UserInputError(e.message, { invalidArgs: args });
         }
         task = await Task.findOne({ _id: args.id }).populate('creator');
-        await pubsub.publish('TASK_UPDATED', { taskEvent: task });
+        await pubsub.publish('TASK_UPDATED', { taskUpdated: task });
         return task;
       } else {
         throw new AuthenticationError('Session error: you must be logged in!');
@@ -1010,7 +1010,7 @@ const resolvers = {
           throw new UserInputError(e.message, { invalidArgs: args });
         }
         task = await Task.findOne({ _id: args.id }).populate('creator');
-        await pubsub.publish('TASK_UPDATED', { taskEvent: task });
+        await pubsub.publish('TASK_UPDATED', { taskUpdated: task });
         return task;
       } else {
         throw new AuthenticationError('Session error: you must be logged in!');
@@ -1030,7 +1030,7 @@ const resolvers = {
       } catch (e) {
         throw new UserInputError(e.message, { invalidArgs: args });
       }
-      await pubsub.publish('USER_ADDED', { userEvent: newUser });
+      await pubsub.publish('USER_ADDED', { userAdded: newUser });
       return newUser;
     },
     updateUser: async (root, args) => {
@@ -1049,7 +1049,7 @@ const resolvers = {
         } catch (e) {
           throw new UserInputError(e.message, { invalidArgs: args });
         }
-        await pubsub.publish('USER_UPDATED', { userEvent: user });
+        await pubsub.publish('USER_UPDATED', { userUpdated: user });
         return user;
       } else {
         throw new AuthenticationError('Invalid authentication!');
@@ -1065,7 +1065,7 @@ const resolvers = {
         } catch (e) {
           throw new UserInputError(e.message, { invalidArgs: args });
         }
-        await pubsub.publish('USER_REMOVED', { userEvent: userToRemove });
+        await pubsub.publish('USER_REMOVED', { userRemoved: userToRemove });
         await pubsub.publish('MAJOR_DBE', { majorDBE: true });
         return userToRemove;
       } else if (user) {
@@ -1133,7 +1133,7 @@ const resolvers = {
         } catch (e) {
           throw new UserInputError(e.message, { invalidArgs: args });
         }
-        await pubsub.publish('USER_UPDATED', { userEvent: user });
+        await pubsub.publish('USER_UPDATED', { userUpdated: user });
         return user;
       } else {
         throw new AuthenticationError('You must be logged in!');
@@ -1151,7 +1151,7 @@ const resolvers = {
         } catch (e) {
           throw new UserInputError(e.message, { invalidArgs: args });
         }
-        await pubsub.publish('USER_UPDATED', { userEvent: user });
+        await pubsub.publish('USER_UPDATED', { userUpdated: user });
         return user;
       } else {
         throw new AuthenticationError('You must be logged in!');
@@ -1175,7 +1175,7 @@ const resolvers = {
         newGroup = await Group.findOne({ title: args.title }).populate('creator');
         user.groups = [...user.groups, newGroup._id.toString()];
         await user.save();
-        await pubsub.publish('GROUP_ADDED', { groupEvent: newGroup });
+        await pubsub.publish('GROUP_ADDED', { groupAdded: newGroup });
         return newGroup;
       } else {
         throw new AuthenticationError('Session error: you must be logged in!');
@@ -1193,7 +1193,7 @@ const resolvers = {
         } catch (e) {
           throw new UserInputError(e.message, { invalidArgs: args });
         }
-        await pubsub.publish('GROUP_UPDATED', { groupEvent: group });
+        await pubsub.publish('GROUP_UPDATED', { groupUpdated: group });
         return group;
       } else {
         throw new AuthenticationError('Session error: you must be logged in!');
@@ -1209,7 +1209,7 @@ const resolvers = {
         } catch (e) {
           throw new UserInputError(e.message, { invalidArgs: args });
         }
-        await pubsub.publish('GROUP_REMOVED', { groupEvent: group });
+        await pubsub.publish('GROUP_REMOVED', { groupRemoved: group });
         await pubsub.publish('GROUP_DBE', { majorDBE: true });
         return group;
       } else {
@@ -1228,29 +1228,74 @@ const resolvers = {
     }
   },
   Subscription: {
-    ingredientEvent: {
-      subscribe: () => pubsub.asyncIterator(['INGREDIENT_ADDED', 'INGREDIENT_REMOVED'])
+    ingredientAdded: {
+      subscribe: () => pubsub.asyncIterator('INGREDIENT_ADDED')
     },
-    dishEvent: {
-      subscribe: () => pubsub.asyncIterator(['DISH_ADDED', 'DISH_REMOVED', 'DISH_UPDATED', 'DISH_VOTED'])
+    ingredientRemoved: {
+      subscribe: () => pubsub.asyncIterator('INGREDIENT_REMOVED')
     },
-    methodEvent: {
-      subscribe: () => pubsub.asyncIterator(['METHOD_ADDED', 'METHOD_REMOVED'])
+    ingredientUpdated: {
+      subscribe: () => pubsub.asyncIterator('INGREDIENT_UPDATED')
     },
-    listEventGroup: {
-      subscribe: () => pubsub.asyncIterator(['LIST_ADDED_G', 'LIST_REMOVED_G'])
+    dishAdded: {
+      subscribe: () => pubsub.asyncIterator('DISH_ADDED')
     },
-    listEventPrivate: {
-      subscribe: () => pubsub.asyncIterator(['LIST_ADDED_P', 'LIST_REMOVED_P'])
+    dishVoted: {
+      subscribe: () => pubsub.asyncIterator('DISH_VOTED')
     },
-    taskEvent: {
-      subscribe: () => pubsub.asyncIterator(['TASK_ADDED', 'TASK_REMOVED', 'TASK_UPDATED'])
+    dishUpdated: {
+      subscribe: () => pubsub.asyncIterator('DISH_UPDATED')
     },
-    userEvent: {
-      subscribe: () => pubsub.asyncIterator(['USER_ADDED', 'USER_REMOVED', 'USER_UPDATED'])
+    dishRemoved: {
+      subscribe: () => pubsub.asyncIterator('DISH_REMOVED')
     },
-    groupEvent: {
-      subscribe: () => pubsub.asyncIterator(['GROUP_ADDED', 'GROUP_REMOVED', 'GROUP_UPDATED'])
+    methodAdded: {
+      subscribe: () => pubsub.asyncIterator('METHOD_ADDED')
+    },
+    methodUpdated: {
+      subscribe: () => pubsub.asyncIterator('METHOD_UPDATED')
+    },
+    methodRemoved: {
+      subscribe: () => pubsub.asyncIterator('METHOD_REMOVED')
+    },
+    listAddedGroup: {
+      subscribe: () => pubsub.asyncIterator('LIST_ADDED_G')
+    },
+    listRemovedGroup: {
+      subscribe: () => pubsub.asyncIterator('LIST_REMOVED_G')
+    },
+    listAddedPrivate: {
+      subscribe: () => pubsub.asyncIterator('LIST_ADDED_P')
+    },
+    listRemovedPrivate: {
+      subscribe: () => pubsub.asyncIterator('LIST_REMOVED_P')
+    },
+    taskAdded: {
+      subscribe: () => pubsub.asyncIterator('TASK_ADDED')
+    },
+    taskUpdated: {
+      subscribe: () => pubsub.asyncIterator('TASK_UPDATED')
+    },
+    taskRemoved: {
+      subscribe: () => pubsub.asyncIterator('TASK_REMOVED')
+    },
+    userAdded: {
+      subscribe: () => pubsub.asyncIterator('USER_ADDED')
+    },
+    userUpdated: {
+      subscribe: () => pubsub.asyncIterator('USER_UPDATED')
+    },
+    userRemoved: {
+      subscribe: () => pubsub.asyncIterator('USER_REMOVED')
+    },
+    groupAdded: {
+      subscribe: () => pubsub.asyncIterator('GROUP_ADDED')
+    },
+    groupUpdated: {
+      subscribe: () => pubsub.asyncIterator('GROUP_UPDATED')
+    },
+    groupRemoved: {
+      subscribe: () => pubsub.asyncIterator('GROUP_REMOVED')
     },
     majorDBE: {
       subscribe: () => pubsub.asyncIterator(['GROUP_DBE', 'USER_DBE'])

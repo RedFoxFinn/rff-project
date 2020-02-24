@@ -1,4 +1,4 @@
-if (process.env.NODE_ENV !== 'production' || process.env.NODE_ENV !== 'staging') {
+if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config();
 }
 
