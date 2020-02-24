@@ -3,7 +3,7 @@
 // IMPORTS
 import React, {useState} from 'react';
 import {connect} from 'react-redux';
-import {useApolloClient, useQuery} from '@apollo/react-hooks';
+import {useApolloClient, useQuery, useSubscription} from '@apollo/react-hooks';
 
 import classProvider from '../core/tools/classProvider';
 import '../core/style/global.css';

@@ -45,13 +45,13 @@ const mapStateToProps = (state) => {
 
 const wsLink = new WebSocketLink({
   uri: process.env.NODE_ENV === 'development'
-    ? 'ws://localhost:4000/graphql'
+    ? 'ws://localhost:4010/graphql'
     : process.env.REACT_APP_RFF_WEBSOCKET,
   options: {reconnect: true}
 });
 const httpLink = createHttpLink({
   uri: process.env.NODE_ENV === 'development'
-    ? 'http://localhost:4000/graphql'
+    ? 'http://localhost:4010/graphql'
     : process.env.REACT_APP_RFF_ENDPOINT
 });
 const authLink = setContext((_, {headers}) => {

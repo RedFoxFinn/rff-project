@@ -2,9 +2,9 @@
 import gql from 'graphql-tag';
 import {DISH_DETAILS} from '../fragments/f_dishFragment';
 
-export const DISH_EVENT = gql`
+export const DISH_VOTED = gql`
   subscription {
-    dishEvent {
+    dishVoted {
       ...DishDetails
     }
   }

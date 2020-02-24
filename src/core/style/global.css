@@ -172,14 +172,20 @@ button {
 .tile {
     height: 10em;
     width: 10em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
 }
 .tile:hover {
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
 }
 .tileDescriptionLi {
+    padding: 1em;
     color: var(--darkslategrey);
 }
 .tileDescriptionDa {
+    padding: 1em;
     color: var(--gainsboro);
 }
 .tileLoading {
@@ -190,6 +196,11 @@ button {
 }
 .dashTile {
     height: 3em;
+    width: 10em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
 }
 .dashTile:hover {
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);

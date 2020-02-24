@@ -2,9 +2,9 @@
 import gql from 'graphql-tag';
 import {GROUP_DETAILS} from '../fragments/f_groupFragment';
 
-export const INGREDIENT_EVENT = gql`
+export const GROUP_ADDED = gql`
   subscription {
-    groupEvent {
+    groupAdded {
       ...GroupDetails
     }
   }

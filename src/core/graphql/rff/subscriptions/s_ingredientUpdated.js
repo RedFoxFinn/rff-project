@@ -2,9 +2,9 @@
 import gql from 'graphql-tag';
 import {INGREDIENT_DETAILS} from '../fragments/f_ingredientFragment';
 
-export const INGREDIENT_EVENT = gql`
+export const INGREDIENT_UPDATED = gql`
   subscription {
-    ingredientEvent {
+    ingredientUpdated {
       ...IngredientDetails
     }
   }

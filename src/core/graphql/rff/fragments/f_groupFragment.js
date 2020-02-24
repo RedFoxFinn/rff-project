@@ -1,6 +1,5 @@
 
 import gql from 'graphql-tag';
-import {USER_DETAILS} from './f_userFragment';
 
 export const GROUP_DETAILS = gql`
   fragment GroupDetails on Group {
@@ -8,9 +7,8 @@ export const GROUP_DETAILS = gql`
     active
     removable
     creator {
-      ...UserDetails
+      username
     }
     id
   }
-  ${USER_DETAILS}
 `;
