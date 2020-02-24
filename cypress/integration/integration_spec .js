@@ -61,14 +61,12 @@ describe('Home, Register, Login', () => {
     cy.get('#loginPassword').type(user.altPassword);
     cy.get('#loginButton').click();
     cy.contains('invalid username or password');
-    cy.location('pathname').should('eq','/#/login');
   });
   it('login:success', () => {
     cy.get('#loginUsername').type(user.username);
     cy.get('#loginPassword').type(user.password);
     cy.get('#loginButton').click();
     cy.contains('logged in successfully');
-    cy.location('pathname').should('eq','/#/');
   });
   it('home:logged', () => {
     cy.contains('You have logged in and therefore eligible to use advanced features.');
@@ -134,7 +132,6 @@ describe('Dashboard', () => {
     cy.get('#loginPassword').type(user.password);
     cy.get('#loginButton').click();
     cy.contains('logged in successfully');
-    cy.location('pathname').should('eq','/#/');
     cy.visit('/#/dashboard');
     cy.contains('Available applications:');
     cy.contains('Statistics:');
@@ -162,7 +159,6 @@ describe('Dishy', () => {
     cy.get('#loginPassword').type(user.password);
     cy.get('#loginButton').click();
     cy.contains('logged in successfully');
-    cy.location('pathname').should('eq','/#/');
     cy.visit('/#/dishy');
     cy.contains('Suggested:');
     cy.contains('Dishes:');

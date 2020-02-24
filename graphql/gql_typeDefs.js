@@ -143,14 +143,29 @@ const typeDefs = gql`
     login(username: String!, password: String!): Token!
   }
   type Subscription {
-    ingredientEvent: Ingredient!
-    dishEvent: Dish!
-    methodEvent: CookingMethod!
-    listEventGroup: GroupList!
-    listEventPrivate: PrivateList!
-    taskEvent: Task!
-    userEvent: User!
-    groupEvent: Group!
+    ingredientAdded: Ingredient!
+    ingredientUpdated: Ingredient!
+    ingredientRemoved: Ingredient!
+    dishAdded: Dish!
+    dishVoted: Dish!
+    dishUpdated: Dish!
+    dishRemoved: Dish!
+    methodAdded: CookingMethod!
+    methodUpdated: CookingMethod!
+    methodRemoved: CookingMethod!
+    listAddedGroup: GroupList!
+    listRemovedGroup: GroupList!
+    listAddedPrivate: PrivateList!
+    listRemovedPrivate: PrivateList!
+    taskAdded: Task!
+    taskUpdated: Task!
+    taskRemoved: Task!
+    userAdded: User!
+    userUpdated: User!
+    userRemoved: User!
+    groupAdded: Group!
+    groupUpdated: Group!
+    groupRemoved: Group!
     majorDBE: Boolean!
   }
 `;
