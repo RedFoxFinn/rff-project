@@ -18,6 +18,16 @@ import {ALL_DISHES} from '../core/graphql/rff/queries/q_allDishes';
 import {ADD_METHOD} from '../core/graphql/rff/mutations/m_addMethod';
 import {ADD_INGREDIENT} from '../core/graphql/rff/mutations/m_addIngredient';
 import {ADD_DISH} from '../core/graphql/rff/mutations/m_addDish';
+import {DISH_ADDED} from '../core/graphql/rff/subscriptions/s_dishAdded';
+import {DISH_UPDATED} from '../core/graphql/rff/subscriptions/s_dishUpdated';
+import {DISH_REMOVED} from '../core/graphql/rff/subscriptions/s_dishRemoved';
+import {DISH_VOTED} from '../core/graphql/rff/subscriptions/s_dishVoted';
+import {INGREDIENT_ADDED} from '../core/graphql/rff/subscriptions/s_ingredientAdded';
+import {INGREDIENT_UPDATED} from '../core/graphql/rff/subscriptions/s_ingredientUpdated';
+import {INGREDIENT_REMOVED} from '../core/graphql/rff/subscriptions/s_ingredientRemoved';
+import {METHOD_ADDED} from '../core/graphql/rff/subscriptions/s_methodAdded';
+import {METHOD_UPDATED} from '../core/graphql/rff/subscriptions/s_methodUpdated';
+import {METHOD_REMOVED} from '../core/graphql/rff/subscriptions/s_methodRemoved';
 
 import {handleInfo, handleError} from '../core/store/reducers/AppReducer';
 import {initDish, resetDish, addDishCarb, addDishProtein, addDishSpice,
@@ -46,6 +56,285 @@ const Dishy = (props) => {
   const spiceResults = useQuery(ALL_SPICES);
   const methodResults = useQuery(ALL_METHODS);
   const dishResults = useQuery(ALL_DISHES);
+
+  useSubscription(DISH_ADDED, {
+    onSubscriptionData: ({subscriptionData}) => {
+      const dish = subscriptionData.data.dishAdded;
+      updateCacheWithDish('added', dish);
+    }
+  });
+  useSubscription(DISH_UPDATED, {
+    onSubscriptionData: ({subscriptionData}) => {
+      const dish = subscriptionData.data.dishUpdated;
+      updateCacheWithDish('updated', dish);
+    }
+  });
+  useSubscription(DISH_VOTED, {
+    onSubscriptionData: ({subscriptionData}) => {
+      const dish = subscriptionData.data.dishVoted;
+      updateCacheWithDish('updated', dish);
+    }
+  });
+  useSubscription(DISH_REMOVED, {
+    onSubscriptionData: ({subscriptionData}) => {
+      const dish = subscriptionData.data.dishRemoved;
+      updateCacheWithDish('removed', dish);
+    }
+  });
+  useSubscription(INGREDIENT_ADDED, {
+    onSubscriptionData: ({subscriptionData}) => {
+      const ingredient = subscriptionData.data.ingredientAdded;
+      if (ingredient.type === 'carb') updateCacheWithCarb('added', ingredient);
+      if (ingredient.type === 'protein') updateCacheWithProtein('added', ingredient);
+      if (ingredient.type === 'spice') updateCacheWithSpice('added', ingredient);
+    }
+  });
+  useSubscription(INGREDIENT_UPDATED, {
+    onSubscriptionData: ({subscriptionData}) => {
+      const ingredient = subscriptionData.data.ingredientUpdated;
+      if (ingredient.type === 'carb') updateCacheWithCarb('updated', ingredient);
+      if (ingredient.type === 'protein') updateCacheWithProtein('updated', ingredient);
+      if (ingredient.type === 'spice') updateCacheWithSpice('updated', ingredient);
+    }
+  });
+  useSubscription(INGREDIENT_REMOVED, {
+    onSubscriptionData: ({subscriptionData}) => {
+      const ingredient = subscriptionData.data.ingredientAdded;
+      if (ingredient.type === 'carb') updateCacheWithCarb('removed', ingredient);
+      if (ingredient.type === 'protein') updateCacheWithProtein('removed', ingredient);
+      if (ingredient.type === 'spice') updateCacheWithSpice('removed', ingredient);
+    }
+  });
+  useSubscription(METHOD_ADDED, {
+    onSubscriptionData: ({subscriptionData}) => {
+      const method = subscriptionData.data.methodAdded;
+      updateCacheWithMethod('added', method);
+    }
+  });
+  useSubscription(METHOD_UPDATED, {
+    onSubscriptionData: ({subscriptionData}) => {
+      const method = subscriptionData.data.methodUpdated;
+      updateCacheWithMethod('updated', method);
+    }
+  });
+  useSubscription(METHOD_REMOVED, {
+    onSubscriptionData: ({subscriptionData}) => {
+      const method = subscriptionData.data.methodRemoved;
+      updateCacheWithMethod('removed', method);
+    }
+  });
+
+  // helper functions for subscriptions
+  const updateCacheWithCarb = (eventType, carb) => {
+    const includedIn = (set, object) => set.map(c => c.id).includes(object.id);
+    const dataInStore = client.readQuery({query: ALL_CARBS});
+
+    switch (eventType) {
+    case 'added':
+      if (!includedIn(dataInStore.allCarbs, carb)) {
+        client.writeQuery({
+          query: ALL_CARBS,
+          data: {allCarbs: dataInStore.allCarbs.concat(carb)}
+        });
+        props.handleInfo(`Carb added: ${carb.name}`);
+      }
+      break;
+    case 'updated':
+      if (includedIn(dataInStore.allCarbs, carb)) {
+        client.writeQuery({
+          query: ALL_CARBS,
+          data: {
+            allCarbs: dataInStore.allCarbs.map(c => {
+              return c.id === carb.id ? carb : c;
+            })}
+        });
+        props.handleInfo(`Carb updated: ${carb.name}`);
+      }
+      break;
+    case 'removed':
+      if (includedIn(dataInStore.allCarbs, carb)) {
+        client.writeQuery({
+          query: ALL_CARBS,
+          data: {
+            allCarbs: dataInStore.allCarbs.forEach(c => {
+              if (c.id !== carb.id) return c;
+            })}
+        });
+        props.handleInfo(`Carb removed: ${carb.name}`);
+      }
+      break;
+    default:
+      break;
+    }
+  };
+  const updateCacheWithProtein = (eventType, protein) => {
+    const includedIn = (set, object) => set.map(p => p.id).includes(object.id);
+    const dataInStore = client.readQuery({query: ALL_PROTEINS});
+
+    switch (eventType) {
+    case 'added':
+      if (!includedIn(dataInStore.allProteins, protein)) {
+        client.writeQuery({
+          query: ALL_PROTEINS,
+          data: {allProteins: dataInStore.allProteins.concat(protein)}
+        });
+        props.handleInfo(`Protein added: ${protein.name}`);
+      }
+      break;
+    case 'updated':
+      if (includedIn(dataInStore.allProteins, protein)) {
+        client.writeQuery({
+          query: ALL_PROTEINS,
+          data: {
+            allProteins: dataInStore.allProteins.map(p => {
+              return p.id === protein.id ? protein : p;
+            })}
+        });
+        props.handleInfo(`Protein updated: ${protein.name}`);
+      }
+      break;
+    case 'removed':
+      if (includedIn(dataInStore.allProteins, protein)) {
+        client.writeQuery({
+          query: ALL_PROTEINS,
+          data: {
+            allProteins: dataInStore.allProteins.forEach(p => {
+              if (p.id !== protein.id) return p;
+            })}
+        });
+        props.handleInfo(`Protein removed: ${protein.name}`);
+      }
+      break;
+    default:
+      break;
+    }
+  };
+  const updateCacheWithSpice = (eventType, spice) => {
+    const includedIn = (set, object) => set.map(s => s.id).includes(object.id);
+    const dataInStore = client.readQuery({query: ALL_SPICES});
+
+    switch (eventType) {
+    case 'added':
+      if (!includedIn(dataInStore.allSpices, spice)) {
+        client.writeQuery({
+          query: ALL_SPICES,
+          data: {allSpices: dataInStore.allSpices.concat(spice)}
+        });
+        props.handleInfo(`Spice added: ${spice.name}`);
+      }
+      break;
+    case 'updated':
+      if (includedIn(dataInStore.allSpices, spice)) {
+        client.writeQuery({
+          query: ALL_SPICES,
+          data: {
+            allSpices: dataInStore.allSpices.map(s => {
+              return s.id === spice.id ? spice : s;
+            })}
+        });
+        props.handleInfo(`Spice updated: ${spice.name}`);
+      }
+      break;
+    case 'removed':
+      if (includedIn(dataInStore.allSpices, spice)) {
+        client.writeQuery({
+          query: ALL_SPICES,
+          data: {
+            allSpices: dataInStore.allSpices.forEach(s => {
+              if (s.id !== spice.id) return s;
+            })}
+        });
+        props.handleInfo(`Spice removed: ${spice.name}`);
+      }
+      break;
+    default:
+      break;
+    }
+  };
+  const updateCacheWithMethod = (eventType, method) => {
+    const includedIn = (set, object) => set.map(m => m.id).includes(object.id);
+    const dataInStore = client.readQuery({query: ALL_METHODS});
+
+    switch (eventType) {
+    case 'added':
+      if (!includedIn(dataInStore.allMethods, method)) {
+        client.writeQuery({
+          query: ALL_METHODS,
+          data: {allMethods: dataInStore.allMethods.concat(method)}
+        });
+        props.handleInfo(`Method added: ${method.name}`);
+      }
+      break;
+    case 'updated':
+      if (includedIn(dataInStore.allMethods, method)) {
+        client.writeQuery({
+          query: ALL_METHODS,
+          data: {
+            allMethods: dataInStore.allMethods.map(m => {
+              return m.id === method.id ? method : m;
+            })}
+        });
+        props.handleInfo(`Method updated: ${method.name}`);
+      }
+      break;
+    case 'removed':
+      if (includedIn(dataInStore.allMethods, method)) {
+        client.writeQuery({
+          query: ALL_METHODS,
+          data: {
+            allMethods: dataInStore.allMethods.forEach(m => {
+              if (m.id !== method.id) return m;
+            })}
+        });
+        props.handleInfo(`Method removed: ${method.name}`);
+      }
+      break;
+    default:
+      break;
+    }
+  };
+  const updateCacheWithDish = (eventType, dish) => {
+    const includedIn = (set, object) => set.map(d => d.id).includes(object.id);
+    const dataInStore = client.readQuery({query: ALL_DISHES});
+
+    switch (eventType) {
+    case 'added':
+      if (!includedIn(dataInStore.allDishes, dish)) {
+        client.writeQuery({
+          query: ALL_DISHES,
+          data: {allDishes: dataInStore.allDishes.concat(dish)}
+        });
+        props.handleInfo(`Dish added: ${dish.name}`);
+      }
+      break;
+    case 'updated':
+      if (includedIn(dataInStore.allDishes, dish)) {
+        client.writeQuery({
+          query: ALL_DISHES,
+          data: {
+            allDishes: dataInStore.allDishes.map(d => {
+              return d.id === dish.id ? dish : d;
+            })}
+        });
+        props.handleInfo(`Dish updated: ${dish.name}`);
+      }
+      break;
+    case 'removed':
+      if (includedIn(dataInStore.allDishes, dish)) {
+        client.writeQuery({
+          query: ALL_DISHES,
+          data: {
+            allDishes: dataInStore.allDishes.forEach(d => {
+              if (d.id !== dish.id) return d;
+            })}
+        });
+        props.handleInfo(`Dish removed: ${dish.name}`);
+      }
+      break;
+    default:
+      break;
+    }
+  };
 
   // subcomponent. shown when GraphQL query/mutation property 'loading' is set.
   const Loading = () => {
@@ -334,9 +623,9 @@ const Dishy = (props) => {
         mutation: type === 'method' ? ADD_METHOD : ADD_INGREDIENT,
         variables: variables,
         errorPolicy: 'ignore'
-      }).then(result => {
-        const {data} = result;
-        if (data !== null) {
+      }).then((result) => {
+        const {data, errors} = result;
+        if (data !== null && !errors) {
           props.handleInfo(`New ${type} saved: ${variables.name}`);
           if (type === 'spice') document.getElementById('newSpiceName').value = '';
           if (type === 'carb') document.getElementById('newCarbName').value = '';
@@ -443,7 +732,7 @@ const Dishy = (props) => {
         mutation: ADD_DISH,
         variables: variables,
         errorPolicy: 'ignore'
-      }).then(result => {
+      }).then((result) => {
         const {data} = result;
         if (data !== null) {
           props.handleInfo(`New dish saved: ${variables.name}`);
