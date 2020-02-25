@@ -17,9 +17,7 @@ const MONGODB_URI = () => {
   }
 };
 
-const PORT = process.env.NODE_ENV === 'production'
-  ? process.env.PORT
-  : 4010;
+const PORT = process.env.PORT || 4010;
 const SECRET = process.env.SECRET;
 
 module.exports = {
