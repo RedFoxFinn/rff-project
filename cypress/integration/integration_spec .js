@@ -170,19 +170,43 @@ describe('Dishy', () => {
   });
   it('dishy:additions:carb', () => {
     cy.get('#componentSelectCarb').click();
+    cy.get('#notification').should('exist');
+    cy.get('#newCarbName').should('exist').should('be.visible');
+    cy.get('#saveCarb').should('exist').should('be.visible');
     cy.get('#newCarbName').type(dishComponents.carb.name);
     cy.get('#saveCarb').click();
-    cy.contains(`New carb saved: ${dishComponents.carb.name}`);
     cy.get('#newCarbName').should('be.empty');
+    cy.contains(`New carb saved: ${dishComponents.carb.name}`);
   });
   it('dishy:additions:protein', () => {
     cy.get('#componentSelectProtein').click();
+    cy.get('#notification').should('exist');
+    cy.get('#newProteinName').should('exist').should('be.visible');
+    cy.get('#saveProtein').should('exist').should('be.visible');
     cy.get('#newProteinName').type(dishComponents.protein.name);
     cy.get('#saveProtein').click();
-    cy.contains(`New protein saved: ${dishComponents.protein.name}`);
     cy.get('#newProteinName').should('be.empty');
+    cy.contains(`New protein saved: ${dishComponents.protein.name}`);
   });
-  it('dishy:additions:spice', () => {});
-  it('dishy:additions:method', () => {});
+  it('dishy:additions:spice', () => {
+    cy.get('#componentSelectSpice').click();
+    cy.get('#notification').should('exist');
+    cy.get('#newSpiceName').should('exist').should('be.visible');
+    cy.get('#saveSpice').should('exist').should('be.visible');
+    cy.get('#newSpiceName').type(dishComponents.spice.name);
+    cy.get('#saveSpice').click();
+    cy.get('#newSpiceName').should('be.empty');
+    cy.contains(`New spice saved: ${dishComponents.spice.name}`);
+  });
+  it('dishy:additions:method', () => {
+    cy.get('#componentSelectMethod').click();
+    cy.get('#notification').should('exist');
+    cy.get('#newMethodName').should('exist').should('be.visible');
+    cy.get('#saveMethod').should('exist').should('be.visible');
+    cy.get('#newMethodName').type(dishComponents.method.name);
+    cy.get('#saveMethod').click();
+    cy.get('#newMethodName').should('be.empty');
+    cy.contains(`New method saved: ${dishComponents.method.name}`);
+  });
   it('dishy:additions:dish', () => {});
 });

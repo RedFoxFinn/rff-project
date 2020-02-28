@@ -173,42 +173,94 @@ const findTasks = async (listID) => {
 };
 
 // dish - ingredient usage mappers
-const updateUsage = async (dishID, type, set) => {
-  switch (type) {
-  case 'CARB':
-    await removeUsage('CARB', dishID);
-    for(let c = 0; c < set.length; c++) {
-      const carb = await Ingredient.findById(set[c]);
-      carb.uses = [...carb.uses, dishID];
-      await carb.save();
+const updateUsage = async (dishID, type, actionType, set) => {
+  if (actionType === 'ADD') {
+    switch (type) {
+      case 'CARB':
+        for(let c = 0; c < set.length; c++) {
+          const carb = await Ingredient.findById(set[c]);
+          carb.uses = [...carb.uses, dishID];
+          await carb.save();
+        }
+        break;
+      case 'METHOD':
+        for(let m = 0; m < set.length; m++) {
+          const method = await CookingMethod.findById(set[m]);
+          method.uses = [...method.uses, dishID];
+          await method.save();
+        }
+        break;
+      case 'PROTEIN':
+        for(let p = 0; p < set.length; p++) {
+          const protein = await Ingredient.findById(set[p]);
+          protein.uses = [...protein.uses, dishID];
+          await protein.save();
+        }
+        break;
+      case 'SPICE':
+        for(let s = 0; s < set.length; s++) {
+          const spice = await Ingredient.findById(set[s]);
+          spice.uses = [...spice.uses, dishID];
+          await spice.save();
+        }
+        break;
+      default:
+        break;
     }
-    break;
-  case 'METHOD':
-    await removeUsage('METHOD', dishID);
-    for(let m = 0; m < set.length; m++) {
-      const method = await CookingMethod.findById(set[m]);
-      method.uses = [...method.uses, dishID];
-      await method.save();
+  } else if (actionType === 'REMOVE') {
+    switch (type) {
+      case 'CARB':
+        await removeUsage('CARB', dishID);
+        break;
+      case 'METHOD':
+        await removeUsage('METHOD', dishID);
+        break;
+      case 'PROTEIN':
+        await removeUsage('PROTEIN', dishID);
+        break;
+      case 'SPICE':
+        await removeUsage('SPICE', dishID);
+        break;
+      default:
+        break;
     }
-    break;
-  case 'PROTEIN':
-    await removeUsage('PROTEIN', dishID);
-    for(let p = 0; p < set.length; p++) {
-      const protein = await Ingredient.findById(set[p]);
-      protein.uses = [...protein.uses, dishID];
-      await protein.save();
+  } else {
+    switch (type) {
+      case 'CARB':
+        await removeUsage('CARB', dishID);
+        for(let c = 0; c < set.length; c++) {
+          const carb = await Ingredient.findById(set[c]);
+          carb.uses = [...carb.uses, dishID];
+          await carb.save();
+        }
+        break;
+      case 'METHOD':
+        await removeUsage('METHOD', dishID);
+        for(let m = 0; m < set.length; m++) {
+          const method = await CookingMethod.findById(set[m]);
+          method.uses = [...method.uses, dishID];
+          await method.save();
+        }
+        break;
+      case 'PROTEIN':
+        await removeUsage('PROTEIN', dishID);
+        for(let p = 0; p < set.length; p++) {
+          const protein = await Ingredient.findById(set[p]);
+          protein.uses = [...protein.uses, dishID];
+          await protein.save();
+        }
+        break;
+      case 'SPICE':
+        await removeUsage('SPICE', dishID);
+        for(let s = 0; s < set.length; s++) {
+          const spice = await Ingredient.findById(set[s]);
+          spice.uses = [...spice.uses, dishID];
+          await spice.save();
+        }
+        break;
+      default:
+        break;
     }
-    break;
-  case 'SPICE':
-    await removeUsage('SPICE', dishID);
-    for(let s = 0; s < set.length; s++) {
-      const spice = await Ingredient.findById(set[s]);
-      spice.uses = [...spice.uses, dishID];
-      await spice.save();
-    }
-    break;
-  default:
-    break;
   }
 };
 const removeUsage = async (type, dishID) => {
@@ -677,6 +729,10 @@ const resolvers = {
           throw new UserInputError(e.message, { invalidArgs: args });
         }
         dish = await Dish.findOne({ name: args.name }).populate(dishFields);
+        await updateUsage(dish._id, 'CARB', 'ADD', args.carbs);
+        await updateUsage(dish._id, 'METHOD', 'ADD', args.cookingMethods);
+        await updateUsage(dish._id, 'PROTEIN', 'ADD', args.proteins);
+        await updateUsage(dish._id, 'SPICE', 'ADD', args.spices);
 	    await pubsub.publish('DISH_ADDED', { dishAdded: dish });
         return dish;
       } else {
@@ -700,10 +756,10 @@ const resolvers = {
         } catch (e) {
           throw new UserInputError(e.message, { invalidArgs: args });
         }
-        if (args.carbs) await updateUsage(args.id, 'CARB', args.carbs);
-        if (args.methods) await updateUsage(args.id, 'METHOD', args.methods);
-        if (args.proteins) await updateUsage(args.id, 'PROTEIN', args.proteins);
-        if (args.spices) await updateUsage(args.id, 'SPICE', args.spices);
+        if (args.carbs) await updateUsage(args.id, 'CARB', 'UPDATE', args.carbs);
+        if (args.methods) await updateUsage(args.id, 'METHOD', 'UPDATE', args.methods);
+        if (args.proteins) await updateUsage(args.id, 'PROTEIN', 'UPDATE', args.proteins);
+        if (args.spices) await updateUsage(args.id, 'SPICE', 'UPDATE', args.spices);
         dish = await Dish.findOne({ _id: args.id }).populate(dishFields);
         await pubsub.publish('DISH_UPDATED', { dishUpdated: dish });
         return dish;
@@ -1081,7 +1137,7 @@ const resolvers = {
           } catch (e) {
             throw new UserInputError(e.message, { invalidArgs: args });
           }
-          await pubsub.publish('USER_REMOVED', { userEvent: userToRemove });
+          await pubsub.publish('USER_REMOVED', { userRemoved: userToRemove });
           await pubsub.publish('USER_DBE', { majorDBE: true });
           return userToRemove;
         }
