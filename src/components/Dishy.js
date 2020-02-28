@@ -58,6 +58,7 @@ const Dishy = (props) => {
   const dishResults = useQuery(ALL_DISHES);
 
   useSubscription(DISH_ADDED, {
+    fetchPolicy: '',
     onSubscriptionData: ({subscriptionData}) => {
       const dish = subscriptionData.data.dishAdded;
       updateCacheWithDish('added', dish);
@@ -84,25 +85,55 @@ const Dishy = (props) => {
   useSubscription(INGREDIENT_ADDED, {
     onSubscriptionData: ({subscriptionData}) => {
       const ingredient = subscriptionData.data.ingredientAdded;
-      if (ingredient.type === 'carb') updateCacheWithCarb('added', ingredient);
-      if (ingredient.type === 'protein') updateCacheWithProtein('added', ingredient);
-      if (ingredient.type === 'spice') updateCacheWithSpice('added', ingredient);
+      switch (ingredient.type) {
+      case 'carb':
+        updateCacheWithCarb('added', ingredient);
+        break;
+      case 'protein':
+        updateCacheWithProtein('added', ingredient);
+        break;
+      case 'spice':
+        updateCacheWithSpice('added', ingredient);
+        break;
+      default:
+        break;
+      }
     }
   });
   useSubscription(INGREDIENT_UPDATED, {
     onSubscriptionData: ({subscriptionData}) => {
       const ingredient = subscriptionData.data.ingredientUpdated;
-      if (ingredient.type === 'carb') updateCacheWithCarb('updated', ingredient);
-      if (ingredient.type === 'protein') updateCacheWithProtein('updated', ingredient);
-      if (ingredient.type === 'spice') updateCacheWithSpice('updated', ingredient);
+      switch (ingredient.type) {
+      case 'carb':
+        updateCacheWithCarb('updated', ingredient);
+        break;
+      case 'protein':
+        updateCacheWithProtein('updated', ingredient);
+        break;
+      case 'spice':
+        updateCacheWithSpice('updated', ingredient);
+        break;
+      default:
+        break;
+      }
     }
   });
   useSubscription(INGREDIENT_REMOVED, {
     onSubscriptionData: ({subscriptionData}) => {
       const ingredient = subscriptionData.data.ingredientAdded;
-      if (ingredient.type === 'carb') updateCacheWithCarb('removed', ingredient);
-      if (ingredient.type === 'protein') updateCacheWithProtein('removed', ingredient);
-      if (ingredient.type === 'spice') updateCacheWithSpice('removed', ingredient);
+      switch (ingredient.type) {
+      case 'carb':
+        updateCacheWithCarb('removed', ingredient);
+        break;
+      case 'protein':
+        updateCacheWithProtein('removed', ingredient);
+        break;
+      case 'spice':
+        updateCacheWithSpice('removed', ingredient);
+        break;
+      default:
+        break;
+      }
     }
   });
   useSubscription(METHOD_ADDED, {
@@ -585,32 +616,33 @@ const Dishy = (props) => {
   // helper function. handles new dish component submission.
   // checks the type of submission and sets variables accordingly.
   const handleNewComponent = async (type) => {
+    const token = await localStorage.getItem('rffUserToken').substring(7);
     let variables;
     switch (type) {
     case 'carb':
       variables = {
-        token: localStorage.getItem('rffUserToken').substring(7),
+        token: token,
         type: type,
         name: document.getElementById('newCarbName').value
       };
       break;
     case 'protein':
       variables = {
-        token: localStorage.getItem('rffUserToken').substring(7),
+        token: token,
         type: type,
         name: document.getElementById('newProteinName').value
       };
       break;
     case 'spice':
       variables = {
-        token: localStorage.getItem('rffUserToken').substring(7),
+        token: token,
         type: type,
         name: document.getElementById('newSpiceName').value
       };
       break;
     case 'method':
       variables = {
-        token: localStorage.getItem('rffUserToken').substring(7),
+        token: token,
         name: document.getElementById('newMethodName').value
       };
       break;
@@ -618,23 +650,41 @@ const Dishy = (props) => {
       variables = null;
       break;
     }
-    variables !== null && variables.token &&
+    if (variables !== null && variables.token) {
       await client.mutate({
         mutation: type === 'method' ? ADD_METHOD : ADD_INGREDIENT,
         variables: variables,
         errorPolicy: 'ignore'
-      }).then((result) => {
-        const {data, errors} = result;
-        if (data !== null && !errors) {
-          props.handleInfo(`New ${type} saved: ${variables.name}`);
-          if (type === 'spice') document.getElementById('newSpiceName').value = '';
-          if (type === 'carb') document.getElementById('newCarbName').value = '';
-          if (type === 'protein') document.getElementById('newProteinName').value = '';
-          if (type === 'method') document.getElementById('newMethodName').value = '';
+      }).then(async (result) => {
+        const {data} = result;
+        if (data !== null) {
+          switch (type) {
+          case 'carb':
+            await updateCacheWithCarb('added', data.addIngredient);
+            props.handleInfo(`New ${type} saved: ${data.addIngredient.name}`);
+            break;
+          case 'protein':
+            await updateCacheWithProtein('added', data.addIngredient);
+            props.handleInfo(`New ${type} saved: ${data.addIngredient.name}`);
+            break;
+          case 'spice':
+            await updateCacheWithSpice('added', data.addIngredient);
+            props.handleInfo(`New ${type} saved: ${data.addIngredient.name}`);
+            break;
+          case 'method':
+            await updateCacheWithMethod('added', data.addMethod);
+            props.handleInfo(`New ${type} saved: ${data.addMethod.name}`);
+            break;
+          default:
+            variables = null;
+            break;
+          }
         } else {
           props.handleError(`Error occurred with ${type}: cannot add ${variables.name}`);
         }
-      });
+      }
+      );
+    }
   };
 
   // subcomponent. renders form for new dish component submission.
@@ -663,15 +713,21 @@ const Dishy = (props) => {
                 ? classProvider(props.theme, 'selected')
                 : classProvider(props.theme, 'selector')}>method</button>
           </div>
-          {selection === 'carb' && <NewCarb/>}
-          {selection === 'method' && <NewMethod/>}
-          {selection === 'protein' && <NewProtein/>}
-          {selection === 'spice' && <NewSpice/>}
+          <DishComponentForm selection={selection}/>
         </div>
       </div>
     );
   };
 
+  const DishComponentForm = ({selection}) => {
+    switch (selection) {
+    case 'carb': return <NewCarb/>;
+    case 'method': return <NewMethod/>;
+    case 'protein': return <NewProtein/>;
+    case 'spice': return <NewSpice/>;
+    default: return null;
+    }
+  };
   // subcomponent. renders form for new spice submission.
   const NewSpice = () => {
     return (
@@ -719,8 +775,9 @@ const Dishy = (props) => {
   const handleNewDish = async () => {
     const {newDishMethods, newDishProteins, newDishCarbs, newDishSpices, newDish} = props.dishyState;
     if (newDish) {
+      const token = await localStorage.getItem('rffUserToken').substring(7);
       const variables = {
-        token: localStorage.getItem('rffUserToken').substring(7),
+        token: token(),
         name: document.getElementById('newDishName').value,
         note: document.getElementById('newDishNote').value,
         cookingMethods: newDishMethods.map(m => m.id),
@@ -728,19 +785,21 @@ const Dishy = (props) => {
         carbs: newDishCarbs.map(c => c.id),
         spices: newDishSpices.map(s => s.id)
       };
-      variables.token && await client.mutate({
-        mutation: ADD_DISH,
-        variables: variables,
-        errorPolicy: 'ignore'
-      }).then((result) => {
-        const {data} = result;
-        if (data !== null) {
-          props.handleInfo(`New dish saved: ${variables.name}`);
-          resetDishForm();
-        } else {
-          props.handleError(`Error occurred with dish: cannot add ${variables.name}`);
-        }
-      });
+      if (variables.token) {
+        await client.mutate({
+          mutation: ADD_DISH,
+          variables: variables,
+          errorPolicy: 'ignore'
+        }).then(async (result) => {
+          const {data} = result;
+          if (data !== null) {
+            await resetDishForm();
+            props.handleInfo(`New dish saved: ${variables.name}`);
+          } else {
+            props.handleError(`Error occurred with dish: cannot add ${variables.name}`);
+          }
+        });
+      }
     }
   };
 

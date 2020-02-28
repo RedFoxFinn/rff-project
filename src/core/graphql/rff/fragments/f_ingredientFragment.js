@@ -1,6 +1,5 @@
 
 import gql from 'graphql-tag';
-import {USER_DETAILS} from './f_userFragment';
 
 export const INGREDIENT_DETAILS = gql`
   fragment IngredientDetails on Ingredient {
@@ -9,8 +8,7 @@ export const INGREDIENT_DETAILS = gql`
     uses
     id
     addedBy {
-        ...UserDetails
+      username
     }
   }
-  ${USER_DETAILS}
 `;
