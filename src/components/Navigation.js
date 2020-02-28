@@ -119,19 +119,19 @@ const Navigation = (props) => {
     if (notification && notification.type === 'info') {
       return (
         <div className='commonElements'>
-          <h4 className={classProvider(theme, 'notificationInfo')}>{notification.message}</h4>
+          <h4 id='notification' className={classProvider(theme, 'notificationInfo')}>{notification.message}</h4>
         </div>
       );
     } else if (notification && notification.type === 'error') {
       return (
         <div className='commonElements'>
-          <h4 className={classProvider(theme, 'notificationError')}>{notification.message}</h4>
+          <h4 id='notification' className={classProvider(theme, 'notificationError')}>{notification.message}</h4>
         </div>
       );
     } else {
       return (
         <div className='commonElements'>
-          <h4 className={classProvider(theme, 'notificationNull')}>{' '}</h4>
+          <h4 id='notification' className={classProvider(theme, 'notificationNull')}>{' '}</h4>
         </div>
       );
     }
