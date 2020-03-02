@@ -167,46 +167,51 @@ describe('Dishy', () => {
     cy.contains('Spices:');
     cy.contains('Cooking methods:');
     cy.contains('Add new...');
+    cy.wait(1000);
   });
   it('dishy:additions:carb', () => {
     cy.get('#componentSelectCarb').click();
     cy.get('#notification').should('exist');
-    cy.get('#newCarbName').should('exist').should('be.visible');
+    cy.get('#newCarbName').should('exist').should('be.visible').should('not.be.disabled');
     cy.get('#saveCarb').should('exist').should('be.visible');
     cy.get('#newCarbName').type(dishComponents.carb.name);
-    cy.get('#saveCarb').click();
-    cy.get('#newCarbName').should('be.empty');
-    cy.contains(`New carb saved: ${dishComponents.carb.name}`);
+    cy.get('#saveCarb').click().then(() => {
+      cy.get('#newCarbName').should('be.empty');
+      cy.contains(`Carb added: ${dishComponents.carb.name}`);
+    });
   });
   it('dishy:additions:protein', () => {
     cy.get('#componentSelectProtein').click();
     cy.get('#notification').should('exist');
-    cy.get('#newProteinName').should('exist').should('be.visible');
+    cy.get('#newProteinName').should('exist').should('be.visible').should('not.be.disabled');
     cy.get('#saveProtein').should('exist').should('be.visible');
     cy.get('#newProteinName').type(dishComponents.protein.name);
-    cy.get('#saveProtein').click();
-    cy.get('#newProteinName').should('be.empty');
-    cy.contains(`New protein saved: ${dishComponents.protein.name}`);
+    cy.get('#saveProtein').click().then(() => {
+      cy.get('#newProteinName').should('be.empty');
+      cy.contains(`Protein added: ${dishComponents.protein.name}`);
+    });
   });
   it('dishy:additions:spice', () => {
     cy.get('#componentSelectSpice').click();
     cy.get('#notification').should('exist');
-    cy.get('#newSpiceName').should('exist').should('be.visible');
+    cy.get('#newSpiceName').should('exist').should('be.visible').should('not.be.disabled');
     cy.get('#saveSpice').should('exist').should('be.visible');
     cy.get('#newSpiceName').type(dishComponents.spice.name);
-    cy.get('#saveSpice').click();
-    cy.get('#newSpiceName').should('be.empty');
-    cy.contains(`New spice saved: ${dishComponents.spice.name}`);
+    cy.get('#saveSpice').click().then(() => {
+      cy.get('#newSpiceName').should('be.empty');
+      cy.contains(`Spice added: ${dishComponents.spice.name}`);
+    });
   });
   it('dishy:additions:method', () => {
     cy.get('#componentSelectMethod').click();
     cy.get('#notification').should('exist');
-    cy.get('#newMethodName').should('exist').should('be.visible');
+    cy.get('#newMethodName').should('exist').should('be.visible').should('not.be.disabled');
     cy.get('#saveMethod').should('exist').should('be.visible');
     cy.get('#newMethodName').type(dishComponents.method.name);
-    cy.get('#saveMethod').click();
-    cy.get('#newMethodName').should('be.empty');
-    cy.contains(`New method saved: ${dishComponents.method.name}`);
+    cy.get('#saveMethod').click().then(() => {
+      cy.get('#newMethodName').should('be.empty');
+      cy.contains(`Method added: ${dishComponents.method.name}`);
+    });
   });
   it('dishy:additions:dish', () => {});
 });
