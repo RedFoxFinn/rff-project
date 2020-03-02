@@ -1,3 +1,9 @@
+// RFF demo project
+// App.js
+// webapp file - provides Redux store and Apollo clients for application components
+// creates client side routing for webapp with React Router
+// creates base structure for app layout
+
 import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
 import {HashRouter as Router, Redirect, Route, Switch} from 'react-router-dom';

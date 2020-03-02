@@ -1,3 +1,7 @@
+// RFF demo project
+// MethodCount.js
+// React component that renders method counter based on available cooking method information
+
 import React from 'react';
 import {connect} from 'react-redux';
 import {useQuery} from '@apollo/react-hooks';
@@ -18,18 +22,18 @@ const MethodCount = (props) => {
   const Count = () => {
     if (!loading) {
       if (!error) {
-        return <p className={classProvider(props.appState.theme, 'tileDescription')}>
-          <strong>{data.methodCount}</strong> cooking methods available
-        </p>;
+        return data.methodCount === 1
+          ? <p className={classProvider(props.appState.theme, 'tileDescription')}>
+            <strong>{data.methodCount}</strong> cooking method available</p>
+          : <p className={classProvider(props.appState.theme, 'tileDescription')}>
+            <strong>{data.methodCount}</strong> cooking methods available</p>;
       } else {
         return <p className={classProvider(props.appState.theme, 'tileError')}>
-          error occurred while loading cooking method count
-        </p>;
+          error occurred while loading cooking method count</p>;
       }
     }
     return <p className={classProvider(props.appState.theme, 'tileLoading')}>
-      loading cooking method count
-    </p>;
+      loading cooking method count</p>;
   };
 
   return(

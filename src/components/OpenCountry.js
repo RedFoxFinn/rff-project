@@ -1,3 +1,7 @@
+// RFF demo project
+// OpenCountry.js
+// React component that renders country data -section of the webapp
+
 import React, {} from 'react';
 import {connect} from 'react-redux';
 import {Icon, InlineIcon} from '@iconify/react';

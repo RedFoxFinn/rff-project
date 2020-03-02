@@ -1,3 +1,7 @@
+// RFF demo project
+// UserCount.js
+// React component that renders user counter based on available information
+
 import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
 
@@ -31,9 +35,9 @@ const UserCount = (props) => {
           <p className={classProvider(props.appState.theme, 'tileError')}>error occurred while loading data</p>
         );
       } else if (userCount.data) {
-        return (
-          <p className={classProvider(props.appState.theme, 'tileDescription')}>application has <strong>{userCount.data.userCount}</strong> users</p>
-        );
+        return userCount.data.userCount === 1
+          ? <p className={classProvider(props.appState.theme, 'tileDescription')}>application has <strong>{userCount.data.userCount}</strong> user</p>
+          : <p className={classProvider(props.appState.theme, 'tileDescription')}>application has <strong>{userCount.data.userCount}</strong> users</p>;
       }
     } else {
       return null;

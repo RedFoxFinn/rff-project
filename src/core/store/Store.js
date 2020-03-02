@@ -1,3 +1,7 @@
+// RFF demo project
+// Store.js
+// creates Redux global state for application
+
 import {combineReducers, createStore, applyMiddleware} from 'redux';
 import thunk from 'redux-thunk';
 import {composeWithDevTools} from 'redux-devtools-extension';

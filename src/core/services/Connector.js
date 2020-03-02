@@ -1,4 +1,6 @@
-
+// RFF demo project
+// Connector.js
+// provides REST via Axios for application to use
 
 import axios from 'axios';
 

@@ -1,3 +1,7 @@
+// RFF demo project
+// classProvider.js
+// provides predefined CSS-classes for application to use based on selected theme
+
 const classProvider = (theme, element) => {
   if (theme === 'dark') {
     switch(element) {

@@ -1,3 +1,7 @@
+// RFF demo project
+// RegistrationPage.js
+// React component that renders registration page of the webapp
+
 import React from 'react';
 import {connect} from 'react-redux';
 

@@ -1,3 +1,7 @@
+// RFF demo project
+// CountryCount.js
+// React component that renders country counter based on available country information
+
 import React from 'react';
 import {connect} from 'react-redux';
 
@@ -16,8 +20,7 @@ const CountryCount = (props) => {
   const Count = () => {
     return (
       <p className={classProvider(props.theme, 'tileDescription')}>
-        <strong>{props.countries.length}</strong> countries information available
-      </p>
+        <strong>{props.countries.length}</strong> countries information available</p>
     );
   };
 

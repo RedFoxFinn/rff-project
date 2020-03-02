@@ -1,4 +1,6 @@
-
+// RFF demo project
+// CountryReducer.js
+// creates reducer to Redux global state for application to use - OpenCountry
 
 const initialState = {
   countries: [],

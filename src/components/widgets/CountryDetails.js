@@ -1,4 +1,6 @@
-
+// RFF demo project
+// CountryDetails.js
+// React component that renders available information of the countries
 
 import React from 'react';
 import {Flag, Image} from 'semantic-ui-react';

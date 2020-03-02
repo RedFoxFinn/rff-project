@@ -1,3 +1,7 @@
+// RFF demo project
+// AdminTools.js
+// React component that renders webapp administrative tools
+
 import React from 'react';
 import {connect} from 'react-redux';
 

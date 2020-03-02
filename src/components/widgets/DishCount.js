@@ -1,3 +1,7 @@
+// RFF demo project
+// DishCount.js
+// React component that renders dish counter based on available dish information
+
 import React from 'react';
 import {connect} from 'react-redux';
 import {useQuery} from '@apollo/react-hooks';
@@ -18,13 +22,14 @@ const DishCount = (props) => {
   const Count = () => {
     if (!loading) {
       if (!error) {
-        return <p className={classProvider(props.appState.theme, 'tileDescription')}>
-          <strong>{data.dishCount}</strong> dishes available
-        </p>;
+        return data.dishCount === 1
+          ? <p className={classProvider(props.appState.theme, 'tileDescription')}>
+            <strong>{data.dishCount}</strong> dish available</p>
+          : <p className={classProvider(props.appState.theme, 'tileDescription')}>
+            <strong>{data.dishCount}</strong> dishes available</p>;
       } else {
         return <p className={classProvider(props.appState.theme, 'tileError')}>
-          error occurred while loading dish count
-        </p>;
+          error occurred while loading dish count</p>;
       }
     }
     return <p className={classProvider(props.appState.theme, 'tileLoading')}>loading dish count</p>;

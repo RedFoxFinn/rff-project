@@ -1,3 +1,6 @@
+// RFF demo project
+// DishyReducer.js
+// creates reducer to Redux global state for application to use - dishy
 
 const initialState = {
   carbSearch: '',

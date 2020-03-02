@@ -1,4 +1,6 @@
-
+// RFF demo project
+// RegReducer.js
+// creates reducer to Redux global state for application to use - registration
 
 const initialState = {
   newUserName: '',

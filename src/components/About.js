@@ -1,3 +1,7 @@
+// RFF demo project
+// About.js
+// React component that renders information related to webapp
+
 import React from 'react';
 import {connect} from 'react-redux';
 

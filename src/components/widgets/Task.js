@@ -1,3 +1,6 @@
+// RFF demo project
+// Task.js
+// React component that renders task of the tasker-section of the webapp
 
 import React, {} from 'react';
 import {connect} from 'react-redux';
@@ -13,6 +16,8 @@ const mapStateToProps = (state) => {
 };
 
 const Task = (props) => {
+  const handlePriority = () => {};
+
   if (!props.status) {
     return (
       <div className='taskContainer'>

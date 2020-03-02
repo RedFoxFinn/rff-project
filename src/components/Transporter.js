@@ -1,3 +1,7 @@
+// RFF demo project
+// Transporter.js
+// React component that renders public transport information -section of the webapp
+
 import React from 'react';
 import {connect} from 'react-redux';
 

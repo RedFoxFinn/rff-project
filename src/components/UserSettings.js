@@ -1,3 +1,7 @@
+// RFF demo project
+// UserSettings.js
+// React component that renders user settings -section of the webapp
+
 import React from 'react';
 import {connect} from 'react-redux';
 
@@ -46,11 +50,11 @@ const UserPage = (props) => {
   const UserData = () => {
     return (
       <>
-        <p className={classProvider(props.theme, 'description')}>User: <strong>{props.user.username}</strong></p>
-        <p className={classProvider(props.theme, 'description')}>Role: <strong>{props.user.role}</strong></p>
-        <p className={classProvider(props.theme, 'description')}>Active: <strong>{props.user.active ? 'true' : 'false'}</strong></p>
-        <p className={classProvider(props.theme, 'description')}>Removable: <strong>{props.user.removable ? 'true' : 'false'}</strong></p>
-        <p className={classProvider(props.theme, 'description')}>ID: <strong>{props.user.id}</strong></p>
+        <p className={classProvider(props.theme, 'description')}>User: <strong>{props.user.getUsername()}</strong></p>
+        <p className={classProvider(props.theme, 'description')}>Role: <strong>{props.user.getRole()}</strong></p>
+        <p className={classProvider(props.theme, 'description')}>Active: <strong>{props.user.getActive() ? 'true' : 'false'}</strong></p>
+        <p className={classProvider(props.theme, 'description')}>Removable: <strong>{props.user.getRemovable() ? 'true' : 'false'}</strong></p>
+        <p className={classProvider(props.theme, 'description')}>ID: <strong>{props.user.getId()}</strong></p>
       </>
     );
   };

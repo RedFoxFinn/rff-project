@@ -1,4 +1,6 @@
-
+// RFF demo project
+// Country.js
+// creates Country-class for application to use - OpenCountry
 
 import PropTypes from 'prop-types';
 

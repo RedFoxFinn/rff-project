@@ -1,4 +1,6 @@
-// Dishy.js | application on demosite.
+// RFF demo project
+// Dishy.js
+// React component that renders dish suggestion-section of the webapp
 
 // IMPORTS
 import React, {useState} from 'react';
@@ -156,14 +158,14 @@ const Dishy = (props) => {
   });
 
   // helper functions for subscriptions
-  const updateCacheWithCarb = (eventType, carb) => {
+  const updateCacheWithCarb = async (eventType, carb) => {
     const includedIn = (set, object) => set.map(c => c.id).includes(object.id);
-    const dataInStore = client.readQuery({query: ALL_CARBS});
+    const dataInStore = await client.readQuery({query: ALL_CARBS});
 
     switch (eventType) {
     case 'added':
       if (!includedIn(dataInStore.allCarbs, carb)) {
-        client.writeQuery({
+        await client.writeQuery({
           query: ALL_CARBS,
           data: {allCarbs: dataInStore.allCarbs.concat(carb)}
         });
@@ -172,7 +174,7 @@ const Dishy = (props) => {
       break;
     case 'updated':
       if (includedIn(dataInStore.allCarbs, carb)) {
-        client.writeQuery({
+        await client.writeQuery({
           query: ALL_CARBS,
           data: {
             allCarbs: dataInStore.allCarbs.map(c => {
@@ -184,7 +186,7 @@ const Dishy = (props) => {
       break;
     case 'removed':
       if (includedIn(dataInStore.allCarbs, carb)) {
-        client.writeQuery({
+        await client.writeQuery({
           query: ALL_CARBS,
           data: {
             allCarbs: dataInStore.allCarbs.forEach(c => {
@@ -198,14 +200,14 @@ const Dishy = (props) => {
       break;
     }
   };
-  const updateCacheWithProtein = (eventType, protein) => {
+  const updateCacheWithProtein = async (eventType, protein) => {
     const includedIn = (set, object) => set.map(p => p.id).includes(object.id);
-    const dataInStore = client.readQuery({query: ALL_PROTEINS});
+    const dataInStore = await client.readQuery({query: ALL_PROTEINS});
 
     switch (eventType) {
     case 'added':
       if (!includedIn(dataInStore.allProteins, protein)) {
-        client.writeQuery({
+        await client.writeQuery({
           query: ALL_PROTEINS,
           data: {allProteins: dataInStore.allProteins.concat(protein)}
         });
@@ -214,7 +216,7 @@ const Dishy = (props) => {
       break;
     case 'updated':
       if (includedIn(dataInStore.allProteins, protein)) {
-        client.writeQuery({
+        await client.writeQuery({
           query: ALL_PROTEINS,
           data: {
             allProteins: dataInStore.allProteins.map(p => {
@@ -226,7 +228,7 @@ const Dishy = (props) => {
       break;
     case 'removed':
       if (includedIn(dataInStore.allProteins, protein)) {
-        client.writeQuery({
+        await client.writeQuery({
           query: ALL_PROTEINS,
           data: {
             allProteins: dataInStore.allProteins.forEach(p => {
@@ -240,14 +242,14 @@ const Dishy = (props) => {
       break;
     }
   };
-  const updateCacheWithSpice = (eventType, spice) => {
+  const updateCacheWithSpice = async (eventType, spice) => {
     const includedIn = (set, object) => set.map(s => s.id).includes(object.id);
-    const dataInStore = client.readQuery({query: ALL_SPICES});
+    const dataInStore = await client.readQuery({query: ALL_SPICES});
 
     switch (eventType) {
     case 'added':
       if (!includedIn(dataInStore.allSpices, spice)) {
-        client.writeQuery({
+        await client.writeQuery({
           query: ALL_SPICES,
           data: {allSpices: dataInStore.allSpices.concat(spice)}
         });
@@ -256,7 +258,7 @@ const Dishy = (props) => {
       break;
     case 'updated':
       if (includedIn(dataInStore.allSpices, spice)) {
-        client.writeQuery({
+        await client.writeQuery({
           query: ALL_SPICES,
           data: {
             allSpices: dataInStore.allSpices.map(s => {
@@ -268,7 +270,7 @@ const Dishy = (props) => {
       break;
     case 'removed':
       if (includedIn(dataInStore.allSpices, spice)) {
-        client.writeQuery({
+        await client.writeQuery({
           query: ALL_SPICES,
           data: {
             allSpices: dataInStore.allSpices.forEach(s => {
@@ -282,14 +284,14 @@ const Dishy = (props) => {
       break;
     }
   };
-  const updateCacheWithMethod = (eventType, method) => {
+  const updateCacheWithMethod = async (eventType, method) => {
     const includedIn = (set, object) => set.map(m => m.id).includes(object.id);
-    const dataInStore = client.readQuery({query: ALL_METHODS});
+    const dataInStore = await client.readQuery({query: ALL_METHODS});
 
     switch (eventType) {
     case 'added':
       if (!includedIn(dataInStore.allMethods, method)) {
-        client.writeQuery({
+        await client.writeQuery({
           query: ALL_METHODS,
           data: {allMethods: dataInStore.allMethods.concat(method)}
         });
@@ -298,7 +300,7 @@ const Dishy = (props) => {
       break;
     case 'updated':
       if (includedIn(dataInStore.allMethods, method)) {
-        client.writeQuery({
+        await client.writeQuery({
           query: ALL_METHODS,
           data: {
             allMethods: dataInStore.allMethods.map(m => {
@@ -310,7 +312,7 @@ const Dishy = (props) => {
       break;
     case 'removed':
       if (includedIn(dataInStore.allMethods, method)) {
-        client.writeQuery({
+        await client.writeQuery({
           query: ALL_METHODS,
           data: {
             allMethods: dataInStore.allMethods.forEach(m => {
@@ -324,14 +326,14 @@ const Dishy = (props) => {
       break;
     }
   };
-  const updateCacheWithDish = (eventType, dish) => {
+  const updateCacheWithDish = async (eventType, dish) => {
     const includedIn = (set, object) => set.map(d => d.id).includes(object.id);
-    const dataInStore = client.readQuery({query: ALL_DISHES});
+    const dataInStore = await client.readQuery({query: ALL_DISHES});
 
     switch (eventType) {
     case 'added':
       if (!includedIn(dataInStore.allDishes, dish)) {
-        client.writeQuery({
+        await client.writeQuery({
           query: ALL_DISHES,
           data: {allDishes: dataInStore.allDishes.concat(dish)}
         });
@@ -340,7 +342,7 @@ const Dishy = (props) => {
       break;
     case 'updated':
       if (includedIn(dataInStore.allDishes, dish)) {
-        client.writeQuery({
+        await client.writeQuery({
           query: ALL_DISHES,
           data: {
             allDishes: dataInStore.allDishes.map(d => {
@@ -352,7 +354,7 @@ const Dishy = (props) => {
       break;
     case 'removed':
       if (includedIn(dataInStore.allDishes, dish)) {
-        client.writeQuery({
+        await client.writeQuery({
           query: ALL_DISHES,
           data: {
             allDishes: dataInStore.allDishes.forEach(d => {
@@ -655,25 +657,21 @@ const Dishy = (props) => {
         mutation: type === 'method' ? ADD_METHOD : ADD_INGREDIENT,
         variables: variables,
         errorPolicy: 'ignore'
-      }).then(async (result) => {
+      }).then((result) => {
         const {data} = result;
         if (data !== null) {
           switch (type) {
           case 'carb':
-            await updateCacheWithCarb('added', data.addIngredient);
-            props.handleInfo(`New ${type} saved: ${data.addIngredient.name}`);
+            updateCacheWithCarb('added', data.addIngredient);
             break;
           case 'protein':
-            await updateCacheWithProtein('added', data.addIngredient);
-            props.handleInfo(`New ${type} saved: ${data.addIngredient.name}`);
+            updateCacheWithProtein('added', data.addIngredient);
             break;
           case 'spice':
-            await updateCacheWithSpice('added', data.addIngredient);
-            props.handleInfo(`New ${type} saved: ${data.addIngredient.name}`);
+            updateCacheWithSpice('added', data.addIngredient);
             break;
           case 'method':
-            await updateCacheWithMethod('added', data.addMethod);
-            props.handleInfo(`New ${type} saved: ${data.addMethod.name}`);
+            updateCacheWithMethod('added', data.addMethod);
             break;
           default:
             variables = null;
@@ -790,10 +788,10 @@ const Dishy = (props) => {
           mutation: ADD_DISH,
           variables: variables,
           errorPolicy: 'ignore'
-        }).then(async (result) => {
+        }).then((result) => {
           const {data} = result;
           if (data !== null) {
-            await resetDishForm();
+            resetDishForm();
             props.handleInfo(`New dish saved: ${variables.name}`);
           } else {
             props.handleError(`Error occurred with dish: cannot add ${variables.name}`);

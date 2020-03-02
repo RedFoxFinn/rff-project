@@ -1,3 +1,7 @@
+// RFF demo project
+// Navigation.js
+// React component that renders navigation-section of the webapp
+
 import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
@@ -95,7 +99,7 @@ const Navigation = (props) => {
       return (
         <div className={classProvider(theme, 'navMenu')}>
           <button type='button' className={classProvider(theme, 'navButton')}>
-            {props.loginState.user !== null ? props.loginState.user.username : null}
+            {props.loginState.user !== null ? props.loginState.user.getUsername() : null}
           </button>
           <div className={classProvider(theme, 'navContent')}>
             <Link to='/user' onClick={() => props.switchApp('UserSettings')}>settings</Link>

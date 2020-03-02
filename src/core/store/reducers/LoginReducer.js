@@ -1,4 +1,8 @@
+// RFF demo project
+// LoginReducer.js
+// creates reducer to Redux global state for application to use - login
 
+import User from '../../classes/User';
 
 const initialState = {
   user: null
@@ -7,7 +11,7 @@ const initialState = {
 const LoginReducer = (state = initialState, action) => {
   switch (action.type) {
   case 'loginSuccess':
-    return {...state, user: action.user};
+    return {...state, user: new User(action.user)};
   case 'loginFailure':
     return {...state};
   case 'logout':

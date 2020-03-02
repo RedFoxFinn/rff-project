@@ -1,3 +1,7 @@
+// RFF demo project
+// ListCount.js
+// React component that renders list counter based on available task list information
+
 import React from 'react';
 import {connect} from 'react-redux';
 
@@ -30,8 +34,11 @@ const ListCount = (props) => {
         return <p className={classProvider(props.appState.theme, 'tileError')}>error occurred while loading task list
           count</p>;
       } else if (data) {
-        return <p className={classProvider(props.appState.theme, 'tileDescription')}>
-          <strong>{data.listCount}</strong> task lists accessible</p>;
+        return data.listCount === 1
+          ? <p className={classProvider(props.appState.theme, 'tileDescription')}>
+            <strong>{data.listCount}</strong> task list accessible</p>
+          : <p className={classProvider(props.appState.theme, 'tileDescription')}>
+            <strong>{data.listCount}</strong> task lists accessible</p>;
       }
     }
   };
@@ -43,17 +50,14 @@ const ListCount = (props) => {
     });
     if (loading) {
       return <p className={classProvider(props.appState.theme, 'tileLoading')}>
-        loading task list count
-      </p>;
+        loading task list count</p>;
     } else {
       if (!error) {
         return <p className={classProvider(props.appState.theme, 'tileDescription')}>
-          <strong>{data.allListCount}</strong> task lists in database
-        </p>;
+          <strong>{data.allListCount}</strong> task lists in database</p>;
       } else {
         return <p className={classProvider(props.appState.theme, 'tileError')}>
-          error occurred while loading task list count
-        </p>;
+          error occurred while loading task list count</p>;
       }
     }
   };

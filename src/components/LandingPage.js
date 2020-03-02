@@ -1,3 +1,7 @@
+// RFF demo project
+// LandingPage.js
+// React component that renders front page for the webapp
+
 import React from 'react';
 import {connect} from 'react-redux';
 

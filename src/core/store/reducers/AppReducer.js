@@ -1,4 +1,6 @@
-
+// RFF demo project
+// AppReducer.js
+// creates reducer to Redux global state for application to use - app in general
 
 const initialState = {
   repository: {

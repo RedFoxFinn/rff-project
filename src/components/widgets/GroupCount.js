@@ -1,3 +1,7 @@
+// RFF demo project
+// GroupCount.js
+// React component that renders group counter based on user groups in the webapp
+
 import React from 'react';
 import {connect} from 'react-redux';
 
@@ -24,18 +28,18 @@ const GroupCount = (props) => {
     });
     if (!loading) {
       if (!error) {
-        return <p className={classProvider(props.appState.theme, 'tileDescription')}>
-          <strong>{data.groupCount}</strong> groups accessible
-        </p>;
+        return data.groupCount === 1
+          ? <p className={classProvider(props.appState.theme, 'tileDescription')}>
+            <strong>{data.groupCount}</strong> group accessible</p>
+          : <p className={classProvider(props.appState.theme, 'tileDescription')}>
+            <strong>{data.groupCount}</strong> groups accessible</p>;
       } else {
         return <p className={classProvider(props.appState.theme, 'tileError')}>
-          error occurred while loading group count
-        </p>;
+          error occurred while loading group count</p>;
       }
     } else {
       return <p className={classProvider(props.appState.theme, 'tileLoading')}>
-        loading group count
-      </p>;
+        loading group count</p>;
     }
   };
   const CountAdmin = () => {

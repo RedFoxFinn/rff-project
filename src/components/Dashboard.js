@@ -1,3 +1,7 @@
+// RFF demo project
+// Dashboard.js
+// React component that renders information summary dashboard
+
 import React from 'react';
 import {connect} from 'react-redux';
 

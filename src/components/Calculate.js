@@ -1,3 +1,7 @@
+// RFF demo project
+// Calculate.js
+// React component that renders simple calculator app
+
 import React, {useState} from 'react';
 import {connect} from 'react-redux';
 import numbro from 'numbro';

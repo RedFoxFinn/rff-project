@@ -1,3 +1,7 @@
+// RFF demo project
+// Colors.js
+// React component that renders color palette available in the webapp
+
 import React from 'react';
 import {connect} from 'react-redux';
 

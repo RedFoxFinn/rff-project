@@ -1,3 +1,7 @@
+// RFF demo project
+// OtherStyles.js
+// React component that renders information of miscellaneous styling available in the webapp
+
 import React from 'react';
 import {connect} from 'react-redux';
 

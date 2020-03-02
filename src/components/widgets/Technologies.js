@@ -1,3 +1,7 @@
+// RFF demo project
+// Technologies.js
+// React component that renders information of used technologies in the webapp
+
 import React from 'react';
 import {connect} from 'react-redux';
 

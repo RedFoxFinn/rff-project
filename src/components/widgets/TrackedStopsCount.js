@@ -1,3 +1,7 @@
+// RFF demo project
+// TrackedStopsCount.js
+// React component that renders stop counter based on available stop tracking information
+
 import React from 'react';
 import {connect} from 'react-redux';
 

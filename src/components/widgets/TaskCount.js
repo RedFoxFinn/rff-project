@@ -1,3 +1,7 @@
+// RFF demo project
+// CountryCount.js
+// React component that renders task counter based on available task information
+
 import React from 'react';
 import {connect} from 'react-redux';
 
@@ -26,18 +30,18 @@ const TaskCount = (props) => {
     });
     if (!loading) {
       if (!error) {
-        return <p className={classProvider(props.appState.theme, 'tileDescription')}>
-          <strong>{data.taskCount}</strong> tasks listed in accessible lists
-        </p>;
+        return data.taskCount === 1
+          ? <p className={classProvider(props.appState.theme, 'tileDescription')}>
+            <strong>{data.taskCount}</strong> task listed in accessible lists</p>
+          : <p className={classProvider(props.appState.theme, 'tileDescription')}>
+            <strong>{data.taskCount}</strong> tasks listed in accessible lists</p>;
       } else {
         return <p className={classProvider(props.appState.theme, 'tileError')}>
-          error occurred while loading task count
-        </p>;
+          error occurred while loading task count</p>;
       }
     } else {
       return <p className={classProvider(props.appState.theme, 'tileLoading')}>
-        loading task count
-      </p>;
+        loading task count</p>;
     }
   };
   const CountAdmin = () => {
@@ -49,17 +53,14 @@ const TaskCount = (props) => {
     if (!loading) {
       if (!error) {
         return <p className={classProvider(props.appState.theme, 'tileDescription')}>
-          <strong>{data.allTaskCount}</strong> tasks listed in the database
-        </p>;
+          <strong>{data.allTaskCount}</strong> tasks listed in the database</p>;
       } else {
         return <p className={classProvider(props.appState.theme, 'tileError')}>
-          error occurred while loading task count
-        </p>;
+          error occurred while loading task count</p>;
       }
     } else {
       return <p className={classProvider(props.appState.theme, 'tileLoading')}>
-        loading task count
-      </p>;
+        loading task count</p>;
     }
   };
 

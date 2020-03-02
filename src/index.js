@@ -1,3 +1,6 @@
+// RFF demo project
+// index.js
+// webapp root file - provides Redux store for application
 
 import React from 'react';
 import ReactDOM from 'react-dom';

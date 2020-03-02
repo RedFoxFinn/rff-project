@@ -1,3 +1,7 @@
+// RFF demo project
+// LoginPage.js
+// React component that renders login page for the webapp
+
 import React, {} from 'react';
 import {connect} from 'react-redux';
 
