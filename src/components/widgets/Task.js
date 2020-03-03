@@ -18,7 +18,19 @@ const mapStateToProps = (state) => {
 const Task = (props) => {
   const handlePriority = () => {};
 
-  if (!props.status) {
+  if (props.status === 'error') {
+    return (
+      <div className='taskContainer'>
+        <p className={classProvider(props.theme, 'tileError')}>{props.task.task}</p>
+      </div>
+    );
+  } else if (props.status === 'loading') {
+    return (
+      <div className='taskContainer'>
+        <p className={classProvider(props.theme, 'tileLoading')}>{props.task.task}</p>
+      </div>
+    );
+  } else if (props.status === 'empty') {
     return (
       <div className='taskContainer'>
         <p className={classProvider(props.theme, 'task')}>{props.task.task}</p>

@@ -31,27 +31,14 @@ const Navigation = (props) => {
   const client = useApolloClient();
   const themes = ['light', 'dark'];
   const theme = props.appState.theme;
-  const loginToken = localStorage.getItem('rffUserToken');
   const setTheme = localStorage.getItem('rffTheme');
 
-  useEffect(() => {
-    loginToken !== null && client.query({
-      query: ME,
-      variables: {
-        token: loginToken.substring(7)
-      }
-    }).then((result, errors) => {
-      if (!errors) {
-        props.loginSuccess(result.data.me);
-      } else {
-        props.handleError(errors[0]);
-      }
-    });
-  }, [loginToken, client]);
+  // hook that handles theme setting if localstorage already has set theme for webapp
   useEffect(() => {
     setTheme !== null && props.switchTheme(setTheme);
   }, []);
 
+  // module that renders main menu of the webapp
   const MenuModule = () => {
     return (
       <div className={classProvider(theme, 'navMenu')}>
@@ -64,7 +51,7 @@ const Navigation = (props) => {
           <Link to='/dishy' onClick={() => props.switchApp( 'Dishy')}>Dishy</Link>
           {props.loginState.user && <Link to='/tasker' onClick={() => props.switchApp( 'Tasker')}>Tasker</Link>}
           <Link to='/transit' onClick={() => props.switchApp( 'Transporter')}>Transporter</Link>
-          {props.loginState.user && (props.loginState.user.role === 'admin' || props.loginState.user.role === 'owner')
+          {props.loginState.user && (props.loginState.user.getRole() === 'admin' || props.loginState.user.getRole() === 'owner')
             && <Link to='/admin' onClick={() => props.switchApp( 'Admin tools')}>Admin tools</Link>}
           <Link to='/about' onClick={() => props.switchApp( 'About')}>About</Link>
           <ThemeSelector/>
@@ -73,6 +60,7 @@ const Navigation = (props) => {
     );
   };
 
+  // module that handles theme selection
   const ThemeSelector = () => {
     return (
       <div className={classProvider(theme, 'navSubMenu')}>
@@ -88,6 +76,7 @@ const Navigation = (props) => {
     );
   };
 
+  // module that handles rendering login session menu & actions
   const LoginModule = () => {
     if (!localStorage.getItem('rffUserToken')) {
       return (
@@ -110,6 +99,7 @@ const Navigation = (props) => {
     }
   };
 
+  // login session helper function
   function logout() {
     props.logout();
     localStorage.removeItem('rffUserToken');
@@ -117,6 +107,7 @@ const Navigation = (props) => {
     props.switchApp('Home');
   }
 
+  // module that handles rendering notifications
   const NotificationModule = () => {
     const notification = props.appState.notification;
 

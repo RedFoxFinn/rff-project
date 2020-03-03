@@ -1,3 +1,12 @@
+[strong checkmark]: <> (&#x2714;)
+[strong cross]: <> (&#x2718;)
+[hammer & pick]: <> (&#x2692;)
+[pick]: <> (&#x26CF;)
+[three lines right]: <> (&#x269E;)
+[three lines left]: <> (&#x269F;)
+[warning]: <> (&#x26A0;)
+[gear]: <> (&#x2699;)
+
 ##### Frontend
 
 This branch contains applications frontend.
@@ -11,46 +20,54 @@ This branch contains applications frontend.
 
 ###### breakdown:
 
+legend | 
+------ | 
+done: &#x2714; |
+upcoming: &#x26CF; | 
+modified: &#x2699; | 
+ongoing: &#x2692; | 
+might not be stable: &#x26A0; |
+
 feature | status
-------- | -----:
-Basic project structure | `done`,`tweaked`
-Custom icons | `done`
-Redux-store (global state management) | `done`,`additions`,`tweaks`
-Redux-reducers (global state management) | `ongoing`,`Thunk-enhanced`
-Services | `done`
-Style | `ongoing`
-Tools | `ongoing`
-Site navigation with React-router | `done`
-About-section | `ongoing`
-About:colors | `done`
-About:technologies | `ongoing`
-Admin-tools | `ongoing`
-Calculate-app | `done`
-Dashboard-section | `done`
-Dashboard:CountryCount | `done`
-Dashboard:DishCount | `done`
-Dashboard:GroupCount | `done`
-Dashboard:IngredientCount | `done`
-DashBoard:ListCount | `done`
-Dashboard:MethodCount | `done`
-Dashboard:TaskCount | `done`
-Dashboard:TrackedStopsCount | `upcoming`
-Dishy-app | `ongoing`
-Landing page | `done`
-Login page | `done`,`tweaked`
-Navigation | `done`
-OpenCountry-app | `done`,`tweaked`
-Tasker-app | `ongoing`
-UserSettings | `upcoming`
-Registering | `done`
-Transporter-app | `upcoming`
-GraphQL-fragments | `done`, `tweaked`
-GraphQL-mutations | `done`
-GraphQL-queries | `done`
-GraphQL-subscriptions | `done`
-Classes | `done`
-TESTS | `ongoing`
-CI | `ongoing`
+:------ | :----:
+Basic project structure | &#x2714; , &#x2699;
+Custom icons | &#x2714;
+Redux-store (global state management) | &#x2714; , &#x2699;
+Redux-reducers (global state management) | &#x2692; , &#x2699;
+Services | &#x2714;
+Style | &#x2692;
+Tools | &#x2692;
+Site navigation with React-router | &#x2714;
+About-section | &#x2692;
+About:colors | &#x2714;
+About:technologies | &#x2692;
+Admin-tools | &#x2692;
+Calculate-app | &#x2714;
+Dashboard-section | &#x2714;
+Dashboard:CountryCount | &#x2714;
+Dashboard:DishCount | &#x2714;
+Dashboard:GroupCount | &#x2714;
+Dashboard:IngredientCount | &#x2714;
+DashBoard:ListCount | &#x2714;
+Dashboard:MethodCount | &#x2714;
+Dashboard:TaskCount | &#x2714;
+Dashboard:TrackedStopsCount | &#x26CF;
+Dishy-app | &#x2692; , &#x26A0;
+Landing page | &#x2714;
+Login page | &#x2714;,&#x2699;
+Navigation | &#x2714;
+OpenCountry-app | &#x2714;,&#x2699;
+Tasker-app | &#x2692; , &#x26A0;
+UserSettings | &#x26CF;
+Registering | &#x2714;
+Transporter-app | &#x26CF;
+GraphQL-fragments | &#x2714;, &#x2699;
+GraphQL-mutations | &#x2714;
+GraphQL-queries | &#x2714;
+GraphQL-subscriptions | &#x2714;
+Classes | &#x2714;
+TESTS | &#x2692;
+CI | &#x2692;
 
 ###### frameworks & libraries:
 
