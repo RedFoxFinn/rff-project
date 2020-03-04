@@ -175,10 +175,9 @@ describe('Dishy', () => {
     cy.get('#newCarbName').should('exist').should('be.visible').should('not.be.disabled');
     cy.get('#saveCarb').should('exist').should('be.visible');
     cy.get('#newCarbName').type(dishComponents.carb.name);
-    cy.get('#saveCarb').click().then(() => {
-      cy.get('#newCarbName').should('be.empty');
-      cy.contains(`Carb added: ${dishComponents.carb.name}`);
-    });
+    cy.get('#saveCarb').click();
+    cy.get('#newCarbName').should('be.empty');
+    cy.contains(`Carb added: ${dishComponents.carb.name}`);
   });
   it('dishy:additions:protein', () => {
     cy.get('#componentSelectProtein').click();
@@ -186,10 +185,9 @@ describe('Dishy', () => {
     cy.get('#newProteinName').should('exist').should('be.visible').should('not.be.disabled');
     cy.get('#saveProtein').should('exist').should('be.visible');
     cy.get('#newProteinName').type(dishComponents.protein.name);
-    cy.get('#saveProtein').click().then(() => {
-      cy.get('#newProteinName').should('be.empty');
-      cy.contains(`Protein added: ${dishComponents.protein.name}`);
-    });
+    cy.get('#saveProtein').click();
+    cy.get('#newProteinName').should('be.empty');
+    cy.contains(`Protein added: ${dishComponents.protein.name}`);
   });
   it('dishy:additions:spice', () => {
     cy.get('#componentSelectSpice').click();
@@ -197,10 +195,9 @@ describe('Dishy', () => {
     cy.get('#newSpiceName').should('exist').should('be.visible').should('not.be.disabled');
     cy.get('#saveSpice').should('exist').should('be.visible');
     cy.get('#newSpiceName').type(dishComponents.spice.name);
-    cy.get('#saveSpice').click().then(() => {
-      cy.get('#newSpiceName').should('be.empty');
-      cy.contains(`Spice added: ${dishComponents.spice.name}`);
-    });
+    cy.get('#saveSpice').click();
+    cy.get('#newSpiceName').should('be.empty');
+    cy.contains(`Spice added: ${dishComponents.spice.name}`);
   });
   it('dishy:additions:method', () => {
     cy.get('#componentSelectMethod').click();
@@ -208,10 +205,36 @@ describe('Dishy', () => {
     cy.get('#newMethodName').should('exist').should('be.visible').should('not.be.disabled');
     cy.get('#saveMethod').should('exist').should('be.visible');
     cy.get('#newMethodName').type(dishComponents.method.name);
-    cy.get('#saveMethod').click().then(() => {
-      cy.get('#newMethodName').should('be.empty');
-      cy.contains(`Method added: ${dishComponents.method.name}`);
-    });
+    cy.get('#saveMethod').click();
+    cy.get('#newMethodName').should('be.empty');
+    cy.contains(`Method added: ${dishComponents.method.name}`);
   });
-  it('dishy:additions:dish', () => {});
+  it('dishy:additions:dish', () => {
+    expect(false).to.be(true);
+  });
+});
+
+describe('Tasker', () => {
+  before(() => {
+    cy.visit('/tasker');
+  });
+  it('/tasker - unlogged', () => {
+    cy.contains('If you want to use these advanced features, please log in.');
+  });
+  it('/tasker - logged', () => {
+    cy.visit('/login');
+    cy.get('#loginUsername').type(user.username);
+    cy.get('#loginPassword').type(user.password);
+    cy.get('#loginButton').click();
+    cy.contains('logged in successfully');
+    cy.visit('/tasker');
+    cy.contains('Accessible private lists:');
+    cy.contains('Add new private list');
+    cy.contains('Accessible group lists:');
+    cy.contains('Add new group list');
+    cy.get('#newListForm_private').should('exist');
+    cy.get('#newListForm_group').should('exist');
+    cy.get('#listFormActivator_private').should('have.class','activatorLi');
+    cy.get('#listFormActivator_group').should('have.class','activatorLi');
+  });
 });
