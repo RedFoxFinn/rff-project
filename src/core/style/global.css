@@ -52,6 +52,37 @@
     --font-global: 'Raleway', sans-serif;
     --navGrey: #7D7D7D;
 }
+
+.tableLi {
+    border-collapse: collapse;
+    text-align: center;
+    table-layout: auto;
+}
+.tableDa {
+    border-collapse: collapse;
+    text-align: center;
+    table-layout: auto;
+}
+.tableRowLi {
+    text-align: center;
+}
+.tableRowDa {
+    text-align: center;
+}
+.tableCellLi {
+    text-align: center;
+    child-align: middle;
+    margin: 0.5em 1em;
+    padding: 0.5em 1em;
+    color: var(--darkslategrey);
+}
+.tableCellDa {
+    text-align: center;
+    child-align: middle;
+    margin: 0.5em 1em;
+    padding: 0.5em 1em;
+    color: var(--gainsboro);
+}
 .app {
     display: flex;
     flex-direction: row;

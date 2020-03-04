@@ -5,6 +5,9 @@
 const classProvider = (theme, element) => {
   if (theme === 'dark') {
     switch(element) {
+    case 'tableCell': return 'tableCellDa';
+    case 'table': return 'tableDa';
+    case 'tableRow': return 'tableRowDa';
     case 'navMenu':
       return 'navMenuDa';
     case 'navSubMenu':
@@ -92,6 +95,9 @@ const classProvider = (theme, element) => {
     }
   } else {
     switch(element) {
+    case 'tableCell': return 'tableCellLi';
+    case 'table': return 'tableLi';
+    case 'tableRow': return 'tableRowLi';
     case 'navMenu':
       return 'navMenuLi';
     case 'navSubMenu':

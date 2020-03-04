@@ -19,7 +19,7 @@ option:disabled {
     outline: none;
     cursor: pointer;
     color: var(--darkslategrey);
-    padding: 1em;
+    padding: 0.5em;
 }
 .activatorLi:hover {
     background-color: var(--googlegreen);
@@ -33,7 +33,7 @@ option:disabled {
     outline: none;
     cursor: pointer;
     color: var(--gainsboro);
-    padding: 1em;
+    padding: 0.5em;
 }
 .activatorDa:hover {
     background-color: var(--googlegreen);
@@ -47,7 +47,7 @@ option:disabled {
     outline: none;
     cursor: pointer;
     color: var(--darkslategrey);
-    padding: 1em;
+    padding: 0.5em;
 }
 .deactivatorLi:hover {
     background-color: var(--googlered);
@@ -61,7 +61,7 @@ option:disabled {
     outline: none;
     cursor: pointer;
     color: var(--gainsboro);
-    padding: 1em;
+    padding: 0.5em;
 }
 .deactivatorDa:hover {
     background-color: var(--googlered);

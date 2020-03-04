@@ -1,17 +1,12 @@
 
 import gql from 'graphql-tag';
-import {LIST_DETAILS} from '../fragments/f_listFragment';
-import {USER_DETAILS} from '../fragments/f_userFragment';
+import {PRIVATE_LIST_DETAILS} from '../fragments/f_privateListFragment';
 
 export const ADD_LIST_PRIVATE = gql`
   mutation addListPrivate($token: String!, $title: String!) {
     addListPrivate(token: $token, title: $title) {
-      ...ListDetails
-      owner {
-        ...UserDetails
-      }
+      ...PrivateListDetails
     }
   }
-  ${USER_DETAILS}
-  ${LIST_DETAILS}
+  ${PRIVATE_LIST_DETAILS}
 `;

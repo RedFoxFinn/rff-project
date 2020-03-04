@@ -46,12 +46,12 @@ const LoginPage = (props) => {
           variables: {
             token: loginToken.substring(7)
           }
-        }).then((result) => {
+        }).then(async (result) => {
           document.getElementById('loginUsername').value = '';
           document.getElementById('loginPassword').value = '';
           localStorage.setItem('rffUserToken', loginToken);
-          props.loginSuccess(result.data.me);
-          props.handleInfo('logged in successfully');
+          await props.loginSuccess(result.data.me);
+          await props.handleInfo('logged in successfully');
         });
       } else {
         document.getElementById('loginPassword').value = '';

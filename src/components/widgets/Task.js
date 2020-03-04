@@ -8,45 +8,77 @@ import {connect} from 'react-redux';
 import classProvider from '../../core/tools/classProvider';
 import '../../core/style/global.css';
 import '../../core/style/tasker.css';
+import {handleError, handleInfo} from '../../core/store/reducers/AppReducer';
+import {TASK_PRIORITY} from '../../core/graphql/rff/mutations/m_taskPriority';
+import {TASK_ACTIVATION} from '../../core/graphql/rff/mutations/m_taskActivation';
+import {TASK_DEACTIVATION} from '../../core/graphql/rff/mutations/m_taskDeactivation';
+import {REMOVE_TASK} from '../../core/graphql/rff/mutations/m_removeTask';
+import {InlineIcon} from '@iconify/react';
+import flagVariant from '@iconify/icons-mdi/flag-variant';
+import flagVariantOutline from '@iconify/icons-mdi/flag-variant-outline';
 
 const mapStateToProps = (state) => {
   return {
     theme: state.appState.theme
   };
 };
+const mapDispatchToProps = {
+  handleError, handleInfo
+};
 
 const Task = (props) => {
-  const handlePriority = () => {};
+  const task = props.task;
+  const handlePriority = () => {
+  };
+
+  const Flagged = ({flagged}) => {
+    return flagged
+      ? <InlineIcon icon={flagVariant}/>
+      : <InlineIcon icon={flagVariantOutline}/>;
+  };
 
   if (props.status === 'error') {
     return (
-      <div className='taskContainer'>
-        <p className={classProvider(props.theme, 'tileError')}>{props.task.task}</p>
-      </div>
+      <tr className={classProvider(props.theme, 'tableRow')}>
+        <td className={classProvider(props.theme, 'tableCell')}>{task.task}</td>
+      </tr>
     );
   } else if (props.status === 'loading') {
     return (
-      <div className='taskContainer'>
-        <p className={classProvider(props.theme, 'tileLoading')}>{props.task.task}</p>
-      </div>
+      <tr className={classProvider(props.theme, 'tableRow')}>
+        <td className={classProvider(props.theme, 'tableCell')}>{task.task}</td>
+      </tr>
     );
   } else if (props.status === 'empty') {
     return (
-      <div className='taskContainer'>
-        <p className={classProvider(props.theme, 'task')}>{props.task.task}</p>
-      </div>
+      <tr className={classProvider(props.theme, 'tableRow')}>
+        <td className={classProvider(props.theme, 'tableCell')}>{task.task}</td>
+      </tr>
     );
   } else {
-    const task = props.task;
     return (
-      <div className='taskContainer'>
-        <p className={classProvider(props.theme, 'task')}>{task.task}</p>
-        <p className={classProvider(props.theme, 'task')}>{task.priority}</p>
-        <p className={classProvider(props.theme, 'task')}>{task.active}</p>
-        <p className={classProvider(props.theme, 'task')}>{task.creator.username}</p>
-      </div>
+      <tr className={classProvider(props.theme, 'tableRow')}>
+        <td className={classProvider(props.theme, 'tableCell')}>{task.task}</td>
+        <td className={classProvider(props.theme, 'tableCell')}><Flagged flagged={task.priority}/></td>
+        <td className={classProvider(props.theme, 'tableCell')}><button className={task.priority
+          ? classProvider(props.theme, 'deactivator')
+          : classProvider(props.theme, 'activator')}>
+          {task.priority
+            ? 'priority off'
+            : 'priority on'}
+        </button></td>
+        <td className={classProvider(props.theme, 'tableCell')}><button className={task.active
+          ? classProvider(props.theme, 'deactivator')
+          : classProvider(props.theme, 'activator')}>
+          {task.active
+            ? 'done'
+            : 'undone'}
+        </button></td>
+        <td className={classProvider(props.theme, 'tableCell')}>
+          <button className={classProvider(props.theme, 'deactivator')}>remove</button></td>
+      </tr>
     );
   }
 };
 
-export default connect(mapStateToProps)(Task);
+export default connect(mapStateToProps, mapDispatchToProps)(Task);
