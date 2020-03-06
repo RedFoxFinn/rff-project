@@ -8,7 +8,8 @@ const Task = require('../models/Task.js');
 const User = require('../models/User.js');
 const Comment = require('../models/Comment');
 const List = require('../models/List');
+const News = require('../models/News');
 
 module.exports = {
-  Ingredient, CookingMethod, Comment, Dish, Group, GroupList, PrivateList, Task, User, List
+  Ingredient, CookingMethod, Comment, Dish, Group, GroupList, PrivateList, Task, User, List, News
 };
