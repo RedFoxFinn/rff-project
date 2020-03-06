@@ -79,6 +79,12 @@ const typeDefs = gql`
     id: ID!
     stops: [String!]!
   }
+  type News {
+    news: String!,
+    category: String!,
+    addedBy: User!,
+    id: ID!
+  }
   type Query {
     me(token: String!): User!
     userCount(token: String!): Int!
@@ -105,8 +111,13 @@ const typeDefs = gql`
     allSpices: [Ingredient!]!
     dishes(carb: String, method: String, protein: String, spice: String): [Dish!]!
     comments(token: String!, id: String!): [Comment!]!
+    news: [News!]!
+    categoryNews(category: String!): [News!]!
   }
   type Mutation {
+    addNews(token: String!, category: String!, news: String!): News!,
+    editNews(token: String!, id: String!, news: String!, category: String!): News!,
+    removeNews(token: String!, id: String!): News!,
     addIngredient(token: String!, type: String!, name: String!): Ingredient!,
     removeIngredient(token: String!, id: String!): Ingredient!,
     addDish(token: String!, name: String!, cookingMethods: [String!]!, carbs: [String!]!,

@@ -8,7 +8,7 @@ const jwt = require('jsonwebtoken');
 const pubsub = new PubSub();
 
 const { Ingredient, CookingMethod, Comment, Dish, Group,
-  GroupList, PrivateList, Task, User, List } = require('../models/modelImporter');
+  GroupList, PrivateList, Task, User, List, News } = require('../models/modelImporter');
 
 // helper functions and constants for resolvers
 
@@ -668,9 +668,64 @@ const resolvers = {
       } else {
         throw new AuthenticationError('Insufficient clearance!');
       }
-    }
+    },
+    news: async () => await News.find({}).populate('addedBy'),
+    categoryNews: async (root, args) => await News.find({category: args.category}).populate('addedBy')
   },
   Mutation: {
+    addNews: async (root, args) => {
+      const decodedToken = await jwt.verify(args.token, config.secret);
+      const user = await User.findById(decodedToken.id);
+      if (user && (user.role === 'admin' || user.role === 'owner')) {
+        let news = new News({
+          news: args.news,
+          category: args.category,
+          addedBy: user._id.toString()
+        });
+        try {
+          await news.save();
+        } catch (e) {
+          throw new UserInputError(e.message, { invalidArgs: args });
+        }
+        news = await News.findOne({news: args.news}).populate('addedBy');
+        return news;
+      } else {
+        throw new AuthenticationError('Session error: you must be logged in!');
+      }
+    },
+    editNews: async (root, args) => {
+      const decodedToken = await jwt.verify(args.token, config.secret);
+      const user = await User.findById(decodedToken.id);
+      if (user && (user.role === 'admin' || user.role === 'owner')) {
+        let news = await News.findById(args.id);
+        news.news = args.news;
+        news.category = args.category;
+        try {
+          await news.save();
+        } catch (e) {
+          throw new UserInputError(e.message, { invalidArgs: args });
+        }
+        news = await News.findById(args.id).populate('addedBy');
+        return news;
+      } else {
+        throw new AuthenticationError('Session error: you must be logged in!');
+      }
+    },
+    removeNews: async (root, args) => {
+      const decodedToken = await jwt.verify(args.token, config.secret);
+      const user = await User.findById(decodedToken.id);
+      if (user && (user.role === 'admin' || user.role === 'owner')) {
+        const news = await News.findById(args.id).populate('addedBy');
+        try {
+          await news.remove();
+        } catch (e) {
+          throw new UserInputError(e.message, { invalidArgs: args });
+        }
+        return news;
+      } else {
+        throw new AuthenticationError('Session error: you must be logged in!');
+      }
+    },
     addIngredient: async (root, args) => {
       const decodedToken = await jwt.verify(args.token, config.secret);
       const user = await User.findById(decodedToken.id);
@@ -994,19 +1049,10 @@ const resolvers = {
       }
     },
     removeTask: async (root, args) => {
-      let list;
       const decodedToken = await jwt.verify(args.token, config.secret);
       const user = await User.findById(decodedToken.id);
-      const task = await Task.findById(args.id).populate('creator');
-      const groupValid = async () => {
-        list = await GroupList.findOne({ _id: task.listID.toString() });
-        return list ? user.groups.includes(list.group.toString()) : false;
-      };
-      const userValid = async () => {
-        list = await PrivateList.findOne({ _id: task.listID.toString() });
-        return list ? user._id.toString() === list.owner.toString() : false;
-      };
-      if (await groupValid() || await userValid()) {
+      const task = await Task.findById(args.id);
+      if (user) {
         try {
           await task.remove();
         } catch (e) {
