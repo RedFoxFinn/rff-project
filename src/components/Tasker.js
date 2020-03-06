@@ -10,8 +10,6 @@ import classProvider from '../core/tools/classProvider';
 import '../core/style/global.css';
 import '../core/style/tasker.css';
 import {useApolloClient, useQuery, useSubscription} from '@apollo/react-hooks';
-
-import Task from './widgets/Task';
 import {handleInfo, handleError} from '../core/store/reducers/AppReducer';
 
 import {InlineIcon} from '@iconify/react';
@@ -25,9 +23,6 @@ import {PRIVATE_LISTS} from '../core/graphql/rff/queries/q_privateLists';
 import {TASKS} from '../core/graphql/rff/queries/q_tasks';
 import {Redirect} from 'react-router-dom';
 
-import {TASK_ACTIVATION} from '../core/graphql/rff/mutations/m_taskActivation';
-import {TASK_DEACTIVATION} from '../core/graphql/rff/mutations/m_taskDeactivation';
-import {TASK_PRIORITY} from '../core/graphql/rff/mutations/m_taskPriority';
 import {TASK_ADDED} from '../core/graphql/rff/subscriptions/s_taskAdded';
 import {TASK_UPDATED} from '../core/graphql/rff/subscriptions/s_taskUpdated';
 import {TASK_REMOVED} from '../core/graphql/rff/subscriptions/s_taskRemoved';
@@ -40,6 +35,10 @@ import {GROUPS} from '../core/graphql/rff/queries/q_groups';
 import {ADD_TASK} from '../core/graphql/rff/mutations/m_addTask';
 import {ADD_LIST_GROUP} from '../core/graphql/rff/mutations/m_addListGroup';
 import {ADD_LIST_PRIVATE} from '../core/graphql/rff/mutations/m_addListPrivate';
+import {TASK_PRIORITY} from '../core/graphql/rff/mutations/m_taskPriority';
+import {TASK_ACTIVATION} from '../core/graphql/rff/mutations/m_taskActivation';
+import {TASK_DEACTIVATION} from '../core/graphql/rff/mutations/m_taskDeactivation';
+import {REMOVE_TASK} from '../core/graphql/rff/mutations/m_removeTask';
 
 // prop mappers
 const mapStateToProps = (state) => {
@@ -59,42 +58,49 @@ const Tasker = (props) => {
 
   // Apollo GraphQL subscriptions
   useSubscription(TASK_ADDED, {
+    fetchPolicy: '',
     onSubscriptionData: ({subscriptionData}) => {
       const task = subscriptionData.data.taskAdded;
       updateCacheWithTask('added', task);
     }
   });
   useSubscription(TASK_UPDATED, {
+    fetchPolicy: '',
     onSubscriptionData: ({subscriptionData}) => {
-      const task = subscriptionData.data.taskAdded;
+      const task = subscriptionData.data.taskUpdated;
       updateCacheWithTask('updated', task);
     }
   });
   useSubscription(TASK_REMOVED, {
+    fetchPolicy: '',
     onSubscriptionData: ({subscriptionData}) => {
-      const task = subscriptionData.data.taskAdded;
+      const task = subscriptionData.data.taskRemoved;
       updateCacheWithTask('removed', task);
     }
   });
   useSubscription(LIST_ADDED_PRIVATE, {
+    fetchPolicy: '',
     onSubscriptionData: ({subscriptionData}) => {
       const list = subscriptionData.data.listAddedPrivate;
       updateCacheWithPrivatelist('added', list);
     }
   });
   useSubscription(LIST_REMOVED_PRIVATE, {
+    fetchPolicy: '',
     onSubscriptionData: ({subscriptionData}) => {
       const list = subscriptionData.data.listRemovedPrivate;
       updateCacheWithPrivatelist('removed', list);
     }
   });
   useSubscription(LIST_ADDED_GROUP, {
+    fetchPolicy: '',
     onSubscriptionData: ({subscriptionData}) => {
       const list = subscriptionData.data.listAddedGroup;
       updateCacheWithGrouplist('added', list);
     }
   });
   useSubscription(LIST_REMOVED_GROUP, {
+    fetchPolicy: '',
     onSubscriptionData: ({subscriptionData}) => {
       const list = subscriptionData.data.listRemovedGroup;
       updateCacheWithGrouplist('removed', list);
@@ -106,8 +112,8 @@ const Tasker = (props) => {
     const includedIn = (set, object) => set.map(t => t.id).includes(object.id);
     const dataInStore = await client.readQuery({
       query: TASKS, variables: {
-        token: userToken,
-        listID: task.listID
+        listID: task.listID,
+        token: userToken
       }});
 
     switch (eventType) {
@@ -115,6 +121,10 @@ const Tasker = (props) => {
       if (!includedIn(dataInStore.tasks, task)) {
         await client.writeQuery({
           query: TASKS,
+          variables: {
+            token: userToken,
+            listID: task.listID
+          },
           data: {tasks: dataInStore.tasks.concat(task)}
         });
         props.handleInfo(`Task added: ${task.task}`);
@@ -124,6 +134,10 @@ const Tasker = (props) => {
       if (includedIn(dataInStore.tasks, task)) {
         await client.writeQuery({
           query: TASKS,
+          variables: {
+            token: userToken,
+            listID: task.listID
+          },
           data: {
             tasks: dataInStore.tasks.map(t => {
               return t.id === task.id ? task : t;
@@ -136,6 +150,10 @@ const Tasker = (props) => {
       if (includedIn(dataInStore.tasks, task)) {
         await client.writeQuery({
           query: TASKS,
+          variables: {
+            token: userToken,
+            listID: task.listID
+          },
           data: {
             tasks: dataInStore.tasks.forEach(t => {
               if (t.id !== task.id) return t;
@@ -153,12 +171,16 @@ const Tasker = (props) => {
     const dataInStore = await client.readQuery({
       query: PRIVATE_LISTS, variables: {
         token: userToken
-      }});
+      }
+    });
     switch (eventType) {
     case 'added':
       if (!includedIn(dataInStore.privateLists, list)) {
         await client.writeQuery({
           query: PRIVATE_LISTS,
+          variables: {
+            token: userToken
+          },
           data: {privateLists: dataInStore.privateLists.concat(list)}
         });
         props.handleInfo(`List added: ${list.title}`);
@@ -168,6 +190,9 @@ const Tasker = (props) => {
       if (includedIn(dataInStore.privateLists, list)) {
         await client.writeQuery({
           query: PRIVATE_LISTS,
+          variables: {
+            token: userToken
+          },
           data: {
             privateLists: dataInStore.privateLists.map(l => {
               return l.id === list.id ? list : l;
@@ -180,6 +205,9 @@ const Tasker = (props) => {
       if (includedIn(dataInStore.privateLists, list)) {
         await client.writeQuery({
           query: PRIVATE_LISTS,
+          variables: {
+            token: userToken
+          },
           data: {
             privateLists: dataInStore.privateLists.forEach(l => {
               if (l.id !== list.id) return l;
@@ -195,16 +223,20 @@ const Tasker = (props) => {
   const updateCacheWithGrouplist = async (eventType, list) => {
     const includedIn = (set, object) => set.map(l => l.id).includes(object.id);
     const dataInStore = await client.readQuery({
-      query: GROUP_LISTS, variables: {
-        token: userToken
-      }});
+      variables: {
+        token: userToken,
+      },
+      query: GROUP_LISTS
+    });
 
     switch (eventType) {
     case 'added':
       if (!includedIn(dataInStore.groupLists, list)) {
         await client.writeQuery({
           query: GROUP_LISTS,
-          variables: {},
+          variables: {
+            token: userToken
+          },
           data: {groupLists: dataInStore.groupLists.concat(list)}
         });
         props.handleInfo(`List added: ${list.title}`);
@@ -214,6 +246,9 @@ const Tasker = (props) => {
       if (includedIn(dataInStore.groupLists, list)) {
         await client.writeQuery({
           query: GROUP_LISTS,
+          variables: {
+            token: userToken
+          },
           data: {
             groupLists: dataInStore.groupLists.map(l => {
               return l.id === list.id ? list : l;
@@ -226,6 +261,9 @@ const Tasker = (props) => {
       if (includedIn(dataInStore.groupLists, list)) {
         await client.writeQuery({
           query: GROUP_LISTS,
+          variables: {
+            token: userToken
+          },
           data: {
             groupLists: dataInStore.groupLists.forEach(l => {
               if (l.id !== list.id) return l;
@@ -407,7 +445,7 @@ const Tasker = (props) => {
           </thead>
           <tbody>
             {tasks.map(t => {
-              return <Task key={`task:${t.id}`} status={true} task={t}/>;
+              return <Task key={t.id} status={true} task={t}/>;
             })}
           </tbody>
         </table>
@@ -418,11 +456,11 @@ const Tasker = (props) => {
   };
 
   // helper functions: task & list saving handlers
-  const handleSaveTask = async (listID, task, priority) => {
+  const handleSaveTask = async (listID, priority) => {
     const variables = {
       token: userToken,
       listID: listID,
-      task: task,
+      task: document.getElementById('newTask').value,
       priority: priority
     };
     if (userToken) {
@@ -435,18 +473,18 @@ const Tasker = (props) => {
         if (data !== null) {
           updateCacheWithTask('added', data.addTask);
         } else {
-          props.handleError('Couldn\'t add new task due an error');
+          props.handleError(`Error occurred with task: cannot add ${variables.task}`);
         }
       });
     }
   };
-  const handleSaveList = async (groupID, listType, title) => {
+  const handleSaveList = async (groupID, listType) => {
     let variables;
     if (listType === 'GroupList') {
       variables = {
         token: userToken,
         group: groupID,
-        title: title
+        title: document.getElementById('newGrouplistTitle').value
       };
       await client.mutate({
         mutation: ADD_LIST_GROUP,
@@ -456,14 +494,15 @@ const Tasker = (props) => {
         const {data} = result;
         if (data !== null) {
           updateCacheWithGrouplist('added', data.addListGroup);
+          document.getElementById('newGrouplistTitle').value = '';
         } else {
-          props.handleError('Couldn\'t add new group list due an error');
+          props.handleError(`Error occurred with list: cannot add ${variables.title}`);
         }
       });
     } else {
       variables = {
         token: userToken,
-        title: title
+        title: document.getElementById('newPrivatelistTitle').value
       };
       await client.mutate({
         mutation: ADD_LIST_PRIVATE,
@@ -473,8 +512,9 @@ const Tasker = (props) => {
         const {data} = result;
         if (data !== null) {
           updateCacheWithPrivatelist('added', data.addListPrivate);
+          document.getElementById('newPrivatelistTitle').value = '';
         } else {
-          props.handleError('Couldn\'t add new private list due an error');
+          props.handleError(`Error occurred with list: cannot add ${variables.title}`);
         }
       });
     }
@@ -482,7 +522,6 @@ const Tasker = (props) => {
 
   // rendering components for new task & list forms
   const AddTask = ({list}) => {
-    const [newTask, setNewTask] = useState('');
     const [expanded, setExpanded] = useState(false);
     const [priority, setPriority] = useState(false);
     return (
@@ -496,20 +535,33 @@ const Tasker = (props) => {
               ? classProvider(props.theme, 'deactivator')
               : classProvider(props.theme, 'activator')}>{expanded ? 'close ' : 'open '}form</button>
         </div>
-        {expanded && <div className='componentContainer'>
-          <form className='taskList'>
-            <p className={classProvider(props.theme, 'text')}>Add new task to <strong>{list.title}</strong></p>
-            <p className={classProvider(props.theme, 'text')}>{'with following content: '}</p>
-            <input required minLength={2} id='newTask' className={classProvider(props.theme, 'formElement')}
-              value={newTask} placeholder='new task'
-              onChange={({target}) => setNewTask(target.value)}/>
-            <button id='newTaskPriority' type='button' className={classProvider(props.theme, 'formElement')}
-              onClick={() => setPriority(!priority)}>{<Flagged flagged={priority}/>}</button>
-            <button disabled={newTask.length <= 0} type='button' className={newTask.length <= 0
-              ? classProvider(props.theme, 'deactivator')
-              : classProvider(props.theme, 'activator')} onClick={() => handleSaveTask(list.id, newTask, priority)}>save list</button>
-          </form>
-        </div>}
+        {expanded && <table className={classProvider(props.theme, 'table')}>
+          <thead>
+            <tr className={classProvider(props.theme, 'tableRow')}>
+              <th className={classProvider(props.theme, 'tableCell')}>list</th>
+              <th className={classProvider(props.theme, 'tableCell')}>task</th>
+              <th className={classProvider(props.theme, 'tableCell')}>priority</th>
+              <th className={classProvider(props.theme, 'tableCell')}>{' '}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr className={classProvider(props.theme, 'tableRow')}>
+              <td className={classProvider(props.theme, 'tableCell')}><strong>{list.title}</strong></td>
+              <td className={classProvider(props.theme, 'tableCell')}>
+                <input required minLength={2} id='newTask'
+                  className={classProvider(props.theme, 'formElement')}
+                  placeholder='new task'/></td>
+              <td className={classProvider(props.theme, 'tableCell')}>
+                <button id='newTaskPriority' type='button' className={classProvider(props.theme, 'formElement')}
+                  onClick={() => setPriority(!priority)}>{<Flagged flagged={priority}/>}</button>
+              </td>
+              <td className={classProvider(props.theme, 'tableCell')}>
+                <button type='button' className={classProvider(props.theme, 'activator')}
+                  onClick={() => handleSaveTask(list.id, priority)}>save list</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>}
       </div>
     );
   };
@@ -536,7 +588,6 @@ const Tasker = (props) => {
     };
     const Group = () => {
       const [groupSelection, setGroupSelection] = useState(null);
-      const [newGrouplistTitle, setNewGrouplistTitle] = useState('');
       return (
         <div className='taskList'>
           {listType === 'group' && <select id='groupSelector' defaultValue='default' className={classProvider(props.theme, 'formElement')}
@@ -555,15 +606,13 @@ const Tasker = (props) => {
             <tbody>
               <tr className={classProvider(props.theme, 'tableRow')}>
                 <td className={classProvider(props.theme, 'tableCell')}><strong>{groupSelection.title}</strong></td>
-                <td className={classProvider(props.theme, 'tableCell')}><input required minLength={2} id='newGroupListTitle'
+                <td className={classProvider(props.theme, 'tableCell')}><input required minLength={2}
+                  id='newGrouplistTitle'
                   className={classProvider(props.theme, 'formElement')}
-                  placeholder='new list title' value={newGrouplistTitle}
-                  onChange={({target}) => setNewGrouplistTitle(target.value)}/></td>
-                <td className={classProvider(props.theme, 'tableCell')}><button disabled={newGrouplistTitle.length <= 0}
-                  type='button' className={newGrouplistTitle.length <= 0
-                    ? classProvider(props.theme, 'deactivator')
-                    : classProvider(props.theme, 'activator')}
-                  onClick={() => handleSaveList(groupSelection.id, 'GroupList', newGrouplistTitle)}>save list</button></td>
+                  placeholder='new list title'/></td>
+                <td className={classProvider(props.theme, 'tableCell')}><button type='button'
+                  className={classProvider(props.theme, 'activator')}
+                  onClick={() => handleSaveList(groupSelection.id, 'GroupList')}>save list</button></td>
               </tr>
             </tbody>
           </table>}
@@ -571,7 +620,6 @@ const Tasker = (props) => {
       );
     };
     const Private = () => {
-      const [newPrivatelistTitle, setNewPrivatelistTitle] = useState('');
       return (
         <table className={classProvider(props.theme, 'table')}>
           <thead>
@@ -584,15 +632,12 @@ const Tasker = (props) => {
           <tbody>
             <tr className={classProvider(props.theme, 'tableRow')}>
               <td className={classProvider(props.theme, 'tableCell')}><strong>{props.user.getUsername()}</strong></td>
-              <td className={classProvider(props.theme, 'tableCell')}><input required minLength={2} id='newUserListTitle'
+              <td className={classProvider(props.theme, 'tableCell')}><input required minLength={2}
                 className={classProvider(props.theme, 'formElement')}
-                placeholder='new list title' value={newPrivatelistTitle}
-                onChange={({target}) => setNewPrivatelistTitle(target.value)}/></td>
-              <td className={classProvider(props.theme, 'tableCell')}><button disabled={newPrivatelistTitle.length <= 0}
-                type='button' className={newPrivatelistTitle.length <= 0
-                  ? classProvider(props.theme, 'deactivator')
-                  : classProvider(props.theme, 'activator')}
-                onClick={() => handleSaveList(null, 'PrivateList', newPrivatelistTitle)}>save list</button></td>
+                placeholder='new list title' id='newPrivatelistTitle'/></td>
+              <td className={classProvider(props.theme, 'tableCell')}><button type='button'
+                className={classProvider(props.theme, 'activator')}
+                onClick={() => handleSaveList(null, 'PrivateList')}>save list</button></td>
             </tr>
           </tbody>
         </table>
@@ -619,6 +664,104 @@ const Tasker = (props) => {
         </div>}
       </div>
     );
+  };
+
+  const handlePriority = async ({id, priority, task}) => {
+    const variables = {
+      token: userToken,
+      id: id,
+      priority: !priority
+    };
+    await client.mutate({
+      mutation: TASK_PRIORITY,
+      variables: variables,
+      errorPolicy: 'ignore'
+    }).then((result) => {
+      const {data} = result;
+      if (data !== null) {
+        updateCacheWithTask('updated', data.taskPriority);
+      } else {
+        props.handleError(`Error occurred with task: cannot update ${task}`);
+      }
+    });
+  };
+  const handleCompletion = async ({id, task, active}) => {
+    const variables = {
+      token: userToken,
+      id: id
+    };
+    await client.mutate({
+      mutation: active ? TASK_DEACTIVATION : TASK_ACTIVATION,
+      variables: variables,
+      errorPolicy: 'ignore'
+    }).then((result) => {
+      const {data} = result;
+      if (data !== null) {
+        updateCacheWithTask('updated', active ? data.taskDeactivation : data.taskActivation);
+      } else {
+        props.handleError(`Error occurred with task: cannot update ${task}`);
+      }
+    });
+  };
+  const handleRemoval = async ({id, task}) => {
+    const variables = {
+      token: userToken,
+      id: id
+    };
+    await client.mutate({
+      mutation: REMOVE_TASK,
+      errorPolicy: 'ignore',
+      variables: variables
+    }).then((result) => {
+      const {data} = result;
+      if (data !== null) {
+        updateCacheWithTask('removed', data.removeTask);
+      } else {
+        props.handleError(`Error occurred with task: cannot remove ${task}`);
+      }
+    });
+  };
+
+  const Task = ({task}) => {
+    const Flagged = ({flagged}) => {
+      return flagged
+        ? <InlineIcon icon={flagVariant}/>
+        : <InlineIcon icon={flagVariantOutline}/>;
+    };
+
+    if (props.status === 'error') {
+      return <td className={classProvider(props.theme, 'tableCell')}>{task.task}</td>;
+    } else if (props.status === 'loading') {
+      return <td className={classProvider(props.theme, 'tableCell')}>{task.task}</td>;
+    } else if (props.status === 'empty') {
+      return <td className={classProvider(props.theme, 'tableCell')}>{task.task}</td>;
+    } else {
+      return (
+        <tr className={classProvider(props.theme, 'tableRow')}>
+          <td className={classProvider(props.theme, 'tableCell')}>{task.task}</td>
+          <td className={classProvider(props.theme, 'tableCell')}><Flagged flagged={task.priority}/></td>
+          <td className={classProvider(props.theme, 'tableCell')}><button className={task.priority
+            ? classProvider(props.theme, 'deactivator')
+            : classProvider(props.theme, 'activator')}
+          onClick={() => handlePriority(task)}>
+            {task.priority
+              ? 'priority off'
+              : 'priority on'}
+          </button></td>
+          <td className={classProvider(props.theme, 'tableCell')}><button className={task.active
+            ? classProvider(props.theme, 'deactivator')
+            : classProvider(props.theme, 'activator')}
+          onClick={() => handleCompletion(task)}>
+            {task.active
+              ? 'done'
+              : 'undone'}
+          </button></td>
+          <td className={classProvider(props.theme, 'tableCell')}>
+            <button className={classProvider(props.theme, 'deactivator')}
+              onClick={() => handleRemoval(task)}>remove</button></td>
+        </tr>
+      );
+    }
   };
 
   return props.show

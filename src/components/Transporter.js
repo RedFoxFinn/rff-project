@@ -26,6 +26,7 @@ const Transporter = (props) => {
     <div className='app'>
       <div className='container'>
         <h5 className={classProvider(props.theme, 'heading')}>Tracked stops:</h5>
+        <p className={classProvider(props.theme, 'text')}>This feature will be added later</p>
       </div>
     </div>
   );

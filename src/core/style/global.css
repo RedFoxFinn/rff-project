@@ -86,13 +86,15 @@
 .app {
     display: flex;
     flex-direction: row;
-    justify-content: space-evenly;
+    justify-content: center;
 }
 
 .container {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    justify-items: center;
+    margin: 0.5em;
 }
 
 .appElements {
@@ -112,8 +114,9 @@
 .commonElements {
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
     align-content: center;
+    align-items: center;
+    margin: 1em 0;
 }
 button {
     font-family: var(--font-global);
@@ -138,6 +141,16 @@ button {
 .descriptionDa {
     color: var(--gainsboro);
     width: 14em;
+}
+.newsLi {
+    color: var(--darkslategrey);
+    margin: 1em 0;
+    width: 20em;
+}
+.newsDa {
+    color: var(--gainsboro);
+    margin: 1em 0;
+    width: 20em;
 }
 .textLi {
     color: var(--darkslategrey);

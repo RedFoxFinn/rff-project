@@ -67,24 +67,28 @@ const Dishy = (props) => {
     }
   });
   useSubscription(DISH_UPDATED, {
+    fetchPolicy: '',
     onSubscriptionData: ({subscriptionData}) => {
       const dish = subscriptionData.data.dishUpdated;
       updateCacheWithDish('updated', dish);
     }
   });
   useSubscription(DISH_VOTED, {
+    fetchPolicy: '',
     onSubscriptionData: ({subscriptionData}) => {
       const dish = subscriptionData.data.dishVoted;
       updateCacheWithDish('updated', dish);
     }
   });
   useSubscription(DISH_REMOVED, {
+    fetchPolicy: '',
     onSubscriptionData: ({subscriptionData}) => {
       const dish = subscriptionData.data.dishRemoved;
       updateCacheWithDish('removed', dish);
     }
   });
   useSubscription(INGREDIENT_ADDED, {
+    fetchPolicy: '',
     onSubscriptionData: ({subscriptionData}) => {
       const ingredient = subscriptionData.data.ingredientAdded;
       switch (ingredient.type) {
@@ -103,6 +107,7 @@ const Dishy = (props) => {
     }
   });
   useSubscription(INGREDIENT_UPDATED, {
+    fetchPolicy: '',
     onSubscriptionData: ({subscriptionData}) => {
       const ingredient = subscriptionData.data.ingredientUpdated;
       switch (ingredient.type) {
@@ -121,6 +126,7 @@ const Dishy = (props) => {
     }
   });
   useSubscription(INGREDIENT_REMOVED, {
+    fetchPolicy: '',
     onSubscriptionData: ({subscriptionData}) => {
       const ingredient = subscriptionData.data.ingredientAdded;
       switch (ingredient.type) {
@@ -139,18 +145,21 @@ const Dishy = (props) => {
     }
   });
   useSubscription(METHOD_ADDED, {
+    fetchPolicy: '',
     onSubscriptionData: ({subscriptionData}) => {
       const method = subscriptionData.data.methodAdded;
       updateCacheWithMethod('added', method);
     }
   });
   useSubscription(METHOD_UPDATED, {
+    fetchPolicy: '',
     onSubscriptionData: ({subscriptionData}) => {
       const method = subscriptionData.data.methodUpdated;
       updateCacheWithMethod('updated', method);
     }
   });
   useSubscription(METHOD_REMOVED, {
+    fetchPolicy: '',
     onSubscriptionData: ({subscriptionData}) => {
       const method = subscriptionData.data.methodRemoved;
       updateCacheWithMethod('removed', method);
