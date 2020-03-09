@@ -1,14 +1,14 @@
-const Ingredient = require('../models/Ingredient.js');
-const CookingMethod = require('../models/CookingMethod.js');
-const Dish = require('../models/Dish.js');
-const Group = require('../models/Group.js');
-const GroupList = require('../models/GroupList.js');
-const PrivateList = require('../models/PrivateList.js');
-const Task = require('../models/Task.js');
-const User = require('../models/User.js');
-const Comment = require('../models/Comment');
-const List = require('../models/List');
-const News = require('../models/News');
+const Ingredient = require('./Ingredient.js');
+const CookingMethod = require('./CookingMethod.js');
+const Dish = require('./Dish.js');
+const Group = require('./Group.js');
+const GroupList = require('./GroupList.js');
+const PrivateList = require('./PrivateList.js');
+const Task = require('./Task.js');
+const User = require('./User.js');
+const Comment = require('./Comment.js');
+const List = require('./List.js');
+const News = require('./News.js');
 
 module.exports = {
   Ingredient, CookingMethod, Comment, Dish, Group, GroupList, PrivateList, Task, User, List, News
