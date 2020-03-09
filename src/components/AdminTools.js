@@ -17,15 +17,17 @@ import MethodCount from './widgets/MethodCount';
 import TrackedStopsCount from './widgets/TrackedStopsCount';
 import UserCount from './widgets/UserCount';
 import {Redirect} from 'react-router-dom';
+import News from './News';
+import Users from './Users';
 
 const mapStateToProps = (state) => {
   return {
-    appState: state.appState
+    appState: state.appState,
+    user: state.loginState.user
   };
 };
 
 const AdminTools = (props) => {
-
   const WidgetsCommon = () => {
     return (
       <div className='appWidgets'>
@@ -49,13 +51,14 @@ const AdminTools = (props) => {
     );
   };
 
-  return props.show
+  return props.show && props.user && (props.user.getRole() === 'admin' || props.user.getRole() === 'owner')
     ? <div className='app'>
-      <div className='container'>
+      <div className='commonElements'>
         <h4 className={classProvider(props.appState.theme, 'heading')}>App statistics:</h4>
         <WidgetsCommon/>
         <WidgetsAdvanced/>
-        <h4 className={classProvider(props.appState.theme, 'heading')}>User management:</h4>
+        <News mode='admin'/>
+        <Users/>
         <h4 className={classProvider(props.appState.theme, 'heading')}>Group management:</h4>
       </div>
     </div>

@@ -12,6 +12,7 @@ import {InlineIcon} from '@iconify/react';
 import {useQuery} from '@apollo/react-hooks';
 
 import {NEWS} from '../core/graphql/rff/queries/q_news';
+import News from './News';
 
 const mapStateToProps = (state) => {
   return {
@@ -21,35 +22,6 @@ const mapStateToProps = (state) => {
 };
 
 const LandingPage = (props) => {
-  const {data, error, loading} = useQuery(NEWS);
-
-  const Error = () => {
-    return <>
-      <h4 className={classProvider(props.appState.theme, 'description')}>News:</h4>
-      <p className={classProvider(props.appState.theme, 'tileError')}>Error occurred</p>
-    </>;
-  };
-  const Loading = () => {
-    return <>
-      <h4 className={classProvider(props.appState.theme, 'description')}>News:</h4>
-      <p className={classProvider(props.appState.theme, 'tileLoading')}>loading . . .</p>
-    </>;
-  };
-
-  const News = () => {
-    const news = data.news;
-    return news.length > 0
-      ? <>
-        <h4 className={classProvider(props.appState.theme, 'description')}>News:</h4>
-        <ul>
-          {news.map((n) => {
-            return <li key={n.id} className={classProvider(props.appState.theme, 'news')}>{n.news}</li>;
-          })}</ul>
-      </> : <>
-        <h4 className={classProvider(props.appState.theme, 'description')}>News:</h4>
-        <p className={classProvider(props.appState.theme, 'news')}>no news</p>
-      </>;
-  };
 
   const Locked = () => {
     return (
@@ -73,16 +45,6 @@ const LandingPage = (props) => {
     );
   };
 
-  const AdditionalInfo = () => {
-    return (
-      <div className='commonElements'>
-        {loading && <Loading/>}
-        {error && <Error/>}
-        {data && <News/>}
-      </div>
-    );
-  };
-
   return (
     <div className='app'>
       <div className='container'>
@@ -90,7 +52,7 @@ const LandingPage = (props) => {
           ? <Locked/>
           : <Unlocked/>
         }
-        <AdditionalInfo/>
+        <News mode='landing'/>
       </div>
     </div>
   );
