@@ -135,7 +135,6 @@ const findGroups = async (args) => {
 
 // list counter
 const countLists = async (all, user) => {
-  console.log(user);
   if (all) {
     return await List.collection.countDocuments();
   } else {
@@ -525,6 +524,12 @@ const resolvers = {
     id: (root) => root._id,
     stops: (root) => root.stops
   },
+  News: {
+    content: (root) => root.content,
+    category: (root) => root.category,
+    id: (root) => root._id,
+    author: (root) => root.author
+  },
   Query: {
     me: async (root, args) => {
       const decodedToken = await jwt.verify(args.token, config.secret);
@@ -669,61 +674,64 @@ const resolvers = {
         throw new AuthenticationError('Insufficient clearance!');
       }
     },
-    news: async () => await News.find({}).populate('addedBy'),
-    categoryNews: async (root, args) => await News.find({category: args.category}).populate('addedBy')
+    news: async () => await News.find({}),
+    categoryNews: async (root, args) => await News.find({category: args.category})
   },
   Mutation: {
     addNews: async (root, args) => {
       const decodedToken = await jwt.verify(args.token, config.secret);
       const user = await User.findById(decodedToken.id);
-      if (user && (user.role === 'admin' || user.role === 'owner')) {
+      if (user.role === 'admin' || user.role === 'owner') {
         let news = new News({
-          news: args.news,
+          content: args.content,
           category: args.category,
-          addedBy: user._id.toString()
+          author: user._id.toString()
         });
         try {
           await news.save();
         } catch (e) {
           throw new UserInputError(e.message, { invalidArgs: args });
         }
-        news = await News.findOne({news: args.news}).populate('addedBy');
+        news = await News.findOne({content: args.content});
+        await pubsub.publish('NEWS_ADDED', { newsAdded: news });
         return news;
       } else {
-        throw new AuthenticationError('Session error: you must be logged in!');
+        throw new AuthenticationError('Insufficient clearance!');
       }
     },
     editNews: async (root, args) => {
       const decodedToken = await jwt.verify(args.token, config.secret);
       const user = await User.findById(decodedToken.id);
-      if (user && (user.role === 'admin' || user.role === 'owner')) {
+      if (user.role === 'admin' || user.role === 'owner') {
         let news = await News.findById(args.id);
-        news.news = args.news;
+        news.content = args.content;
         news.category = args.category;
         try {
           await news.save();
         } catch (e) {
           throw new UserInputError(e.message, { invalidArgs: args });
         }
-        news = await News.findById(args.id).populate('addedBy');
+        news = await News.findById(args.id);
+        await pubsub.publish('NEWS_UPDATED', { newsUpdated: news });
         return news;
       } else {
-        throw new AuthenticationError('Session error: you must be logged in!');
+        throw new AuthenticationError('Insufficient clearance!');
       }
     },
     removeNews: async (root, args) => {
       const decodedToken = await jwt.verify(args.token, config.secret);
       const user = await User.findById(decodedToken.id);
-      if (user && (user.role === 'admin' || user.role === 'owner')) {
-        const news = await News.findById(args.id).populate('addedBy');
+      if (user.role === 'admin' || user.role === 'owner') {
+        const news = await News.findById(args.id);
         try {
           await news.remove();
         } catch (e) {
           throw new UserInputError(e.message, { invalidArgs: args });
         }
+        await pubsub.publish('NEWS_REMOVED', { newsRemoved: news });
         return news;
       } else {
-        throw new AuthenticationError('Session error: you must be logged in!');
+        throw new AuthenticationError('Insufficient clearance!');
       }
     },
     addIngredient: async (root, args) => {
@@ -741,7 +749,7 @@ const resolvers = {
         } catch (e) {
           throw new UserInputError(e.message, { invalidArgs: args });
         }
-	ingredient = await Ingredient.findOne({name: args.name}).populate('addedBy');
+	      ingredient = await Ingredient.findOne({name: args.name}).populate('addedBy');
         await pubsub.publish('INGREDIENT_ADDED', { ingredientAdded: ingredient });
         return ingredient;
       } else {
@@ -1330,6 +1338,15 @@ const resolvers = {
     }
   },
   Subscription: {
+    newsAdded: {
+      subscribe: () => pubsub.asyncIterator('NEWS_ADDED')
+    },
+    newsUpdated: {
+      subscribe: () => pubsub.asyncIterator('NEWS_UPDATED')
+    },
+    newsRemoved: {
+      subscribe: () => pubsub.asyncIterator('NEWS_REMOVED')
+    },
     ingredientAdded: {
       subscribe: () => pubsub.asyncIterator('INGREDIENT_ADDED')
     },

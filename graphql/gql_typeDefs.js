@@ -80,9 +80,9 @@ const typeDefs = gql`
     stops: [String!]!
   }
   type News {
-    news: String!,
-    category: String!,
-    addedBy: User!,
+    content: String!
+    category: String!
+    author: User!
     id: ID!
   }
   type Query {
@@ -115,8 +115,8 @@ const typeDefs = gql`
     categoryNews(category: String!): [News!]!
   }
   type Mutation {
-    addNews(token: String!, category: String!, news: String!): News!,
-    editNews(token: String!, id: String!, news: String!, category: String!): News!,
+    addNews(token: String!, category: String!, content: String!): News!,
+    editNews(token: String!, id: String!, content: String!, category: String!): News!,
     removeNews(token: String!, id: String!): News!,
     addIngredient(token: String!, type: String!, name: String!): Ingredient!,
     removeIngredient(token: String!, id: String!): Ingredient!,
@@ -154,6 +154,9 @@ const typeDefs = gql`
     login(username: String!, password: String!): Token!
   }
   type Subscription {
+    newsAdded: News!
+    newsUpdated: News!
+    newsRemoved: News!
     ingredientAdded: Ingredient!
     ingredientUpdated: Ingredient!
     ingredientRemoved: Ingredient!
