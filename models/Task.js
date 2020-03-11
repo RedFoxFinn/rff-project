@@ -23,7 +23,7 @@ const TaskSchema = new mongoose.Schema({
   },
   listID: {
     required: true,
-    type: mongoose.Schema.Types.ObjectId
+    type: String
   }
 });
 
