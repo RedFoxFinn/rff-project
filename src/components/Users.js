@@ -15,7 +15,6 @@ import {UPDATE_USER} from '../core/graphql/rff/mutations/m_updateUser';
 import {REMOVE_USER} from '../core/graphql/rff/mutations/m_removeUser';
 
 import {handleInfo, handleError} from '../core/store/reducers/AppReducer';
-import {Redirect} from 'react-router-dom';
 
 const mapStateToProps = (state) => {
   return {
@@ -138,14 +137,14 @@ const Users = (props) => {
     );
   };
 
-  return props.user && (props.user.getRole() === 'admin' || props.user.getRole() === 'owner')
+  return props.user.getRole() === 'admin' || props.user.getRole() === 'owner'
     ?
     <>
       {error && <Error/>}
       {loading && <Loading/>}
       {data && <ManageUsers/>}
     </>
-    : <Redirect push to='/'/>;
+    : null;
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Users);

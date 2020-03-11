@@ -19,6 +19,7 @@ import UserCount from './widgets/UserCount';
 import {Redirect} from 'react-router-dom';
 import News from './News';
 import Users from './Users';
+import Groups from './Groups';
 
 const mapStateToProps = (state) => {
   return {
@@ -59,7 +60,7 @@ const AdminTools = (props) => {
         <WidgetsAdvanced/>
         <News mode='admin'/>
         <Users/>
-        <h4 className={classProvider(props.appState.theme, 'heading')}>Group management:</h4>
+        <Groups/>
       </div>
     </div>
     : <Redirect push to='/'/>;

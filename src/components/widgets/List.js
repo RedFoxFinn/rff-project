@@ -8,7 +8,6 @@ import userShield from '@iconify/icons-fa-solid/user-shield';
 import usersIcon from '@iconify/icons-fa-solid/users';
 import chevronUp from '@iconify/icons-fa-solid/chevron-up';
 import chevronDown from '@iconify/icons-fa-solid/chevron-down';
-import {ADD_TASK} from '../../core/graphql/rff/mutations/m_addTask';
 import Task from './Task';
 import flagVariant from '@iconify/icons-mdi/flag-variant';
 import flagVariantOutline from '@iconify/icons-mdi/flag-variant-outline';
@@ -22,8 +21,6 @@ const mapStateToProps = (state) => {
 
 // task list rendering component
 const List = (props) => {
-  const handleSaveTask = props.handleSaveTask;
-  const updateCacheWithTask = props.updateCacheWithTask;
   const list = props.list;
   const userToken = localStorage.getItem('rffUserToken').substring(7);
   const [expanded, setExpanded] = useState(false);
@@ -77,7 +74,8 @@ const List = (props) => {
           </thead>
           <tbody>
             {tasks.map(t => {
-              return <Task key={t.id} status={true} task={t} updateCacheWithTask={updateCacheWithTask}/>;
+              return <Task key={t.id} status='data' task={t} handlePriority={props.handleTaskPriority}
+                handleCompletion={props.handleTaskCompletion} handleRemoval={props.handleRemoveTask}/>;
             })}
           </tbody>
         </table>
@@ -125,7 +123,7 @@ const List = (props) => {
               </td>
               <td className={classProvider(props.theme, 'tableCell')}>
                 <button type='button' className={classProvider(props.theme, 'activator')}
-                  onClick={() => handleSaveTask(list.id, priority)}>save list</button>
+                  onClick={() => props.handleSaveTask(list.id, priority)}>save list</button>
               </td>
             </tr>
           </tbody>

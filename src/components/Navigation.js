@@ -14,6 +14,10 @@ import '../core/style/global.css';
 
 import {ME} from '../core/graphql/rff/queries/q_me';
 import {useApolloClient} from '@apollo/react-hooks';
+import {InlineIcon} from '@iconify/react';
+import loginOutlined from '@iconify/icons-ant-design/login-outlined';
+import logoutOutlined from '@iconify/icons-ant-design/logout-outlined';
+import settingOutlined from '@iconify/icons-ant-design/setting-outlined';
 
 const mapStateToProps = (state) => {
   return {
@@ -27,7 +31,6 @@ const mapDispatchToProps = {
 };
 
 const Navigation = (props) => {
-
   const client = useApolloClient();
   const themes = ['light', 'dark'];
   const theme = props.appState.theme;
@@ -42,18 +45,18 @@ const Navigation = (props) => {
   const MenuModule = () => {
     return (
       <div className={classProvider(theme, 'navMenu')}>
-        <button className={classProvider(theme, 'navButton')}>menu</button>
+        <button id='rffMenu' className={classProvider(theme, 'navButton')}>Menu</button>
         <div className={classProvider(theme, 'navContent')}>
           <Link to='/' onClick={() => props.switchApp('Home')}>Home</Link>
           <Link to='/dashboard' onClick={() => props.switchApp('Dashboard')}>Dashboard</Link>
-          <Link to='/calculate' onClick={() => props.switchApp( 'Calculate')}>Calculate</Link>
-          <Link to='/countries' onClick={() => props.switchApp( 'OpenCountry')}>OpenCountry</Link>
-          <Link to='/dishy' onClick={() => props.switchApp( 'Dishy')}>Dishy</Link>
-          {props.loginState.user && <Link to='/tasker' onClick={() => props.switchApp( 'Tasker')}>Tasker</Link>}
-          <Link to='/transit' onClick={() => props.switchApp( 'Transporter')}>Transporter</Link>
+          <Link to='/calculate' onClick={() => props.switchApp('Calculate')}>Calculate</Link>
+          <Link to='/countries' onClick={() => props.switchApp('OpenCountry')}>OpenCountry</Link>
+          <Link to='/dishy' onClick={() => props.switchApp('Dishy')}>Dishy</Link>
+          {props.loginState.user && <Link to='/tasker' onClick={() => props.switchApp('Tasker')}>Tasker</Link>}
+          <Link to='/transit' onClick={() => props.switchApp('Transporter')}>Transporter</Link>
           {props.loginState.user && (props.loginState.user.getRole() === 'admin' || props.loginState.user.getRole() === 'owner')
-            && <Link to='/admin' onClick={() => props.switchApp( 'Admin tools')}>Admin tools</Link>}
-          <Link to='/about' onClick={() => props.switchApp( 'About')}>About</Link>
+            && <Link to='/admin' onClick={() => props.switchApp('Admin tools')}>Admin tools</Link>}
+          <Link to='/about' onClick={() => props.switchApp('About')}>About</Link>
           <ThemeSelector/>
         </div>
       </div>
@@ -64,7 +67,7 @@ const Navigation = (props) => {
   const ThemeSelector = () => {
     return (
       <div className={classProvider(theme, 'navSubMenu')}>
-        <button className={classProvider(theme, 'navSubButton')}>
+        <button id='rffTheme' className={classProvider(theme, 'navSubButton')}>
           <strong>{props.appState.theme}</strong> theme selected
         </button>
         <div className={classProvider(theme, 'navSubContent')}>
@@ -81,18 +84,18 @@ const Navigation = (props) => {
     if (!localStorage.getItem('rffUserToken')) {
       return (
         <div className={classProvider(theme, 'loginMenu')}>
-          <Link to='/login' onClick={() => props.switchApp('Login')}>login</Link>
+          <Link id='rffLogin' to='/login' title='login' onClick={() => props.switchApp('Login')}>Login</Link>
         </div>
       );
     } else {
       return (
         <div className={classProvider(theme, 'navMenu')}>
-          <button type='button' className={classProvider(theme, 'navButton')}>
+          <button id='rffUsermenu' type='button' className={classProvider(theme, 'navButton')}>
             {props.loginState.user !== null ? props.loginState.user.getUsername() : null}
           </button>
           <div className={classProvider(theme, 'navContent')}>
-            <Link to='/user' onClick={() => props.switchApp('UserSettings')}>settings</Link>
-            <Link to='/' onClick={() => logout()}>logout</Link>
+            <Link id='rffUsersettings' to='/user' title='settings' onClick={() => props.switchApp('UserSettings')}>Settings</Link>
+            <Link id='rffLogout' to='/' title='logout' onClick={() => logout()}>Logout</Link>
           </div>
         </div>
       );

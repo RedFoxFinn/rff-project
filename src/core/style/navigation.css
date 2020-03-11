@@ -11,14 +11,15 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    padding: 0.5em 1em;
 }
 .navMenuLi {
     position: relative;
-    display: inline-block;
+    display: block;
 }
 .navMenuDa {
     position: relative;
-    display: inline-block;
+    display: block;
 }
 .navButtonLi {
     border: none;
@@ -59,25 +60,29 @@
     z-index: 1;
 }
 .navContentLi a {
-    margin: 1em;
-    display: block;
+    padding: 0.5em;
+    margin: 0.5em;
+    display: inline-flex;
     color: black;
     text-decoration: none;
     cursor: pointer;
 }
 .navContentDa a {
-    margin: 1em;
-    display: block;
+    padding: 0.5em;
+    margin: 0.5em;
+    display: inline-flex;
     color: black;
     text-decoration: none;
     cursor: pointer;
 }
 .navContentLi a:hover {
+    color: var(--googlered);
 }
 .navMenuLi:hover .navContentLi {
     display: block;
 }
 .navContentDa a:hover {
+    color: var(--googlered);
 }
 .navMenuDa:hover .navContentDa {
     display: block;

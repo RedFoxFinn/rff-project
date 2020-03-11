@@ -130,7 +130,7 @@ const Tasker = (props) => {
           updateCacheWithGrouplist('added', data.addListGroup);
           document.getElementById('newGrouplistTitle').value = '';
         } else {
-          handleError(`Error occurred with list: cannot add ${variables.title}`);
+          props.handleError(`Error occurred with list: cannot add ${variables.title}`);
         }
       });
     } else {
@@ -148,12 +148,12 @@ const Tasker = (props) => {
           updateCacheWithPrivatelist('added', data.addListPrivate);
           document.getElementById('newPrivatelistTitle').value = '';
         } else {
-          handleError(`Error occurred with list: cannot add ${variables.title}`);
+          props.handleError(`Error occurred with list: cannot add ${variables.title}`);
         }
       });
     }
   };
-  // helper function: task saving handler
+  // helper functions: task handlers
   const handleSaveTask = async (listID, priority) => {
     const variables = {
       token: userToken,
@@ -171,10 +171,65 @@ const Tasker = (props) => {
         if (data !== null) {
           updateCacheWithTask('added', data.addTask);
         } else {
-          handleError(`Error occurred with task: cannot add ${variables.task}`);
+          props.handleError(`Error occurred with task: cannot add ${variables.task}`);
         }
       });
     }
+  };
+  const handleTaskPriority = async ({id, priority, task}) => {
+    const variables = {
+      token: userToken,
+      id: id,
+      priority: !priority
+    };
+    await client.mutate({
+      mutation: TASK_PRIORITY,
+      variables: variables,
+      errorPolicy: 'ignore'
+    }).then((result) => {
+      const {data} = result;
+      if (data !== null) {
+        updateCacheWithTask('updated', data.taskPriority);
+      } else {
+        props.handleError(`Error occurred with task: cannot update ${task}`);
+      }
+    });
+  };
+  const handleTaskCompletion = async ({id, task, active}) => {
+    const variables = {
+      token: userToken,
+      id: id
+    };
+    await client.mutate({
+      mutation: active ? TASK_DEACTIVATION : TASK_ACTIVATION,
+      variables: variables,
+      errorPolicy: 'ignore'
+    }).then((result) => {
+      const {data} = result;
+      if (data !== null) {
+        updateCacheWithTask('updated', active ? data.taskDeactivation : data.taskActivation);
+      } else {
+        props.handleError(`Error occurred with task: cannot update ${task}`);
+      }
+    });
+  };
+  const handleTaskRemoval = async ({id, task}) => {
+    const variables = {
+      token: userToken,
+      id: id
+    };
+    await client.mutate({
+      mutation: REMOVE_TASK,
+      errorPolicy: 'ignore',
+      variables: variables
+    }).then((result) => {
+      const {data} = result;
+      if (data !== null) {
+        updateCacheWithTask('removed', data.removeTask);
+      } else {
+        props.handleError(`Error occurred with task: cannot remove ${task}`);
+      }
+    });
   };
 
   // helper functions for subscriptions
@@ -197,7 +252,7 @@ const Tasker = (props) => {
           },
           data: {tasks: dataInStore.tasks.concat(task)}
         });
-        handleInfo(`Task added: ${task.task}`);
+        props.handleInfo(`Task added: ${task.task}`);
       }
       break;
     case 'updated':
@@ -213,7 +268,7 @@ const Tasker = (props) => {
               return t.id === task.id ? task : t;
             })}
         });
-        handleInfo(`Task updated: ${task.task}`);
+        props.handleInfo(`Task updated: ${task.task}`);
       }
       break;
     case 'removed':
@@ -229,7 +284,7 @@ const Tasker = (props) => {
               if (t.id !== task.id) return t;
             })}
         });
-        handleInfo(`Task removed: ${task.task}`);
+        props.handleInfo(`Task removed: ${task.task}`);
       }
       break;
     default:
@@ -253,7 +308,7 @@ const Tasker = (props) => {
           },
           data: {privateLists: dataInStore.privateLists.concat(list)}
         });
-        handleInfo(`List added: ${list.title}`);
+        props.handleInfo(`List added: ${list.title}`);
       }
       break;
     case 'updated':
@@ -283,7 +338,7 @@ const Tasker = (props) => {
               if (l.id !== list.id) return l;
             })}
         });
-        handleInfo(`List removed: ${list.title}`);
+        props.handleInfo(`List removed: ${list.title}`);
       }
       break;
     default:
@@ -309,7 +364,7 @@ const Tasker = (props) => {
           },
           data: {groupLists: dataInStore.groupLists.concat(list)}
         });
-        handleInfo(`List added: ${list.title}`);
+        props.handleInfo(`List added: ${list.title}`);
       }
       break;
     case 'updated':
@@ -324,7 +379,7 @@ const Tasker = (props) => {
               return l.id === list.id ? list : l;
             })}
         });
-        handleInfo(`List updated: ${list.title}`);
+        props.handleInfo(`List updated: ${list.title}`);
       }
       break;
     case 'removed':
@@ -339,7 +394,7 @@ const Tasker = (props) => {
               if (l.id !== list.id) return l;
             })}
         });
-        handleInfo(`List removed: ${list.title}`);
+        props.handleInfo(`List removed: ${list.title}`);
       }
       break;
     default:
@@ -403,7 +458,8 @@ const Tasker = (props) => {
           <AddList listType='private'/>
           {data && data.privateLists.length > 0
             ? <>{data.privateLists.map(l =>
-              <List key={`privateList:${l.id}`} list={l} handleSaveTask={handleSaveTask}
+              <List key={`privateList:${l.id}`} list={l} handleSaveTask={handleSaveTask} handleRemoveTask={handleTaskRemoval}
+                handleTaskCompletion={handleTaskCompletion} handleTaskPriority={handleTaskPriority}
                 updateCacheWithTask={updateCacheWithTask}/>)}</>
             : <Empty type='private'/>}
         </div>

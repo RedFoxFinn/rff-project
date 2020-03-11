@@ -3,6 +3,8 @@
 describe('Home, Register & Login -pages', () => {
   it('home', () => {
     cy.visit('/');
+    cy.contains('Menu');
+    cy.contains('Login');
     cy.contains('If you want to use these advanced features, please log in.');
   });
   it('/register', () => {
@@ -90,5 +92,22 @@ describe('Dishy', () => {
     cy.contains('Proteins:');
     cy.contains('Spices:');
     cy.contains('Cooking methods:');
+  });
+});
+
+describe('Menu', () => {
+  before(() => {
+    cy.visit('/');
+  });
+  it('/, Menu', () => {
+    cy.get('#rffMenu').click();
+    cy.contains('Home');
+    cy.contains('Dashboard');
+    cy.contains('Calculate');
+    cy.contains('OpenCountry');
+    cy.contains('Dishy');
+    cy.contains('Transporter');
+    cy.contains('About');
+    cy.contains('theme selected');
   });
 });
