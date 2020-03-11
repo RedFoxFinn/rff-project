@@ -15,7 +15,7 @@ const { resolvers } = require('../graphql/gql_resolvers');
 const tester = new EasyGraphQLTester(typeDefs, resolvers);
 
 const { Ingredient, CookingMethod, Comment, Dish, Group,
-  GroupList, PrivateList, Task, User } = require('../models/modelImporter');
+  GroupList, PrivateList, Task, User, News } = require('../models/modelImporter');
 
 // sample data for testing
 const samples = {
@@ -153,6 +153,33 @@ const samples = {
   },
   dishNote1: 'This dish isn\'t very good',
   dishNote2: 'This dish is delicious',
+  news: [
+    {
+      content: 'This is a test',
+      category: 'test'
+    },{
+      content: 'This is a test too',
+      category: 'test'
+    }
+  ],
+  devNews: [
+    {
+      content: 'Tasker is now in testing phase',
+      category: 'milestone'
+    },{
+      content: 'Dishy is now in testing phase',
+      category: 'milestone'
+    },{
+      content: 'News is now in testing phase',
+      category: 'milestone'
+    },{
+      content: 'Additional translations for Finnish will be delayed',
+      category: 'feature'
+    },{
+      content: 'Transporter will be delayed',
+      category: 'feature'
+    }
+  ]
 };
 
 // list test helpers
@@ -237,10 +264,13 @@ const resetDB = async () => {
   await resetGroups();
   await resetListsGroup();
   await resetListsPrivate();
+  await resetNews();
   await resetTasks();
   await resetUsers();
   await setNullUser();
   await setDummyUser();
+  const nullUser = await User.findOne({username: samples.nullUser.username});
+  await setDevNews(nullUser._id.toString());
 };
 
 // helper functions for resetting
@@ -253,6 +283,7 @@ const resetListsGroup = async () => await GroupList.deleteMany({});
 const resetListsPrivate = async () => await PrivateList.deleteMany({});
 const resetTasks = async () => await Task.deleteMany({});
 const resetUsers = async () => await User.deleteMany({});
+const resetNews = async () => await News.deleteMany({});
 const setNullUser = async () => {
   try {
     await new User({
@@ -266,6 +297,15 @@ const setNullUser = async () => {
   } catch (e) {
     console.error(e);
   }
+};
+const setDevNews = (userID) => {
+  samples.devNews.forEach(async dn => {
+    await new News({
+      content: dn.content,
+      category: dn.category,
+      author: userID
+    }).save();
+  });
 };
 const setIngredients = async (userID) => {
   let result = 0;
@@ -292,6 +332,26 @@ const setSpices = async (userID) => {
 // helpers functions creating queries & mutations
 const createQuery = (queryType) => {
   switch (queryType) {
+  case 'news':
+    return gql`
+      query news {
+        news {
+          content
+          category
+          id
+        }
+      }
+    `;
+  case 'categoryNews':
+    return gql`
+      query categoryNews($category: String!) {
+        categoryNews(category: $category) {
+          content
+          category
+          id
+        }
+      }
+    `;
   case 'userCount':
     return gql`
       query userCount($token: String!) {
@@ -544,6 +604,36 @@ const createQuery = (queryType) => {
 
 const createMutation = (mutationType) => {
   switch (mutationType) {
+  case 'addNews':
+    return gql`
+      mutation addNews($token: String!, $content: String!, $category: String!) {
+        addNews(token: $token, content: $content, category: $category) {
+          content
+          category
+          id
+        }
+      }
+    `;
+  case 'editNews':
+    return gql`
+      mutation editNews($token: String!, $id: String!, $content: String!, $category: String!) {
+        editNews(token: $token, id: $id, content: $content, category: $category) {
+          content
+          category
+          id
+        }
+      }
+    `;
+  case 'removeNews':
+    return gql`
+      mutation removeNews($token: String!, $id: String!) {
+        removeNews(token: $token, id: $id) {
+          content
+          category
+          id
+        }
+      }
+    `;
   case 'login':
     return gql`
       mutation login($username: String!, $password: String!) {
@@ -950,7 +1040,9 @@ beforeAll(async () => {
   } catch (e) {
     console.error('Connection to Atlas - MongoDB cloud: failed');
   } finally {
+    console.error('resetting testing database . . .');
     await resetDB();
+    console.log('done');
   }
 });
 
@@ -965,10 +1057,12 @@ describe('test:dummy', () => {
   test('dummy, success', () => {
     const x = process.env.NODE_ENV === 'testing' ? 'dummy' : 'notDummy';
     expect(x).toBe('dummy');
+    console.log('dummy - success: done');
   });
   test('dummy, fail', () => {
     const x = process.env.NODE_ENV === 'development' ? 'dummy' : 'notDummy';
     expect(x).toBe('notDummy');
+    console.log('dummy - fail: done');
   });
 });
 
@@ -993,7 +1087,8 @@ describe('API:test:user', () => {
     const { errors } = await tester.graphql(mutation, undefined, undefined, variables);
     expect(errors).toBeDefined();
     const message = errors[0].message;
-    expect(message).toMatch('Incorrect username or password!');
+    expect(message).toMatch('Invalid credentials!');
+    console.log('login - gql - fail: done');
   });
 
   test('login:gql, success', async () => {
@@ -1006,6 +1101,7 @@ describe('API:test:user', () => {
     expect(data).toBeDefined();
     expect(data.login).toBeDefined();
     masterToken = data.login.value;
+    console.log('login - gql - success: done');
   });
 
   test('userCount', async () => {
@@ -1017,6 +1113,7 @@ describe('API:test:user', () => {
     expect(data).toBeDefined();
     expect(data.userCount).toBeDefined();
     expect(data.userCount).toBe(2);
+    console.log('usercount: done');
   });
 
   test('addUser, unique', async () => {
@@ -1030,6 +1127,7 @@ describe('API:test:user', () => {
     expect(data.addUser).toBeDefined();
     expect(data.addUser).toHaveProperty('username', samples.user1.username);
     user = data.addUser;
+    console.log('adduser - unique: done');
   });
 
   test('addUser, not unique', async () => {
@@ -1042,6 +1140,7 @@ describe('API:test:user', () => {
     expect(errors).toBeDefined();
     const message = errors[0].message.substring(0, 38);
     expect(message).toMatch('E11000 duplicate key error collection:');
+    console.log('adduser - not unique: done');
   });
 
   test('new user, login:gql, fail', async () => {
@@ -1053,7 +1152,8 @@ describe('API:test:user', () => {
     const { errors } = await tester.graphql(mutation, undefined, undefined, variables);
     expect(errors).toBeDefined();
     const message = errors[0].message;
-    expect(message).toMatch('Incorrect username or password!');
+    expect(message).toMatch('Invalid credentials!');
+    console.log('new user - login - gql - fail: done');
   });
 
   test('new user, login:gql, success', async () => {
@@ -1066,6 +1166,7 @@ describe('API:test:user', () => {
     expect(data).toBeDefined();
     expect(data.login).toBeDefined();
     token = data.login.value;
+    console.log('new user - login - gql - success: done');
   });
 
   test('userCount, revisited', async () => {
@@ -1077,6 +1178,7 @@ describe('API:test:user', () => {
     expect(data).toBeDefined();
     expect(data.userCount).toBeDefined();
     expect(data.userCount).toBe(3);
+    console.log('usercount - revisited: done');
   });
 
   test('users, active', async () => {
@@ -1089,6 +1191,7 @@ describe('API:test:user', () => {
     expect(data).toBeDefined();
     expect(data.users).toBeDefined();
     expect(data.users.length).toBe(2);
+    console.log('users - active: done');
   });
   test('users, role', async () => {
     const query = await createQuery('users');
@@ -1100,6 +1203,7 @@ describe('API:test:user', () => {
     expect(data).toBeDefined();
     expect(data.users).toBeDefined();
     expect(data.users.length).toBe(2);
+    console.log('users - role: done');
   });
   test('users, username', async () => {
     const query = await createQuery('users');
@@ -1112,6 +1216,7 @@ describe('API:test:user', () => {
     expect(data.users).toBeDefined();
     expect(data.users.length).toBe(1);
     expect(data.users[0].username).toMatch(samples.user1.username);
+    console.log('users - username: done');
   });
   test('users, noArgs', async () => {
     const query = await createQuery('users');
@@ -1122,6 +1227,7 @@ describe('API:test:user', () => {
     expect(data).toBeDefined();
     expect(data.users).toBeDefined();
     expect(data.users.length).toBe(3);
+    console.log('users - noargs: done');
   });
   test('updateUser:password, success', async () => {
     const mutation = await createMutation('updateUser');
@@ -1133,6 +1239,7 @@ describe('API:test:user', () => {
     const { data } = await tester.graphql(mutation, undefined, undefined, variables);
     expect(data).toBeDefined();
     expect(data.updateUser).toBeDefined();
+    console.log('updateuser - password - success: done');
   });
 
   test('updateUser:username, success', async () => {
@@ -1148,6 +1255,7 @@ describe('API:test:user', () => {
     expect(data.updateUser).toBeDefined();
     expect(data.updateUser.username).toMatch(reversed);
     usernameReversed = reversed;
+    console.log('updateuser - username - success: done');
   });
 
   test('updateUser, fail', async () => {
@@ -1160,7 +1268,8 @@ describe('API:test:user', () => {
     const { errors } = await tester.graphql(mutation, undefined, undefined, variables);
     expect(errors).toBeDefined();
     const message = errors[0].message;
-    expect(message).toMatch('Invalid authentication!');
+    expect(message).toMatch('Invalid credentials!');
+    console.log('updateuser - fail: done');
   });
 
   test('addStop', async () => {
@@ -1175,6 +1284,7 @@ describe('API:test:user', () => {
     expect(data.addStop.stops).toBeDefined();
     expect(data.addStop.stops.length).toBe(1);
     expect(data.addStop.stops[0]).toMatch(samples.stops[0]);
+    console.log('addstop: done');
   });
   test('removeStop', async () => {
     const mutation = await createMutation('removeStop');
@@ -1187,6 +1297,7 @@ describe('API:test:user', () => {
     expect(data.removeStop).toBeDefined();
     expect(data.removeStop.stops).toBeDefined();
     expect(data.removeStop.stops.length).toBe(0);
+    console.log('removestop: done');
   });
 
   test('deactivate user, fail', async () => {
@@ -1198,7 +1309,8 @@ describe('API:test:user', () => {
     const { errors } = await tester.graphql(mutation, undefined, undefined, variables);
     expect(errors).toBeDefined();
     const error = errors[0].message;
-    expect(error).toMatch('Session error: you must be logged in!');
+    expect(error).toMatch('You must be logged in!');
+    console.log('deactivateuser - fail: done');
   });
   test('deactivate user, success', async () => {
     const mutation = await createMutation('deactivateUser');
@@ -1210,6 +1322,7 @@ describe('API:test:user', () => {
     expect(data).toBeDefined();
     expect(data.deactivateUser).toBeDefined();
     expect(data.deactivateUser.username).toMatch(usernameReversed);
+    console.log('deactivateuser - success: done');
   });
   test('activate user, fail', async () => {
     const mutation = await createMutation('activateUser');
@@ -1220,7 +1333,8 @@ describe('API:test:user', () => {
     const { errors } = await tester.graphql(mutation, undefined, undefined, variables);
     expect(errors).toBeDefined();
     const error = errors[0].message;
-    expect(error).toMatch('Session error: you must be logged in!');
+    expect(error).toMatch('You must be logged in!');
+    console.log('activateuser - fail: done');
   });
   test('activate user, success', async () => {
     const mutation = await createMutation('activateUser');
@@ -1232,6 +1346,7 @@ describe('API:test:user', () => {
     expect(data).toBeDefined();
     expect(data.activateUser).toBeDefined();
     expect(data.activateUser.username).toMatch(usernameReversed);
+    console.log('activateuser - success: done');
   });
 
   test('removeUser, fail', async () => {
@@ -1245,6 +1360,7 @@ describe('API:test:user', () => {
     expect(errors).toBeDefined();
     const message = errors[0].message;
     expect(message).toMatch('Insufficient clearance!');
+    console.log('removeuser - fail: done');
   });
   test('removeUser, success', async () => {
     const mutation = await createMutation('removeUser');
@@ -1257,6 +1373,7 @@ describe('API:test:user', () => {
     expect(data).toBeDefined();
     expect(data.removeUser).toBeDefined();
     expect(data.removeUser.username).toMatch(usernameReversed);
+    console.log('removeuser - success: done');
   });
 });
 
@@ -1280,6 +1397,7 @@ describe('API:test:group', () => {
     const { data } = await tester.graphql(query, undefined, undefined, variables);
     expect(data).toBeDefined();
     expect(data.groupCount).toBe(0);
+    console.log('groupcount: done');
   });
   test('addGroup, unique, success', async () => {
     const mutation = await createMutation('addGroup');
@@ -1292,6 +1410,7 @@ describe('API:test:group', () => {
     expect(data.addGroup).toBeDefined();
     expect(data.addGroup.title).toBeDefined();
     expect(data.addGroup.title).toMatch(samples.group1.title);
+    console.log('addgroup - unique - success: done');
   });
   test('addGroup, non-unique, fail', async () => {
     const mutation = await createMutation('addGroup');
@@ -1303,6 +1422,7 @@ describe('API:test:group', () => {
     expect(errors).toBeDefined();
     const message = errors[0].message.substring(0, 38);
     expect(message).toMatch('E11000 duplicate key error collection:');
+    console.log('addgroup - not unique - fail: done');
   });
   test('groupCount, revisited', async () => {
     const query = await createQuery('groupCount');
@@ -1312,6 +1432,7 @@ describe('API:test:group', () => {
     const { data } = await tester.graphql(query, undefined, undefined, variables);
     expect(data).toBeDefined();
     expect(data.groupCount).toBe(1);
+    console.log('groupcount - revisited: done');
   });
   test('groups', async () => {
     const query = await createQuery('groups');
@@ -1324,6 +1445,7 @@ describe('API:test:group', () => {
     expect(data.groups.length).toBe(1);
     const group = data.groups[0];
     expect(group.title).toMatch(samples.group1.title);
+    console.log('groups: done');
   });
   test('allGroups, user', async () => {
     const query = await createQuery('allGroups');
@@ -1334,6 +1456,7 @@ describe('API:test:group', () => {
     expect(data).toBeDefined();
     expect(data.allGroups).toBeDefined();
     expect(data.allGroups.length).toBe(0);
+    console.log('allgroups - user: done');
   });
   test('allGroups, admin/owner', async () => {
     const query = await createQuery('allGroups');
@@ -1344,6 +1467,7 @@ describe('API:test:group', () => {
     expect(data).toBeDefined();
     expect(data.allGroups).toBeDefined();
     expect(data.allGroups.length).toBe(1);
+    console.log('allgroups - admin/owner: done');
   });
   test('updateGroup, fail', async () => {
     const mut1 = await createMutation('addGroup');
@@ -1365,6 +1489,7 @@ describe('API:test:group', () => {
     const message = errors[0].message.substring(0, 38);
     expect(message).toMatch('E11000 duplicate key error collection:');
     await Group.findOneAndDelete({ title: samples.group2.title });
+    console.log('updategroup - fail: done');
   });
   test('updateGroup, success', async () => {
     const mutation = await createMutation('updateGroup');
@@ -1378,6 +1503,7 @@ describe('API:test:group', () => {
     expect(data).toBeDefined();
     expect(data.updateGroup).toBeDefined();
     expect(data.updateGroup.title).toMatch(samples.group2.title);
+    console.log('updategroup - success: done');
   });
   test('removeGroup, fail', async () => {
     const mutation = await createMutation('removeGroup');
@@ -1390,6 +1516,7 @@ describe('API:test:group', () => {
     expect(errors).toBeDefined();
     const message = errors[0].message;
     expect(message).toMatch('Insufficient clearance!');
+    console.log('removegroup - fail: done');
   });
   test('removeGroup, success', async () => {
     const mutation = await createMutation('removeGroup');
@@ -1402,6 +1529,7 @@ describe('API:test:group', () => {
     expect(data).toBeDefined();
     expect(data.removeGroup).toBeDefined();
     expect(data.removeGroup.title).toMatch(samples.group2.title);
+    console.log('removegroup - success: done');
   });
 });
 
@@ -1426,6 +1554,7 @@ describe('API:test:carb', () => {
     expect(data).toBeDefined();
     expect(data.carbCount).toBeDefined();
     expect(data.carbCount).toBe(0);
+    console.log('carbcount: done');
   });
   test('addIngredient, carb, unique, success', async () => {
     const mutation = await createMutation('addIngredient');
@@ -1439,6 +1568,7 @@ describe('API:test:carb', () => {
     expect(data.addIngredient).toBeDefined();
     expect(data.addIngredient.name).toBeDefined();
     expect(data.addIngredient.name).toMatch(samples.carbs[0].name);
+    console.log('addingredient - carb - unique - success: done');
   });
   test('addIngredient, carb, non-unique, fail', async () => {
     const mutation = await createMutation('addIngredient');
@@ -1451,6 +1581,7 @@ describe('API:test:carb', () => {
     expect(errors).toBeDefined();
     const message = errors[0].message.substring(0, 38);
     expect(message).toMatch('E11000 duplicate key error collection:');
+    console.log('addingredient - carb - not unique - fail: done');
   });
   test('carbCount, revisited', async () => {
     const query = await createQuery('carbCount');
@@ -1458,12 +1589,14 @@ describe('API:test:carb', () => {
     expect(data).toBeDefined();
     expect(data.carbCount).toBeDefined();
     expect(data.carbCount).toBe(1);
+    console.log('carbcount - revisited: done');
   });
   test('allCarbs', async () => {
     const query = await createQuery('allCarbs');
     const { data } = await tester.graphql(query, undefined, undefined, {});
     expect(data).toBeDefined();
     expect(data.allCarbs).toBeDefined();
+    console.log('allcarbs: done');
   });
   test('removeIngredient, carb, fail', async () => {
     const mutation = await createMutation('removeIngredient');
@@ -1476,6 +1609,7 @@ describe('API:test:carb', () => {
     expect(errors).toBeDefined();
     const message = errors[0].message;
     expect(message).toMatch('Insufficient clearance!');
+    console.log('removeingredient - carb - fail: done');
   });
   test('removeIngredient, carb, success', async () => {
     const mutation = await createMutation('removeIngredient');
@@ -1489,6 +1623,7 @@ describe('API:test:carb', () => {
     expect(data.removeIngredient).toBeDefined();
     expect(data.removeIngredient.name).toBeDefined();
     expect(data.removeIngredient.name).toMatch(samples.carbs[0].name);
+    console.log('removeingredient - carb - success: done');
   });
 });
 
@@ -1513,6 +1648,7 @@ describe('API:test:cookingMethod', () => {
     expect(data).toBeDefined();
     expect(data.methodCount).toBeDefined();
     expect(data.methodCount).toBe(0);
+    console.log('methodcount: done');
   });
   test('addMethod, unique, success', async () => {
     const mutation = await createMutation('addMethod');
@@ -1525,6 +1661,7 @@ describe('API:test:cookingMethod', () => {
     expect(data.addMethod).toBeDefined();
     expect(data.addMethod.name).toBeDefined();
     expect(data.addMethod.name).toMatch(samples.methods[0].name);
+    console.log('addmethod - unique - success: done');
   });
   test('addMethod, non-unique, fail', async () => {
     const mutation = await createMutation('addMethod');
@@ -1536,6 +1673,7 @@ describe('API:test:cookingMethod', () => {
     expect(errors).toBeDefined();
     const message = errors[0].message.substring(0, 38);
     expect(message).toMatch('E11000 duplicate key error collection:');
+    console.log('addmethod - not unique - fail: done');
   });
   test('methodCount, revisited', async () => {
     const query = await createQuery('methodCount');
@@ -1543,11 +1681,13 @@ describe('API:test:cookingMethod', () => {
     expect(data).toBeDefined();
     expect(data.methodCount).toBeDefined();
     expect(data.methodCount).toBe(1);
+    console.log('methodcount - revisited: done');
   });
   test('allMethods', async () => {
     const query = await createQuery('allMethods');
     const { data } = await tester.graphql(query, undefined, undefined, {});
     expect(data).toBeDefined();
+    console.log('allmethods: done');
   });
   test('removeMethod, fail', async () => {
     const mutation = await createMutation('removeMethod');
@@ -1560,6 +1700,7 @@ describe('API:test:cookingMethod', () => {
     expect(errors).toBeDefined();
     const message = errors[0].message;
     expect(message).toMatch('Insufficient clearance!');
+    console.log('removemethod - fail: done');
   });
   test('removeMethod, success', async () => {
     const mutation = await createMutation('removeMethod');
@@ -1573,6 +1714,7 @@ describe('API:test:cookingMethod', () => {
     expect(data.removeMethod).toBeDefined();
     expect(data.removeMethod.name).toBeDefined();
     expect(data.removeMethod.name).toMatch(samples.methods[0].name);
+    console.log('removemethod - success: done');
   });
 });
 
@@ -1597,6 +1739,7 @@ describe('API:test:protein', () => {
     expect(data).toBeDefined();
     expect(data.proteinCount).toBeDefined();
     expect(data.proteinCount).toBe(0);
+    console.log('proteincount: done');
   });
   test('addIngredient, protein, unique, success', async () => {
     const mutation = await createMutation('addIngredient');
@@ -1610,6 +1753,7 @@ describe('API:test:protein', () => {
     expect(data.addIngredient).toBeDefined();
     expect(data.addIngredient.name).toBeDefined();
     expect(data.addIngredient.name).toMatch(samples.proteins[0].name);
+    console.log('addingredient - protein - unique - success: done');
   });
   test('addIngredient, protein, non-unique, fail', async () => {
     const mutation = await createMutation('addIngredient');
@@ -1622,6 +1766,7 @@ describe('API:test:protein', () => {
     expect(errors).toBeDefined();
     const message = errors[0].message.substring(0, 38);
     expect(message).toMatch('E11000 duplicate key error collection:');
+    console.log('addingredient - protein - not unique - fail: done');
   });
   test('proteinCount, revisited', async () => {
     const query = await createQuery('proteinCount');
@@ -1629,11 +1774,13 @@ describe('API:test:protein', () => {
     expect(data).toBeDefined();
     expect(data.proteinCount).toBeDefined();
     expect(data.proteinCount).toBe(1);
+    console.log('proteincount - revisited: done');
   });
   test('allProteins', async () => {
     const query = await createQuery('allProteins');
     const { data } = await tester.graphql(query, undefined, undefined, {});
     expect(data).toBeDefined();
+    console.log('allproteins: done');
   });
   test('removeIngredient, protein, fail', async () => {
     const mutation = await createMutation('removeIngredient');
@@ -1646,6 +1793,7 @@ describe('API:test:protein', () => {
     expect(errors).toBeDefined();
     const message = errors[0].message;
     expect(message).toMatch('Insufficient clearance!');
+    console.log('removeingredient - protein - fail: done');
   });
   test('removeIngredient, protein, success', async () => {
     const mutation = await createMutation('removeIngredient');
@@ -1659,6 +1807,7 @@ describe('API:test:protein', () => {
     expect(data.removeIngredient).toBeDefined();
     expect(data.removeIngredient.name).toBeDefined();
     expect(data.removeIngredient.name).toMatch(samples.proteins[0].name);
+    console.log('removeingredient - protein - success: done');
   });
 });
 
@@ -1683,6 +1832,7 @@ describe('API:test:spice', () => {
     expect(data).toBeDefined();
     expect(data.spiceCount).toBeDefined();
     expect(data.spiceCount).toBe(0);
+    console.log('spicecount: done');
   });
   test('addIngredient, spice, unique, success', async () => {
     const mutation = await createMutation('addIngredient');
@@ -1696,6 +1846,7 @@ describe('API:test:spice', () => {
     expect(data.addIngredient).toBeDefined();
     expect(data.addIngredient.name).toBeDefined();
     expect(data.addIngredient.name).toMatch(samples.spices[0].name);
+    console.log('addingredient - spice - unique - success: done');
   });
   test('addIngredient, spice, non-unique, fail', async () => {
     const mutation = await createMutation('addIngredient');
@@ -1708,6 +1859,7 @@ describe('API:test:spice', () => {
     expect(errors).toBeDefined();
     const message = errors[0].message.substring(0, 38);
     expect(message).toMatch('E11000 duplicate key error collection:');
+    console.log('addingredient - spice - not unique - fail: done');
   });
   test('spiceCount, revisited', async () => {
     const query = await createQuery('spiceCount');
@@ -1715,11 +1867,13 @@ describe('API:test:spice', () => {
     expect(data).toBeDefined();
     expect(data.spiceCount).toBeDefined();
     expect(data.spiceCount).toBe(1);
+    console.log('spicecount - revisited: done');
   });
   test('allSpices', async () => {
     const query = await createQuery('allSpices');
     const { data } = await tester.graphql(query, undefined, undefined, {});
     expect(data).toBeDefined();
+    console.log('allspices: done');
   });
   test('removeIngredient, spice, fail', async () => {
     const mutation = await createMutation('removeIngredient');
@@ -1732,6 +1886,7 @@ describe('API:test:spice', () => {
     expect(errors).toBeDefined();
     const message = errors[0].message;
     expect(message).toMatch('Insufficient clearance!');
+    console.log('removeingredient - spice - fail: done');
   });
   test('removeIngredient, spice, success', async () => {
     const mutation = await createMutation('removeIngredient');
@@ -1745,6 +1900,7 @@ describe('API:test:spice', () => {
     expect(data.removeIngredient).toBeDefined();
     expect(data.removeIngredient.name).toBeDefined();
     expect(data.removeIngredient.name).toMatch(samples.spices[0].name);
+    console.log('removeingredient - spice - success: done');
   });
 });
 
@@ -1794,6 +1950,7 @@ describe('API:test:dish', () => {
     expect(data).toBeDefined();
     expect(data.dishCount).toBeDefined();
     expect(data.dishCount).toBe(0);
+    console.log('dishcount: done');
   });
   test('addDish, unique, success', async () => {
     const values = {
@@ -1831,6 +1988,7 @@ describe('API:test:dish', () => {
     expect(data.addDish.cookingMethods[0].name).toMatch(values.method);
     expect(data.addDish.note).toMatch(values.note);
     expect(data.addDish.addedBy.username).toMatch(samples.nullUser.username);
+    console.log('adddish - unique - success: done');
   });
   test('addDish, non-unique, fail', async () => {
     const mutation = await createMutation('addDish');
@@ -1855,6 +2013,7 @@ describe('API:test:dish', () => {
     expect(errors).toBeDefined();
     const message = errors[0].message.substring(0, 38);
     expect(message).toMatch('E11000 duplicate key error collection:');
+    console.log('adddish - not unique - fail: done');
   });
   test('dishCount, revisited', async () => {
     const query = await createQuery('dishCount');
@@ -1862,6 +2021,7 @@ describe('API:test:dish', () => {
     expect(data).toBeDefined();
     expect(data.dishCount).toBeDefined();
     expect(data.dishCount).toBe(1);
+    console.log('dishcount - revisited: done');
   });
   test('allDishes', async () => {
     const query = await createQuery('allDishes');
@@ -1869,6 +2029,7 @@ describe('API:test:dish', () => {
     expect(data).toBeDefined();
     expect(data.allDishes).toBeDefined();
     expect(data.allDishes.length).toBe(1);
+    console.log('alldishes: done');
   });
   test('findDish, carb', async () => {
     const query = await createQuery('dishes');
@@ -1880,6 +2041,7 @@ describe('API:test:dish', () => {
     expect(data.dishes).toBeDefined();
     expect(data.dishes[0].carbs).toBeDefined();
     expect(data.dishes[0].carbs[0].name).toMatch(carbs.data.allCarbs[0].name);
+    console.log('finddish - carb: done');
   });
   test('findDish, method', async () => {
     const query = await createQuery('dishes');
@@ -1891,6 +2053,7 @@ describe('API:test:dish', () => {
     expect(data.dishes).toBeDefined();
     expect(data.dishes[0].cookingMethods).toBeDefined();
     expect(data.dishes[0].cookingMethods[0].name).toMatch(methods.data.allMethods[0].name);
+    console.log('finddish - method: done');
   });
   test('findDish, protein', async () => {
     const query = await createQuery('dishes');
@@ -1902,6 +2065,7 @@ describe('API:test:dish', () => {
     expect(data.dishes).toBeDefined();
     expect(data.dishes[0].proteins).toBeDefined();
     expect(data.dishes[0].proteins[0].name).toMatch(proteins.data.allProteins[0].name);
+    console.log('finddish - protein: done');
   });
   test('findDish, spice', async () => {
     const query = await createQuery('dishes');
@@ -1913,6 +2077,7 @@ describe('API:test:dish', () => {
     expect(data.dishes).toBeDefined();
     expect(data.dishes[0].spices).toBeDefined();
     expect(data.dishes[0].spices[0].name).toMatch(spices.data.allSpices[0].name);
+    console.log('finddish - spice: done');
   });
   test('findDish, carb & method', async () => {
     const query = await createQuery('dishes');
@@ -1927,6 +2092,7 @@ describe('API:test:dish', () => {
     expect(data.dishes[0].cookingMethods).toBeDefined();
     expect(data.dishes[0].cookingMethods[0].name).toMatch(methods.data.allMethods[0].name);
     expect(data.dishes[0].carbs[0].name).toMatch(carbs.data.allCarbs[0].name);
+    console.log('finddish - carb & method: done');
   });
   test('findDish, carb & method & spice', async () => {
     const query = await createQuery('dishes');
@@ -1944,6 +2110,7 @@ describe('API:test:dish', () => {
     expect(data.dishes[0].cookingMethods[0].name).toMatch(methods.data.allMethods[0].name);
     expect(data.dishes[0].carbs[0].name).toMatch(carbs.data.allCarbs[0].name);
     expect(data.dishes[0].spices[0].name).toMatch(spices.data.allSpices[0].name);
+    console.log('finddish - carb & method & spice: done');
   });
   test('findDish, carb & method & spice & protein', async () => {
     const query = await createQuery('dishes');
@@ -1964,6 +2131,7 @@ describe('API:test:dish', () => {
     expect(data.dishes[0].cookingMethods[0].name).toMatch(methods.data.allMethods[0].name);
     expect(data.dishes[0].carbs[0].name).toMatch(carbs.data.allCarbs[0].name);
     expect(data.dishes[0].spices[0].name).toMatch(spices.data.allSpices[0].name);
+    console.log('finddish - carb & method & spice & protein: done');
   });
   test('updateDish', async () => {
     const mutation = await createMutation('updateDish');
@@ -1992,6 +2160,7 @@ describe('API:test:dish', () => {
     expect(data.updateDish.spices.length).toBe(2);
     expect(data.updateDish.karma).toBe(-10);
     expect(data.updateDish.note).toMatch(samples.dishNote2);
+    console.log('updatedish: done');
   });
   test('dishKarma, up', async () => {
     const mutation = await createMutation('dishKarma');
@@ -2006,6 +2175,7 @@ describe('API:test:dish', () => {
     expect(data.dishKarma).toBeDefined();
     expect(data.dishKarma.name).toMatch(samples.dish1.name);
     expect(data.dishKarma.karma).toBe(-9);
+    console.log('dishkarma - up: done');
   });
   test('dishKarma, down', async () => {
     const mutation = await createMutation('dishKarma');
@@ -2020,6 +2190,7 @@ describe('API:test:dish', () => {
     expect(data.dishKarma).toBeDefined();
     expect(data.dishKarma.name).toMatch(samples.dish1.name);
     expect(data.dishKarma.karma).toBe(-10);
+    console.log('dishkarma - down: done');
   });
   test('removeDish, fail', async () => {
     const mutation = await createMutation('removeDish');
@@ -2032,6 +2203,7 @@ describe('API:test:dish', () => {
     expect(errors).toBeDefined();
     const message = errors[0].message;
     expect(message).toMatch('Insufficient clearance!');
+    console.log('removedish - fail: done');
   });
   test('removeDish, success', async () => {
     const mutation = await createMutation('removeDish');
@@ -2044,6 +2216,7 @@ describe('API:test:dish', () => {
     expect(data).toBeDefined();
     expect(data.removeDish).toBeDefined();
     expect(data.removeDish.name).toMatch(samples.dish1.name);
+    console.log('removedish - success: done');
   });
 });
 
@@ -2068,6 +2241,7 @@ describe('API:test:privateList', () => {
     expect(data).toBeDefined();
     expect(data.privateLists).toBeDefined();
     expect(data.privateLists.length).toBe(0);
+    console.log('privatelists: done');
   });
   test('addListPrivate, unique, success', async () => {
     const mutation = await createMutation('addListPrivate');
@@ -2081,6 +2255,7 @@ describe('API:test:privateList', () => {
     expect(data.addListPrivate.title).toMatch(samples.privateList1.title);
     expect(data.addListPrivate.listType).toMatch('PrivateList');
     expect(data.addListPrivate.owner.username).toMatch(samples.dummyUser.username);
+    console.log('addprivatelist - unique - success: done');
   });
   test('addListPrivate, non-unique, fail', async () => {
     const mutation = await createMutation('addListPrivate');
@@ -2092,6 +2267,7 @@ describe('API:test:privateList', () => {
     expect(errors).toBeDefined();
     const message = errors[0].message.substring(0, 38);
     expect(message).toMatch('E11000 duplicate key error collection:');
+    console.log('addprivatelist - not unique - fail: done');
   });
   test('privateLists, revisited', async () => {
     const query = await createQuery('privateLists');
@@ -2103,6 +2279,7 @@ describe('API:test:privateList', () => {
     expect(data.privateLists).toBeDefined();
     expect(data.privateLists.length).toBe(1);
     expect(data.privateLists[0].title).toMatch(samples.privateList1.title);
+    console.log('privatelists - revisited: done');
   });
   test('removeListPrivate, fail', async () => {
     const mutation = await createMutation('removeListPrivate');
@@ -2115,6 +2292,7 @@ describe('API:test:privateList', () => {
     expect(errors).toBeDefined();
     const message = errors[0].message;
     expect(message).toMatch('Insufficient clearance!');
+    console.log('removeprivatelist - fail: done');
   });
   test('removeListPrivate, success', async () => {
     const mutation = await createMutation('removeListPrivate');
@@ -2127,6 +2305,7 @@ describe('API:test:privateList', () => {
     expect(data).toBeDefined();
     expect(data.removeListPrivate).toBeDefined();
     expect(data.removeListPrivate.title).toMatch(samples.privateList1.title);
+    console.log('removeprivatelist - success: done');
   });
 });
 
@@ -2158,6 +2337,7 @@ describe('API:test:groupList', () => {
     expect(data).toBeDefined();
     expect(data.groupLists).toBeDefined();
     expect(data.groupLists.length).toBe(0);
+    console.log('grouplists: done');
   });
   test('addListGroup, unique, success', async () => {
     const group = await Group.findOne({ title: samples.group1.title });
@@ -2173,6 +2353,7 @@ describe('API:test:groupList', () => {
     expect(data.addListGroup.listType).toMatch('GroupList');
     expect(data.addListGroup.title).toMatch(samples.groupList1.title);
     expect(data.addListGroup.group.title).toMatch(group.title);
+    console.log('addgrouplist - unique - success: done');
   });
   test('addListGroup, non-unique, fail', async () => {
     const group = await Group.findOne({ title: samples.group1.title });
@@ -2186,6 +2367,7 @@ describe('API:test:groupList', () => {
     expect(errors).toBeDefined();
     const message = errors[0].message.substring(0, 38);
     expect(message).toMatch('E11000 duplicate key error collection:');
+    console.log('addgrouplist - not unique - fail: done');
   });
   test('groupLists, revisited', async () => {
     const query = await createQuery('groupLists');
@@ -2197,6 +2379,7 @@ describe('API:test:groupList', () => {
     expect(data.groupLists).toBeDefined();
     expect(data.groupLists.length).toBe(1);
     expect(data.groupLists[0].title).toMatch(samples.groupList1.title);
+    console.log('grouplists - revisited: done');
   });
   test('removeListGroup, fail', async () => {
     const list = await GroupList.findOne({ title: samples.groupList1.title });
@@ -2209,6 +2392,7 @@ describe('API:test:groupList', () => {
     expect(errors).toBeDefined();
     const message = errors[0].message;
     expect(message).toMatch('Insufficient clearance!');
+    console.log('removegrouplist - fail: done');
   });
   test('removeListGroup, success', async () => {
     const list = await GroupList.findOne({ title: samples.groupList1.title });
@@ -2221,6 +2405,7 @@ describe('API:test:groupList', () => {
     expect(data).toBeDefined();
     expect(data.removeListGroup).toBeDefined();
     expect(data.removeListGroup.title).toMatch(samples.groupList1.title);
+    console.log('removegrouplist - success: done');
   });
 });
 
@@ -2251,6 +2436,7 @@ describe('API:test:comment', () => {
     expect(data).toBeDefined();
     expect(data.comments).toBeDefined();
     expect(data.comments.length).toBe(0);
+    console.log('comments - privatelist: done');
   });
   test('comments, groupList', async () => {
     const { data } = await tester.graphql(
@@ -2263,6 +2449,7 @@ describe('API:test:comment', () => {
     expect(data).toBeDefined();
     expect(data.comments).toBeDefined();
     expect(data.comments.length).toBe(0);
+    console.log('comments - grouplist: done');
   });
   test('addComment, privateList', async () => {
     const { data } = await tester.graphql(
@@ -2278,6 +2465,7 @@ describe('API:test:comment', () => {
     expect(data.addComment.listID).toMatch(privateList._id.toString());
     expect(data.addComment.comment).toMatch(samples.genericCommentP);
     expect(data.addComment.addedBy.username).toMatch(samples.dummyUser.username);
+    console.log('addcomment - privatelist: done');
   });
   test('addComment, groupList', async () => {
     const { data } = await tester.graphql(
@@ -2293,6 +2481,7 @@ describe('API:test:comment', () => {
     expect(data.addComment.listID).toMatch(groupList._id.toString());
     expect(data.addComment.comment).toMatch(samples.genericCommentG);
     expect(data.addComment.addedBy.username).toMatch(samples.dummyUser.username);
+    console.log('addcomment - grouplist: done');
   });
   test('comments, privateList, revisited', async () => {
     const { data } = await tester.graphql(
@@ -2306,6 +2495,7 @@ describe('API:test:comment', () => {
     expect(data.comments).toBeDefined();
     expect(data.comments.length).toBe(1);
     expect(data.comments[0].karma).toBe(0);
+    console.log('comments - privatelist - revisited: done');
   });
   test('comments, groupList, revisited', async () => {
     const { data } = await tester.graphql(
@@ -2319,6 +2509,7 @@ describe('API:test:comment', () => {
     expect(data.comments).toBeDefined();
     expect(data.comments.length).toBe(1);
     expect(data.comments[0].karma).toBe(0);
+    console.log('comments - grouplist - revisited: done');
   });
   test('voteComment, privateList:comment:up', async () => {
     const comment = await Comment.findOne({ comment: samples.genericCommentP });
@@ -2341,6 +2532,7 @@ describe('API:test:comment', () => {
     expect(data).toBeDefined();
     expect(data.voteComment).toBeDefined();
     expect(data.voteComment.karma).toBe(2);
+    console.log('votecomment - privatelist - up: done');
   });
   test('voteComment, privateList:comment:down', async () => {
     const comment = await Comment.findOne({ comment: samples.genericCommentP });
@@ -2355,6 +2547,7 @@ describe('API:test:comment', () => {
     expect(data).toBeDefined();
     expect(data.voteComment).toBeDefined();
     expect(data.voteComment.karma).toBe(1);
+    console.log('votecomment - privatelist - down: done');
   });
   test('voteComment, groupList:comment:up', async () => {
     const comment = await Comment.findOne({ comment: samples.genericCommentG });
@@ -2369,6 +2562,7 @@ describe('API:test:comment', () => {
     expect(data).toBeDefined();
     expect(data.voteComment).toBeDefined();
     expect(data.voteComment.karma).toBe(1);
+    console.log('votecomment - grouplist - up: done');
   });
   test('voteComment, groupList:comment:down', async () => {
     const comment = await Comment.findOne({ comment: samples.genericCommentG });
@@ -2391,6 +2585,7 @@ describe('API:test:comment', () => {
     expect(data).toBeDefined();
     expect(data.voteComment).toBeDefined();
     expect(data.voteComment.karma).toBe(-1);
+    console.log('votecomment - grouplist - down: done');
   });
   test('removeComment, groupList:comment, fail', async () => {
     const comment = await Comment.findOne({ comment: samples.genericCommentG });
@@ -2404,6 +2599,7 @@ describe('API:test:comment', () => {
     expect(errors).toBeDefined();
     const message = errors[0].message;
     expect(message).toMatch('Insufficient clearance!');
+    console.log('removecomment - grouplist - fail: done');
   });
   test('removeComment, privateList:comment, fail', async () => {
     const comment = await Comment.findOne({ comment: samples.genericCommentP });
@@ -2417,6 +2613,7 @@ describe('API:test:comment', () => {
     expect(errors).toBeDefined();
     const message = errors[0].message;
     expect(message).toMatch('Insufficient clearance!');
+    console.log('removecomment - privatelist - fail: done');
   });
   test('removeComment, groupList:comment, success', async () => {
     const comment = await Comment.findOne({ comment: samples.genericCommentG });
@@ -2431,6 +2628,7 @@ describe('API:test:comment', () => {
     expect(data.removeComment).toBeDefined();
     expect(data.removeComment.id).toMatch(comment._id.toString());
     expect(data.removeComment.comment).toMatch(comment.comment);
+    console.log('removecomment - grouplist - success: done');
   });
   test('removeComment, privateList:comment, success', async () => {
     const comment = await Comment.findOne({ comment: samples.genericCommentP });
@@ -2445,6 +2643,7 @@ describe('API:test:comment', () => {
     expect(data.removeComment).toBeDefined();
     expect(data.removeComment.id).toMatch(comment._id.toString());
     expect(data.removeComment.comment).toMatch(comment.comment);
+    console.log('removecomment - privatelist - success: done');
   });
 });
 
@@ -2473,6 +2672,7 @@ describe('API:test:task', () => {
     expect(data).toBeDefined();
     expect(data.allTaskCount).toBeDefined();
     expect(data.allTaskCount).toBe(0);
+    console.log('alltaskcount: done');
   });
   test('taskCount, privateList', async () => {
     const query = await createQuery('taskCount');
@@ -2484,6 +2684,7 @@ describe('API:test:task', () => {
     expect(data).toBeDefined();
     expect(data.taskCount).toBeDefined();
     expect(data.taskCount).toBe(0);
+    console.log('taskcount - privatelist: done');
   });
   test('taskCount, groupList', async () => {
     const query = await createQuery('taskCount');
@@ -2495,6 +2696,7 @@ describe('API:test:task', () => {
     expect(data).toBeDefined();
     expect(data.taskCount).toBeDefined();
     expect(data.taskCount).toBe(0);
+    console.log('taskcount - grouplist: done');
   });
   test('taskCount, total', async () => {
     const query = await createQuery('taskCount');
@@ -2506,6 +2708,7 @@ describe('API:test:task', () => {
     expect(data).toBeDefined();
     expect(data.taskCount).toBeDefined();
     expect(data.taskCount).toBe(0);
+    console.log('taskcount - total: done');
   });
   test('tasks, privateList', async () => {
     const query = await createQuery('tasks');
@@ -2517,6 +2720,7 @@ describe('API:test:task', () => {
     expect(data).toBeDefined();
     expect(data.tasks).toBeDefined();
     expect(data.tasks.length).toBe(0);
+    console.log('tasks - privatelist: done');
   });
   test('tasks, groupList', async () => {
     const query = await createQuery('tasks');
@@ -2528,6 +2732,7 @@ describe('API:test:task', () => {
     expect(data).toBeDefined();
     expect(data.tasks).toBeDefined();
     expect(data.tasks.length).toBe(0);
+    console.log('tasks - grouplist: done');
   });
 
   test('addTask, privateList', async () => {
@@ -2544,6 +2749,7 @@ describe('API:test:task', () => {
     expect(data.addTask.task).toMatch(samples.genericTaskP.task);
     expect(data.addTask.priority).toBe(false);
     expect(data.addTask.creator.username).toMatch(samples.dummyUser.username);
+    console.log('addtask - privatelist: done');
   });
   test('addTask, groupList', async () => {
     const mutation = await createMutation('addTask');
@@ -2559,6 +2765,7 @@ describe('API:test:task', () => {
     expect(data.addTask.task).toMatch(samples.genericTaskG.task);
     expect(data.addTask.priority).toBe(false);
     expect(data.addTask.creator.username).toMatch(samples.dummyUser.username);
+    console.log('addtask - grouplist: done');
   });
 
   test('taskPriority, privateList:task, priority', async () => {
@@ -2574,6 +2781,7 @@ describe('API:test:task', () => {
     expect(data.taskPriority).toBeDefined();
     expect(data.taskPriority.priority).toBe(true);
     expect(data.taskPriority.task).toMatch(samples.genericTaskP.task);
+    console.log('taskpriority - privatelist - task - priority: done');
   });
   test('taskPriority, groupList:task, priority', async () => {
     const task = await Task.findOne({ task: samples.genericTaskG.task });
@@ -2588,6 +2796,7 @@ describe('API:test:task', () => {
     expect(data.taskPriority).toBeDefined();
     expect(data.taskPriority.priority).toBe(true);
     expect(data.taskPriority.task).toMatch(samples.genericTaskG.task);
+    console.log('taskpriority - grouplist - task - priority: done');
   });
   test('taskPriority, privateList:task, non-priority', async () => {
     const task = await Task.findOne({ task: samples.genericTaskP.task });
@@ -2602,6 +2811,7 @@ describe('API:test:task', () => {
     expect(data.taskPriority).toBeDefined();
     expect(data.taskPriority.priority).toBe(false);
     expect(data.taskPriority.task).toMatch(samples.genericTaskP.task);
+    console.log('taskpriority - privatelist - task - non-priority: done');
   });
   test('taskPriority, groupList:task, non-priority', async () => {
     const task = await Task.findOne({ task: samples.genericTaskG.task });
@@ -2616,6 +2826,7 @@ describe('API:test:task', () => {
     expect(data.taskPriority).toBeDefined();
     expect(data.taskPriority.priority).toBe(false);
     expect(data.taskPriority.task).toMatch(samples.genericTaskG.task);
+    console.log('taskpriority - grouplist - task - non-priority: done');
   });
 
   test('allTaskCount, revisited', async () => {
@@ -2627,6 +2838,7 @@ describe('API:test:task', () => {
     expect(data).toBeDefined();
     expect(data.allTaskCount).toBeDefined();
     expect(data.allTaskCount).toBe(2);
+    console.log('alltaskcount - revisited: done');
   });
   test('taskCount, privateList, revisited', async () => {
     const query = await createQuery('taskCount');
@@ -2638,6 +2850,7 @@ describe('API:test:task', () => {
     expect(data).toBeDefined();
     expect(data.taskCount).toBeDefined();
     expect(data.taskCount).toBe(1);
+    console.log('taskcount - privatelist - revisited: done');
   });
   test('taskCount, groupList, revisited', async () => {
     const query = await createQuery('taskCount');
@@ -2649,6 +2862,7 @@ describe('API:test:task', () => {
     expect(data).toBeDefined();
     expect(data.taskCount).toBeDefined();
     expect(data.taskCount).toBe(1);
+    console.log('taskcount - grouplist - revisited: done');
   });
   test('taskCount, total, revisited', async () => {
     const query = await createQuery('taskCount');
@@ -2660,6 +2874,7 @@ describe('API:test:task', () => {
     expect(data).toBeDefined();
     expect(data.taskCount).toBeDefined();
     expect(data.taskCount).toBe(2);
+    console.log('taskcount - total - revisited: done');
   });
   test('tasks, privateList, revisited', async () => {
     const query = await createQuery('tasks');
@@ -2672,6 +2887,7 @@ describe('API:test:task', () => {
     expect(data.tasks).toBeDefined();
     expect(data.tasks.length).toBe(1);
     expect(data.tasks[0].task).toMatch(samples.genericTaskP.task);
+    console.log('tasks - privatelist - revisited: done');
   });
   test('tasks, groupList, revisited', async () => {
     const query = await createQuery('tasks');
@@ -2684,6 +2900,7 @@ describe('API:test:task', () => {
     expect(data.tasks).toBeDefined();
     expect(data.tasks.length).toBe(1);
     expect(data.tasks[0].task).toMatch(samples.genericTaskG.task);
+    console.log('tasks - grouplist - revisited: done');
   });
 
   test('deactivateTask, privateList', async () => {
@@ -2698,6 +2915,7 @@ describe('API:test:task', () => {
     expect(data.taskDeactivation).toBeDefined();
     expect(data.taskDeactivation.task).toMatch(samples.genericTaskP.task);
     expect(data.taskDeactivation.active).toBe(false);
+    console.log('deactivatetask - privatelist: done');
   });
   test('deactivateTask, groupList', async () => {
     const task = await Task.findOne({ listID: groupList._id.toString() });
@@ -2711,6 +2929,7 @@ describe('API:test:task', () => {
     expect(data.taskDeactivation).toBeDefined();
     expect(data.taskDeactivation.task).toMatch(samples.genericTaskG.task);
     expect(data.taskDeactivation.active).toBe(false);
+    console.log('deactivatetask - grouplist: done');
   });
   test('activateTask, privateList', async () => {
     const task = await Task.findOne({ listID: privateList._id.toString() });
@@ -2724,6 +2943,7 @@ describe('API:test:task', () => {
     expect(data.taskActivation).toBeDefined();
     expect(data.taskActivation.task).toMatch(samples.genericTaskP.task);
     expect(data.taskActivation.active).toBe(true);
+    console.log('activatetask - privatelist: done');
   });
   test('activateTask, groupList', async () => {
     const task = await Task.findOne({ listID: groupList._id.toString() });
@@ -2737,6 +2957,7 @@ describe('API:test:task', () => {
     expect(data.taskActivation).toBeDefined();
     expect(data.taskActivation.task).toMatch(samples.genericTaskG.task);
     expect(data.taskActivation.active).toBe(true);
+    console.log('activatetask - grouplist: done');
   });
 
   test('removeTask, privateList:task, fail', async () => {
@@ -2750,6 +2971,7 @@ describe('API:test:task', () => {
     expect(errors).toBeDefined();
     const message = errors[0].message;
     expect(message).toMatch('Insufficient clearance!');
+    console.log('removetask - privatelist - fail: done');
   });
   test('removeTask, groupList:task, fail', async () => {
     const task = await Task.findOne({ listID: groupList._id.toString() });
@@ -2762,6 +2984,7 @@ describe('API:test:task', () => {
     expect(errors).toBeDefined();
     const message = errors[0].message;
     expect(message).toMatch('Insufficient clearance!');
+    console.log('removetask - grouplist - fail: done');
   });
   test('removeTask, privateList:task, success', async () => {
     const task = await Task.findOne({ listID: privateList._id.toString() });
@@ -2776,6 +2999,7 @@ describe('API:test:task', () => {
     expect(data.removeTask.id).toMatch(task._id.toString());
     expect(data.removeTask.task).toMatch(task.task);
     expect(data.removeTask.active).toBe(true);
+    console.log('removetask - privatelist - success: done');
   });
   test('removeTask, groupList:task, success', async () => {
     const task = await Task.findOne({ listID: groupList._id.toString() });
@@ -2790,5 +3014,95 @@ describe('API:test:task', () => {
     expect(data.removeTask.id).toMatch(task._id.toString());
     expect(data.removeTask.task).toMatch(task.task);
     expect(data.removeTask.active).toBe(true);
+    console.log('removetask - grouplist - success: done');
+  });
+});
+describe('API:test:news', () => {
+  let token;
+  let news1;
+  beforeAll(async () => {
+    token = await getNullToken();
+  });
+  test('news', async () => {
+    const query = await createQuery('news');
+    const variables = {};
+    const {data} = await tester.graphql(query, undefined, undefined, variables);
+    expect(data).toBeDefined();
+    expect(data.news).toBeDefined();
+    expect(data.news.length).toBe(5);
+    console.log('news: done');
+  });
+  test('categoryNews', async () => {
+    const query = await createQuery('categoryNews');
+    const variables = {
+      category: 'test'
+    };
+    const {data} = await tester.graphql(query, undefined, undefined, variables);
+    expect(data).toBeDefined();
+    expect(data.categoryNews).toBeDefined();
+    expect(data.categoryNews.length).toBe(0);
+    console.log('categoryNews - test: done');
+  });
+  test('addNews', async () => {
+    const mutation = await createMutation('addNews');
+    const variables = {
+      token: token.substring(7),
+      content: samples.news[0].content,
+      category: samples.news[0].category
+    };
+    const {data} = await tester.graphql(mutation, undefined, undefined, variables);
+    expect(data).toBeDefined();
+    expect(data.addNews).toBeDefined();
+    expect(data.addNews.content).toMatch(samples.news[0].content);
+    expect(data.addNews.category).toMatch('test');
+    news1 = data.addNews;
+    console.log('addNews: done');
+  });
+  test('editNews', async () => {
+    const mutation = await createMutation('editNews');
+    const variables = {
+      token: token.substring(7),
+      id: news1.id,
+      content: samples.news[1].content,
+      category: samples.news[0].category
+    };
+    const {data} = await tester.graphql(mutation, undefined, undefined, variables);
+    expect(data).toBeDefined();
+    expect(data.editNews).toBeDefined();
+    expect(data.editNews.content).toMatch(samples.news[1].content);
+    expect(data.editNews.category).toMatch('test');
+    news1 = data.editNews;
+    console.log('editNews: done');
+  });
+  test('news, revisited', async () => {
+    const query = await createQuery('news');
+    const {data} = await tester.graphql(query, undefined, undefined, undefined);
+    expect(data).toBeDefined();
+    expect(data.news).toBeDefined();
+    expect(data.news.length).toBe(6);
+    console.log('news - revisited: done');
+  });
+  test('categoryNews', async () => {
+    const query = await createQuery('categoryNews');
+    const variables = {
+      category: 'test'
+    };
+    const {data} = await tester.graphql(query, undefined, undefined, variables);
+    expect(data).toBeDefined();
+    expect(data.categoryNews).toBeDefined();
+    expect(data.categoryNews.length).toBe(1);
+    console.log('categoryNews - test - revisited: done');
+  });
+  test('removeNews', async () => {
+    const mutation = await createMutation('removeNews');
+    const variables = {
+      token: token.substring(7),
+      id: news1.id
+    };
+    const {data} = await tester.graphql(mutation, undefined, undefined, variables);
+    expect(data).toBeDefined();
+    expect(data.removeNews).toBeDefined();
+    expect(data.removeNews.content).toMatch(news1.content);
+    console.log('removeNews: done');
   });
 });

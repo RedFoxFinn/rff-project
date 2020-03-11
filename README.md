@@ -26,7 +26,7 @@ legend |
  Routing (app/api) | <img src="https://api.iconify.design/mdi-check-circle-outline.svg?color=green"/>
  GraphQL-playground at `/api` endpoint in `development`-mode | <img src="https://api.iconify.design/mdi-check-circle-outline.svg?color=green"/>
  MongoDB/Mongoose models | <img src="https://api.iconify.design/mdi-check-circle-outline.svg?color=green"/>
- GraphQL schemas | <img src="https://api.iconify.design/mdi-check-circle-outline.svg?color=green"/>
+ GraphQL schemas | <img src="https://api.iconify.design/mdi-check-circle-outline.svg?color=green"/><img src="https://api.iconify.design/mdi-pencil-circle-outline.svg?color=blue"/>
  GraphQL resolvers | <img src="https://api.iconify.design/mdi-check-circle-outline.svg?color=green"/><img src="https://api.iconify.design/mdi-pencil-circle-outline.svg?color=blue"/>
  JWT used for login | <img src="https://api.iconify.design/mdi-check-circle-outline.svg?color=green"/>
  BCrypt used for encrypting sensitive user data stored `Atlas mongo-cloud` | <img src="https://api.iconify.design/mdi-check-circle-outline.svg?color=green"/>
