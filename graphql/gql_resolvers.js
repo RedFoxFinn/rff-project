@@ -453,6 +453,15 @@ const hash = (password) => {
   return bcrypt.hash(password, 10);
 };
 
+// helper functions: errors
+const authError = (type) => {
+  switch (type) {
+    case 'CLEARANCE': throw new AuthenticationError('Insufficient clearance!');
+    case 'LOGIN': throw new AuthenticationError('You must be logged in!');
+    default: throw new AuthenticationError('Invalid credentials!');
+  }
+};
+
 // resolvers for application, first custom type, then Query, Mutation, Subscription
 const resolvers = {
   Ingredient: {
@@ -530,6 +539,7 @@ const resolvers = {
     id: (root) => root._id,
     author: (root) => root.author
   },
+  // GraphQL queries
   Query: {
     me: async (root, args) => {
       const decodedToken = await jwt.verify(args.token, config.secret);
@@ -541,7 +551,7 @@ const resolvers = {
       if (user.role === 'admin' || user.role === 'owner') {
         return User.collection.countDocuments();
       } else {
-        throw new AuthenticationError('Insufficient clearance!');
+        await authError('CLEARANCE');
       }
     },
     users: async (root, args) => {
@@ -550,7 +560,7 @@ const resolvers = {
       if (user.role === 'admin' || user.role === 'owner') {
         return await findUsers(args);
       } else {
-        throw new AuthenticationError('Insufficient clearance!');
+        await authError('CLEARANCE');
       }
     },
     groupCount: async (root, args) => {
@@ -561,7 +571,7 @@ const resolvers = {
       } else if (user) {
         return user.groups.length;
       } else {
-        throw new AuthenticationError('Insufficient clearance!');
+        await authError('CLEARANCE');
       }
     },
     groups: async (root, args) => {
@@ -570,7 +580,7 @@ const resolvers = {
       if (user) {
         return await findGroups({ all: false, groups: user.groups });
       } else {
-        throw new AuthenticationError('Session error: you must be logged in!');
+        await authError('LOGIN');
       }
     },
     allGroups: async (root, args) => {
@@ -581,7 +591,7 @@ const resolvers = {
       } else if (user) {
         return await findGroups({ all: false, groups: user.groups });
       } else {
-        throw new AuthenticationError('Session error: you must be logged in!');
+        await authError('LOGIN');
       }
     },
     listCount: async (root, args) => {
@@ -590,7 +600,7 @@ const resolvers = {
       if (user) {
         return await countLists(false, user);
       } else {
-        throw new AuthenticationError('Insufficient clearance!');
+        await authError('CLEARANCE');
       }
     },
     allListCount: async (root, args) => {
@@ -599,7 +609,7 @@ const resolvers = {
       if (user.role === 'admin' || user.role === 'owner') {
         return await countLists(true, user);
       } else {
-        throw new AuthenticationError('Insufficient clearance!');
+        await authError('CLEARANCE');
       }
     },
     privateLists: async (root, args) => {
@@ -608,7 +618,7 @@ const resolvers = {
       if (user) {
         return await PrivateList.find({ owner: decodedToken.id }).populate('owner');
       } else {
-        throw new AuthenticationError('Session error: you must be logged in!');
+        await authError('LOGIN');
       }
     },
     groupLists: async (root, args) => {
@@ -622,7 +632,7 @@ const resolvers = {
         }
         return lists;
       } else {
-        throw new AuthenticationError('Session error: you must be logged in!');
+        await authError('LOGIN');
       }
     },
     taskCount: async (root, args) => {
@@ -633,7 +643,7 @@ const resolvers = {
         if (args.countType === 'group') return await countTasks({ ...args, all: false, groupIDs: user.groups.map(g => g.toString()) });
         if (args.countType === 'total') return await countTasks({ ...args, all: false, userID: user._id.toString(), groupIDs: user.groups.map(g => g.toString()) });
       } else {
-        throw new AuthenticationError('Session error: you must be logged in!');
+        await authError('LOGIN');
       }
     },
     allTaskCount: async (root, args) => {
@@ -642,7 +652,7 @@ const resolvers = {
       if (user.role === 'admin' || user.role === 'owner') {
         return await countTasks({ ...args, all: true });
       } else {
-        throw new AuthenticationError('Insufficient clearance!');
+        await authError('CLEARANCE');
       }
     },
     tasks: async (root, args) => {
@@ -651,7 +661,7 @@ const resolvers = {
       if (user) {
         return await findTasks(args.listID);
       } else {
-        throw new AuthenticationError('Session error: you must be logged in!');
+        await authError('LOGIN');
       }
     },
     carbCount: async () => await Ingredient.find({ type: 'carb' }).countDocuments(),
@@ -671,12 +681,13 @@ const resolvers = {
       if (user) {
         return await Comment.find({ listID: args.id }).populate('addedBy');
       } else {
-        throw new AuthenticationError('Insufficient clearance!');
+        await authError('CLEARANCE');
       }
     },
     news: async () => await News.find({}),
     categoryNews: async (root, args) => await News.find({category: args.category})
   },
+  // GraphQL mutations
   Mutation: {
     addNews: async (root, args) => {
       const decodedToken = await jwt.verify(args.token, config.secret);
@@ -696,7 +707,7 @@ const resolvers = {
         await pubsub.publish('NEWS_ADDED', { newsAdded: news });
         return news;
       } else {
-        throw new AuthenticationError('Insufficient clearance!');
+        await authError('CLEARANCE');
       }
     },
     editNews: async (root, args) => {
@@ -715,7 +726,7 @@ const resolvers = {
         await pubsub.publish('NEWS_UPDATED', { newsUpdated: news });
         return news;
       } else {
-        throw new AuthenticationError('Insufficient clearance!');
+        await authError('CLEARANCE');
       }
     },
     removeNews: async (root, args) => {
@@ -731,7 +742,7 @@ const resolvers = {
         await pubsub.publish('NEWS_REMOVED', { newsRemoved: news });
         return news;
       } else {
-        throw new AuthenticationError('Insufficient clearance!');
+        await authError('CLEARANCE');
       }
     },
     addIngredient: async (root, args) => {
@@ -753,7 +764,7 @@ const resolvers = {
         await pubsub.publish('INGREDIENT_ADDED', { ingredientAdded: ingredient });
         return ingredient;
       } else {
-        throw new AuthenticationError('Session error: you must be logged in!');
+        await authError('LOGIN');
       }
     },
     removeIngredient: async (root, args) => {
@@ -769,7 +780,7 @@ const resolvers = {
         await pubsub.publish('INGREDIENT_REMOVED', { ingredientRemoved: ingredient });
         return ingredient;
       } else {
-        throw new AuthenticationError('Insufficient clearance!');
+        await authError('CLEARANCE');
       }
     },
     addDish: async (root, args) => {
@@ -799,7 +810,7 @@ const resolvers = {
 	    await pubsub.publish('DISH_ADDED', { dishAdded: dish });
         return dish;
       } else {
-        throw new AuthenticationError('Session error: you must be logged in!');
+        await authError('LOGIN');
       }
     },
     updateDish: async (root, args) => {
@@ -827,7 +838,7 @@ const resolvers = {
         await pubsub.publish('DISH_UPDATED', { dishUpdated: dish });
         return dish;
       } else {
-        throw new AuthenticationError('Session error: you must be logged in!');
+        await authError('LOGIN');
       }
     },
     removeDish: async (root, args) => {
@@ -843,7 +854,7 @@ const resolvers = {
         await pubsub.publish('DISH_REMOVED', { dishRemoved: dish });
         return dish;
       } else {
-        throw new AuthenticationError('Insufficient clearance!');
+        await authError('CLEARANCE');
       }
     },
     dishKarma: async (root, args) => {
@@ -862,7 +873,7 @@ const resolvers = {
         await pubsub.publish('DISH_VOTED', { dishVoted: dish });
         return dish;
       } else {
-        throw new AuthenticationError('Session error: you must be logged in!');
+        await authError('LOGIN');
       }
     },
     addMethod: async (root, args) => {
@@ -883,7 +894,7 @@ const resolvers = {
         await pubsub.publish('METHOD_ADDED', { methodAdded: method });
         return method;
       } else {
-        throw new AuthenticationError('Session error: you must be logged in!');
+        await authError('LOGIN');
       }
     },
     removeMethod: async (root, args) => {
@@ -899,7 +910,7 @@ const resolvers = {
         await pubsub.publish('METHOD_REMOVED', { methodRemoved: method });
         return method;
       } else {
-        throw new AuthenticationError('Insufficient clearance!');
+        await authError('CLEARANCE');
       }
     },
     addListGroup: async (root, args) => {
@@ -920,7 +931,7 @@ const resolvers = {
         await pubsub.publish('LIST_ADDED_G', { listAddedGroup: list });
         return list;
       } else {
-        throw new AuthenticationError('Session error: you must be logged in!');
+        await authError('LOGIN');
       }
     },
     removeListGroup: async (root, args) => {
@@ -936,7 +947,7 @@ const resolvers = {
         await pubsub.publish('LIST_REMOVED_G', { listRemovedGroup: list });
         return list;
       } else {
-        throw new AuthenticationError('Insufficient clearance!');
+        await authError('CLEARANCE');
       }
     },
     addListPrivate: async (root, args) => {
@@ -957,7 +968,7 @@ const resolvers = {
         await pubsub.publish('LIST_ADDED_P', { listAddedPrivate: list });
         return list;
       } else {
-        throw new AuthenticationError('Session error: you must be logged in!');
+        await authError('LOGIN');
       }
     },
     removeListPrivate: async (root, args) => {
@@ -974,10 +985,10 @@ const resolvers = {
           await pubsub.publish('LIST_REMOVED_P', { listRemovedPrivate: list });
           return list;
         } else {
-          throw new AuthenticationError('Insufficient clearance!');
+          await authError('CLEARANCE');
         }
       } else {
-        throw new AuthenticationError('Session error: you must be logged in!');
+        await authError('LOGIN');
       }
     },
     addComment: async (root, args) => {
@@ -998,7 +1009,7 @@ const resolvers = {
         comment = await Comment.findOne({ comment: args.comment }).populate('addedBy');
         return comment;
       } else {
-        throw new AuthenticationError('Session error: you must be logged in!');
+        await authError('LOGIN');
       }
     },
     removeComment: async (root, args) => {
@@ -1013,7 +1024,7 @@ const resolvers = {
         }
         return comment;
       } else {
-        throw new AuthenticationError('Insufficient clearance!');
+        await authError('CLEARANCE');
       }
     },
     voteComment: async (root, args) => {
@@ -1030,7 +1041,7 @@ const resolvers = {
         comment = await Comment.findOne({ _id: args.id }).populate('addedBy');
         return comment;
       } else {
-        throw new AuthenticationError('Session error: you must be logged in!');
+        await authError('LOGIN');
       }
     },
     addTask: async (root, args) => {
@@ -1041,7 +1052,7 @@ const resolvers = {
           task: args.task,
           priority: args.priority,
           active: true,
-          creator: user._id,
+          creator: user._id.toString(),
           listID: args.listID
         });
         try {
@@ -1053,23 +1064,45 @@ const resolvers = {
         await pubsub.publish('TASK_ADDED', { taskAdded: task });
         return task;
       } else {
-        throw new AuthenticationError('Session error: you must be logged in!');
+        await authError('LOGIN');
       }
     },
     removeTask: async (root, args) => {
       const decodedToken = await jwt.verify(args.token, config.secret);
-      const user = await User.findById(decodedToken.id);
-      const task = await Task.findById(args.id);
-      if (user) {
-        try {
-          await task.remove();
-        } catch (e) {
-          throw new UserInputError(e.message, { invalidArgs: args });
+      const user = await User.findById(decodedToken.id).populate('groups');
+      const task = await Task.findById(args.id).populate('creator');
+      let list = await List.findById(task.listID);
+
+      if (user && list.listType === 'PrivateList') {
+        list = await PrivateList.findById(task.listID).populate('owner');
+        if (list.owner._id.toString() === user._id.toString()) {
+          try {
+            await task.remove();
+          } catch (e) {
+            throw new UserInputError(e.message, {invalidArgs: args});
+          }
+          await pubsub.publish('TASK_REMOVED', {taskRemoved: task});
+          return task;
+        } else {
+          await authError('CLEARANCE');
         }
-        await pubsub.publish('TASK_REMOVED', { taskRemoved: task });
-        return task;
+      } else if (user && list.listType === 'GroupList') {
+        list = await GroupList.findById(task.listID).populate('group');
+        if (user.groups.map(g => g._id.toString()).includes(list.group._id.toString())) {
+          try {
+            await task.remove();
+          } catch (e) {
+            throw new UserInputError(e.message, {invalidArgs: args});
+          }
+          await pubsub.publish('TASK_REMOVED', {taskRemoved: task});
+          return task;
+        } else {
+          await authError('CLEARANCE');
+        }
+      } else if (user) {
+        await authError('CLEARANCE');
       } else {
-        throw new AuthenticationError('Insufficient clearance!');
+        await authError('LOGIN');
       }
     },
     taskPriority: async (root, args) => {
@@ -1087,7 +1120,7 @@ const resolvers = {
         await pubsub.publish('TASK_UPDATED', { taskUpdated: task });
         return task;
       } else {
-        throw new AuthenticationError('Session error: you must be logged in!');
+        await authError('LOGIN');
       }
     },
     taskActivation: async (root, args) => {
@@ -1105,7 +1138,7 @@ const resolvers = {
         await pubsub.publish('TASK_UPDATED', { taskUpdated: task });
         return task;
       } else {
-        throw new AuthenticationError('Session error: you must be logged in!');
+        await authError('LOGIN');
       }
     },
     taskDeactivation: async (root, args) => {
@@ -1123,14 +1156,14 @@ const resolvers = {
         await pubsub.publish('TASK_UPDATED', { taskUpdated: task });
         return task;
       } else {
-        throw new AuthenticationError('Session error: you must be logged in!');
+        await authError('LOGIN');
       }
     },
     addUser: async (root, args) => {
       let newUser = new User({
         username: args.username,
         passwordHash: await hash(args.password),
-        active: true,
+        active: false,
         removable: true,
         role: 'user',
         groups: []
@@ -1162,7 +1195,7 @@ const resolvers = {
         await pubsub.publish('USER_UPDATED', { userUpdated: user });
         return user;
       } else {
-        throw new AuthenticationError('Invalid authentication!');
+        await authError('default');
       }
     },
     removeUser: async (root, args) => {
@@ -1196,7 +1229,7 @@ const resolvers = {
           return userToRemove;
         }
       } else {
-        throw new AuthenticationError('Session error: you must be logged in!');
+        await authError('LOGIN');
       }
     },
     activateUser: async (root, args) => {
@@ -1213,7 +1246,7 @@ const resolvers = {
         userToActivate = await User.findById(args.id);
         return userToActivate;
       } else {
-        throw new AuthenticationError('Session error: you must be logged in!');
+        await authError('LOGIN');
       }
     },
     deactivateUser: async (root, args) => {
@@ -1222,7 +1255,7 @@ const resolvers = {
       if (user.role === 'owner' || user.role === 'admin' || user._id.toString() === args.id) {
         let userToDeactivate = await User.findById(args.id);
         try {
-          userToDeactivate.active = true;
+          userToDeactivate.active = false;
           await userToDeactivate.save();
         } catch (e) {
           throw new UserInputError(e.message, { invalidArgs: args });
@@ -1230,7 +1263,7 @@ const resolvers = {
         userToDeactivate = await User.findById(args.id);
         return userToDeactivate;
       } else {
-        throw new AuthenticationError('Session error: you must be logged in!');
+        await authError('LOGIN');
       }
     },
     addStop: async (root, args) => {
@@ -1246,7 +1279,7 @@ const resolvers = {
         await pubsub.publish('USER_UPDATED', { userUpdated: user });
         return user;
       } else {
-        throw new AuthenticationError('You must be logged in!');
+        await authError('LOGIN');
       }
     },
     removeStop: async (root, args) => {
@@ -1264,7 +1297,7 @@ const resolvers = {
         await pubsub.publish('USER_UPDATED', { userUpdated: user });
         return user;
       } else {
-        throw new AuthenticationError('You must be logged in!');
+        await authError('LOGIN');
       }
     },
     addGroup: async (root, args) => {
@@ -1273,7 +1306,7 @@ const resolvers = {
       if (user) {
         let newGroup = new Group({
           title: args.title,
-          active: true,
+          active: false,
           removable: true,
           creator: user._id.toString()
         });
@@ -1288,7 +1321,7 @@ const resolvers = {
         await pubsub.publish('GROUP_ADDED', { groupAdded: newGroup });
         return newGroup;
       } else {
-        throw new AuthenticationError('Session error: you must be logged in!');
+        await authError('LOGIN');
       }
     },
     updateGroup: async (root, args) => {
@@ -1299,21 +1332,22 @@ const resolvers = {
         if (args.title) group.title = args.title;
         if (args.active) group.active = args.active;
         try {
-          group = await group.save();
+          await group.save();
         } catch (e) {
           throw new UserInputError(e.message, { invalidArgs: args });
         }
+        group = await Group.findById(args.id).populate('creator');
         await pubsub.publish('GROUP_UPDATED', { groupUpdated: group });
         return group;
       } else {
-        throw new AuthenticationError('Session error: you must be logged in!');
+        await authError('LOGIN');
       }
     },
     removeGroup: async (root, args) => {
       const decodedToken = await jwt.verify(args.token, config.secret);
       const user = await User.findById(decodedToken.id);
       if (user.role === 'admin' || user.role === 'owner') {
-        const group = await Group.findById(args.id);
+        const group = await Group.findById(args.id).populate('creator');
         try {
           await dependencyRemover('GROUP', args.id);
         } catch (e) {
@@ -1323,7 +1357,7 @@ const resolvers = {
         await pubsub.publish('GROUP_DBE', { majorDBE: true });
         return group;
       } else {
-        throw new AuthenticationError('Insufficient clearance!');
+        await authError('CLEARANCE');
       }
     },
     login: async (root, args) => {
@@ -1333,10 +1367,12 @@ const resolvers = {
         : await bcrypt.compare(args.password, user.passwordHash);
       if (user && correctPassword) {
         return { value: `Bearer ${jwt.sign({ username: user.username, id: user._id }, config.secret)}` };
+      } else {
+        await authError('default');
       }
-      throw new AuthenticationError('Incorrect username or password!');
     }
   },
+  // GraphQL subscriptions
   Subscription: {
     newsAdded: {
       subscribe: () => pubsub.asyncIterator('NEWS_ADDED')
