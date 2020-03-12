@@ -1,6 +1,10 @@
+// RFF demo project
+// List.js
+// React component that renders list & tasks for task management
+
 import React, {useState} from 'react';
 import {connect} from 'react-redux';
-import {useQuery} from '@apollo/react-hooks';
+import {useApolloClient, useQuery, useSubscription} from '@apollo/react-hooks';
 import {TASKS} from '../../core/graphql/rff/queries/q_tasks';
 import classProvider from '../../core/tools/classProvider';
 import {InlineIcon} from '@iconify/react';
@@ -8,9 +12,17 @@ import userShield from '@iconify/icons-fa-solid/user-shield';
 import usersIcon from '@iconify/icons-fa-solid/users';
 import chevronUp from '@iconify/icons-fa-solid/chevron-up';
 import chevronDown from '@iconify/icons-fa-solid/chevron-down';
-import Task from './Task';
 import flagVariant from '@iconify/icons-mdi/flag-variant';
 import flagVariantOutline from '@iconify/icons-mdi/flag-variant-outline';
+import {TASK_ADDED} from '../../core/graphql/rff/subscriptions/s_taskAdded';
+import {TASK_UPDATED} from '../../core/graphql/rff/subscriptions/s_taskUpdated';
+import {TASK_REMOVED} from '../../core/graphql/rff/subscriptions/s_taskRemoved';
+import {ADD_TASK} from '../../core/graphql/rff/mutations/m_addTask';
+import {TASK_PRIORITY} from '../../core/graphql/rff/mutations/m_taskPriority';
+import {TASK_DEACTIVATION} from '../../core/graphql/rff/mutations/m_taskDeactivation';
+import {TASK_ACTIVATION} from '../../core/graphql/rff/mutations/m_taskActivation';
+import {REMOVE_TASK} from '../../core/graphql/rff/mutations/m_removeTask';
+import {handleError, handleInfo} from '../../core/store/reducers/AppReducer';
 
 const mapStateToProps = (state) => {
   return {
@@ -19,17 +31,152 @@ const mapStateToProps = (state) => {
   };
 };
 
+const mapDispatchToProps = {
+  handleError, handleInfo
+};
+
 // task list rendering component
 const List = (props) => {
+  const client = useApolloClient();
   const list = props.list;
   const userToken = localStorage.getItem('rffUserToken').substring(7);
   const [expanded, setExpanded] = useState(false);
-  const {data, loading, error} = useQuery(TASKS, {
+  const {data, loading, error, refetch} = useQuery(TASKS, {
     variables: {
       token: userToken,
       listID: list.id
     }
   });
+
+  // helper function for subscriptions
+  const updateCacheWithTask = async (eventType, task) => {
+    const includedIn = (set, object) => set.map(t => t.id).includes(object.id);
+    const dataInStore = await client.readQuery({
+      query: TASKS, variables: {
+        listID: task.listID,
+        token: userToken
+      }});
+
+    switch (eventType) {
+    case 'added':
+      if (!includedIn(dataInStore.tasks, task)) {
+        await refetch();
+        props.handleInfo(`Task added: ${task.task}`);
+      }
+      break;
+    case 'updated':
+      if (includedIn(dataInStore.tasks, task)) {
+        await refetch();
+        props.handleInfo(`Task updated: ${task.task}`);
+      }
+      break;
+    case 'removed':
+      if (includedIn(dataInStore.tasks, task)) {
+        await refetch();
+        props.handleInfo(`Task removed: ${task.task}`);
+      }
+      break;
+    default:
+      break;
+    }
+  };
+
+  useSubscription(TASK_ADDED, {
+    fetchPolicy: '',
+    onSubscriptionData: ({subscriptionData}) => {
+      const task = subscriptionData.data.taskAdded;
+      updateCacheWithTask('added', task);
+    }
+  });
+  useSubscription(TASK_UPDATED, {
+    fetchPolicy: '',
+    onSubscriptionData: ({subscriptionData}) => {
+      const task = subscriptionData.data.taskUpdated;
+      updateCacheWithTask('updated', task);
+    }
+  });
+  useSubscription(TASK_REMOVED, {
+    fetchPolicy: '',
+    onSubscriptionData: ({subscriptionData}) => {
+      const task = subscriptionData.data.taskRemoved;
+      updateCacheWithTask('removed', task);
+    }
+  });
+
+  // helper functions: task handlers
+  const handleSaveTask = async (listID, priority) => {
+    const variables = {
+      token: userToken,
+      listID: listID,
+      task: document.getElementById('newTask').value,
+      priority: priority
+    };
+    if (userToken) {
+      await client.mutate({
+        mutation: ADD_TASK,
+        variables: variables
+      }).then((result) => {
+        const {data, errors} = result;
+        if (data !== null) {
+          updateCacheWithTask('added', data.addTask);
+        } else {
+          props.handleError(errors[0].message);
+        }
+      });
+    }
+  };
+  const handleTaskPriority = async ({id, priority}) => {
+    const variables = {
+      token: userToken,
+      id: id,
+      priority: !priority
+    };
+    await client.mutate({
+      mutation: TASK_PRIORITY,
+      variables: variables
+    }).then((result) => {
+      const {data, errors} = result;
+      if (data !== null) {
+        updateCacheWithTask('updated', data.taskPriority);
+      } else {
+        props.handleError(errors[0].message);
+      }
+    });
+  };
+  const handleTaskCompletion = async ({id, active}) => {
+    const variables = {
+      token: userToken,
+      id: id
+    };
+    await client.mutate({
+      mutation: active ? TASK_DEACTIVATION : TASK_ACTIVATION,
+      variables: variables
+    }).then((result) => {
+      const {data, errors} = result;
+      if (data !== null) {
+        updateCacheWithTask('updated', active ? data.taskDeactivation : data.taskActivation);
+      } else {
+        props.handleError(errors[0].message);
+      }
+    });
+  };
+  const handleTaskRemoval = async ({id}) => {
+    const variables = {
+      token: userToken,
+      id: id
+    };
+    await client.mutate({
+      mutation: REMOVE_TASK,
+      variables: variables
+    }).then((result) => {
+      const {data, errors} = result;
+      if (data !== null) {
+        updateCacheWithTask('removed', data.removeTask);
+      } else {
+        props.handleError(errors[0].message);
+      }
+    });
+  };
 
   const Flagged = ({flagged}) => {
     return flagged
@@ -74,14 +221,55 @@ const List = (props) => {
           </thead>
           <tbody>
             {tasks.map(t => {
-              return <Task key={t.id} status='data' task={t} handlePriority={props.handleTaskPriority}
-                handleCompletion={props.handleTaskCompletion} handleRemoval={props.handleRemoveTask}/>;
+              return <Task key={t.id} status='data' task={t}/>;
             })}
           </tbody>
         </table>
       );
     } else {
       return <TaskEmpty/>;
+    }
+  };
+
+  const Task = ({task, status}) => {
+    const Flagged = ({flagged}) => {
+      return flagged
+        ? <InlineIcon icon={flagVariant}/>
+        : <InlineIcon icon={flagVariantOutline}/>;
+    };
+
+    if (status === 'error') {
+      return <td className={classProvider(props.theme, 'tableCell')}>{task.task}</td>;
+    } else if (status === 'loading') {
+      return <td className={classProvider(props.theme, 'tableCell')}>{task.task}</td>;
+    } else if (status === 'empty') {
+      return <td className={classProvider(props.theme, 'tableCell')}>{task.task}</td>;
+    } else {
+      return (
+        <tr className={classProvider(props.theme, 'tableRow')}>
+          <td className={classProvider(props.theme, 'tableCell')}>{task.task}</td>
+          <td className={classProvider(props.theme, 'tableCell')}><Flagged flagged={task.priority}/></td>
+          <td className={classProvider(props.theme, 'tableCell')}><button className={task.priority
+            ? classProvider(props.theme, 'deactivator')
+            : classProvider(props.theme, 'activator')}
+          onClick={() => handleTaskPriority(task)}>
+            {task.priority
+              ? 'priority off'
+              : 'priority on'}
+          </button></td>
+          <td className={classProvider(props.theme, 'tableCell')}><button className={task.active
+            ? classProvider(props.theme, 'deactivator')
+            : classProvider(props.theme, 'activator')}
+          onClick={() => handleTaskCompletion(task)}>
+            {task.active
+              ? 'done'
+              : 'undone'}
+          </button></td>
+          <td className={classProvider(props.theme, 'tableCell')}>
+            <button className={classProvider(props.theme, 'deactivator')}
+              onClick={() => handleTaskRemoval(task)}>remove</button></td>
+        </tr>
+      );
     }
   };
 
@@ -123,7 +311,7 @@ const List = (props) => {
               </td>
               <td className={classProvider(props.theme, 'tableCell')}>
                 <button type='button' className={classProvider(props.theme, 'activator')}
-                  onClick={() => props.handleSaveTask(list.id, priority)}>save list</button>
+                  onClick={() => handleSaveTask(list.id, priority)}>save list</button>
               </td>
             </tr>
           </tbody>
@@ -133,14 +321,14 @@ const List = (props) => {
   };
 
   return (
-    <div className='listContainer'>
-      <div key={`${list.listType}:${list.id}`} className='componentContainer'>
+    <div id={`${list.id}`} className='listContainer'>
+      <div className='componentContainer'>
         <div className='component'>
           <strong><p className={classProvider(props.theme, 'text')}>
             <InlineIcon icon={list.listType === 'PrivateList' ? userShield : usersIcon}/> {list.title}
           </p></strong>
         </div>
-        <button title={expanded ? 'hide list' : 'show list'} onClick={() => setExpanded(!expanded)}
+        <button id={`${list.id}:listExpander`} title={expanded ? 'hide list' : 'show list'} onClick={() => setExpanded(!expanded)}
           className={expanded
             ? classProvider(props.theme, 'deactivator')
             : classProvider(props.theme, 'activator')}>
@@ -166,4 +354,4 @@ const List = (props) => {
   );
 };
 
-export default connect(mapStateToProps)(List);
+export default connect(mapStateToProps, mapDispatchToProps)(List);

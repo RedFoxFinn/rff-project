@@ -13,36 +13,20 @@ import {useApolloClient, useQuery, useSubscription} from '@apollo/react-hooks';
 import {handleInfo, handleError} from '../core/store/reducers/AppReducer';
 
 import {InlineIcon} from '@iconify/react';
-import userShield from '@iconify/icons-fa-solid/user-shield';
-import usersIcon from '@iconify/icons-fa-solid/users';
-import flagVariantOutline from '@iconify/icons-mdi/flag-variant-outline';
-import flagVariant from '@iconify/icons-mdi/flag-variant';
-import saveIcon from '@iconify/icons-fa-regular/save';
-import trashAlt from '@iconify/icons-fa-regular/trash-alt';
 import chevronUp from '@iconify/icons-fa-solid/chevron-up';
 import chevronDown from '@iconify/icons-fa-solid/chevron-down';
 
 import {GROUP_LISTS} from '../core/graphql/rff/queries/q_groupLists';
 import {PRIVATE_LISTS} from '../core/graphql/rff/queries/q_privateLists';
-import {TASKS} from '../core/graphql/rff/queries/q_tasks';
 import {Redirect} from 'react-router-dom';
-
-import {TASK_ADDED} from '../core/graphql/rff/subscriptions/s_taskAdded';
-import {TASK_UPDATED} from '../core/graphql/rff/subscriptions/s_taskUpdated';
-import {TASK_REMOVED} from '../core/graphql/rff/subscriptions/s_taskRemoved';
 
 import {LIST_ADDED_GROUP} from '../core/graphql/rff/subscriptions/s_listAddedGroup';
 import {LIST_ADDED_PRIVATE} from '../core/graphql/rff/subscriptions/s_listAddedPrivate';
 import {LIST_REMOVED_GROUP} from '../core/graphql/rff/subscriptions/s_listRemovedGroup';
 import {LIST_REMOVED_PRIVATE} from '../core/graphql/rff/subscriptions/s_listRemovedPrivate';
 import {GROUPS} from '../core/graphql/rff/queries/q_groups';
-import {ADD_TASK} from '../core/graphql/rff/mutations/m_addTask';
 import {ADD_LIST_GROUP} from '../core/graphql/rff/mutations/m_addListGroup';
 import {ADD_LIST_PRIVATE} from '../core/graphql/rff/mutations/m_addListPrivate';
-import {TASK_PRIORITY} from '../core/graphql/rff/mutations/m_taskPriority';
-import {TASK_ACTIVATION} from '../core/graphql/rff/mutations/m_taskActivation';
-import {TASK_DEACTIVATION} from '../core/graphql/rff/mutations/m_taskDeactivation';
-import {REMOVE_TASK} from '../core/graphql/rff/mutations/m_removeTask';
 import List from './widgets/List';
 
 // prop mappers
@@ -58,30 +42,20 @@ const mapDispatchToProps = {
 };
 
 const Tasker = (props) => {
+  const userToken = localStorage.getItem('rffUserToken').substring(7);
   const client = useApolloClient();
-  let userToken;
+  const privateLists = useQuery(PRIVATE_LISTS, {
+    variables: {
+      token: userToken
+    }
+  });
+  const groupLists = useQuery(GROUP_LISTS, {
+    variables: {
+      token: userToken
+    }
+  });
+
   // Apollo GraphQL subscriptions
-  useSubscription(TASK_ADDED, {
-    fetchPolicy: '',
-    onSubscriptionData: ({subscriptionData}) => {
-      const task = subscriptionData.data.taskAdded;
-      updateCacheWithTask('added', task);
-    }
-  });
-  useSubscription(TASK_UPDATED, {
-    fetchPolicy: '',
-    onSubscriptionData: ({subscriptionData}) => {
-      const task = subscriptionData.data.taskUpdated;
-      updateCacheWithTask('updated', task);
-    }
-  });
-  useSubscription(TASK_REMOVED, {
-    fetchPolicy: '',
-    onSubscriptionData: ({subscriptionData}) => {
-      const task = subscriptionData.data.taskRemoved;
-      updateCacheWithTask('removed', task);
-    }
-  });
   useSubscription(LIST_ADDED_PRIVATE, {
     fetchPolicy: '',
     onSubscriptionData: ({subscriptionData}) => {
@@ -153,144 +127,8 @@ const Tasker = (props) => {
       });
     }
   };
-  // helper functions: task handlers
-  const handleSaveTask = async (listID, priority) => {
-    const variables = {
-      token: userToken,
-      listID: listID,
-      task: document.getElementById('newTask').value,
-      priority: priority
-    };
-    if (userToken) {
-      await client.mutate({
-        mutation: ADD_TASK,
-        errorPolicy: 'ignore',
-        variables: variables
-      }).then((result) => {
-        const {data} = result;
-        if (data !== null) {
-          updateCacheWithTask('added', data.addTask);
-        } else {
-          props.handleError(`Error occurred with task: cannot add ${variables.task}`);
-        }
-      });
-    }
-  };
-  const handleTaskPriority = async ({id, priority, task}) => {
-    const variables = {
-      token: userToken,
-      id: id,
-      priority: !priority
-    };
-    await client.mutate({
-      mutation: TASK_PRIORITY,
-      variables: variables,
-      errorPolicy: 'ignore'
-    }).then((result) => {
-      const {data} = result;
-      if (data !== null) {
-        updateCacheWithTask('updated', data.taskPriority);
-      } else {
-        props.handleError(`Error occurred with task: cannot update ${task}`);
-      }
-    });
-  };
-  const handleTaskCompletion = async ({id, task, active}) => {
-    const variables = {
-      token: userToken,
-      id: id
-    };
-    await client.mutate({
-      mutation: active ? TASK_DEACTIVATION : TASK_ACTIVATION,
-      variables: variables,
-      errorPolicy: 'ignore'
-    }).then((result) => {
-      const {data} = result;
-      if (data !== null) {
-        updateCacheWithTask('updated', active ? data.taskDeactivation : data.taskActivation);
-      } else {
-        props.handleError(`Error occurred with task: cannot update ${task}`);
-      }
-    });
-  };
-  const handleTaskRemoval = async ({id, task}) => {
-    const variables = {
-      token: userToken,
-      id: id
-    };
-    await client.mutate({
-      mutation: REMOVE_TASK,
-      errorPolicy: 'ignore',
-      variables: variables
-    }).then((result) => {
-      const {data} = result;
-      if (data !== null) {
-        updateCacheWithTask('removed', data.removeTask);
-      } else {
-        props.handleError(`Error occurred with task: cannot remove ${task}`);
-      }
-    });
-  };
 
   // helper functions for subscriptions
-  const updateCacheWithTask = async (eventType, task) => {
-    const includedIn = (set, object) => set.map(t => t.id).includes(object.id);
-    const dataInStore = await client.readQuery({
-      query: TASKS, variables: {
-        listID: task.listID,
-        token: userToken
-      }});
-
-    switch (eventType) {
-    case 'added':
-      if (!includedIn(dataInStore.tasks, task)) {
-        await client.writeQuery({
-          query: TASKS,
-          variables: {
-            token: userToken,
-            listID: task.listID
-          },
-          data: {tasks: dataInStore.tasks.concat(task)}
-        });
-        props.handleInfo(`Task added: ${task.task}`);
-      }
-      break;
-    case 'updated':
-      if (includedIn(dataInStore.tasks, task)) {
-        await client.writeQuery({
-          query: TASKS,
-          variables: {
-            token: userToken,
-            listID: task.listID
-          },
-          data: {
-            tasks: dataInStore.tasks.map(t => {
-              return t.id === task.id ? task : t;
-            })}
-        });
-        props.handleInfo(`Task updated: ${task.task}`);
-      }
-      break;
-    case 'removed':
-      if (includedIn(dataInStore.tasks, task)) {
-        await client.writeQuery({
-          query: TASKS,
-          variables: {
-            token: userToken,
-            listID: task.listID
-          },
-          data: {
-            tasks: dataInStore.tasks.forEach(t => {
-              if (t.id !== task.id) return t;
-            })}
-        });
-        props.handleInfo(`Task removed: ${task.task}`);
-      }
-      break;
-    default:
-      break;
-    }
-  };
   const updateCacheWithPrivatelist = async (eventType, list) => {
     const includedIn = (set, object) => set.map(l => l.id).includes(object.id);
     const dataInStore = await client.readQuery({
@@ -301,43 +139,19 @@ const Tasker = (props) => {
     switch (eventType) {
     case 'added':
       if (!includedIn(dataInStore.privateLists, list)) {
-        await client.writeQuery({
-          query: PRIVATE_LISTS,
-          variables: {
-            token: userToken
-          },
-          data: {privateLists: dataInStore.privateLists.concat(list)}
-        });
+        await privateLists.refetch();
         props.handleInfo(`List added: ${list.title}`);
       }
       break;
     case 'updated':
       if (includedIn(dataInStore.privateLists, list)) {
-        await client.writeQuery({
-          query: PRIVATE_LISTS,
-          variables: {
-            token: userToken
-          },
-          data: {
-            privateLists: dataInStore.privateLists.map(l => {
-              return l.id === list.id ? list : l;
-            })}
-        });
-        handleInfo(`List updated: ${list.title}`);
+        await privateLists.refetch();
+        props.handleInfo(`List updated: ${list.title}`);
       }
       break;
     case 'removed':
       if (includedIn(dataInStore.privateLists, list)) {
-        await client.writeQuery({
-          query: PRIVATE_LISTS,
-          variables: {
-            token: userToken
-          },
-          data: {
-            privateLists: dataInStore.privateLists.forEach(l => {
-              if (l.id !== list.id) return l;
-            })}
-        });
+        await privateLists.refetch();
         props.handleInfo(`List removed: ${list.title}`);
       }
       break;
@@ -357,43 +171,19 @@ const Tasker = (props) => {
     switch (eventType) {
     case 'added':
       if (!includedIn(dataInStore.groupLists, list)) {
-        await client.writeQuery({
-          query: GROUP_LISTS,
-          variables: {
-            token: userToken
-          },
-          data: {groupLists: dataInStore.groupLists.concat(list)}
-        });
+        await groupLists.refetch();
         props.handleInfo(`List added: ${list.title}`);
       }
       break;
     case 'updated':
       if (includedIn(dataInStore.groupLists, list)) {
-        await client.writeQuery({
-          query: GROUP_LISTS,
-          variables: {
-            token: userToken
-          },
-          data: {
-            groupLists: dataInStore.groupLists.map(l => {
-              return l.id === list.id ? list : l;
-            })}
-        });
+        await groupLists.refetch();
         props.handleInfo(`List updated: ${list.title}`);
       }
       break;
     case 'removed':
       if (includedIn(dataInStore.groupLists, list)) {
-        await client.writeQuery({
-          query: GROUP_LISTS,
-          variables: {
-            token: userToken
-          },
-          data: {
-            groupLists: dataInStore.groupLists.forEach(l => {
-              if (l.id !== list.id) return l;
-            })}
-        });
+        await groupLists.refetch();
         props.handleInfo(`List removed: ${list.title}`);
       }
       break;
@@ -427,40 +217,29 @@ const Tasker = (props) => {
 
   // component that gives layout base for task list rendering
   const Lists = () => {
-    if (props.user) {
-      userToken = localStorage.getItem('rffUserToken').substring(7);
-      return (
-        <div className='container'>
-          <ListsP/>
-          <ListsG/>
-        </div>
-      );
-    } else {
-      return (
-        <div className='container'>
-          <p className={classProvider(props.theme, 'tileError')}>login needed</p>
-        </div>
-      );
-    }
+    return (
+      <div className='container'>
+        {props.user
+          ? <>
+            <ListsP/>
+            <ListsG/>
+          </>
+          : <p className={classProvider(props.theme, 'tileError')}>login needed</p>}
+      </div>
+    );
   };
 
   // task lists rendering components
   const ListsP = () => {
-    const {data, loading, error} = useQuery(PRIVATE_LISTS, {
-      variables: {
-        token: userToken
-      }
-    });
+    const {data, error, loading} = privateLists;
     return (
-      <div className='taskList'>
+      <div id='privateLists' className='taskList'>
         <h4 className={classProvider(props.theme, 'listHeader')}>Accessible private lists:</h4>
         <div className='taskList'>
           <AddList listType='private'/>
           {data && data.privateLists.length > 0
             ? <>{data.privateLists.map(l =>
-              <List key={`privateList:${l.id}`} list={l} handleSaveTask={handleSaveTask} handleRemoveTask={handleTaskRemoval}
-                handleTaskCompletion={handleTaskCompletion} handleTaskPriority={handleTaskPriority}
-                updateCacheWithTask={updateCacheWithTask}/>)}</>
+              <List key={`privateList:${l.id}`} list={l}/>)}</>
             : <Empty type='private'/>}
         </div>
         {error && <Error type='private'/>}
@@ -469,13 +248,9 @@ const Tasker = (props) => {
     );
   };
   const ListsG = () => {
-    const {data, loading, error} = useQuery(GROUP_LISTS, {
-      variables: {
-        token: userToken
-      }
-    });
+    const {data, error, loading} = groupLists;
     return (
-      <div className='taskList'>
+      <div id='groupLists' className='taskList'>
         <h4 className={classProvider(props.theme, 'heading')}>Accessible group lists:</h4>
         <div className='taskList'>
           <AddList listType='group'/>

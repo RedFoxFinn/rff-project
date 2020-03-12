@@ -4,14 +4,15 @@ import {useQuery, useApolloClient, useSubscription} from '@apollo/react-hooks';
 import classProvider from '../core/tools/classProvider';
 import '../core/style/global.css';
 import {InlineIcon} from '@iconify/react';
-import usersCog from '@iconify/icons-fa-solid/users-cog';
-import usersIcon from '@iconify/icons-fa-solid/users';
-import usergroupDeleteOutline from '@iconify/icons-ant-design/usergroup-delete-outline';
-import usergroupAddOutline from '@iconify/icons-ant-design/usergroup-add-outline';
+import cogOutline from '@iconify/icons-mdi/cog-outline';
+import accountMultipleRemoveOutline from '@iconify/icons-mdi/account-multiple-remove-outline';
+import accountMultiplePlusOutline from '@iconify/icons-mdi/account-multiple-plus-outline';
 import {ALL_GROUPS} from '../core/graphql/rff/queries/q_allGroups';
 import {ADD_GROUP} from '../core/graphql/rff/mutations/m_addGroup';
 import {UPDATE_GROUP} from '../core/graphql/rff/mutations/m_updateGroup';
 import {REMOVE_GROUP} from '../core/graphql/rff/mutations/m_removeGroup';
+import {ACTIVATE_GROUP} from '../core/graphql/rff/mutations/m_activateGroup';
+import {DEACTIVATE_GROUP} from '../core/graphql/rff/mutations/m_deactivateGroup';
 
 import {handleInfo, handleError} from '../core/store/reducers/AppReducer';
 import {GROUP_ADDED} from '../core/graphql/rff/subscriptions/s_groupAdded';
@@ -31,7 +32,7 @@ const mapDispatchToProps = {
 const Groups = (props) => {
   const userToken = localStorage.getItem('rffUserToken').substring(7);
   const client = useApolloClient();
-  const {data, error, loading} = useQuery(ALL_GROUPS, {
+  const {data, error, loading, refetch} = useQuery(ALL_GROUPS, {
     variables: {token: userToken}
   });
 
@@ -66,43 +67,19 @@ const Groups = (props) => {
     switch (eventType) {
     case 'added':
       if (!includedIn(dataInStore.allGroups, group)) {
-        await client.writeQuery({
-          query: ALL_GROUPS,
-          variables: {
-            token: userToken,
-          },
-          data: {allGroups: dataInStore.allGroups.concat(group)}
-        });
+        await refetch();
         props.handleInfo(`Group added: ${group.title}`);
       }
       break;
     case 'updated':
       if (includedIn(dataInStore.allGroups, group)) {
-        await client.writeQuery({
-          query: ALL_GROUPS,
-          variables: {
-            token: userToken,
-          },
-          data: {
-            allGroups: dataInStore.allGroups.map(g => {
-              return g.id === group.id ? group : g;
-            })}
-        });
+        await refetch();
         props.handleInfo(`Group updated: ${group.title}`);
       }
       break;
     case 'removed':
       if(includedIn(dataInStore.allGroups, group)) {
-        await client.writeQuery({
-          query: ALL_GROUPS,
-          variables: {
-            token: userToken,
-          },
-          data: {
-            allGroups: dataInStore.allGroups.forEach(g => {
-              if (g.id !== group.id) return g;
-            })}
-        });
+        await refetch();
         props.handleInfo(`Group removed: ${group.title}`);
       }
       break;
@@ -130,40 +107,37 @@ const Groups = (props) => {
       }
     });
   };
-  const handleRemoval = async ({id, title}) => {
+  const handleRemoval = async ({id}) => {
     const variables = {
       token: userToken,
       id: id
     };
     await client.mutate({
       mutation: REMOVE_GROUP,
-      errorPolicy: 'ignore',
       variables: variables
     }).then((result) => {
-      const {data} = result;
+      const {data, errors} = result;
       if (data !== null) {
         updateCacheWithGroup('removed', data.removeGroup);
       } else {
-        props.handleError(`Error occurred with group: cannot remove ${title}`);
+        props.handleError(errors[0].message);
       }
     });
   };
-  const handleActivate = async ({id, active, title}) => {
+  const handleActivate = async ({id, active}) => {
     const variables = {
       token: userToken,
-      id: id,
-      active: !active
+      id: id
     };
     await client.mutate({
-      mutation: UPDATE_GROUP,
-      errorPolicy: 'ignore',
+      mutation: active ? DEACTIVATE_GROUP : ACTIVATE_GROUP,
       variables: variables
     }).then((result) => {
-      const {data} = result;
+      const {data, errors} = result;
       if (data !== null) {
-        updateCacheWithGroup('updated', data.updateGroup);
+        updateCacheWithGroup('updated', active ? data.deactivateGroup : data.activateGroup);
       } else {
-        props.handleError(`Error occurred with group: cannot update ${title}`);
+        props.handleError(errors[0].message);
       }
     });
   };
@@ -181,7 +155,7 @@ const Groups = (props) => {
     </>;
   };
 
-  const ManageUsers = () => {
+  const ManageGroups = () => {
     const groups = data.allGroups;
     return groups.length > 0
       ? <>
@@ -214,14 +188,15 @@ const Groups = (props) => {
         <td id={group.id + ':title'} className={classProvider(props.theme, 'tableCell')}>{group.title}</td>
         <td id={group.id + ':status'} className={classProvider(props.theme, 'tableCell')}>{group.active ? 'true' : 'false'}</td>
         <td className={classProvider(props.theme, 'tableCell')}>
-          <button id={group.id + ':statusButton'} onClick={() => handleActivate(group)} className={group.active
-            ? classProvider(props.theme, 'deactivator') : classProvider(props.theme, 'activator')}>
-            {group.active ? 'deactivate' : 'activate'}</button>
+          <button title={group.active ? 'deactivate' : 'activate'} id={`${group.id}-statusButton`}
+            onClick={() => handleActivate(group)} className={group.active
+              ? classProvider(props.theme, 'deactivator') : classProvider(props.theme, 'activator')}>
+            <InlineIcon icon={cogOutline}/></button>
         </td>
         {group.removable && <td className={classProvider(props.theme, 'tableCell')}>
-          <button id={group.id + ':removeButton'} title='remove group' className={classProvider(props.theme, 'deactivator')}
+          <button id={`${group.id}-removeButton`} title='remove group' className={classProvider(props.theme, 'deactivator')}
             onClick={() => handleRemoval(group)}>
-            <InlineIcon icon={usergroupDeleteOutline}/></button></td>}
+            <InlineIcon icon={accountMultipleRemoveOutline}/></button></td>}
       </tr>
     );
   };
@@ -237,7 +212,7 @@ const Groups = (props) => {
         <td className={classProvider(props.theme, 'tableCell')}>{' '}</td>
         <td className={classProvider(props.theme, 'tableCell')}>
           <button id='saveGroup' title='save group' className={classProvider(props.theme, 'activator')}
-            onClick={() => handleAddition()}><InlineIcon icon={usergroupAddOutline}/></button></td>
+            onClick={() => handleAddition()}><InlineIcon icon={accountMultiplePlusOutline}/></button></td>
       </tr>
     );
   };
@@ -247,7 +222,7 @@ const Groups = (props) => {
     <>
       {error && <Error/>}
       {loading && <Loading/>}
-      {data && <ManageUsers/>}
+      {data && <ManageGroups/>}
     </>
     : null;
 };

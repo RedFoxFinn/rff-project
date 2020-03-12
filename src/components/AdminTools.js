@@ -52,14 +52,14 @@ const AdminTools = (props) => {
     );
   };
 
-  return props.show && props.user && (props.user.getRole() === 'admin' || props.user.getRole() === 'owner')
+  return props.show
     ? <div className='app'>
       <div className='commonElements'>
         <h4 className={classProvider(props.appState.theme, 'heading')}>App statistics:</h4>
         <WidgetsCommon/>
         <WidgetsAdvanced/>
         <News mode='admin'/>
-        <Users/>
+        <Users show={props.user.getRole() === 'admin' || props.user.getRole() === 'owner'}/>
         <Groups/>
       </div>
     </div>

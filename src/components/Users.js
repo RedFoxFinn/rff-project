@@ -1,25 +1,28 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {useQuery, useApolloClient} from '@apollo/react-hooks';
+import {useQuery, useApolloClient, useSubscription} from '@apollo/react-hooks';
 import classProvider from '../core/tools/classProvider';
 import '../core/style/global.css';
 import {InlineIcon} from '@iconify/react';
-import usersCog from '@iconify/icons-fa-solid/users-cog';
-import userCog from '@iconify/icons-fa-solid/user-cog';
-import userTimes from '@iconify/icons-fa-solid/user-times';
-import saveIcon from '@iconify/icons-fa-regular/save';
-import trashAlt from '@iconify/icons-fa-regular/trash-alt';
+import accountRemoveOutline from '@iconify/icons-mdi/account-remove-outline';
+import cogOutline from '@iconify/icons-mdi/cog-outline';
 import {USERS} from '../core/graphql/rff/queries/q_users';
-import {ADD_GROUP} from '../core/graphql/rff/mutations/m_addGroup';
+import {ACTIVATE_USER} from '../core/graphql/rff/mutations/m_activateUser';
+import {DEACTIVATE_USER} from '../core/graphql/rff/mutations/m_deactivateUser';
 import {UPDATE_USER} from '../core/graphql/rff/mutations/m_updateUser';
 import {REMOVE_USER} from '../core/graphql/rff/mutations/m_removeUser';
+import {DEMOTE_USER} from '../core/graphql/rff/mutations/m_demoteUser';
+import {PROMOTE_USER} from '../core/graphql/rff/mutations/m_promoteUser';
 
 import {handleInfo, handleError} from '../core/store/reducers/AppReducer';
+import {USER_ADDED} from '../core/graphql/rff/subscriptions/s_userAdded';
+import {USER_UPDATED} from '../core/graphql/rff/subscriptions/s_userUpdated';
+import {USER_REMOVED} from '../core/graphql/rff/subscriptions/s_userRemoved';
 
 const mapStateToProps = (state) => {
   return {
     theme: state.appState.theme,
-    user: state.loginState.user
+    currentUser: state.loginState.user
   };
 };
 const mapDispatchToProps = {
@@ -29,49 +32,113 @@ const mapDispatchToProps = {
 const Users = (props) => {
   const userToken = localStorage.getItem('rffUserToken').substring(7);
   const client = useApolloClient();
-  const {data, error, loading} = useQuery(USERS, {
+  const {data, error, loading, refetch} = useQuery(USERS, {
     variables: {token: userToken}
   });
 
-  const handleRemoval = async ({id, username}) => {
+  useSubscription(USER_ADDED, {
+    fetchPolicy: '',
+    onSubscriptionData: ({subscriptionData}) => {
+      const user = subscriptionData.data.userAdded;
+      updateCacheWithUser('added', user);
+    }
+  });
+  useSubscription(USER_UPDATED, {
+    fetchPolicy: '',
+    onSubscriptionData: ({subscriptionData}) => {
+      const user = subscriptionData.data.userUpdated;
+      updateCacheWithUser('updated', user);
+    }
+  });
+  useSubscription(USER_REMOVED, {
+    fetchPolicy: '',
+    onSubscriptionData: ({subscriptionData}) => {
+      const user = subscriptionData.data.userRemoved;
+      updateCacheWithUser('removed', user);
+    }
+  });
+
+  const updateCacheWithUser = async (eventType, user) => {
+    const includedIn = (set, object) => set.map(u => u.id).includes(object.id);
+    const dataInStore = await client.readQuery({
+      query: USERS, variables: {
+        token: userToken}});
+
+    switch (eventType) {
+    case 'added':
+      if (!includedIn(dataInStore.users, user)) {
+        await refetch();
+        props.handleInfo(`User added: ${user.username}`);
+      }
+      break;
+    case 'updated':
+      if (includedIn(dataInStore.users, user)) {
+        await refetch();
+        props.handleInfo(`User updated: ${user.username}`);
+      }
+      break;
+    case 'removed':
+      if(includedIn(dataInStore.users, user)) {
+        await refetch();
+        props.handleInfo(`User removed: ${user.username}`);
+      }
+      break;
+    default:
+      break;
+    }
+  };
+
+  const handleRemoval = async ({id}) => {
     const variables = {
       token: userToken,
       id: id
     };
     await client.mutate({
       mutation: REMOVE_USER,
-      errorPolicy: 'ignore',
       variables: variables
     }).then((result) => {
-      const {data} = result;
+      const {data, errors} = result;
       if (data !== null) {
-        props.handleInfo(`User removed: ${username}`);
+        updateCacheWithUser('removed', data.removeUser);
       } else {
-        props.handleError(`Error occurred with user: cannot remove ${username}`);
+        props.handleError(errors[0].message);
       }
     });
   };
-  /*const handleEdit = async () => {
+  const handleActive = async ({id, active}) => {
     const variables = {
       token: userToken,
-      content: document.getElementById('addNewsContent').value,
-      category: document.getElementById('addNewsCategory').value
+      id: id
     };
     await client.mutate({
-      mutation: ADD_NEWS,
-      errorPolicy: 'ignore',
+      mutation: active ? DEACTIVATE_USER : ACTIVATE_USER,
       variables: variables
     }).then((result) => {
-      const {data} = result;
+      const {data, errors} = result;
       if (data !== null) {
-        updateCacheWithNews('added', data.addNews);
-        document.getElementById('addNewsContent').value = '';
-        document.getElementById('addNewsCategory').value = '';
+        updateCacheWithUser('added', active ? data.deactivateUser : data.activateUser);
       } else {
-        props.handleError(`Error occurred with news: cannot add ${variables.content}`);
+        props.handleError(errors[0].message);
       }
     });
-  };*/
+  };
+  const handleRole = async ({id, role}) => {
+    const variables = {
+      token: userToken,
+      id: id
+    };
+    role !== 'owner' && await client.mutate({
+      mutation: role === 'user' ? PROMOTE_USER : DEMOTE_USER,
+      variables: variables
+    }).then((result) => {
+      const {data, errors} = result;
+      if (data !== null) {
+        updateCacheWithUser('updated', role === 'user' ? data.promoteUser : data.demoteUser);
+      } else {
+        props.handleError(errors[0].message);
+      }
+    });
+  };
 
   const Error = () => {
     return <>
@@ -119,25 +186,30 @@ const Users = (props) => {
       <tr className={classProvider(props.theme, 'tableRow')}>
         <td className={classProvider(props.theme, 'tableCell')}>{user.username}</td>
         <td className={classProvider(props.theme, 'tableCell')}>{user.role}</td>
-        <td className={classProvider(props.theme, 'tableCell')}>
-          <button className={user.role === 'user'
-            ? classProvider(props.theme, 'activator') : classProvider(props.theme, 'deactivator')}>
-            {user.role === 'user' ? 'promote' : 'demote'}</button>
-        </td>
+        {user.role !== 'owner' && props.currentUser.getId() !== user.id
+          ? <td className={classProvider(props.theme, 'tableCell')}>
+            <button title={user.role === 'user' ? 'promote' : 'demote'}
+              id={`${user.id}-roleButton`}
+              onClick={() => handleRole(user)} className={user.role === 'user'
+                ? classProvider(props.theme, 'activator')
+                : classProvider(props.theme, 'deactivator')}>
+              <InlineIcon icon={cogOutline}/></button></td>
+          : <td className={classProvider(props.theme, 'tableCell')}>{' '}</td>}
         <td className={classProvider(props.theme, 'tableCell')}>{user.active ? 'true' : 'false'}</td>
-        <td className={classProvider(props.theme, 'tableCell')}>
-          <button className={user.role === 'user'
-            ? classProvider(props.theme, 'deactivator') : classProvider(props.theme, 'activator')}>
-            {user.active ? 'deactivate' : 'activate'}</button>
-        </td>
+        {props.currentUser.getId() !== user.id && <td className={classProvider(props.theme, 'tableCell')}>
+          <button title={user.active ? 'deactivate' : 'activate'} id={`${user.id}-activatorButton`}
+            className={user.active ? classProvider(props.theme, 'deactivator')
+              : classProvider(props.theme, 'activator')}
+            onClick={() => handleActive(user)}><InlineIcon icon={cogOutline}/></button></td>}
         {user.removable && <td className={classProvider(props.theme, 'tableCell')}>
-          <button title='remove user' className={classProvider(props.theme, 'deactivator')}>
-            <InlineIcon icon={userTimes}/></button></td>}
+          <button title='remove user' id={`${user.id}-removeButton`}
+            className={classProvider(props.theme, 'deactivator')}
+            onClick={() => handleRemoval(user)}><InlineIcon icon={accountRemoveOutline}/></button></td>}
       </tr>
     );
   };
 
-  return props.user.getRole() === 'admin' || props.user.getRole() === 'owner'
+  return props.show
     ?
     <>
       {error && <Error/>}

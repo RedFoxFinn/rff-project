@@ -181,7 +181,7 @@
     min-width: 5em;
 }
 .loginMenuLi a {
-    padding: 0.75em;
+    padding: 1em;
     color: black;
     text-decoration: none;
     cursor: pointer;
@@ -189,7 +189,7 @@
     border: none;
 }
 .loginMenuDa a {
-    padding: 0.75em;
+    padding: 1em;
     color: black;
     text-decoration: none;
     cursor: pointer;

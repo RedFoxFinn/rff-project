@@ -15,9 +15,6 @@ import '../core/style/global.css';
 import {ME} from '../core/graphql/rff/queries/q_me';
 import {useApolloClient} from '@apollo/react-hooks';
 import {InlineIcon} from '@iconify/react';
-import loginOutlined from '@iconify/icons-ant-design/login-outlined';
-import logoutOutlined from '@iconify/icons-ant-design/logout-outlined';
-import settingOutlined from '@iconify/icons-ant-design/setting-outlined';
 
 const mapStateToProps = (state) => {
   return {

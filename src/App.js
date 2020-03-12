@@ -134,7 +134,7 @@ const App = (props) => {
         <Route exact path='/' render={(props) => <LandingPage {...props} show={true}/>}/>
         <Route path='/about' render={(props) => <About {...props} show={true}/>}/>
         <Route path='/admin' render={(props) => <AdminTools {...props}
-          show={loginToken !== null}/>}/>
+          show={loginToken !== null && user !== null && (user.getRole() === 'admin' || user.getRole() === 'owner')}/>}/>
         <Route path='/calculate' render={(props) => <Calculate {...props} show={true}/>}/>
         <Route path='/countries' render={(props) => <OpenCountry {...props} show={true}/>}/>
         <Route path='/dashboard' render={(props) => <Dashboard {...props} show={loginToken !== null ? 'advanced' : 'common'}/>}/>
