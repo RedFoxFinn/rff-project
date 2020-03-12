@@ -1163,7 +1163,7 @@ const resolvers = {
       let newUser = new User({
         username: args.username,
         passwordHash: await hash(args.password),
-        active: true,
+        active: false,
         removable: true,
         role: 'user',
         groups: []
@@ -1255,7 +1255,7 @@ const resolvers = {
       if (user.role === 'owner' || user.role === 'admin' || user._id.toString() === args.id) {
         let userToDeactivate = await User.findById(args.id);
         try {
-          userToDeactivate.active = true;
+          userToDeactivate.active = false;
           await userToDeactivate.save();
         } catch (e) {
           throw new UserInputError(e.message, { invalidArgs: args });
@@ -1347,7 +1347,7 @@ const resolvers = {
       const decodedToken = await jwt.verify(args.token, config.secret);
       const user = await User.findById(decodedToken.id);
       if (user.role === 'admin' || user.role === 'owner') {
-        const group = await Group.findById(args.id);
+        const group = await Group.findById(args.id).populate('creator');
         try {
           await dependencyRemover('GROUP', args.id);
         } catch (e) {

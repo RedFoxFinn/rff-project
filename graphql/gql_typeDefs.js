@@ -143,6 +143,8 @@ const typeDefs = gql`
     addUser(username: String!, password: String!): User!,
     updateUser(token: String!, password: String!,
       newUsername: String, newPassword: String): User!,
+    promoteUser(token: String!, id: String!, role: String!): User!,
+    demoteUser(token: String!, id: String!, role: String!): User!,
     removeUser(token: String!, id: String!, password: String): User!,
     activateUser(token: String!, id: String!): User!,
     deactivateUser(token: String!, id: String!): User!,

@@ -179,7 +179,10 @@ const samples = {
       content: 'Transporter will be delayed',
       category: 'feature'
     }
-  ]
+  ],
+  defaultGroup: {
+    title: 'testGroup'
+  }
 };
 
 // list test helpers
@@ -291,7 +294,7 @@ const setNullUser = async () => {
       passwordHash: await hash(samples.nullUser.password),
       active: false,
       removable: false,
-      role: 'admin',
+      role: 'owner',
       groups: []
     }).save();
   } catch (e) {
@@ -927,6 +930,9 @@ const createMutation = (mutationType) => {
             newPassword: $newPassword) {
               username
               id
+              active
+              removable
+              role
           }
       }
     `;
@@ -936,6 +942,9 @@ const createMutation = (mutationType) => {
         removeUser(token: $token, id: $id, password: $password) {
           username
           id
+          active
+          removable
+          role
         }
       }
     `;
@@ -946,6 +955,8 @@ const createMutation = (mutationType) => {
           username
           id
           active
+          removable
+          role
         }
       }
     `;
@@ -956,6 +967,8 @@ const createMutation = (mutationType) => {
           username
           id
           active
+          removable
+          role
         }
       }
     `;
@@ -1190,7 +1203,7 @@ describe('API:test:user', () => {
     const { data } = await tester.graphql(query, undefined, undefined, variables);
     expect(data).toBeDefined();
     expect(data.users).toBeDefined();
-    expect(data.users.length).toBe(2);
+    expect(data.users.length).toBe(1);
     console.log('users - active: done');
   });
   test('users, role', async () => {
