@@ -462,26 +462,6 @@ const authError = (type) => {
   }
 };
 
-// helper tools: task remove
-const listType = async (task) => {
-  const {listType} = await List.findById(task.listID);
-  switch (listType) {
-    case 'PrivateList': return 'PRIVATE';
-    case 'GroupList': return 'GROUP';
-    default: return null;
-  }
-};
-
-const isOwner = async (userID, listID) => {
-  const list = await PrivateList.findById(listID);
-  return list.owner.toString() === userID ? true : false;
-};
-
-const groupAccess = async (userID, groupID) => {
-  const user = await User.findById(userID);
-  return user.groups.filter(g => g.toString(),groupID);
-};
-
 // resolvers for application, first custom type, then Query, Mutation, Subscription
 const resolvers = {
   Ingredient: {
@@ -1089,35 +1069,38 @@ const resolvers = {
     },
     removeTask: async (root, args) => {
       const decodedToken = await jwt.verify(args.token, config.secret);
-      const user = await User.findById(decodedToken.id);
-      const task = await Task.findById(args.id);
+      const user = await User.findById(decodedToken.id).populate('groups');
+      const task = await Task.findById(args.id).populate('creator');
+      let list = await List.findById(task.listID);
 
-      if (user) {
-        const type = listType(task);
-        if (type === 'PRIVATE') {
-          if (isOwner(decodedToken.id, task.listID)) {
-            try {
-              await task.remove();
-            } catch (e) {
-              throw new UserInputError(e.message, {invalidArgs: args});
-            }
-            await pubsub.publish('TASK_REMOVED', {taskRemoved: task});
-            return task;
+      if (user && list.listType === 'PrivateList') {
+        list = await PrivateList.findById(task.listID).populate('owner');
+        if (list.owner._id.toString() === user._id.toString()) {
+          try {
+            await task.remove();
+          } catch (e) {
+            throw new UserInputError(e.message, {invalidArgs: args});
           }
-        } else if (type === 'GROUP') {
-          const list = await GroupList.findById(task.listID).populate('group');
-          if (groupAccess(decodedToken.id, list.group._id.toString())) {
-            try {
-              await task.remove();
-            } catch (e) {
-              throw new UserInputError(e.message, {invalidArgs: args});
-            }
-            await pubsub.publish('TASK_REMOVED', {taskRemoved: task});
-            return task;
-          }
+          await pubsub.publish('TASK_REMOVED', {taskRemoved: task});
+          return task;
         } else {
           await authError('CLEARANCE');
         }
+      } else if (user && list.listType === 'GroupList') {
+        list = await GroupList.findById(task.listID).populate('group');
+        if (user.groups.map(g => g._id.toString()).includes(list.group._id.toString())) {
+          try {
+            await task.remove();
+          } catch (e) {
+            throw new UserInputError(e.message, {invalidArgs: args});
+          }
+          await pubsub.publish('TASK_REMOVED', {taskRemoved: task});
+          return task;
+        } else {
+          await authError('CLEARANCE');
+        }
+      } else if (user) {
+        await authError('CLEARANCE');
       } else {
         await authError('LOGIN');
       }
@@ -1180,7 +1163,7 @@ const resolvers = {
       let newUser = new User({
         username: args.username,
         passwordHash: await hash(args.password),
-        active: true,
+        active: false,
         removable: true,
         role: 'user',
         groups: []
@@ -1272,7 +1255,7 @@ const resolvers = {
       if (user.role === 'owner' || user.role === 'admin' || user._id.toString() === args.id) {
         let userToDeactivate = await User.findById(args.id);
         try {
-          userToDeactivate.active = true;
+          userToDeactivate.active = false;
           await userToDeactivate.save();
         } catch (e) {
           throw new UserInputError(e.message, { invalidArgs: args });
@@ -1364,7 +1347,7 @@ const resolvers = {
       const decodedToken = await jwt.verify(args.token, config.secret);
       const user = await User.findById(decodedToken.id);
       if (user.role === 'admin' || user.role === 'owner') {
-        const group = await Group.findById(args.id);
+        const group = await Group.findById(args.id).populate('creator');
         try {
           await dependencyRemover('GROUP', args.id);
         } catch (e) {
