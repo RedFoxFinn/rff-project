@@ -25,15 +25,15 @@ feature | status
 Basic project structure | <img src="https://api.iconify.design/mdi-check-circle-outline.svg?color=green"/><img src="https://api.iconify.design/mdi-pencil-circle-outline.svg?color=blue"/>
 Custom icons | <img src="https://api.iconify.design/mdi-check-circle-outline.svg?color=green"/>
 Redux-store (global state management) | <img src="https://api.iconify.design/mdi-check-circle-outline.svg?color=green"/><img src="https://api.iconify.design/mdi-pencil-circle-outline.svg?color=blue"/>
-Redux-reducers (global state management) | <img src="https://api.iconify.design/mdi-progress-wrench.svg?color=orange"/><img src="https://api.iconify.design/mdi-pencil-circle-outline.svg?color=blue"/>
+Redux-reducers (global state management) | <img src="https://api.iconify.design/mdi-check-circle-outline.svg?color=green"/><img src="https://api.iconify.design/mdi-pencil-circle-outline.svg?color=blue"/>
 Services | <img src="https://api.iconify.design/mdi-check-circle-outline.svg?color=green"/>
 Style | <img src="https://api.iconify.design/mdi-progress-wrench.svg?color=orange"/>
 Tools | <img src="https://api.iconify.design/mdi-progress-wrench.svg?color=orange"/>
 Site navigation with React-router | <img src="https://api.iconify.design/mdi-check-circle-outline.svg?color=green"/>
-About-section | <img src="https://api.iconify.design/mdi-progress-wrench.svg?color=orange"/>
+About-section | <img src="https://api.iconify.design/mdi-check-circle-outline.svg?color=green"/>
 About:colors | <img src="https://api.iconify.design/mdi-check-circle-outline.svg?color=green"/>
-About:technologies | <img src="https://api.iconify.design/mdi-progress-wrench.svg?color=orange"/>
-Admin-tools | <img src="https://api.iconify.design/mdi-progress-wrench.svg?color=orange"/>
+About:technologies | <img src="https://api.iconify.design/mdi-check-circle-outline.svg?color=green"/>
+Admin-tools | <img src="https://api.iconify.design/mdi-check-circle-outline.svg?color=green"/>
 Calculate-app | <img src="https://api.iconify.design/mdi-check-circle-outline.svg?color=green"/>
 Dashboard-section | <img src="https://api.iconify.design/mdi-check-circle-outline.svg?color=green"/>
 Dashboard:CountryCount | <img src="https://api.iconify.design/mdi-check-circle-outline.svg?color=green"/>
@@ -44,13 +44,13 @@ DashBoard:ListCount | <img src="https://api.iconify.design/mdi-check-circle-outl
 Dashboard:MethodCount | <img src="https://api.iconify.design/mdi-check-circle-outline.svg?color=green"/>
 Dashboard:TaskCount | <img src="https://api.iconify.design/mdi-check-circle-outline.svg?color=green"/>
 Dashboard:TrackedStopsCount | <img src="https://api.iconify.design/mdi-hammer.svg?color=red"/>
-Dishy-app | <img src="https://api.iconify.design/mdi-progress-wrench.svg?color=orange"/><img src="https://api.iconify.design/mdi-alert-outline.svg?color=orangered"/>
+Dishy-app | <img src="https://api.iconify.design/mdi-check-circle-outline.svg?color=green"/>
 Landing page | <img src="https://api.iconify.design/mdi-check-circle-outline.svg?color=green"/>
 Login page | <img src="https://api.iconify.design/mdi-check-circle-outline.svg?color=green"/><img src="https://api.iconify.design/mdi-pencil-circle-outline.svg?color=blue"/>
 Navigation | <img src="https://api.iconify.design/mdi-check-circle-outline.svg?color=green"/>
 OpenCountry-app | <img src="https://api.iconify.design/mdi-check-circle-outline.svg?color=green"/><img src="https://api.iconify.design/mdi-pencil-circle-outline.svg?color=blue"/>
-Tasker-app | <img src="https://api.iconify.design/mdi-progress-wrench.svg?color=orange"/><img src="https://api.iconify.design/mdi-alert-outline.svg?color=orangered"/>
-UserSettings | <img src="https://api.iconify.design/mdi-progress-wrench.svg?color=orange"/>
+Tasker-app | <img src="https://api.iconify.design/mdi-check-circle-outline.svg?color=green"/>
+UserSettings | <img src="https://api.iconify.design/mdi-check-circle-outline.svg?color=green"/>
 Registering | <img src="https://api.iconify.design/mdi-check-circle-outline.svg?color=green"/>
 Transporter-app | <img src="https://api.iconify.design/mdi-hammer.svg?color=red"/>
 GraphQL-fragments | <img src="https://api.iconify.design/mdi-check-circle-outline.svg?color=green"/><img src="https://api.iconify.design/mdi-pencil-circle-outline.svg?color=blue"/>
@@ -58,7 +58,7 @@ GraphQL-mutations | <img src="https://api.iconify.design/mdi-check-circle-outlin
 GraphQL-queries | <img src="https://api.iconify.design/mdi-check-circle-outline.svg?color=green"/>
 GraphQL-subscriptions | <img src="https://api.iconify.design/mdi-check-circle-outline.svg?color=green"/>
 Classes | <img src="https://api.iconify.design/mdi-check-circle-outline.svg?color=green"/>
-TESTS | <img src="https://api.iconify.design/mdi-progress-wrench.svg?color=orange"/>
+UI-TESTS | <img src="https://api.iconify.design/mdi-check-circle-outline.svg?color=green"/>
 CI | <img src="https://api.iconify.design/mdi-check-circle-outline.svg?color=green"/>
 
 ###### frameworks & libraries:
