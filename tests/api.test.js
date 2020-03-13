@@ -936,6 +936,30 @@ const createMutation = (mutationType) => {
           }
       }
     `;
+  case 'demoteUser':
+    return gql`
+      mutation demoteUser($token: String!, $id: String!) {
+        demoteUser(token: $token, id: $id) {
+          username
+          id
+          active
+          role
+          removable
+        }
+      }
+    `;
+  case 'promoteUser':
+    return gql`
+      mutation promoteUser($token: String!, $id: String!) {
+        promoteUser(token: $token, id: $id) {
+          username
+          id
+          active
+          role
+          removable
+        }
+      }
+    `;
   case 'removeUser':        // args: id!, password
     return gql`
       mutation removeUser($token: String!, $id: String!, $password: String) {
@@ -1009,6 +1033,36 @@ const createMutation = (mutationType) => {
           title
           id
           active
+        }
+      }
+    `;
+  case 'activateGroup':
+    return gql`
+      mutation activateGroup($token: String!, $id: String!) {
+        activateGroup(token: $token, id: $id) {
+          title
+          id
+          active
+          removable
+          creator {
+            username
+            id
+          }
+        }
+      }
+    `;
+  case 'deactivateGroup':
+    return gql`
+      mutation deactivateGroup($token: String!, $id: String!) {
+        deactivateGroup(token: $token, id: $id) {
+          title
+          id
+          active
+          removable
+          creator {
+            username
+            id
+          }
         }
       }
     `;
@@ -1242,6 +1296,78 @@ describe('API:test:user', () => {
     expect(data.users.length).toBe(3);
     console.log('users - noargs: done');
   });
+  test('promoteUser, fail, user:user', async () => {
+    const mutation = await createMutation('promoteUser');
+    const variables = {
+      token: token.substring(7),
+      id: user.id
+    };
+    const { errors } = await tester.graphql(mutation, undefined, undefined, variables);
+    expect(errors).toBeDefined();
+    const message = errors[0].message;
+    expect(message).toMatch('Insufficient clearance!');
+    console.log('promoteuser - user:user - fail: done');
+  });
+  test('promoteUser, success, owner:user', async () => {
+    const mutation = await createMutation('promoteUser');
+    const variables = {
+      token: masterToken.substring(7),
+      id: user.id
+    };
+    const { data } = await tester.graphql(mutation, undefined, undefined, variables);
+    expect(data).toBeDefined();
+    expect(data.promoteUser).toBeDefined();
+    expect(data.promoteUser.username).toMatch(user.username);
+    console.log('promoteuser - owner:user - success: done');
+  });
+  test('demoteUser, fail, owner:owner', async () => {
+    const mutation = await createMutation('demoteUser');
+    const variables = {
+      token: masterToken.substring(7),
+      id: nullUser.id
+    };
+    const { errors } = await tester.graphql(mutation, undefined, undefined, variables);
+    expect(errors).toBeDefined();
+    const message = errors[0].message;
+    expect(message).toMatch('Insufficient clearance!');
+    console.log('demoteuser - owner:owner - fail: done');
+  });
+  test('demoteUser, fail, admin:owner', async () => {
+    const mutation = await createMutation('demoteUser');
+    const variables = {
+      token: token.substring(7),
+      id: nullUser.id
+    };
+    const { errors } = await tester.graphql(mutation, undefined, undefined, variables);
+    expect(errors).toBeDefined();
+    const message = errors[0].message;
+    expect(message).toMatch('Insufficient clearance!');
+    console.log('demoteuser - admin:owner - fail: done');
+  });
+  test('demoteUser, success, owner:admin', async () => {
+    const mutation = await createMutation('demoteUser');
+    const variables = {
+      token: masterToken.substring(7),
+      id: nullUser.id
+    };
+    const { errors } = await tester.graphql(mutation, undefined, undefined, variables);
+    expect(errors).toBeDefined();
+    const message = errors[0].message;
+    expect(message).toMatch('Insufficient clearance!');
+    console.log('demoteuser - owner:admin - success: done');
+  });
+  test('demoteUser, fail, user:owner', async () => {
+    const mutation = await createMutation('demoteUser');
+    const variables = {
+      token: token.substring(7),
+      id: nullUser.id
+    };
+    const { errors } = await tester.graphql(mutation, undefined, undefined, variables);
+    expect(errors).toBeDefined();
+    const message = errors[0].message;
+    expect(message).toMatch('Insufficient clearance!');
+    console.log('demoteuser - user:owner - fail: done');
+  });
   test('updateUser:password, success', async () => {
     const mutation = await createMutation('updateUser');
     const variables = {
@@ -1317,7 +1443,7 @@ describe('API:test:user', () => {
     const mutation = await createMutation('deactivateUser');
     const variables = {
       token: token.substring(7),
-      id: nullUser._id.toString()
+      id: user.id
     };
     const { errors } = await tester.graphql(mutation, undefined, undefined, variables);
     expect(errors).toBeDefined();
@@ -1328,7 +1454,7 @@ describe('API:test:user', () => {
   test('deactivate user, success', async () => {
     const mutation = await createMutation('deactivateUser');
     const variables = {
-      token: token.substring(7),
+      token: masterToken.substring(7),
       id: user.id
     };
     const { data } = await tester.graphql(mutation, undefined, undefined, variables);
@@ -1372,7 +1498,7 @@ describe('API:test:user', () => {
     const { errors } = await tester.graphql(mutation, undefined, undefined, variables);
     expect(errors).toBeDefined();
     const message = errors[0].message;
-    expect(message).toMatch('Insufficient clearance!');
+    expect(message).toMatch('Invalid credentials!');
     console.log('removeuser - fail: done');
   });
   test('removeUser, success', async () => {
@@ -1392,20 +1518,20 @@ describe('API:test:user', () => {
 
 // group tests
 describe('API:test:group', () => {
-  let token;
+  let masterToken;
   let dummyToken;
 
   beforeAll(async () => {
     dummyToken = await getDummyToken();
   });
   beforeEach(async () => {
-    token = await getNullToken();
+    masterToken = await getNullToken();
   });
 
   test('groupCount', async () => {
     const query = await createQuery('groupCount');
     const variables = {
-      token: token.substring(7)
+      token: masterToken.substring(7)
     };
     const { data } = await tester.graphql(query, undefined, undefined, variables);
     expect(data).toBeDefined();
@@ -1415,7 +1541,7 @@ describe('API:test:group', () => {
   test('addGroup, unique, success', async () => {
     const mutation = await createMutation('addGroup');
     const variables = {
-      token: token.substring(7),
+      token: masterToken.substring(7),
       title: samples.group1.title
     };
     const { data } = await tester.graphql(mutation, undefined, undefined, variables);
@@ -1428,7 +1554,7 @@ describe('API:test:group', () => {
   test('addGroup, non-unique, fail', async () => {
     const mutation = await createMutation('addGroup');
     const variables = {
-      token: token.substring(7),
+      token: masterToken.substring(7),
       title: samples.group1.title
     };
     const { errors } = await tester.graphql(mutation, undefined, undefined, variables);
@@ -1440,7 +1566,7 @@ describe('API:test:group', () => {
   test('groupCount, revisited', async () => {
     const query = await createQuery('groupCount');
     const variables = {
-      token: token.substring(7)
+      token: masterToken.substring(7)
     };
     const { data } = await tester.graphql(query, undefined, undefined, variables);
     expect(data).toBeDefined();
@@ -1450,7 +1576,7 @@ describe('API:test:group', () => {
   test('groups', async () => {
     const query = await createQuery('groups');
     const variables = {
-      token: token.substring(7)
+      token: masterToken.substring(7)
     };
     const { data } = await tester.graphql(query, undefined, undefined, variables);
     expect(data).toBeDefined();
@@ -1474,7 +1600,7 @@ describe('API:test:group', () => {
   test('allGroups, admin/owner', async () => {
     const query = await createQuery('allGroups');
     const variables = {
-      token: token.substring(7)
+      token: masterToken.substring(7)
     };
     const { data } = await tester.graphql(query, undefined, undefined, variables);
     expect(data).toBeDefined();
@@ -1485,7 +1611,7 @@ describe('API:test:group', () => {
   test('updateGroup, fail', async () => {
     const mut1 = await createMutation('addGroup');
     const var1 = {
-      token: token.substring(7),
+      token: masterToken.substring(7),
       title: samples.group2.title
     };
     await tester.graphql(mut1, undefined, undefined, var1);
@@ -1493,7 +1619,7 @@ describe('API:test:group', () => {
 
     const mutation = await createMutation('updateGroup');
     const variables = {
-      token: token.substring(7),
+      token: masterToken.substring(7),
       id: group._id.toString(),
       title: samples.group1.title
     };
@@ -1508,7 +1634,7 @@ describe('API:test:group', () => {
     const mutation = await createMutation('updateGroup');
     const group = await Group.findOne({ title: samples.group1.title });
     const variables = {
-      token: token.substring(7),
+      token: masterToken.substring(7),
       id: group._id.toString(),
       title: samples.group2.title
     };
@@ -1517,6 +1643,60 @@ describe('API:test:group', () => {
     expect(data.updateGroup).toBeDefined();
     expect(data.updateGroup.title).toMatch(samples.group2.title);
     console.log('updategroup - success: done');
+  });
+  test('activateGroup, user:fail', async () => {
+    const mutation = await createMutation('activateGroup');
+    const group = await Group.findOne({ title: samples.group2.title });
+    const variables = {
+      token: dummyToken.substring(7),
+      id: group._id.toString()
+    };
+    const { errors } = await tester.graphql(mutation, undefined, undefined, variables);
+    expect(errors).toBeDefined();
+    const message = errors[0].message;
+    expect(message).toMatch('Insufficient clearance!');
+    console.log('activategroup - user:fail: done');
+  });
+  test('activateGroup, owner:success', async () => {
+    const mutation = await createMutation('activateGroup');
+    const group = await Group.findOne({ title: samples.group2.title });
+    const variables = {
+      token: masterToken.substring(7),
+      id: group._id.toString()
+    };
+    const { data } = await tester.graphql(mutation, undefined, undefined, variables);
+    expect(data).toBeDefined();
+    expect(data.activateGroup).toBeDefined();
+    expect(data.activateGroup.title).toMatch(samples.group2.title);
+    expect(data.activateGroup.active).toBe(true);
+    console.log('activategroup - admin/owner:success: done');
+  });
+  test('deactivateGroup, user:fail', async () => {
+    const mutation = await createMutation('deactivateGroup');
+    const group = await Group.findOne({ title: samples.group2.title });
+    const variables = {
+      token: dummyToken.substring(7),
+      id: group._id.toString()
+    };
+    const { errors } = await tester.graphql(mutation, undefined, undefined, variables);
+    expect(errors).toBeDefined();
+    const message = errors[0].message;
+    expect(message).toMatch('Insufficient clearance!');
+    console.log('deactivategroup - user:fail: done');
+  });
+  test('deactivateGroup, owner:success', async () => {
+    const mutation = await createMutation('deactivateGroup');
+    const group = await Group.findOne({ title: samples.group2.title });
+    const variables = {
+      token: masterToken.substring(7),
+      id: group._id.toString()
+    };
+    const { data } = await tester.graphql(mutation, undefined, undefined, variables);
+    expect(data).toBeDefined();
+    expect(data.deactivateGroup).toBeDefined();
+    expect(data.deactivateGroup.title).toMatch(samples.group2.title);
+    expect(data.deactivateGroup.active).toBe(false);
+    console.log('deactivategroup - admin/owner:success: done');
   });
   test('removeGroup, fail', async () => {
     const mutation = await createMutation('removeGroup');
@@ -1535,7 +1715,7 @@ describe('API:test:group', () => {
     const mutation = await createMutation('removeGroup');
     const group = await Group.findOne({ title: samples.group2.title });
     const variables = {
-      token: token.substring(7),
+      token: masterToken.substring(7),
       id: group._id.toString()
     };
     const { data } = await tester.graphql(mutation, undefined, undefined, variables);

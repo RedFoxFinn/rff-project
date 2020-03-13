@@ -143,8 +143,8 @@ const typeDefs = gql`
     addUser(username: String!, password: String!): User!,
     updateUser(token: String!, password: String!,
       newUsername: String, newPassword: String): User!,
-    promoteUser(token: String!, id: String!, role: String!): User!,
-    demoteUser(token: String!, id: String!, role: String!): User!,
+    promoteUser(token: String!, id: String!): User!,
+    demoteUser(token: String!, id: String!): User!,
     removeUser(token: String!, id: String!, password: String): User!,
     activateUser(token: String!, id: String!): User!,
     deactivateUser(token: String!, id: String!): User!,
@@ -152,6 +152,8 @@ const typeDefs = gql`
     removeStop(token: String!, stop: String!): User!,
     addGroup(token: String!, title: String!): Group!,
     updateGroup(token: String!, id: String!, title: String, active: Boolean): Group!,
+    activateGroup(token: String!, id: String!): Group!,
+    deactivateGroup(token: String!, id: String!): Group!,
     removeGroup(token: String!, id: String!): Group!,
     login(username: String!, password: String!): Token!
   }

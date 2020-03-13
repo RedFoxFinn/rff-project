@@ -29,7 +29,7 @@ legend |
  GraphQL schemas | <img src="https://api.iconify.design/mdi-check-circle-outline.svg?color=green"/><img src="https://api.iconify.design/mdi-pencil-circle-outline.svg?color=blue"/>
  GraphQL resolvers | <img src="https://api.iconify.design/mdi-check-circle-outline.svg?color=green"/><img src="https://api.iconify.design/mdi-pencil-circle-outline.svg?color=blue"/>
  JWT used for login | <img src="https://api.iconify.design/mdi-check-circle-outline.svg?color=green"/>
- BCrypt used for encrypting sensitive user data stored `Atlas mongo-cloud` | <img src="https://api.iconify.design/mdi-check-circle-outline.svg?color=green"/>
+ BCrypt used for encrypting sensitive user data stored `MongoDB Atlas cloud` | <img src="https://api.iconify.design/mdi-check-circle-outline.svg?color=green"/>
  `.env` for environmental variables in `development`-mode | <img src="https://api.iconify.design/mdi-check-circle-outline.svg?color=green"/>
  `.gitignore` | <img src="https://api.iconify.design/mdi-check-circle-outline.svg?color=green"/>
  `eslint` | <img src="https://api.iconify.design/mdi-check-circle-outline.svg?color=green"/>
