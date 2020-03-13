@@ -1169,10 +1169,11 @@ const resolvers = {
         groups: []
       });
       try {
-        newUser = await newUser.save();
+        await newUser.save();
       } catch (e) {
         throw new UserInputError(e.message, { invalidArgs: args });
       }
+      newUser = await User.findOne({username: args.username});
       await pubsub.publish('USER_ADDED', { userAdded: newUser });
       return newUser;
     },
@@ -1192,50 +1193,75 @@ const resolvers = {
         } catch (e) {
           throw new UserInputError(e.message, { invalidArgs: args });
         }
+        newUser = await User.findById(decodedToken.id);
         await pubsub.publish('USER_UPDATED', { userUpdated: user });
         return user;
       } else {
         await authError('default');
       }
     },
+    demoteUser: async (root, args) => {
+      const decodedToken = await jwt.verify(args.token, config.secret);
+      const user = await User.findById(decodedToken.id);
+      let target = await User.findById(args.id);
+      if (user && (user.role === 'admin' || user.role === 'owner')
+        && (target.role !== 'owner' && args.id !== decodedToken.id)) {
+        target.role = 'user';
+        try {
+          await target.save();
+        } catch (e) {
+          throw new UserInputError(e.message, { invalidArgs: args });
+        }
+        target = await User.findById(args.id);
+        await pubsub.publish('USER_UPDATED', { userUpdated: target });
+        return target;
+      } else {
+        await authError('CLEARANCE');
+      }
+    },
+    promoteUser: async (root, args) => {
+      const decodedToken = await jwt.verify(args.token, config.secret);
+      const user = await User.findById(decodedToken.id);
+      let target = await User.findById(args.id);
+      if (user && (user.role === 'admin' || user.role === 'owner')
+        && (target.role !== 'owner' && args.id !== decodedToken.id)) {
+        target.role = 'admin';
+        try {
+          await target.save();
+        } catch (e) {
+          throw new UserInputError(e.message, { invalidArgs: args });
+        }
+        target = await User.findById(args.id);
+        await pubsub.publish('USER_UPDATED', { userUpdated: target });
+        return target;
+      } else {
+        await authError('CLEARANCE');
+      }
+    },
     removeUser: async (root, args) => {
       const decodedToken = await jwt.verify(args.token, config.secret);
       const user = await User.findById(decodedToken.id);
-      if (user.role === 'owner' || user.role === 'admin') {
-        const userToRemove = await User.findById(args.id);
+      const target = await User.findById(args.id);
+      const correctPassword = !target
+        ? false
+        : args.password !== null ? await bcrypt.compare(args.password, target.passwordHash) : false;
+      if (user && (args.password === null ? (user.role === 'owner' || user.role === 'admin') : correctPassword)) {
         try {
           await dependencyRemover('USER', args.id);
         } catch (e) {
           throw new UserInputError(e.message, { invalidArgs: args });
         }
-        await pubsub.publish('USER_REMOVED', { userRemoved: userToRemove });
+        await pubsub.publish('USER_REMOVED', { userRemoved: target });
         await pubsub.publish('MAJOR_DBE', { majorDBE: true });
-        return userToRemove;
-      } else if (user) {
-        const userToRemove = await User.findById(args.id);
-        const correctPassword = !userToRemove
-          ? false
-          : await bcrypt.compare(args.password, userToRemove.passwordHash);
-        if (!correctPassword) {
-          throw new AuthenticationError('Insufficient clearance!');
-        } else {
-          try {
-            await dependencyRemover('USER', args.id);
-          } catch (e) {
-            throw new UserInputError(e.message, { invalidArgs: args });
-          }
-          await pubsub.publish('USER_REMOVED', { userRemoved: userToRemove });
-          await pubsub.publish('USER_DBE', { majorDBE: true });
-          return userToRemove;
-        }
+        return target;
       } else {
-        await authError('LOGIN');
+        await authError('default');
       }
     },
     activateUser: async (root, args) => {
       const decodedToken = await jwt.verify(args.token, config.secret);
       const user = await User.findById(decodedToken.id);
-      if (user.role === 'owner' || user.role === 'admin') {
+      if ((user.role === 'owner' || user.role === 'admin') && args.id !== user._id.toString()) {
         let userToActivate = await User.findById(args.id);
         try {
           userToActivate.active = true;
@@ -1252,7 +1278,7 @@ const resolvers = {
     deactivateUser: async (root, args) => {
       const decodedToken = await jwt.verify(args.token, config.secret);
       const user = await User.findById(decodedToken.id);
-      if (user.role === 'owner' || user.role === 'admin' || user._id.toString() === args.id) {
+      if ((user.role === 'owner' || user.role === 'admin') && args.id !== user._id.toString()) {
         let userToDeactivate = await User.findById(args.id);
         try {
           userToDeactivate.active = false;
@@ -1341,6 +1367,42 @@ const resolvers = {
         return group;
       } else {
         await authError('LOGIN');
+      }
+    },
+    activateGroup: async (root, args) => {
+      const decodedToken = await jwt.verify(args.token, config.secret);
+      const user = await User.findById(decodedToken.id);
+      if (user && (user.role === 'admin' || user.role === 'owner')) {
+        let group = await Group.findById(args.id);
+        group.active = true;
+        try {
+          await group.save();
+        } catch (e) {
+          throw new UserInputError(e.message, { invalidArgs: args });
+        }
+        group = await Group.findById(args.id).populate('creator');
+        await pubsub.publish('GROUP_UPDATED', { groupUpdated: group });
+        return group;
+      } else {
+        await authError('CLEARANCE');
+      }
+    },
+    deactivateGroup: async (root, args) => {
+      const decodedToken = await jwt.verify(args.token, config.secret);
+      const user = await User.findById(decodedToken.id);
+      if (user && (user.role === 'admin' || user.role === 'owner')) {
+        let group = await Group.findById(args.id);
+        group.active = false;
+        try {
+          await group.save();
+        } catch (e) {
+          throw new UserInputError(e.message, { invalidArgs: args });
+        }
+        group = await Group.findById(args.id).populate('creator');
+        await pubsub.publish('GROUP_UPDATED', { groupUpdated: group });
+        return group;
+      } else {
+        await authError('CLEARANCE');
       }
     },
     removeGroup: async (root, args) => {
